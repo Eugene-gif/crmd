@@ -1,22 +1,12 @@
 <template>
   <q-item
     clickable
-    tag="a"
-    target="_blank"
-    :href="link"
+    v-ripple
+    :to="link"
   >
-    <q-item-section
-      v-if="icon"
-      avatar
-    >
-      <q-icon :name="icon" />
-    </q-item-section>
-
     <q-item-section>
-      <q-item-label>{{ title }}</q-item-label>
-      <q-item-label caption>
-        {{ caption }}
-      </q-item-label>
+      <q-item-label>{{ title }} <sup>{{number}}</sup></q-item-label>
+      <q-icon size="12px" name="svguse:icons/allIcons.svg#essentialPlus" />
     </q-item-section>
   </q-item>
 </template>
@@ -32,19 +22,14 @@ export default defineComponent({
       required: true
     },
 
-    caption: {
-      type: String,
-      default: ''
-    },
-
     link: {
       type: String,
       default: '#'
     },
 
-    icon: {
-      type: String,
-      default: ''
+    number: {
+      type: Number,
+      default: null
     }
   }
 })

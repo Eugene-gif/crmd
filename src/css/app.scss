@@ -1,1 +1,19 @@
 // app global css in SCSS form
+@import 'quasar.variables';
+
+// font
+@import 'stylesheet';
+
+* {
+  font-family: 'graphik', sans-serif;
+}
+
+
+// layouts
+@import 'layout/main';
+
+// pages
+
+
+// components
+@import 'components/essentiallink';

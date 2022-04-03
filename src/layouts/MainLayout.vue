@@ -1,20 +1,10 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+  <q-layout view="lHh Lpr lFf" class="main-layout">
+    <q-header class="bg-white" bordered>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
-
         <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
@@ -23,14 +13,15 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      :width="246"
+      class="bg-grey"
     >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
+      <q-item-label
+        header
+      >
+        CRMD
+      </q-item-label>
+      <q-list class="essential-link">
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
@@ -50,46 +41,34 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Проекты',
+    link: 'projects',
+    number: 6
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Сметы',
+    link: 'estimates',
+    number: 43
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Финансы',
+    link: '/',
+    number: null
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Заказчики',
+    link: 'customers',
+    number: 2
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
+    title: 'Подрядчики',
+    link: 'contractors',
+    number: 150
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Документы',
+    link: 'documents',
+    number: null
   }
 ];
 

@@ -1,0 +1,33 @@
+.essential-link {
+  padding-left: 30px;
+  padding-right: 30px;
+  .q-focusable:focus > .q-focus-helper,
+  .q-manual-focusable--focused > .q-focus-helper,
+  .q-hoverable:hover > .q-focus-helper {
+    background: #dbdbdb !important;
+  }
+  .q-item {
+    border-radius: 8px;
+    .q-item__section {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      .q-item__label {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 18px;
+        letter-spacing: -0.02em;
+        color: $dark;
+      }
+      .q-icon {
+        margin-left: auto;
+      }
+    }
+    &.q-router-link--active {
+      background: $primary; 
+      .q-item__label {
+        color: white;
+      }
+    }
+  }
+}

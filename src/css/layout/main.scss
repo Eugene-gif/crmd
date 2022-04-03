@@ -1,0 +1,22 @@
+.main-layout {
+  .q-header {
+    min-height: 89px;
+  }
+  .q-item__label--header {
+    color: $dark;
+    padding: 32px 0 27.21px 30px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    border-bottom: 1px solid #F0F0F0;
+  }
+  .q-header--bordered {
+    border-color: #F0F0F0;
+  }
+  .q-drawer--left {
+    &.q-drawer--bordered {
+      border-color: #F0F0F0;
+    }
+  }
+}
