@@ -2,10 +2,23 @@
   <q-layout view="lHh Lpr lFf" class="main-layout">
     <q-header class="bg-white" bordered>
       <q-toolbar>
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-        <div>Quasar v{{ $q.version }}</div>
+        <q-input color="grey-2" class="header__input__search" v-model="text">
+          <template v-slot:prepend>
+            <q-icon color="grey-2" size="18px" name="svguse:icons/allIcons.svg#search" />
+          </template>
+        </q-input>
+        <q-btn flat round v-ripple> 
+          <q-icon color="black" size="20px" name="svguse:icons/allIcons.svg#mail" />
+        </q-btn>
+        <q-btn flat round v-ripple class="header__btn__alert"> 
+          <q-icon color="black" size="19px" name="svguse:icons/allIcons.svg#alert" />
+          <sup>
+            6
+          </sup>
+        </q-btn>
+        <q-btn flat round v-ripple class="header__btn__avatar"> 
+          <img src="~assets/anton.jpg">
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -13,7 +26,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      :width="246"
+      :width="276"
       class="bg-grey"
     >
       <q-item-label
@@ -87,6 +100,7 @@ export default defineComponent({
     return {
       essentialLinks: linksList,
       leftDrawerOpen,
+      text: ref(''),
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       }

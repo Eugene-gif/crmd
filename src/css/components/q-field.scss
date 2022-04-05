@@ -1,0 +1,19 @@
+.q-field.q-input {
+  .q-field__control {
+    height: 60px;
+  }
+}
+.q-input.header__input__search {
+  .q-field__control {
+    height: auto ;
+    &:before {
+      border-color: rgba(0,0,0,0);
+    }
+    &:hover:before {
+      border-color: currentColor;
+    }
+  }
+  .q-field__marginal {
+    height: auto;
+  }
+}

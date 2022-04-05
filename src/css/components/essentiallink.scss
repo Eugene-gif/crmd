@@ -1,6 +1,6 @@
 .essential-link {
   padding-left: 30px;
-  padding-right: 30px;
+  padding-right: 37px;
   .q-focusable:focus > .q-focus-helper,
   .q-manual-focusable--focused > .q-focus-helper,
   .q-hoverable:hover > .q-focus-helper {
@@ -8,6 +8,8 @@
   }
   .q-item {
     border-radius: 8px;
+    padding: 10px 21px 10px 30px;
+    min-height: 42px;
     .q-item__section {
       flex-direction: row;
       justify-content: flex-start;
@@ -18,6 +20,15 @@
         line-height: 18px;
         letter-spacing: -0.02em;
         color: $dark;
+        align-items: center;
+        display: flex;
+        position: relative;
+        sup {
+          font-size: 10px;
+          margin-left: 4px;
+          position: relative;
+          top: -3.9px;
+        }
       }
       .q-icon {
         margin-left: auto;
