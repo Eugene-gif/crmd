@@ -41,6 +41,15 @@
           v-bind="link"
         />
       </q-list>
+      <q-list class="essential-about">
+        <q-item 
+          v-for="item in links"
+          :key="item.title"
+          :to="item.link"
+        >
+          <q-item-label>{{item.title}}</q-item-label>
+        </q-item>
+      </q-list>
     </q-drawer>
 
     <q-page-container>
@@ -65,7 +74,7 @@ const linksList = [
   },
   {
     title: 'Финансы',
-    link: '/',
+    link: '/finance',
     number: null
   },
   {
@@ -85,6 +94,25 @@ const linksList = [
   }
 ];
 
+const links = [
+  {
+    title: 'О проекте',
+    link: '#'
+  },
+  {
+    title: 'Полезные сервисы',
+    link: '#'
+  },
+  {
+    title: 'Техподдержка',
+    link: '#'
+  },
+  {
+    title: 'Настройки',
+    link: '#'
+  }
+];
+
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
@@ -99,6 +127,7 @@ export default defineComponent({
 
     return {
       essentialLinks: linksList,
+      links,
       leftDrawerOpen,
       text: ref(''),
       toggleLeftDrawer () {

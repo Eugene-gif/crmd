@@ -12,4 +12,8 @@
     <path d="M16 15V9C16 5.5 13.4 2.6 10 2.1V0H8V2.1C4.6 2.6 2 5.5 2 9V15H0V17H2H16H18V15H16ZM4 15V9C4 6.2 6.2 4 9 4C11.8 4 14 6.2 14 9V15H4Z"/>
     <path d="M11 18H7V20H11V18Z"/>
   </symbol>
+  <symbol viewBox="0 0 2 12" id="tooltip">
+    <path d="M2 12L2 4L0 4L0 12L2 12Z" />
+    <path d="M2 0H0V2H2V0Z" />
+  </symbol>
 </svg>

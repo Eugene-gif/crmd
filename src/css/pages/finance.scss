@@ -1,0 +1,93 @@
+.page-finance {
+  .header-btns {
+    padding-top: 43px;
+  }
+  .cards {
+    padding-top: 51px;
+    .my-card {
+      width: 492px;
+      border-radius: 10px;
+      border-color: $grey-3;
+      .q-separator {
+        background: $grey-3;
+      }
+      .q-card__section {
+        padding: 0;
+      }
+      .my-card-section {
+        padding: 21px 21px 17px 23.5px;
+        .text-h5 {
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 25px;
+          color: black;
+          letter-spacing: -0.02em;
+          margin-top: 4.5px;
+        }
+        .my-tabs {
+          padding-top: 30px;
+          .q-tabs__content {
+            .q-tab {
+              padding: 0;
+              min-height: auto;
+              margin-right: 15px;
+              .q-focus-helper {
+                display: none;
+              }
+              .q-tab__content {
+                padding: 0;
+                .q-tab__label {
+                  font-size: 16px;
+                  line-height: 16px;
+                  letter-spacing: -0.02em;
+                  font-weight: 400;
+                  text-transform: capitalize;
+                  opacity: 0.3;
+                }
+              }
+              &--active {
+                .q-tab__content {
+                  .q-tab__label {
+                    opacity: 1;
+                  }
+                }
+                .q-tab__indicator {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+      
+      .q-card__actions {
+        padding: 16px 21px 16px 27px;
+        .text-subtitle1 {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 16px;
+          letter-spacing: -0.02em;
+          color: $dark-2;
+        }
+        .circle-warning {
+          width: 26px;
+          height: 26px;
+          background: $grey-3;
+          border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          transition: all 0.25s;
+          &:hover {
+            background: $positive;
+            .q-icon {
+              svg {
+                color: $white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

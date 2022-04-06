@@ -42,3 +42,26 @@
     }
   }
 }
+
+.essential-about {
+  padding-top: 190px;
+  padding-left: 44px;
+  .q-item {
+    min-height: auto;
+    padding: 7.8px 16px;
+    .q-focus-helper {
+      display: none;
+    }
+    .q-item__label {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 15px !important;
+      letter-spacing: -0.02em;
+      color: $dark-2;
+      transition: all 0.25s;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}

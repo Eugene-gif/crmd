@@ -4,17 +4,35 @@
 // font
 @import 'stylesheet';
 
+// general style
 * {
   font-family: 'graphik', sans-serif;
 }
+.text-h2 {
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 40px;
+  letter-spacing: -0.02em;
+  color: $dark;
+}
 
 
+.q-tooltip {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  background: $dark-2;
+  padding: 15px 19px;
+}
 // layouts
 @import 'layout/main';
 
 // pages
-
+@import 'pages/finance';
 
 // components
 @import 'components/essentiallink';
 @import 'components/q-field';
+@import 'components/q-btn';
