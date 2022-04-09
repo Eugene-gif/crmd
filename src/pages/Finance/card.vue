@@ -1,23 +1,25 @@
 <template>
-  <q-card class="my-card" flat bordered>
-    <q-card-section class="my-card-section" horizontal>
+  <q-card class="finance-card" flat bordered>
+    <q-card-section class="finance-card-section" horizontal>
       <q-card-section>
         <div class="text-h5">Получен гонорар</div>
         <q-tabs
           v-model="tab"
-          class="text-dark-2 my-tabs"
+          class="text-dark finance-tabs my-tabs"
+          no-caps
         >
           <q-tab name="1" label="Всего" />
           <q-tab name="2" label="За год" />
           <q-tab name="3" label="За месяц" />
         </q-tabs>
+        <div class="row flex items-center">
+          <div class="finance-card__number">4 500 000 руб.</div>
+          <div class="finance-card__procent">40%</div>
+        </div>
       </q-card-section>
 
-      <q-card-section class="col-12 col-lg-1 flex flex-center">
-        <q-img
-          class="rounded-borders"
-          src="https://cdn.quasar.dev/img/parallax2.jpg"
-        />
+      <q-card-section class="flex toolbar">
+        <div class="toolbar-procent" :style="{height: 40 + '%'}"></div>
       </q-card-section>
     </q-card-section>
 

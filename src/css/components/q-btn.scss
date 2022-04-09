@@ -1,8 +1,21 @@
-.q-btn {
+.my-btn {
   .block {
     font-weight: 400;
     font-size: 18px;
     line-height: 18px;
     letter-spacing: -0.02em;
+  }
+}
+.btn-effect {
+  &:before,
+  .q-icon {
+    opacity: 0.3;
+    transition: all 0.25s;
+  }
+  &:hover {
+    &:before,
+    .q-icon {
+      opacity: 1;
+    }
   }
 }

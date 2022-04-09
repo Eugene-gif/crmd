@@ -23,7 +23,7 @@
   line-height: 18px;
   letter-spacing: -0.02em;
   color: #FFFFFF;
-  background: $dark-2;
+  background: $grey-5;
   padding: 15px 19px;
 }
 // layouts
@@ -36,3 +36,4 @@
 @import 'components/essentiallink';
 @import 'components/q-field';
 @import 'components/q-btn';
+@import 'components/q-tabs';

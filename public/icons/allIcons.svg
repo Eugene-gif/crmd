@@ -16,4 +16,17 @@
     <path d="M2 12L2 4L0 4L0 12L2 12Z" />
     <path d="M2 0H0V2H2V0Z" />
   </symbol>
+  <symbol viewBox="0 0 15 9" id="filter-icon">
+    <g>
+      <path d="M2.04545 0H0V1.5H2.04545V0Z" />
+      <path d="M4.77282 0H3.40918V1.5H4.77282V0Z" />
+      <path d="M14.9999 0H6.13623V1.5H14.9999V0Z" />
+      <path d="M2.04545 7.5H0V9H2.04545V7.5Z" />
+      <path d="M4.77282 7.5H3.40918V9H4.77282V7.5Z" />
+      <path d="M14.9999 7.5H6.13623V9H14.9999V7.5Z" />
+      <path d="M15 3.75H12.9546V5.25H15V3.75Z" />
+      <path d="M11.5907 3.75H10.2271V5.25H11.5907V3.75Z" />
+      <path d="M8.86364 3.75H0V5.25H8.86364V3.75Z" />
+    </g>
+  </symbol>
 </svg>
