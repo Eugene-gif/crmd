@@ -121,6 +121,8 @@
   }
   .operations {
     padding-top: 14px;
+    margin-top: 61px;
+    border-top: 1px solid $grey-3;
   }
   .operations-tabs {
     .q-tabs__content {
@@ -134,5 +136,9 @@
         }
       }
     }
+  }
+  .q-table__container {
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
 }

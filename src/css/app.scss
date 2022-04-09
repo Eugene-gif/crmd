@@ -7,6 +7,7 @@
 // general style
 * {
   font-family: 'graphik', sans-serif;
+  letter-spacing: -0.02em;
 }
 .text-h2 {
   font-weight: 700;
@@ -37,3 +38,4 @@
 @import 'components/q-field';
 @import 'components/q-btn';
 @import 'components/q-tabs';
+@import 'components/q-table';
