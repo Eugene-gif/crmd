@@ -1,0 +1,53 @@
+.my-effect {
+  transition: all 0.25s;
+  .q-ripple {
+    display: none;
+  }
+  &.h-primary {
+    .q-icon {
+      transition: all 0.25s;
+      &:hover {
+        color: $primary !important;
+      }
+      &:active {
+        opacity: 0.3;
+        color: $primary !important;
+      }
+    }
+  }
+  &.h-img {
+    img {
+      transition: all 0.25s;
+    }
+    &:hover {
+      img {
+        opacity: 0.6;
+      }
+    }
+    &:active {
+      img {
+        opacity: 0.3;
+      }
+    }
+  }
+  &.h-dark {
+    .block {
+      transition: all 0.25s;
+    }
+    &:hover {
+      .q-focus-helper:before {
+        opacity: 0.7 !important;
+      }
+      .q-focus-helper:after {
+        opacity: 0 !important;
+      }
+    }
+     
+    &:active {
+      .block {
+        opacity: 0.2;
+      }
+    }
+     
+  }
+}

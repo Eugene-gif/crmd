@@ -16,6 +16,12 @@
   letter-spacing: -0.02em;
   color: $dark;
 }
+.rotate {
+  transition: all 0.25s;
+  &:hover {
+    transform: rotate(180deg);
+  }
+}
 
 
 .q-tooltip {
@@ -39,3 +45,5 @@
 @import 'components/q-btn';
 @import 'components/q-tabs';
 @import 'components/q-table';
+@import 'components/q-icon';
+@import 'components/my-effect';

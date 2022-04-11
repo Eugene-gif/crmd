@@ -39,11 +39,17 @@
               }
             }
           }
-          &.q-th__smaile.sorted {
+          &.q-th__smaile.sorted {       
             i {
-              opacity: 1;
+              opacity: 1 !important;
               position: relative;
               transition: all 0.25s;
+              * {
+                color: black !important;
+              }
+              .q-icon {
+                opacity: 1 !important;
+              }
               &:after {
                 content: '';
                 width: 100%;
@@ -93,17 +99,18 @@
     tbody {
       tr {
         td {
-          height: 66px;
-          .q-td__status {
-            .q-icon {
-              
-            }
+          height: auto;
+          padding: 10.5px 16px;
+          & > div {
+            display: block;
+            white-space: pre-wrap;
           }
           .q-td__sum {
             font-weight: 500;
             font-size: 18px;
             line-height: 18px;
             color: black;
+            max-width: 131px;
           }
           .q-td__date {
             font-weight: 400;
@@ -120,17 +127,28 @@
           .q-td__from {
             display: flex;
             align-items: center;
-            img {
-              width: 30px;
-              height: 30px;
-              border-radius: 100%;
-              margin-right: 13px;
+            .q-td__form__img {
+              position: relative;
+              display: flex;
+              align-items: center;
+              z-index: 1;
+              .q-icon {
+                position: absolute;
+                top: -5px;
+                right: -11px;
+              }
+              img {
+                width: 30px;
+                height: 30px;
+                border-radius: 100%;
+              }
             }
             .title {
               font-weight: 400;
               font-size: 16px;
               line-height: 16px;
               color: $grey-5;
+              margin-left: 13px;
             }
           }
           .q-td__type {
@@ -140,12 +158,110 @@
             color: $grey-5;
           }
           .q-td__action {
+            .q-btn-dropdown {
+              padding: 0;
+              width: 44px;
+              height: 44px;
+              // &:hover {
+              //   .q-focus-helper {
+              //     display: none;
+              //   }
+              // }
+              &__arrow {
+                display: none;
+              }
+            }
             .q-icon {
               cursor: pointer;
             }
           }
         }
       }
+      .q-tr__transfer {
+        .q-td__from {
+          position: relative;
+          .q-td__from__arrow {
+            position: absolute;
+            top: -120%;
+            left: -3px;
+            z-index: 0;
+          }
+        }
+      }
+      .q-tr__transfer,
+      .q-tr__agency {
+        height: 66px;
+        .q-td__sum {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 16px;
+          color: $grey-5;
+          position: relative;
+          z-index: 1;
+          white-space: nowrap;
+        }
+      }
+      .q-tr__agency {
+        .q-td__status {
+          .q-icon {
+            background: white;
+            border-radius: 100%;
+          }
+        }
+        .q-td__action {
+          .q-icon {
+            margin-right: 6px;
+          }
+        }
+      }
+      .q-tr__borderlr {
+        td {
+          &:first-child {
+            border-left: 1px solid $grey-3;
+          }
+          &:last-child {
+            border-right: 1px solid $grey-3;
+          }
+        }
+      }
     }
   }
+}
+
+.q-td__action__list {
+  background: #333333;
+  box-shadow: 0px 15px 30px rgba(51, 51, 51, 0.15);
+  border-radius: 10px;
+  min-width: 321px !important;
+  overflow: hidden;
+  .q-list {
+    padding: 12.5px 18px;
+    .q-item {
+      padding: 0;
+      margin: 8px 0;
+      min-height: auto;
+      .q-focus-helper {
+        display: none;
+      }
+      .q-item__label {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 18px;
+        color: white;
+        transition: all 0.25s;
+      }
+      &:hover {
+        .q-item__label {
+          color: #73C949;
+        }
+      }
+      &:active {
+        .q-item__label {
+          opacity: 0.3;
+        }
+      }
+    }
+  }
+  
+  
 }

@@ -123,6 +123,11 @@
     padding-top: 14px;
     margin-top: 61px;
     border-top: 1px solid $grey-3;
+    .btn-effect {
+      .q-icon {
+        font-size: 14px;
+      }
+    }
   }
   .operations-tabs {
     .q-tabs__content {

@@ -7,16 +7,16 @@
             <q-icon color="grey-2" size="18px" name="svguse:icons/allIcons.svg#search" />
           </template>
         </q-input>
-        <q-btn flat round v-ripple> 
-          <q-icon color="black" size="20px" name="svguse:icons/allIcons.svg#mail" />
+        <q-btn flat round class="my-effect h-primary"> 
+          <q-icon color="black" size="20px"  name="svguse:icons/allIcons.svg#mail" />
         </q-btn>
-        <q-btn flat round v-ripple class="header__btn__alert"> 
+        <q-btn flat round class="header__btn__alert my-effect h-primary"> 
           <q-icon color="black" size="19px" name="svguse:icons/allIcons.svg#alert" />
           <sup>
             6
           </sup>
         </q-btn>
-        <q-btn flat round v-ripple class="header__btn__avatar"> 
+        <q-btn flat round v-ripple class="header__btn__avatar my-effect h-img"> 
           <img src="~assets/anton.jpg">
         </q-btn>
       </q-toolbar>
