@@ -42,12 +42,43 @@
         opacity: 0 !important;
       }
     }
-     
     &:active {
+      .q-icon {
+        opacity: 0.3;
+      }
       .block {
         opacity: 0.2;
       }
     }
-     
+  }
+  &.h-opacity {
+    .q-focus-helper {
+      opacity: 0 !important;
+    }
+    .q-focus-helper:before {
+      opacity: 0 !important;
+    }
+    .q-focus-helper:after {
+      opacity: 0 !important;
+    }
+    .q-item__label,
+    .q-icon,
+    .block {
+      transition: all 0.25s;
+    }
+    &:hover {
+      .q-item__label,
+      .q-icon,
+      .block {
+        opacity: 0.7;
+      }
+    }
+    &:active {
+      .q-item__label,
+      .q-icon,
+      .block {
+        opacity: 0.3;
+      }
+    }
   }
 }

@@ -12,6 +12,15 @@
       &:last-child {
         margin-left: 30px;
       }
+      @media (min-width: 772px) and (max-width: 1440px) {
+        width: calc(50% - 15px);
+        &:first-child {
+          margin-right: 15px;
+        }
+        &:last-child {
+          margin-left: 15px;
+        }
+      }
     }
   }
   .finance-card {
@@ -124,6 +133,9 @@
     margin-top: 61px;
     border-top: 1px solid $grey-3;
     .btn-effect {
+      .q-focus-helper {
+        opacity: 0 !important;
+      }
       .q-icon {
         font-size: 14px;
       }
@@ -143,7 +155,7 @@
     }
   }
   .q-table__container {
-    margin-top: 40px;
     margin-bottom: 40px;
+    margin-top: 30px;
   }
 }

@@ -46,6 +46,7 @@
           v-for="item in links"
           :key="item.title"
           :to="item.link"
+          class="my-effect h-opacity"
         >
           <q-item-label>{{item.title}}</q-item-label>
         </q-item>

@@ -3,6 +3,7 @@
     clickable
     v-ripple
     :to="link"
+    class="my-effect h-opacity"
   >
     <q-item-section>
       <q-item-label>{{ title }} <sup>{{number}}</sup></q-item-label>

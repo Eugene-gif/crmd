@@ -8,6 +8,30 @@
       padding-right: 24px;
       .header__input__search {
         margin-right: auto;
+        .q-field__control:after ,
+        .q-field__control:before {
+          display: none;
+        }
+        .q-icon {
+          transition: all 0.25s;
+        }
+        input {
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 18px;
+          color: $grey-5;
+          margin-left: 8px;
+        }
+        &:hover {
+          .q-icon {
+            color: black !important;
+          }
+        }
+        &.q-field--focused {
+          .q-icon {
+            color: black !important;
+          }
+        }
       }
       .header__btn__alert {
         position: relative;
@@ -48,6 +72,10 @@
     .essential-link {
       padding-top: 46.3px;
     }
+    .q-drawer__content {
+      display: flex;
+      flex-direction: column;
+    }
   }
   
   .q-page {
@@ -55,5 +83,14 @@
     margin: 0 auto;
     padding: 0 60px;
     padding-top: 45px;
+    padding-bottom: 60px;
+    @media (min-width: 772px) and (max-width: 1440px) {
+      max-width: 1014px;
+      min-width: 1014px;
+      margin: 0 auto;
+      padding: 0 30px;
+      padding-top: 47px;
+      padding-bottom: 47px;
+    }
   }
 }

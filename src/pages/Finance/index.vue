@@ -49,8 +49,8 @@
           outline
           no-caps
           padding="12px 27px"
-          class="bg-white text-grey-5 my-btn btn-effect"
-          label="Выбрать"
+          class="bg-white text-grey-5 my-btn btn-effect my-effect h-dark"
+          label="Фильтр"
           icon="svguse:icons/allIcons.svg#filter-icon"
         />
       </div>
