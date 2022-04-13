@@ -1,0 +1,54 @@
+.q-dialog__backdrop {
+  background: #F5F5F5;
+  opacity: 0.95;
+  transition: all 0.3s;
+}
+.my-dialog {
+  .q-card {
+    background: #FFFFFF;
+    border: 1px solid #F0F0F0;
+    box-sizing: border-box;
+    box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.15);
+    border-radius: 30px;
+    max-width: 650px;
+    width: 100%;
+    padding: 51px 62px 61px 62px;
+    .q-card__section,
+    .q-card__actions {
+      padding: 0;
+    }
+    .head {
+      padding-bottom: 49px;
+      padding-bottom: 20px;
+      .title {
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 40px;
+        color: black;
+      }
+      .close {
+        cursor: pointer;
+      }
+    }
+    .form-section {
+      margin-top: 29px;
+      label {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 18px;
+        color: black;
+      }
+      .q-field {
+        margin-top: 14px;
+      }
+    }
+    .q-btn {
+      border-radius: 10px;
+      // margin-top: 60px;
+      .block {
+        font-size: 20px;
+        line-height: 20px;
+      }
+    }
+  }
+}
