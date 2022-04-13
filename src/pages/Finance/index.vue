@@ -1,4 +1,11 @@
 <template>
+  <q-dialog
+    v-model="dialog"
+    class="my-dialog finance-dialog"
+  >
+    <Dialog />
+  </q-dialog>
+  
   <q-page class="page-finance">
     <div class="row justify-between items-center">
       <div class="text-h2">Финансы</div>
@@ -19,6 +26,7 @@
         padding="12px 27.5px"
         class="bg-positive text-white my-btn my-effect h-dark"
         label="Добавить операцию"
+        @click="dialog = true"
       />
       <q-btn
         rounded
@@ -54,6 +62,7 @@
           icon="svguse:icons/allIcons.svg#filter-icon"
         />
       </div>
+
       <q-table
         flat
         :rows="rows"
@@ -289,6 +298,7 @@
 
 <script>
 import Card from 'pages/Finance/card.vue'
+import Dialog from 'pages/Finance/dialog.vue'
 import { ref } from 'vue'
 
 const columns = [
@@ -378,14 +388,15 @@ const rows = ref([
 export default {
   name: 'PageFinance',
   components: {
-    Card
+    Card,
+    Dialog
   },
   setup () {
-    
     return {
       tab: ref('1'),
       columns,
-      rows
+      rows,
+      dialog: ref(false)
     }
   }
 }
