@@ -42,12 +42,12 @@ import { ref, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'FinanceCard',
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
+  // props: {
+  //   title: {
+  //     type: String,
+  //     required: true
+  //   }
+  // },
   setup () {
     return {
       tab: ref('1'),

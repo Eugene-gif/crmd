@@ -4,104 +4,69 @@
       <div class="title">Указать перевод</div>
       <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
     </q-card-section>
-    <!-- 
-      <template v-slot:option="scope">
-          <q-item v-if="!scope.opt.group"
-            v-bind="scope.itemProps"
-            v-on="scope.itemEvents"
-          >              
-            <q-item-section avatar>
-              <q-icon :name="scope.opt.icon" ></q-icon>
-            </q-item-section>
-            <q-item-section>
-              <q-item-label v-html="scope.opt.label" ></q-item-label>
-              <q-item-label caption>{{ scope.opt.description }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-     -->
 
     <q-card-section class="form-section">
       <label>Тип</label>
       <q-select
         filled
-        v-model="select1.value"
+        v-model="select1"
         :options="type"
         stack-label
         placeholder="Выбрать"
         dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
         class="my-select"
+        ref="selectDropbox"
+        @popup-hide="focusSelect"
         popup-content-class="my-select-menu"
+        :label="select1 ? undefined : 'Выбрать'"
       />
     </q-card-section>
 
     <q-card-section class="form-section">
       <label>Проект</label>
-      <q-select
-        filled
-        v-model="select2.value"
-        :options="options"
-        stack-label
-        use-input
-        @filter="filterFn"
-        aria-placeholder="Выбрать"
-        dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
-        class="my-select"
-        popup-content-class="my-dopbox-menu"
-        :label="select2.value ? undefined : 'Введите имя или e-mail'"
-      >
-        <template v-slot:prepend>
-          <q-icon size="18px" name="svguse:icons/allIcons.svg#field-search" @click.stop class="search-input" />
-        </template>
-        <template v-slot:append>
-          <q-icon name="svguse:icons/allIcons.svg#clear-field" @click.stop="select2 = ''" class="cursor-pointer clear-input" />
-        </template>
-        <template v-slot:option="scope">
-          <q-item v-if="!scope.opt.group"
-            v-bind="scope.itemProps"
-            v-on="scope.itemEvents"
-          >              
-            <q-item-section avatar>
-              <img :src="scope.opt.icon" alt="">
-            </q-item-section>
-            <q-item-section>
-              <q-item-label v-html="scope.opt.label" ></q-item-label>
-              <q-item-label caption>{{ scope.opt.description }}</q-item-label>
-            </q-item-section>
-          </q-item>
-        </template>
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-dark">
-              Нет результатов
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
-
+      <DropBox />
     </q-card-section>
 
-    <q-card-section class="form-section">
+    <q-card-section class="form-section"  v-show="select1.value === 1 || select1.value === 2 || select1.value === 3">
       <label>От кого</label>
-      <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите сумму" />
+      <DropBox />
+    </q-card-section>
+    
+    <q-card-section class="form-section" v-show="select1.value === 3 || select1.value === 4">
+      <label>Кому</label>
+      <DropBox />
     </q-card-section>
 
-    <q-card-section class="form-section">
+    <q-card-section class="form-section" v-show="select1.value === 1 || select1.value === 2 || select1.value === 4">
       <label>Сумма, руб.</label>
-      <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите сумму" />
+      <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Введите сумму" />
+    </q-card-section>
+
+    <q-card-section class="form-section form-section-row" v-show="select1.value === 3">
+      <div class="form-col">
+        <label>Сумма, руб.</label>
+        <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Введите сумму" />
+      </div>
+      <div class="form-col">
+        <label>Агентские, %</label>
+        <q-input v-model="text4" class="my-input bg-grey-3" placeholder="Введите сумму" />
+      </div>
+      <div class="form-col form-col-hint">
+        <div class="hint">Сумма агентских: 15 000 руб.</div>
+      </div>
     </q-card-section>
 
     <q-card-section class="form-section">
       <label>Дата</label>
-      <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите сумму" />
+      <BtnDate />
     </q-card-section>
 
     <q-card-actions align="center">
       <q-btn
         unelevated
         no-caps
-        padding="21px 10px"
-        class="full-width bg-positive text-white my-btn my-effect h-dark"
+        padding="20px 10px"
+        class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
         label="Добавить перевод"
       />
     </q-card-actions>
@@ -110,72 +75,56 @@
 
 <script>
 import { ref } from 'vue'
-const stringOptions = [
-  {
-    label: 'Антон Глуханько',
-    value: 'Антон Глуханько',
-    icon: '/icons/anton.jpg'
-  },
-  {
-    label: 'СтройПро',
-    value: 'СтройПро',
-    icon: '/icons/stroipro.jpg'
-  },
-  {
-    label: 'Антон Глуханько',
-    value: 'Антон Глуханько',
-    icon: '/icons/anton.jpg'
-  },
-  {
-    label: 'СтройПро',
-    value: 'СтройПро',
-    icon: '/icons/stroipro.jpg'
-  },
-]
-// const stringOptions = [
-//   'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
-// ]
+import BtnDate from 'components/BtnDate.vue'
+import DropBox from 'components/DropBox.vue'
 
 export default ({
   name: 'FinanceDialog',
+  components: {
+    BtnDate,
+    DropBox
+  }, 
   setup () {
-    const options = ref(stringOptions)
-
+    const selectDropbox = ref();
     return {
       select1: ref(
         {
-          label: 'Выбрать тип',
-          value: null
+          label: 'Гонорар',
+          value: 1
         },
       ),
-      select2: ref(
-        {
-          label: 'Выбрать',
-          value: null
-        },
-      ),
+      
       type: [
-        'Гонорар', 'Агентсткие', 'Трансфер', 'Возврат'
+        {
+          label: 'Гонорар',
+          value: 1
+        },
+        {
+          label: 'Агентсткие',
+          value: 2
+        },
+        {
+          label: 'Трансфер',
+          value: 3
+        },
+        {
+          label: 'Возврат',
+          value: 4
+        }
       ],
       
-      model: ref(null),
-      stringOptions,
-      options,
-      
-      filterFn (val, update) {
-        if (val === '') {
-          update(() => {
-            options.value = stringOptions
-          })
-          return
+      selectDropbox,
+
+      text: ref(''),
+      text2: ref(''),
+      text3: ref(),
+      text4: ref(15),
+      focusSelect() {
+        function func() {
+          selectDropbox.value.blur()
         }
-
-        update(() => {
-          const needle = val.toLowerCase()
-          options.value = stringOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
-        })
+        setTimeout(func, 100);
       }
-
     }
   }
 })

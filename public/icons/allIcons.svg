@@ -41,4 +41,15 @@
   <symbol viewBox="0 0 18 18" id="field-search">
     <path d="M18 16.6L14.5 13.1C15.6 11.7 16.2 10 16.2 8.1C16.2 3.6 12.6 0 8.1 0C3.6 0 0 3.6 0 8.1C0 12.6 3.6 16.2 8.1 16.2C10 16.2 11.7 15.6 13.1 14.5L16.6 18L18 16.6ZM8.1 14.2C4.8 14.2 2 11.5 2 8.1C2 4.7 4.8 2 8.1 2C11.4 2 14.2 4.7 14.2 8.1C14.2 11.5 11.5 14.2 8.1 14.2Z" fill="black" fill-opacity="0.3" />
   </symbol>
+  <symbol viewBox="0 0 16 16" id="date-ico">
+    <path d="M14 0V3H10V0H6V3H2V0H0V16H16V0H14ZM14 14H2V5H14V14Z" fill="black" fill-opacity="0.3"/>
+    <path d="M5 0H3V2H5V0Z" fill="black" fill-opacity="0.3"/>
+    <path d="M13 0H11V2H13V0Z" fill="black" fill-opacity="0.3"/>
+    <path d="M6 7H4V9H6V7Z" fill="black" fill-opacity="0.3"/>
+    <path d="M6 10H4V12H6V10Z" fill="black" fill-opacity="0.3"/>
+    <path d="M9 7H7V9H9V7Z" fill="black" fill-opacity="0.3"/>
+    <path d="M9 10H7V12H9V10Z" fill="black" fill-opacity="0.3"/>
+    <path d="M12 7H10V9H12V7Z" fill="black" fill-opacity="0.3"/>
+    <path d="M12 10H10V12H12V10Z" fill="black" fill-opacity="0.3"/>
+  </symbol>
 </svg>
