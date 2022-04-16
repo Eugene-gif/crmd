@@ -79,13 +79,7 @@
         }
       }
     }
-    tbody {
-      tr {
-        td {
-          
-        }
-      }
-    }
+    
   }
   .q-table thead,
   .q-table tr,
@@ -95,6 +89,9 @@
   }
 }
 .finance-table {
+  .q-table__middle {
+    overflow: hidden;
+  }
   .q-table {
     padding-top: 61px;
     thead {
@@ -111,11 +108,40 @@
             border-top: 1px solid $grey-3;
           }
         }
+        &:hover {
+          td {
+            &:after {
+              content: '';
+              width: 100%;
+              background: none;
+              position: absolute;
+              border-bottom: 1px solid #ECECEC;
+              bottom: -1px;
+              opacity: 1;
+            }
+          }
+        }
         td {
           height: auto;
           padding: 10.5px 16px;
+          
           @media (min-width: 772px) and (max-width: 1440px) {
             padding: 10.5px 12px;
+          }
+          &:after {
+            content: '';
+            width: 100%;
+            background: none;
+            position: absolute;
+            border-bottom: 1px solid #ECECEC;
+            bottom: -1px;
+            opacity: 0;
+          }
+          &:before {
+            background: none;
+            border-top: 1px solid #ECECEC;
+            top: -1px;
+            opacity: 1;
           }
           & > div {
             display: block;
@@ -178,6 +204,17 @@
               padding: 0;
               width: 44px;
               height: 44px;
+              &:hover {
+                .q-focus-helper {
+                  display: none;
+                }
+                background: #F5F5F5;
+              }
+              &:active {
+                .q-icon {
+                  opacity: 0.3;
+                }
+              }
               &__arrow {
                 display: none;
               }
@@ -235,6 +272,16 @@
             border-right: 1px solid $grey-3;
           }
         }
+        &:hover {
+          td {
+          &:first-child {
+            border-left: 1px solid #ECECEC;
+          }
+          &:last-child {
+            border-right: 1px solid #ECECEC;
+          }
+        }
+        }
       }
     }
   }
@@ -256,7 +303,7 @@
         display: none;
       }
       .q-item__label {
-        font-weight: 400;
+        font-weight: 500;
         font-size: 18px;
         line-height: 18px;
         color: white;

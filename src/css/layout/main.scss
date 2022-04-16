@@ -50,6 +50,11 @@
       }
       .header__btn__avatar {
         margin-left: 27px;
+        img {
+          max-width: 40px;
+          border-radius: 100%;
+          image-rendering: -webkit-optimize-contrast;
+        }
       }
     }
   }

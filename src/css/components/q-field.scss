@@ -179,6 +179,14 @@
       }
     }
   }
+  .no-result {
+    .q-item__section {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 18px;
+      color: $grey-5;
+    }
+  }
 }
 .my-dopbox-menu {
   .q-item {
@@ -186,6 +194,9 @@
     min-height: auto;
     padding: 7px 19px;
     align-items: center;
+    img {
+      border-radius: 100%;
+    }
     &:first-child {
       padding-top: 14px;
     }

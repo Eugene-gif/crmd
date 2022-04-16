@@ -117,6 +117,7 @@ export default ({
 
       text: ref(''),
       text2: ref(''),
+      show: ref(false),
       text3: ref(),
       text4: ref(15),
       focusSelect() {
@@ -124,7 +125,10 @@ export default ({
           selectDropbox.value.blur()
         }
         setTimeout(func, 100);
-      }
+      },
+      beforeHide() {
+      show.value = true;
+    }
     }
   }
 })

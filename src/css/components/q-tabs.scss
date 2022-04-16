@@ -16,13 +16,28 @@
           font-weight: 700;
           line-height: 1;
           letter-spacing: -0.02em;
-          opacity: 0.3;
+          opacity: 0.15;
+          transition: all 0.25s;
+        }
+      }
+      &:hover {
+        .q-tab__content {
+          .q-tab__label {
+            opacity: 0.2;
+          }
         }
       }
       &--active {
         .q-tab__content {
           .q-tab__label {
             opacity: 1;
+          }
+        }
+        &:hover {
+          .q-tab__content {
+            .q-tab__label {
+              opacity: 1;
+            }
           }
         }
         .q-tab__indicator {

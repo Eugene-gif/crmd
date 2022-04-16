@@ -33,7 +33,7 @@
       </q-item>
     </template>
     <template v-slot:no-option>
-      <q-item>
+      <q-item class="no-result">
         <q-item-section class="text-dark">
           Нет результатов
         </q-item-section>

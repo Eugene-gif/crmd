@@ -50,7 +50,7 @@
     </g>
   </symbol>
   <symbol viewBox="0 0 36 36" id="arrow">
-    <rect width="36" height="36" rx="15" fill="white"/>
+    <rect width="36" height="36" rx="15" fill="white" fill-opacity="0"/>
     <path d="M26 17L24.6 15.6L19 21.2V10H17V21.2L11.4 15.6L10 17L18 25L26 17Z" fill="black" fill-opacity="0.3"/>
   </symbol>
   <symbol viewBox="0 0 26 26" id="warning">

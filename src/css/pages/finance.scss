@@ -54,6 +54,16 @@
             .q-tab__content {
               .q-tab__label {
                 font-size: 16px;
+                color: $grey-5;
+                opacity: 0.3;
+                font-weight: 400;
+              }
+            }
+            &--active {
+              .q-tab__content {
+                .q-tab__label {
+                  opacity: 1;
+                }
               }
             }
           }
@@ -121,7 +131,7 @@
           background: $positive;
           .q-icon {
             svg {
-              color: $white;
+              color: white;
             }
           }
         }
@@ -138,6 +148,9 @@
       }
       .q-icon {
         font-size: 14px;
+      }
+      &:hover:before {
+        border-color: rgba(0,0,0,0.3);
       }
     }
   }
@@ -156,6 +169,6 @@
   }
   .q-table__container {
     margin-bottom: 40px;
-    margin-top: 30px;
+    margin-top: 60px;
   }
 }

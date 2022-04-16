@@ -1,5 +1,10 @@
 .date-field {
   position: relative;
+  .q-btn {
+    .q-ripple {
+      display: none;
+    }
+  }
   .q-date {
     width: 100%;
     position: absolute;
@@ -110,6 +115,13 @@
             margin: 4px;
             background: #222222;
             border-radius: 10px;
+            transition: all 0.25s;
+            &:hover {
+              background: #151515;
+              .q-focus-helper {
+                display: none;
+              }
+            }
           }
         }
         .q-date__months {
@@ -133,9 +145,10 @@
         color: $grey-5;
         opacity: 0.6;
       }
-      .q-icon.on-right {
+      .q-icon {
         font-size: 16px;
         opacity: 0.6;
+        margin-left: auto;
       }
     }
     

@@ -6,6 +6,7 @@
       mask="D MMMM YYYY"
       today-btn
       :class="{ active: dateActive }"
+      @update:model-value="dateActive = !dateActive"
     />
     <q-btn
       unelevated 
