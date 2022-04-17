@@ -10,6 +10,9 @@
     border-radius: 8px;
     padding: 10px 21px 10px 30px;
     min-height: 42px;
+    @media (min-width: 772px) and (max-width: 1440px) {
+      padding: 10px 20px 10px 20px;
+    }
     .q-item__section {
       flex-direction: row;
       justify-content: flex-start;

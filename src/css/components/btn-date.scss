@@ -88,6 +88,9 @@
                   background: #222222;
                   border-radius: 10px;
                   transition: all 0.25s;
+                  &.q-date__today {
+                    border: 2px solid white;
+                  }
                   &:hover {
                     background: #151515;
                     .q-focus-helper {

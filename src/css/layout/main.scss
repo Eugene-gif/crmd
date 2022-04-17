@@ -1,8 +1,11 @@
+$width: 275px;
+$width-md: 245px;
 .main-layout {
   .q-header {
     min-height: 89px;
     justify-content: center;
     display: flex;
+    left: $width !important;
     .q-toolbar {
       padding-left: 60px;
       padding-right: 24px;
@@ -70,7 +73,11 @@
   .q-header--bordered {
     border-color: #F0F0F0;
   }
+  .q-page-container {
+    padding-left: $width !important;
+  }
   .q-drawer--left {
+    width: $width !important;
     &.q-drawer--bordered {
       border-color: #F0F0F0;
     }

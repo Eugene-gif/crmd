@@ -1,9 +1,12 @@
 <template>
   <q-dialog
     v-model="dialog"
+    :maximized="maximizedToggle"
+    transition-show="fade"
+    transition-hide="fade" 
     class="my-dialog finance-dialog"
   >
-    <Dialog />
+    <Dialog @modalFalse="modalFalse" />
   </q-dialog>
   
   <q-page class="page-finance">
@@ -392,11 +395,16 @@ export default {
     Dialog
   },
   setup () {
+    const dialog = ref(false)
     return {
       tab: ref('1'),
       columns,
       rows,
-      dialog: ref(false)
+      dialog,
+      maximizedToggle: ref(true),
+      modalFalse() {
+        dialog.value = false
+      }
     }
   }
 }

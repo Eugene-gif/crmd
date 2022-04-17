@@ -26,7 +26,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      :width="276"
+      
       class="bg-grey"
     >
       <q-item-label
