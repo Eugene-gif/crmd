@@ -156,8 +156,91 @@
     }
   }
   @media (max-width: 772px) {
+    .q-date {
+      bottom: 80px;
+      border-radius: 10px;
+      color: white;
+      &:after,
+      &:before {
+        top: 100%;
+      }
+      .q-date__main {
+        .q-date__content {
+          .q-date__view {
+            min-height: auto;
+            padding: 0;
+            .q-date__navigation {
+              padding: 7px 4px 8px 4px;
+              .relative-position {
+                .q-btn {
+                  .block {
+                    font-size: 1px;
+                    line-height: 20px;
+                  }
+                }
+              }
+            }
+            .q-date__calendar-days-container {
+              min-height: auto;
+              padding: 0;
+              .q-date__calendar-days {
+                border-radius: 0 0 10px 10px;
+                overflow: hidden;
+                .q-date__calendar-item {
+                  margin: 0;
+                  padding: 0;
+                  .q-btn,
+                  div {
+                    width: 100%;
+                    min-height: 40px;
+                    border: 0.01em solid rgba(69, 69, 69, 1);
+                    border-radius: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-width: 0.01px;
+                  }
+                }
+                .q-date__calendar-item--in {
+                  border-radius: 0;
+                  .q-btn {
+                    width: 100%;
+                    min-height: 40px;
+                    margin: 0;
+                    background: rgba(0,0,0,0);
+                    border-radius: 0;
+                    &.q-date__today {
+                      border: 1px solid white;
+                    }
+                  }
+                }
+                .q-date__calendar-item--fill {
+                  visibility: visible;
+                  opacity: 0.6;
+                }
+              }
+            }
+          }
+          .q-date__years-content,
+          .q-date__months {
+            padding: 14px 0;
+            .q-btn {
+              border-radius: 0;
+            }
+          }
+          .q-date__months {
+            padding: 14px;
+          }
+        }
+      }
+    }
     .btn-date {
       min-height: 40px;
+      .q-btn__content {
+        .block {
+          font-size: 16px;
+        }
+      }
     }
   }
 }
