@@ -17,6 +17,7 @@
           placeholder="Выбрать"
           dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
           class="my-select"
+          behavior="menu"
           ref="selectDropbox"
           @popup-hide="focusSelect"
           popup-content-class="my-select-menu"

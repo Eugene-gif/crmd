@@ -154,7 +154,11 @@
         margin-left: auto;
       }
     }
-    
+  }
+  @media (max-width: 772px) {
+    .btn-date {
+      min-height: 40px;
+    }
   }
 }
 

@@ -88,6 +88,7 @@
     border-color: $grey-3;
   }
 }
+
 .finance-table {
   .q-table__middle {
     overflow: hidden;
@@ -258,7 +259,7 @@
         }
         .q-td__action {
           .q-icon {
-            margin-right: 6px;
+            margin-right: 12px;
           }
         }
       }
@@ -281,6 +282,245 @@
             border-right: 1px solid #ECECEC;
           }
         }
+        }
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    .q-table {
+      padding-top: 0;
+      display: block;
+      width: 100%;
+      thead {
+        display: none;
+      }
+      tbody {
+        display: block;
+        tr {
+          display: flex;
+          flex-wrap: wrap;
+          border: 1px solid $grey-3;
+          border-radius: 10px;
+          margin-bottom: 5px;
+          padding: 14px 20px 21px 20px;
+          position: relative;
+          &:first-child { 
+            td {
+              border: none;
+            }
+          }
+          &:hover {
+            td {
+              &:after {
+                display: none;
+              }
+            }
+          }
+          td {
+            height: auto;
+            padding: 0;
+            border: none;
+            flex: 1 1 max-content;
+            min-width: auto ;
+            max-width: max-content;
+            &:after {
+              display: none;
+            }
+            &:before {
+              display: none;
+            }
+            // & > div {
+            //   display: block;
+            //   white-space: pre-wrap;
+            // }
+            .q-td__status {
+              max-width: max-content;
+              margin-left: -3px;
+              .q-icon {
+                font-size: 18px !important;
+              }
+            }
+            .q-td__sum {
+              max-width: max-content;
+              margin-left: 8px;
+              line-height: 20px;
+              position: relative;
+              top: 1.2px;
+            }
+
+            &.q-td-date {
+              order: 2;
+              margin-left: auto;
+              margin-top: 3px;
+              .q-td__date {
+                font-size: 14px;
+                line-height: 14px;
+                font-size: 14px;
+                line-height: 14px;
+                opacity: 0.3;
+              }
+            }
+
+            &.q-td-project {
+              flex: 0 0 100%;
+              max-width: 100%;
+              margin-top: 14px;
+              .q-td__project {
+                font-size: 14px;
+                line-height: 14px;
+              }
+            }
+            
+            &.q-td-from {
+              order: 3;
+              max-width: 100%;
+              flex: 0 0 100%;
+              padding-top: 13px;
+              .q-td__from {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                .q-td__form__img {
+                  img {
+                    display: none;
+                  }
+                  .q-icon {
+                    display: none;
+                  }
+                }
+                .title {
+                  font-size: 14px;
+                  line-height: 14px;
+                  margin-left: 0;
+                  width: 100%;
+                  flex: 0 0 100%;
+                  max-width: 100%;
+                  &:before {
+                    content: 'От кого: '
+                  }
+                }
+                .title-to {
+                  &:before {
+                    content: 'Кому: '
+                  }
+                }
+              }
+            }
+            &.q-td-type {
+              order: 1;
+              margin-top: 3px;
+              .q-td__type {
+                font-size: 14px;
+                line-height: 14px;
+                margin-left: 0;
+                opacity: 0.3;
+              }
+            }
+            
+            &.q-td-action {
+              position: absolute;
+              top: 2.5px;
+              right: 10px;
+              .q-td__action {
+                
+                .q-btn-dropdown {
+                  padding: 0;
+                  width: 44px;
+                  height: 44px;
+                }
+              }
+            }
+          }
+        }
+        .q-tr__transfer {
+          border-top: none;
+          border-radius: 0 0 10px 10px;
+          padding-top: 0;
+          padding-bottom: 21px;
+          height: auto !important;
+          .q-td__sum {
+            font-size: 14px;
+            line-height: 14px;
+            opacity: 0.3;
+            margin-left: 0;
+          }
+          .q-td__from {
+            display: none;
+            .q-td__from__arrow {
+              display: none;
+            }
+          }
+        }
+        .q-tr__transfer,
+        .q-tr__agency {
+          height: 66px;
+          .q-td__sum {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 16px;
+            color: $grey-5;
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+          }
+        }
+        
+        
+        .q-tr__borderlr {
+          margin-bottom: 0;
+          border-radius: 10px 10px 0 0;
+          border-bottom: none;
+          td {
+            &:first-child {
+              border: none;
+            }
+            &:last-child {
+              border: none;
+            }
+          }
+          &:hover {
+            td {
+            &:first-child {
+              border: none;
+            }
+            &:last-child {
+              border: none;
+            }
+          }
+          }
+        }
+        .q-tr__borderlr__transfer {
+          padding-bottom: 16px;
+        }
+        .q-tr__agency {
+          border-radius: 0 0 10px 10px;
+          border-bottom: none;
+          height: auto;
+          .q-td__status {
+            .q-icon {
+              display: none;
+            }
+          }
+          .q-td__sum {
+            font-size: 14px;
+            line-height: 14px;
+            opacity: 0.4;
+            white-space: pre-wrap;
+            margin-left: 0;
+            text-align: left;
+          }
+          .q-td__action {
+            display: none;
+            .q-icon {
+              margin-right: 6px;
+            }
+          }
+          .q-td__from {
+            margin-top: 18px;
+            .q-btn {
+              padding: 7px 13px !important;
+            }
+          }
         }
       }
     }
@@ -321,6 +561,4 @@
       }
     }
   }
-  
-  
 }

@@ -5,7 +5,6 @@
 }
 
 .my-dialog {
-
   .q-card {
     background: rgba(0, 0, 0, 0);
     position: relative;
@@ -103,7 +102,98 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    .q-card {
+      padding-left: 15px;
+      padding-right: 15px;
+      .dialog-section {
+        border-radius: 15px;
+        padding: 22px 0 20px 0;
+      }
+      .q-card__section {
+        padding: 0 18px 0 20px;
+      }
+      .head {
+        padding-bottom: 49px;
+        padding-bottom: 3px;
+        align-items: flex-start;
+        flex-wrap: nowrap;
+        .title {
+          font-size: 27px;
+          line-height: 27px;
+          flex: 1 1 100%;
+        }
+        .close {
+          cursor: pointer;
+          margin-top: 7px;
+          flex: 0 0 14px;
+          margin-left: 25px;
+        }
+      }
+      .form-section {
+        margin-top: 19px;
+        label {
+          font-size: 16px;
+          line-height: 16px;
+          margin-bottom: 12px;
+        }
+        .hint {
+          font-size: 14px;
+          line-height: 14px;
+        }
+      }
+      .form-section-row {
+        display: flex;
+        flex-wrap: wrap;
+        .form-col {
+          &:nth-child(1) {
+            flex: 1 1 100%;
+            margin-right: 0;
+          }
+          &:nth-child(2) {
+            flex: 0 0 100px;
+            .q-field {
+              margin-bottom: 0;
+            }
+          }
+          &:nth-child(3) {
+            flex: 1 1 100%;
+          }
+          .q-field {
+            margin-bottom: 19px;
+          }
+        }
+        .form-col-hint {
+          max-width: 140px;
+          margin-top: auto;
+          margin-bottom: 5px;
+          .hint{
+            margin-left: 20px;
+            margin-top: 8px;
+          }
+        }
+      }
+      .q-card__actions {
+        border-top: 1px solid $grey-3;
+        margin-top: 19px;
+        position: relative;
+        padding: 0 18px 0 20px;
+        .q-btn-actions {
+          border-radius: 10px;
+          margin-top: 21px;
+          padding: 13px 10px !important;
+          .block {
+            font-size: 16px;
+            line-height: 16px;
+          }
+        }
+      }
+    }
+    
+  }
 }
+
+
 
 .active {
   background: green;

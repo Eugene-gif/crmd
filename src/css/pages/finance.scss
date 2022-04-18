@@ -1,6 +1,12 @@
 .page-finance {
   .header-btns {
     padding-top: 43px;
+    @media (max-width: 772px) {
+      padding-top: 23px;
+      .q-btn {
+        margin-top: 5px;
+      }
+    }
   }
   .cards {
     padding-top: 51px;
@@ -19,6 +25,20 @@
         }
         &:last-child {
           margin-left: 15px;
+        }
+      }
+    }
+    @media (max-width: 772px) {
+      padding-top: 32px;
+      .finance-card {
+        width: 100%;
+        flex: 0 0 100%;
+        margin-top: 5px;
+        &:first-child {
+          margin-right: 0;
+        }
+        &:last-child {
+          margin-left: 0;
         }
       }
     }
@@ -117,6 +137,9 @@
         line-height: 16px;
         letter-spacing: -0.02em;
         color: $grey-5;
+        .circle-warning {
+          display: none;
+        }
       }
       .circle-warning {
         width: 26px;
@@ -134,6 +157,95 @@
               color: white;
             }
           }
+        }
+      }
+    }
+    @media (min-width: 772px) {
+      .toolbar {
+        .toolbar-procent {
+          width: 6px !important;
+        }
+      }
+    }
+    @media (max-width: 772px) {
+      .finance-card-section {
+        padding: 21px 20px 17px 19px;
+        flex-wrap: wrap;
+        .text-h5 {
+          font-size: 18px;
+          line-height: 18px;
+          margin-top: 0;
+        }
+        .finance-tabs {
+          padding-top: 20px;
+          margin-bottom: 14px;
+          .q-tabs__content {
+            .q-tab {
+              margin-right: 10px;
+            }
+          }
+        }
+        .finance-card__number {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 18px;
+        }
+        .finance-card__procent {
+          font-weight: 500;
+          margin-right: 0;
+          margin-top: 4px;
+        }
+      }
+      .toolbar {
+        width: 100% !important;
+        height: 4px !important;
+        margin-left: auto;
+        flex: 0 0 100% !important;
+        max-width: 100%;
+        margin-top: 7px;
+        margin-right: 0;
+        margin-bottom: 0;
+        .toolbar-procent {
+          height: 4px !important;
+        }
+      }
+      .q-separator {
+        display: none;
+      }
+      .q-card__actions {
+        padding: 0px 20px 22px 19px;
+        border-top: none;
+        .text-subtitle1 {
+          line-height: 20px;
+          display: inline-block;
+          max-width: 60%;
+          span {
+            flex: 0 0 55%;
+          }
+          .circle-warning {
+            display: inline-block;
+            min-width: 15px;
+            min-height: 15px;
+            width: 15px;
+            height: 15px;
+            margin-left: 6px;
+            vertical-align: middle;
+            margin-bottom: 2px;
+            position: relative;
+            .q-icon {
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              margin: auto;
+              font-size: 7px !important;
+            }
+          }
+        }
+        .circle-warning {
+          background: $grey-3;
+          display: none;
         }
       }
     }
@@ -170,5 +282,80 @@
   .q-table__container {
     margin-bottom: 40px;
     margin-top: 60px;
+  }
+  @media (max-width: 772px) {
+    .operations {
+      padding-top: 0;
+      margin-top: 24px;
+      border-top: none;
+      .sorted {
+        flex: 0 0 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 15px;
+        .sorted-section {
+          display: flex;
+          .title {
+            font-size: 16px;
+            line-height: 16px;
+            color: $grey-5;
+          }
+          .q-field {
+            min-height: auto;
+            height: auto;
+            margin-left: 5px;
+            .q-field__control,
+            .q-field__append,
+            .q-field__native,
+            .q-field__marginal,
+            .q-field__control-container {
+              min-height: auto;
+              height: auto;
+              padding: 0;
+              .q-select__dropdown-icon {
+                display: none;
+              }
+            }
+          }
+        }
+        .sorted-btns {
+          margin-left: auto;
+          margin-right: 16px;
+          .q-icon {
+            &:last-child {
+              opacity: 0.3;
+              margin-left: 13px;
+            }
+          }
+        }
+        .q-btn {
+          padding: 9.5px;
+          .q-icon {
+            margin-right: 0;
+          }
+          .block {
+            display: none !important;
+          }
+        }
+      }
+    }
+    .operations-tabs {
+      .q-tabs__content {
+        .q-tab {
+          margin-right: 19px;
+          .q-tab__content {
+            padding: 0;
+            .q-tab__label {
+              font-size: 24px;
+            }
+          }
+        }
+      }
+    }
+    .q-table__container {
+      margin-bottom: 40px;
+      margin-top: 60px;
+    }
   }
 }

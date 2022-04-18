@@ -9,6 +9,7 @@
     dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
     class="my-select"
     ref="selectDropbox"
+    behavior="menu"
     @popup-hide="focusSelect"
     popup-content-class="my-dopbox-menu"
     :label="select2 ? undefined : 'Введите имя или e-mail'"

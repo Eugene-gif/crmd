@@ -15,6 +15,10 @@
   line-height: 40px;
   letter-spacing: -0.02em;
   color: $dark;
+  @media (max-width: 772px) {
+    font-size: 27px;
+    line-height: 27px;
+  }
 }
 .rotate {
   transition: all 0.25s;
@@ -33,6 +37,12 @@
   background: $grey-5;
   padding: 15px 19px;
 }
+.dropdown-none {
+  .q-btn-dropdown__arrow {
+    display: none !important;
+  }
+}
+
 // layouts
 @import 'layout/main';
 
@@ -49,3 +59,21 @@
 @import 'components/my-effect';
 @import 'components/q-dialog';
 @import 'components/btn-date';
+
+
+
+// modile
+.mb-visible {
+  display: none;
+}
+.lg-visible {
+  display: initial;
+}
+@media (max-width: 772px) {
+  .mb-visible {
+    display: initial;
+  }
+  .lg-visible {
+    display: none;
+  }
+}

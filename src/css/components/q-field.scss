@@ -2,6 +2,11 @@
   .q-field__control {
     height: 60px;
   }
+  @media (max-width: 772px) {
+    .q-field__control {
+      height: 40px;
+    }
+  }
 }
 .q-input.header__input__search {
   .q-field__control {
@@ -188,6 +193,22 @@
       color: $grey-5;
     }
   }
+  @media (max-width: 772px) {
+    border-radius: 0 0 6px 6px;
+    .q-item {
+      .q-item__label {
+        font-size: 16px;
+        line-height: 16px;
+        max-width: 40vw;
+      }
+    }
+    .no-result {
+      .q-item__section {
+        font-size: 16px;
+        line-height: 16px;
+      }
+    }
+  }
 }
 .my-dopbox-menu {
   .q-item {
@@ -223,6 +244,153 @@
       & > .q-focus-helper {
         opacity: 0;
       }
+    }
+  }
+  @media (max-width: 772px) {
+    .q-item {
+      padding: 4px 13px;
+      img {
+        border-radius: 100%;
+      }
+      &:first-child {
+        padding-top: 10px;
+      }
+      &:last-child {
+        padding-bottom: 10px;
+      }
+      .q-item__label {
+        font-size: 16px;
+      }
+      .q-item__section--avatar {
+        padding-right: 8px;
+        img {
+          width: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 772px) {
+  .my-input {
+    border-radius: 6px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    color: $grey-5;
+    opacity: 1;
+    border: 2px solid $grey-3;
+    height: 40px;
+    transition: all 0.25s;
+    input {
+      height: 36px;
+      font-size: 16px;
+    }
+    &:hover {
+      background: #ECECEC;
+    }
+    &.q-field--focused {
+      border: 2px solid #444444;
+    }
+    .q-field__control {
+      padding-left: 13px;
+      padding-right: 14px;
+      min-height: 40px;
+      border-radius: 6px;
+    }
+    .q-field__native {
+      min-height: 36px;
+    }
+  }
+  
+  .my-select {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    color: $grey-5;
+    border-radius: 6px;
+
+    .q-field__label {
+      opacity: 0.6;
+    }
+    .q-field__marginal {
+      min-height: 40px;
+    }
+    .q-select__dropdown-icon {
+      font-size: 11px;
+    }
+    .q-field__native {
+      min-height: 40px;
+    }
+    .q-field__control {
+      padding-left: 13px;
+      padding-right: 14px;
+      border-radius: 6px;
+      min-height: 40px;
+      height: 40px;
+
+      &:before,
+      &:after {
+        display: none;
+      }
+      .q-field__append {
+        min-height: 42px;
+        height: 42px;
+        .clear-input {
+          font-size: 13px;
+          margin-right: 16px;
+        }
+      }
+      .q-field__prepend,
+      .q-field__append,
+      .q-field__prepend {
+        .search-input,
+        .clear-input {
+          opacity: 0;
+          display: none;
+        }
+      }
+      .q-field__prepend {
+        display: none;
+      }
+      .q-field__control-container,
+      .q-field__control-container .q-field__native {
+        padding: 0;
+      }
+      .q-field__control-container {
+        span {
+          flex: 1 1 40vw;
+          font-size: 16px;
+        }
+      }
+      .ellipsis {
+        font-weight: 400;
+        font-size: 21px;
+        line-height: 21px;
+        color: $grey-5;
+        opacity: 0.6;
+        top: 20px;
+        height: max-content;
+        z-index: 2;
+        margin: auto 0;
+      }
+    }
+    &.q-field--focused {
+      .q-field__control {
+        border-radius: 6px 6px 0 0;
+        background: #FFFFFF;
+        border: 1px solid #D4D4D4;
+        .ellipsis {
+          display: none;
+        }
+      }
+    }
+  }
+  .my-select-menu,
+  .my-dopbox-menu {
+    border-radius: 0 0 6px 6px;
+    .q-item {
+      min-height: 40px;
     }
   }
 }

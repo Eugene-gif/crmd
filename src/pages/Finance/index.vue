@@ -16,18 +16,17 @@
         rounded
         unelevated
         no-caps
-        padding="12px 27px"
-        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark"
+        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark lg-visible"
         label="Выбрать"
       />
+      <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
     </div>
     <div class="row items-center header-btns">
       <q-btn
         rounded
         unelevated
         no-caps
-        padding="12px 27.5px"
-        class="bg-positive text-white my-btn my-effect h-dark"
+        class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
         label="Добавить операцию"
         @click="dialog = true"
       />
@@ -35,9 +34,16 @@
         rounded
         unelevated
         no-caps
-        padding="12px 27px"
-        class="bg-positive text-white q-ml-xs my-btn my-effect h-dark"
+        class="bg-positive text-white my-btn my-effect h-dark"
         label="Выставить счёт"
+        @click="customSort(rows)"
+      />
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-grey-3 text-grey-5 my-btn q-ml-xs my-effect h-dark mb-visible"
+        label="Выбрать"
       />
     </div>
     <div class="row justify-between cards">
@@ -52,18 +58,28 @@
           no-caps
         >
           <q-tab name="1" label="История операций" />
-          <q-tab name="2" label="Отклоненные" />
+          <q-tab name="2" label="Отклоненные" class="lg-visible" />
         </q-tabs>
-        <q-btn
-          rounded
-          unelevated
-          outline
-          no-caps
-          padding="12px 27px"
-          class="bg-white text-grey-5 my-btn btn-effect my-effect h-dark"
-          label="Фильтр"
-          icon="svguse:icons/allIcons.svg#filter-icon"
-        />
+        <div class="sorted">
+          <div class="sorted-section mb-visible">
+            <div class="title">Сортировка: </div>
+            <q-select borderless v-model="model" :options="columns" />
+          </div>
+          <div class="sorted-btns mb-visible">
+            <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
+            <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
+          </div>
+          <q-btn
+            rounded
+            unelevated
+            outline
+            no-caps
+            class="bg-white text-grey-5 my-btn btn-effect my-effect h-dark"
+            label="Фильтр"
+            icon="svguse:icons/allIcons.svg#filter-icon"
+          />
+        </div>
+        
       </div>
 
       <q-table
@@ -73,6 +89,9 @@
         row-key="id"
         hide-pagination
         class="my-table finance-table"
+        :pagination="pagination"
+        :sort-method="customSort"
+        binary-state-sort
       >
         <template v-slot:header-cell-status="props">
           <q-th :props="props" class="q-th__smaile">
@@ -103,7 +122,7 @@
         <template #body="props">
           <q-tr
             :props="props"
-            :class="{ 'bg-grey q-tr__borderlr': props.row.status === 3 }"
+            :class="{ 'bg-grey q-tr__borderlr': props.row.status === 3, 'q-tr__borderlr q-tr__borderlr__transfer': props.row.status === 5}"
           >
             <q-td
               key="status"
@@ -124,6 +143,7 @@
             <q-td
               key="date"
               :props="props"
+              class="q-td-date"
             >
             <div class="q-td__date">
               {{props.row.date}}
@@ -132,6 +152,7 @@
             <q-td
               key="project"
               :props="props"
+              class="q-td-project"
             >
             <div class="q-td__project">
               {{props.row.project}}
@@ -140,18 +161,23 @@
             <q-td
               key="from"
               :props="props"
+              class="q-td-from"
             >
-            <div class="q-td__from">
-              <div class="q-td__form__img">
-                <q-icon size="19px" name="svguse:icons/financeTable.svg#check" v-if="props.row.status === 2" />
-                <img :src="props.row.from.image" alt="">
+              <div class="q-td__from">
+                <div class="q-td__form__img">
+                  <q-icon size="19px" name="svguse:icons/financeTable.svg#check" v-if="props.row.status === 2" />
+                  <img :src="props.row.from.image" alt="">
+                </div>
+                <div class="title">{{props.row.from.name}}</div>
+                <div class="title title-to" v-if="props.row.status === 5">{{props.row.to.name}}</div>
               </div>
-              <div class="title">{{props.row.from.name}}</div>
-            </div>
+              
             </q-td>
+            
             <q-td
               key="type"
               :props="props"
+              class="q-td-type"
             >
             <div class="q-td__type">
               {{props.row.type}}
@@ -160,6 +186,7 @@
             <q-td
               key="action"
               :props="props"
+              class="q-td-action"
             >
             <div class="q-td__action">
               <q-btn-dropdown
@@ -249,9 +276,7 @@
               key="sum"
               :props="props"
             >
-              <div class="q-td__sum">
-                Не участвует в расчетах, пока не подтвеждено вами.
-              </div>
+              <div class="q-td__sum">Не участвует в расчетах, пока не подтвеждено вами.</div>
             </q-td>
             <q-td></q-td>
             <q-td></q-td>
@@ -396,14 +421,43 @@ export default {
   },
   setup () {
     const dialog = ref(false)
+    const pagination = ref({
+      sortBy: 'id'
+    })
     return {
+      model: ref('id'),
+      options: [
+        'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
+      ],
       tab: ref('1'),
       columns,
       rows,
+      pagination,
       dialog,
       maximizedToggle: ref(true),
       modalFalse() {
         dialog.value = false
+      },
+      customSort (rows, sortBy, descending) {
+        const data = [...rows]
+
+        if (sortBy) {
+          data.sort((a, b) => {
+            const x = descending ? b : a
+            const y = descending ? a : b
+
+            if (sortBy === 'name') {
+              // string sort
+              return x[ sortBy ] > y[ sortBy ] ? 1 : x[ sortBy ] < y[ sortBy ] ? -1 : 0
+            }
+            else {
+              // numeric sort
+              return parseFloat(x[ sortBy ]) - parseFloat(y[ sortBy ])
+            }
+          })
+        }
+        pagination.value.sortBy = sortBy
+        return data
       }
     }
   }

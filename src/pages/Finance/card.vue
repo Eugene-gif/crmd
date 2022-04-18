@@ -19,14 +19,19 @@
       </q-card-section>
 
       <q-card-section class="flex toolbar">
-        <div class="toolbar-procent" :style="{height: 40 + '%'}"></div>
+        <div class="toolbar-procent" :style="{height: 40 + '%', width: 50 + '%'}"></div>
       </q-card-section>
     </q-card-section>
 
     <q-separator />
 
     <q-card-actions class="row justify-between">
-      <div class="text-subtitle1">Ожидается еще: 3 450 000 руб.</div>
+      <div class="text-subtitle1">
+        Ожидается еще: 3 450 000 руб. 
+        <div class="circle-warning mb-visible">
+          <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="12px"/>
+        </div>
+      </div>
       <div class="circle-warning">
         <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="12px"/>
         <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
