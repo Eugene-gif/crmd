@@ -30,13 +30,13 @@
         label="Добавить операцию"
         @click="dialog = true"
       />
+      <!-- @click="customSort(rows)" -->
       <q-btn
         rounded
         unelevated
         no-caps
         class="bg-positive text-white my-btn my-effect h-dark"
         label="Выставить счёт"
-        @click="customSort(rows)"
       />
       <q-btn
         rounded
@@ -82,6 +82,7 @@
         
       </div>
 
+      <!-- :sort-method="customSort" -->
       <q-table
         flat
         :rows="rows"
@@ -90,7 +91,7 @@
         hide-pagination
         class="my-table finance-table"
         :pagination="pagination"
-        :sort-method="customSort"
+        
         binary-state-sort
       >
         <template v-slot:header-cell-status="props">
@@ -122,7 +123,7 @@
         <template #body="props">
           <q-tr
             :props="props"
-            :class="{ 'bg-grey q-tr__borderlr': props.row.status === 3, 'q-tr__borderlr q-tr__borderlr__transfer': props.row.status === 5}"
+            :class="{ 'bg-grey q-tr__borderlr': props.row.status === 3, 'q-tr__borderlr q-tr__borderlr__transfer q-tr__borderlr-noborder': props.row.status === 5}"
           >
             <q-td
               key="status"
@@ -166,10 +167,10 @@
               <div class="q-td__from">
                 <div class="q-td__form__img">
                   <q-icon size="19px" name="svguse:icons/financeTable.svg#check" v-if="props.row.status === 2" />
-                  <img :src="props.row.from.image" alt="">
+                  <img :src="props.row.fromImage" alt="">
                 </div>
-                <div class="title">{{props.row.from.name}}</div>
-                <div class="title title-to" v-if="props.row.status === 5">{{props.row.to.name}}</div>
+                <div class="title">{{props.row.fromName}}</div>
+                <div class="title title-to mb-visible" v-if="props.row.status === 5">{{props.row.to.name}}</div>
               </div>
               
             </q-td>
@@ -331,79 +332,69 @@ import { ref } from 'vue'
 
 const columns = [
   { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
-  { name: 'sum', label: 'Сумма', field: 'sum', align: 'left', sortable: true },
+  { name: 'sum', label: 'Сумма', field: 'sum', align: 'left', type: Number, sortable: true },
   { name: 'date', label: 'Дата', field: 'date', align: 'left', sortable: true },
   { name: 'project', label: 'Проект', field: 'project', align: 'left', sortable: true },
-  { name: 'from', label: 'От кого', field: 'from', align: 'left'},
-  { name: 'type', label: 'Тип', field: 'type', align: 'left' },
+  { name: 'from', label: 'От кого', field: 'from', align: 'left', sortable: true},
+  { name: 'type', label: 'Тип', field: 'type', align: 'left', sortable: true },
   { name: 'action', label: '', field: 'action', align: 'right' }
 ]
 const rows = ref([
   {
     id: 1,
     status: 1,
-    sum: 40000,
+    sum: '40 000',
     date: '17.04.2020',
     project: 'Квартира на Ленина',
-    from: {
-      image: '/icons/anton.jpg',
-      name: 'Антон Глуханько'
-    },
+    fromName : 'Антон Глуханько',
+    fromImage: '/icons/anton.jpg',
     type: 'Гонорар'
   },
   {
     id: 2,
     status: 2,
-    sum: 10000,
+    sum: '10 000',
     date: '17.03.2020',
     project: 'Квартира на Ленина',
-    from: {
-      image: '/icons/stroipro.jpg',
-      name: 'СтройПро'
-    },
+    fromName : 'СтройПро',
+    fromImage: '/icons/stroipro.jpg',
     type: 'Агентские'
   },
   {
     id: 3,
     status: 4,
-    sum: 5000,
+    sum: '5 000',
     date: '17.04.2021',
     project: 'Квартира на Ленина',
-    from: {
-      image: '/icons/anton.jpg',
-      name: 'Антон Глуханько'
-    },
+    fromName : ' Антон Глуханько',
+    fromImage: '/icons/anton.jpg',
     type: 'Возврат',
   },
   {
     id: 4,
     status: 5,
-    sum: 5000,
+    sum: '5 000',
     date: '17.04.2021',
     project: 'Квартира на Ленина',
-    from: {
-      image: '/icons/anton.jpg',
-      name: 'Антон Глуханько'
-    },
+    fromName : 'Антон Глуханько',
+    fromImage: '/icons/anton.jpg',
     to: {
       image: '/icons/stroipro.jpg',
       name: 'СтройПро',
       visible: true
     },
     type: 'Трансфер',
-    transfer: 240000,
+    transfer: '240 000',
     comment: 'агентские'
   },
   {
     id: 5,
     status: 3,
-    sum: 5000,
+    sum: '5 000',
     date: '17.04.2021',
     project: 'Квартира на Ленина',
-    from: {
-      image: '/icons/anton.jpg',
-      name: 'Антон Глуханько'
-    },
+    fromName : 'Антон Глуханько',
+    fromImage: '/icons/anton.jpg',
     to: {
       image: '/icons/stroipro.jpg',
       name: 'СтройПро',
@@ -438,27 +429,27 @@ export default {
       modalFalse() {
         dialog.value = false
       },
-      customSort (rows, sortBy, descending) {
-        const data = [...rows]
+      // customSort (rows, sortBy, descending) {
+      //   const data = [...rows]
 
-        if (sortBy) {
-          data.sort((a, b) => {
-            const x = descending ? b : a
-            const y = descending ? a : b
+      //   if (sortBy) {
+      //     data.sort((a, b) => {
+      //       const x = descending ? b : a
+      //       const y = descending ? a : b
 
-            if (sortBy === 'name') {
-              // string sort
-              return x[ sortBy ] > y[ sortBy ] ? 1 : x[ sortBy ] < y[ sortBy ] ? -1 : 0
-            }
-            else {
-              // numeric sort
-              return parseFloat(x[ sortBy ]) - parseFloat(y[ sortBy ])
-            }
-          })
-        }
-        pagination.value.sortBy = sortBy
-        return data
-      }
+      //       if (sortBy === 'name') {
+      //         // string sort
+      //         return x[ sortBy ] > y[ sortBy ] ? 1 : x[ sortBy ] < y[ sortBy ] ? -1 : 0
+      //       }
+      //       else {
+      //         // numeric sort
+      //         return parseFloat(x[ sortBy ]) - parseFloat(y[ sortBy ])
+      //       }
+      //     })
+      //   }
+      //   pagination.value.sortBy = sortBy
+      //   return data
+      // }
     }
   }
 }

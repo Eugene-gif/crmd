@@ -115,6 +115,7 @@
           </q-item-label>
         </q-item>
       </q-list>
+      
       <router-view />
     </q-page-container>
   </q-layout>

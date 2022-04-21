@@ -116,7 +116,7 @@
               width: 100%;
               background: none;
               position: absolute;
-              border-bottom: 1px solid #ECECEC;
+              border-bottom: 1px solid #dddddd;
               bottom: -1px;
               opacity: 1;
             }
@@ -134,13 +134,13 @@
             width: 100%;
             background: none;
             position: absolute;
-            border-bottom: 1px solid #ECECEC;
+            border-bottom: 1px solid #dddddd;
             bottom: -1px;
             opacity: 0;
           }
           &:before {
             background: none;
-            border-top: 1px solid #ECECEC;
+            border-top: 1px solid #dddddd;
             top: -1px;
             opacity: 1;
           }
@@ -275,13 +275,33 @@
         }
         &:hover {
           td {
-          &:first-child {
-            border-left: 1px solid #ECECEC;
-          }
-          &:last-child {
-            border-right: 1px solid #ECECEC;
+            &:first-child {
+              border-left: 1px solid #ECECEC;
+            }
+            &:last-child {
+              border-right: 1px solid #ECECEC;
+            }
           }
         }
+      }
+      .q-tr__borderlr-noborder {
+        td {
+          &:first-child {
+            border-left: none;
+          }
+          &:last-child {
+            border-right: none;
+          }
+        }
+        &:hover {
+          td {
+            &:first-child {
+              border-left: none;
+            }
+            &:last-child {
+              border-right: none;
+            }
+          }
         }
       }
     }
@@ -480,13 +500,13 @@
           }
           &:hover {
             td {
-            &:first-child {
-              border: none;
+              &:first-child {
+                border: none;
+              }
+              &:last-child {
+                border: none;
+              }
             }
-            &:last-child {
-              border: none;
-            }
-          }
           }
         }
         .q-tr__borderlr__transfer {
@@ -522,6 +542,7 @@
             }
           }
         }
+
       }
     }
   }

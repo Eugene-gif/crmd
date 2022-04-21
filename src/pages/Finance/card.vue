@@ -30,6 +30,9 @@
         Ожидается еще: 3 450 000 руб. 
         <div class="circle-warning mb-visible">
           <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="12px"/>
+          <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
+            Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+          </q-tooltip>
         </div>
       </div>
       <div class="circle-warning">

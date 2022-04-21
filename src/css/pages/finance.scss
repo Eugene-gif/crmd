@@ -153,8 +153,9 @@
         &:hover {
           background: $positive;
           .q-icon {
+            color: white !important;
             svg {
-              color: white;
+              color: white !important;
             }
           }
         }
@@ -224,10 +225,10 @@
           }
           .circle-warning {
             display: inline-block;
-            min-width: 15px;
-            min-height: 15px;
-            width: 15px;
-            height: 15px;
+            min-width: 18px;
+            min-height: 18px;
+            width: 18px;
+            height: 18px;
             margin-left: 6px;
             vertical-align: middle;
             margin-bottom: 2px;
@@ -261,8 +262,11 @@
       .q-icon {
         font-size: 14px;
       }
-      &:hover:before {
+      &:before {
         border-color: rgba(0,0,0,0.3);
+      }
+      &:hover:before {
+        border-color: rgba(0,0,0,0.2);
       }
     }
   }
@@ -281,7 +285,7 @@
   }
   .q-table__container {
     margin-bottom: 40px;
-    margin-top: 60px;
+    margin-top: 30px;
   }
   @media (max-width: 772px) {
     .operations {
@@ -355,7 +359,7 @@
     }
     .q-table__container {
       margin-bottom: 40px;
-      margin-top: 60px;
+      margin-top: 30px;
     }
   }
 }

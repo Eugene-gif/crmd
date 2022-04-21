@@ -17,6 +17,9 @@
     box-shadow: 0px 15px 30px rgba(51, 51, 51, 0.2);
     border-radius: 20px;
     color: white;
+    * {
+      z-index: -1;
+    }
     &:after,
     &:before {
       top: 100%;
@@ -38,6 +41,9 @@
     &.active {
       opacity: 1;
       z-index: 1000;
+      * {
+        z-index: 1;
+      }
     }
     .q-date__main {
       .q-date__content {
@@ -146,11 +152,11 @@
         line-height: 18px;
         letter-spacing: -0.02em;
         color: $grey-5;
-        opacity: 0.6;
+        opacity: 1;
       }
       .q-icon {
         font-size: 16px;
-        opacity: 0.6;
+        opacity: 1;
         margin-left: auto;
       }
     }
@@ -174,7 +180,7 @@
               .relative-position {
                 .q-btn {
                   .block {
-                    font-size: 1px;
+                    font-size: 18px;
                     line-height: 20px;
                   }
                 }

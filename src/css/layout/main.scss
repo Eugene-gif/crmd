@@ -95,6 +95,9 @@ $width-sm: 100%;
     }
     &.q-drawer--bordered {
       border-color: #F0F0F0;
+      @media (max-width: 772px) {
+        border: none;
+      }
     }
     .essential-link {
       padding-top: 46.3px;
@@ -121,10 +124,18 @@ $width-sm: 100%;
     }
   }
   .gorisont-nav {
+    position: relative;
     display: flex;
     border-bottom: 1px solid $grey-3;
     padding: 0 10.5px;
-    overflow-x: scroll;
+    overflow-x: scroll !important;
+    background: white;
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+    &::-webkit-scrollbar {
+      height: 0;
+    }
     .q-item {
       min-height: auto;
       padding: 0 4.5px;
@@ -237,7 +248,7 @@ $width-sm: 100%;
       min-width: 100%;
       margin: 0 auto;
       padding: 0 15px;
-      padding-top: 18px;
+      padding-top: 48px;
       padding-bottom: 20px;
     }
   }
