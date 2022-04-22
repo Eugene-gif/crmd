@@ -190,33 +190,37 @@
               class="q-td-action"
             >
             <div class="q-td__action">
-              <q-btn-dropdown
+              <q-btn
                 unelevated
                 no-caps
                 icon="svguse:icons/financeTable.svg#action"
                 class="my-effect"
-                content-class="q-td__action__list"
               >
-                <q-list>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>Изменить</q-item-label>
-                    </q-item-section>
-                  </q-item>
+                <q-menu
+                  :offset="[20, 10]"
+                  class="q-td__action__list"
+                >
+                  <q-list>
+                    <q-item clickable v-close-popup>
+                      <q-item-section>
+                        <q-item-label>Изменить</q-item-label>
+                      </q-item-section>
+                    </q-item>
 
-                  <q-item clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>Дублировать</q-item-label>
-                    </q-item-section>
-                  </q-item>
+                    <q-item clickable v-close-popup>
+                      <q-item-section>
+                        <q-item-label>Дублировать</q-item-label>
+                      </q-item-section>
+                    </q-item>
 
-                  <q-item clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>Удалить</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-btn-dropdown>
+                    <q-item clickable v-close-popup>
+                      <q-item-section>
+                        <q-item-label>Удалить</q-item-label>
+                      </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
             </div>
             </q-td>
           </q-tr>

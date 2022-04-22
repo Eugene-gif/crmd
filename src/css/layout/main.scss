@@ -238,8 +238,20 @@ $width-sm: 100%;
     }
     .q-drawer--left {
       width: $width-sm !important;
+      transform: translateY(0) !important;
+      display: block !important;
+      *{
+        opacity: 1;
+      }
       .essential-link {
         padding-top: 46.3px;
+      }
+    }
+    .q-layout--prevent-focus {
+      transform: translateX(0) !important;
+      transform: translateY(-300px) !important;
+      *{
+        opacity: 0;
       }
     }
     
