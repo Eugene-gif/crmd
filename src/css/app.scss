@@ -28,7 +28,8 @@
 }
 
 
-.q-tooltip {
+.q-tooltip,
+.circle-warning-tooltip {
   font-weight: 400;
   font-size: 16px;
   line-height: 18px;
@@ -36,6 +37,9 @@
   color: #FFFFFF;
   background: $grey-5;
   padding: 15px 19px;
+}
+.circle-warning-tooltip {
+  width: 280px;
 }
 .dropdown-none {
   .q-btn-dropdown__arrow {
@@ -59,6 +63,7 @@
 @import 'components/my-effect';
 @import 'components/q-dialog';
 @import 'components/btn-date';
+@import 'components/q-menu';
 
 
 

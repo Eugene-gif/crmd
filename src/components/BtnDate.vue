@@ -13,7 +13,7 @@
       no-caps
       color="grey-3"
       :label="date"
-      class="full-width btn-date my-effect h-dark"
+      class="full-width btn-date"
       icon-right="svguse:icons/allIcons.svg#date-ico"
       @click="dateActive = !dateActive"
     >

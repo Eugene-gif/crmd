@@ -91,7 +91,7 @@
 
 .finance-table {
   .q-table__middle {
-    overflow: hidden;
+    overflow: visible;
   }
   .q-table {
     padding-top: 61px;
@@ -104,6 +104,11 @@
     }
     tbody {
       tr {
+        &:last-child {
+          td {
+            border-bottom: 1px solid #F0F0F0;
+          }
+        } 
         &:first-child { 
           td {
             border-top: 1px solid $grey-3;
@@ -210,6 +215,9 @@
                   display: none;
                 }
                 background: #F5F5F5;
+                @media (max-width: 772px) {
+                  background: rgba(0,0,0,0);
+                }
               }
               &:active {
                 .q-icon {

@@ -133,8 +133,12 @@ $width-sm: 100%;
     position: fixed;
     z-index: 10;
     width: 100%;
+    scrollbar-color: rgba(0,0,0,0);
     &::-webkit-scrollbar {
+      -webkit-appearance: none;
+      width: 0;
       height: 0;
+      display: none;
     }
     .q-item {
       min-height: auto;
@@ -240,6 +244,7 @@ $width-sm: 100%;
       width: $width-sm !important;
       transform: translateY(0) !important;
       display: block !important;
+      z-index: 9999;
       *{
         opacity: 1;
       }
@@ -249,7 +254,7 @@ $width-sm: 100%;
     }
     .q-layout--prevent-focus {
       transform: translateX(0) !important;
-      transform: translateY(-300px) !important;
+      transform: translateY(-100vh) !important;
       *{
         opacity: 0;
       }

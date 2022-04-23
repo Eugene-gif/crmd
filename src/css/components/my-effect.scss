@@ -30,7 +30,8 @@
       }
     }
   }
-  &.h-dark {
+  &.h-dark,
+  &.h-dark-lite {
     .block {
       transition: all 0.25s;
     }
@@ -49,6 +50,14 @@
       .block {
         opacity: 0.2;
       }
+    }
+  }
+  &.h-dark-lite {
+    .q-focus-helper {
+      display: none;
+    }
+    &:hover {
+      background: #ECECEC !important;
     }
   }
   &.h-opacity {

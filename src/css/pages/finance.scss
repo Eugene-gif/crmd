@@ -150,6 +150,9 @@
         justify-content: center;
         align-items: center;
         transition: all 0.25s;
+        .q-ripple {
+          display: none;
+        }
         &:hover {
           background: $positive;
           .q-icon {
@@ -221,7 +224,7 @@
           display: inline-block;
           max-width: 60%;
           span {
-            flex: 0 0 55%;
+            white-space: nowrap;
           }
           .circle-warning {
             display: inline-block;
@@ -309,6 +312,7 @@
             min-height: auto;
             height: auto;
             margin-left: 5px;
+            min-width: 114px;
             .q-field__control,
             .q-field__append,
             .q-field__native,

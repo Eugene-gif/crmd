@@ -16,7 +16,7 @@
         rounded
         unelevated
         no-caps
-        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark lg-visible"
+        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite lg-visible"
         label="Выбрать"
       />
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -42,7 +42,7 @@
         rounded
         unelevated
         no-caps
-        class="bg-grey-3 text-grey-5 my-btn q-ml-xs my-effect h-dark mb-visible"
+        class="bg-grey-3 text-grey-5 my-btn q-ml-xs my-effect h-dark-lite mb-visible"
         label="Выбрать"
       />
     </div>
@@ -63,7 +63,13 @@
         <div class="sorted">
           <div class="sorted-section mb-visible">
             <div class="title">Сортировка: </div>
-            <q-select borderless v-model="model" :options="columns" />
+            <q-select
+              borderless
+              v-model="model"
+              :options="options2"
+              behavior="menu"
+              popup-content-class="select-menu-mobile"
+            />
           </div>
           <div class="sorted-btns mb-visible">
             <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
@@ -195,32 +201,35 @@
                 no-caps
                 icon="svguse:icons/financeTable.svg#action"
                 class="my-effect"
+                ref="dropdown"
+                :auto-close="false" 
+                @click.stop="notify"
+              ></q-btn>
+              <q-menu
+                :offset="[20, 10]"
+                class="q-td__action__list"
+                ref="menu"
               >
-                <q-menu
-                  :offset="[20, 10]"
-                  class="q-td__action__list"
-                >
-                  <q-list>
-                    <q-item clickable v-close-popup>
-                      <q-item-section>
-                        <q-item-label>Изменить</q-item-label>
-                      </q-item-section>
-                    </q-item>
+                <q-list>
+                  <q-item clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>Изменить</q-item-label>
+                    </q-item-section>
+                  </q-item>
 
-                    <q-item clickable v-close-popup>
-                      <q-item-section>
-                        <q-item-label>Дублировать</q-item-label>
-                      </q-item-section>
-                    </q-item>
+                  <q-item clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>Дублировать</q-item-label>
+                    </q-item-section>
+                  </q-item>
 
-                    <q-item clickable v-close-popup>
-                      <q-item-section>
-                        <q-item-label>Удалить</q-item-label>
-                      </q-item-section>
-                    </q-item>
-                  </q-list>
-                </q-menu>
-              </q-btn>
+                  <q-item clickable v-close-popup>
+                    <q-item-section>
+                      <q-item-label>Удалить</q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+              </q-menu>
             </div>
             </q-td>
           </q-tr>
@@ -416,6 +425,8 @@ export default {
   },
   setup () {
     const dialog = ref(false)
+    const dropdown = ref(false)
+    const menu = ref()
     const pagination = ref({
       sortBy: 'id'
     })
@@ -424,8 +435,13 @@ export default {
       options: [
         'Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'
       ],
+      options2: [
+        'id', 'Статус', 'Сумма', 'Дата', 'Проект', 'От кого', 'Тип'
+      ],
       tab: ref('1'),
       columns,
+      dropdown,
+      menu,
       rows,
       pagination,
       dialog,
@@ -433,6 +449,11 @@ export default {
       modalFalse() {
         dialog.value = false
       },
+      notify() {
+        menu.show  
+        // dropdown.value = $refs.menu
+        // this.$nextTick(()=>{$refs.menu.show()})
+      }
       // customSort (rows, sortBy, descending) {
       //   const data = [...rows]
 
