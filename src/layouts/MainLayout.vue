@@ -20,6 +20,7 @@
           flat
           round
           class="header__btn__alert my-effect h-primary dropdown-none"
+          content-class="q-menu__notifications"
         > 
           <template v-slot:label>
             <q-icon color="black" size="19px" name="svguse:icons/allIcons.svg#alert" />
@@ -28,19 +29,45 @@
             </sup>
           </template>
           <q-list>
-            <q-item clickable>
+            <q-item class="head">
               <q-item-section>
-                <q-item-label>Photos</q-item-label>
+                <q-item-label>Сегодня</q-item-label>
+                <q-btn
+                  flat
+                  rounded
+                  v-close-popup
+                  class="bg-grey-3 my-effect h-opacity rotate"
+                  padding="11px"
+                >
+                  <q-icon size="13px" name="svguse:icons/allIcons.svg#close-modal" />
+                </q-btn>
               </q-item-section>
             </q-item>
 
-            <q-item clickable>
+            <q-item class="column">
+              <q-item-section class="d-flex row kind">
+                <q-icon color="black" name="svguse:icons/allIcons.svg#sms" />
+                <q-item-label>Сообщения</q-item-label>
+                <div class="time">09:35</div>
+              </q-item-section>
+              <q-item-section class="d-flex row message">
+                <q-item-section class="info">
+                  <div class="name">Антон Глуханько</div>
+                  <div class="text">
+                    Привезем без проблем, если границы не закроют снова!
+                  </div>
+                </q-item-section>
+                <img src="~assets/anton.jpg">
+              </q-item-section>
+            </q-item>
+
+            <q-item>
               <q-item-section>
                 <q-item-label>Videos</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item clickable>
+            <q-item>
               <q-item-section>
                 <q-item-label>Articles</q-item-label>
               </q-item-section>

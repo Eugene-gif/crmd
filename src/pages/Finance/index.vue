@@ -97,7 +97,6 @@
         hide-pagination
         class="my-table finance-table"
         :pagination="pagination"
-        
         binary-state-sort
       >
         <template v-slot:header-cell-status="props">
@@ -193,22 +192,25 @@
             <q-td
               key="action"
               :props="props"
-              class="q-td-action"
+              :class="`q-td-action`"
             >
             <div class="q-td__action">
+              <!-- {{props.key}} -->
               <q-btn
                 unelevated
                 no-caps
                 icon="svguse:icons/financeTable.svg#action"
                 class="my-effect"
-                ref="dropdown"
+                :ref="el => dropdown[props.key] = el"
                 :auto-close="false" 
-                @click.stop="notify"
+                @click.stop="notify(props.key)"
               ></q-btn>
+              
+              <!-- :ref="`menu${props.key}`" -->
               <q-menu
                 :offset="[20, 10]"
                 class="q-td__action__list"
-                ref="menu"
+                :ref="el => menu[props.key] = el"
               >
                 <q-list>
                   <q-item clickable v-close-popup>
@@ -425,8 +427,8 @@ export default {
   },
   setup () {
     const dialog = ref(false)
-    const dropdown = ref(false)
-    const menu = ref()
+    const dropdown = ref([])
+    const menu = ref([])
     const pagination = ref({
       sortBy: 'id'
     })
@@ -449,8 +451,12 @@ export default {
       modalFalse() {
         dialog.value = false
       },
-      notify() {
-        menu.show  
+      notify(el) {
+        
+        menu.value[el].show()
+        // menu.value[el] = dropdown.value[el]
+        console.log(menu.value[el]) 
+        Vue.nextTick(() => {menu.value[el].show()});
         // dropdown.value = $refs.menu
         // this.$nextTick(()=>{$refs.menu.show()})
       }

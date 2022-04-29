@@ -97,7 +97,7 @@
     padding-top: 61px;
     thead {
       position: relative;
-      top: -61px;
+      top: -61px !important;
       th {
         padding-bottom: 15px;
       }
@@ -310,6 +310,15 @@
             }
             &:last-child {
               border-right: none;
+            }
+          }
+        }
+      }
+      @media (min-width: 772px) {
+        .q-tr__borderlr {
+          &:hover + tr {
+            td {
+              border-bottom: 1px solid #dddddd;
             }
           }
         }
@@ -600,7 +609,7 @@
       }
       &:hover {
         .q-item__label {
-          color: #73C949;
+          color: $positive;
         }
       }
       &:active {

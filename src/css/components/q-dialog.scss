@@ -155,6 +155,9 @@
           }
           &:nth-child(2) {
             flex: 0 0 100px;
+            label {
+              margin-top: 19px;
+            }
             .q-field {
               margin-bottom: 0;
             }
