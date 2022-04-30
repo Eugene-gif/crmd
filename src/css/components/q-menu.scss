@@ -18,6 +18,7 @@
       .q-item__label {
         span {
           font-weight: 500;
+          font-size: 16px;
           color: white;
         }
       }
@@ -39,10 +40,41 @@
   width: 100%;
   box-shadow: 0px 30px 80px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
+  max-height: 638px;
+  border: 1px solid #F0F0F0;
+  position: relative;
+  overflow: visible;
+  transform: translate(33px, 15px);
+  &:after,
+  &:before {
+    top: -20px;
+    right: 42px;
+    border: solid green;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    transform: rotate(180deg);
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: white;
+    border-width: 10px;
+    margin-left: -10px;
+    z-index: 2;
+  }
+  &:after {
+    top: -21px;
+    border-top-color: #F0F0F0;
+    z-index: 1;
+  }
   .q-list {
     .q-item {
       border-bottom: 1px solid $grey-3;
       padding: 17px 28px;
+      &:nth-child(5) {
+        border: none;
+        padding-bottom: 4px;
+      }
       .q-item__section {
         flex-direction: row;
         justify-content: flex-start;
@@ -108,6 +140,48 @@
           line-height: 30px;
           letter-spacing: -0.02em;
           color: #000000;
+        }
+      }
+    }
+    .foot {
+      display: flex;
+      padding: 0 28px 30px 28px ;
+      position: relative;
+      &:before {
+        content: '';
+        width: 100%;
+        height: 39px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+        position: absolute;
+        top: -39px;
+        left: 0;
+        z-index: 2;
+      }
+      .q-item__section {
+        .q-btn {
+          border-radius: 10px;
+          width: 100%;
+          .block {
+            font-weight: 500;
+            font-size: 18px;
+            position: relative;
+            sup {
+              position: absolute;
+              font-size: 14px;
+              margin-left: 5px;
+            }
+          }
+          &:hover {
+            background: #202020 !important;
+            .block {
+              opacity: 1;
+            }
+          }
+          &:active {
+            .block {
+              opacity: 0.3;
+            }
+          }
         }
       }
     }

@@ -104,14 +104,16 @@
     }
     tbody {
       tr {
-        &:last-child {
-          td {
-            border-bottom: 1px solid #F0F0F0;
-          }
-        } 
-        &:first-child { 
-          td {
-            border-top: 1px solid $grey-3;
+        @media (min-width: 772px) {
+          &:last-child {
+            td {
+              border-bottom: 1px solid #F0F0F0;
+            }
+          } 
+          &:first-child { 
+            td {
+              border-top: 1px solid $grey-3;
+            }
           }
         }
         &:hover {
