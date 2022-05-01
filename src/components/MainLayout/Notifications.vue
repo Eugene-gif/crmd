@@ -102,9 +102,8 @@
             no-caps
             class="bg-grey-6 text-white my-btn my-effect h-opacity"
             padding="16.5px 0"
-          >
-          <span class="block">Все уведомления <sup>12</sup></span>
-          </q-btn>
+            label="Все уведомления"
+          />
         </q-item-section>
       </q-item>
 

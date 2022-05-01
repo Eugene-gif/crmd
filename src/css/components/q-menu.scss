@@ -187,3 +187,108 @@
     }
   }
 }
+
+.q-menu-userinfo {
+  background: #323232;
+  box-shadow: 0px 15px 30px rgba(51, 51, 51, 0.2);
+  border-radius: 10px;
+  max-width: 492px;
+  width: 100%;
+  .q-item {
+    .q-focus-helper {
+      display: none; 
+    }
+    .head {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex: 0 0 100%;
+      .name {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: nowrap;
+        flex: 0 0 max-content;
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 10px;
+          image-rendering: -webkit-optimize-contrast;
+        }
+        .q-item__label {
+          color: white;
+          margin-left: 17px;
+          .name-user {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 18px;
+          }
+          .email-user {
+            font-size: 14px;
+            line-height: 14px;
+            margin-top: 8px;
+          }
+        }
+      }
+      .reviews {
+        flex-direction: column;
+        align-items: flex-end;
+        .q-tabs {
+          .q-tab {
+            padding: 0;
+            min-height: auto;
+            flex: 0 0 max-content;
+            .q-tab__content {
+              flex-direction: row;
+              flex-wrap: nowrap;
+              align-items: flex-end;
+              color: white;
+              padding: 0;
+              padding-bottom: 3px;
+              .q-icon {
+                width: 18px;
+                font-size: 18px;
+              }
+              .q-tab__label {
+                line-height: 1;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                margin-left: 7px;
+              }
+            }
+            .q-tab__indicator,
+            .q-ripple {
+              display: none;
+            }
+            &--active {
+              .q-tab__content {
+                .q-icon {
+                  color: $positive;
+                }
+              }
+            }
+            &:last-child {
+              margin-left: 17px;
+              .q-tab__content {
+                .q-icon {
+                  position: relative;
+                  top: 6px;
+                }
+              }
+            }
+          }
+        }
+        .q-item__label {
+          min-width: max-content;
+          color: white;
+          font-weight: 400;
+          margin-top: 2px;
+        }
+      }
+    }
+    .foot {
+
+    }
+  }
+}
