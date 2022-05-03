@@ -31,7 +31,12 @@
           <q-item-label v-html="scope.opt.label" ></q-item-label>
           <q-item-label caption>{{ scope.opt.description }}</q-item-label>
         </q-item-section>
-        <q-icon class="bg-grey-3" name="svguse:icons/FinanceTable.svg#warning" @click.stop >
+        <q-icon
+          class="bg-grey-3"
+          name="svguse:icons/FinanceTable.svg#warning"
+          style="border-radius: 5px;"
+          @click.stop
+        >
           <q-menu class="q-menu-userinfo">
             <q-item clickable>
               <q-item-section class="head">
@@ -53,7 +58,39 @@
                 </q-item-section>
               </q-item-section>
               <q-item-section class="foot">
-                
+                <q-item-section class="message">
+                  <q-list>
+                    <q-item
+                      class="link-mail"
+                      link
+                      :href="`mailto:${scope.opt.email}`"
+                    >
+                      <q-icon color="white" size="20px" name="svguse:icons/allIcons.svg#mail" />
+                    </q-item>
+                    <q-item
+                      class="link-whatsap"
+                      link
+                      :href="`mailto:${scope.opt.whatsapp}`"
+                    >
+                      <q-icon size="24px" name="svguse:icons/allIcons.svg#whatsapp" />
+                    </q-item>
+                    <q-item
+                      class="link-telegram"
+                      link
+                      :href="`mailto:${scope.opt.telegram}`"
+                    >
+                      <q-icon size="24px" name="svguse:icons/allIcons.svg#telegram" />
+                    </q-item>
+                    <q-item
+                      class="link-insta"
+                      link
+                      :href="`mailto:${scope.opt.instagram}`"
+                    >
+                      <q-icon size="24px" name="svguse:icons/allIcons.svg#instagram" />
+                    </q-item>
+                  </q-list>
+                </q-item-section>
+                <a :href="`tel:${scope.opt.whatsapp}`" class="foot__tel">{{scope.opt.tel}}</a>
               </q-item-section>
             </q-item>
           </q-menu>

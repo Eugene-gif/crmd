@@ -195,6 +195,9 @@
   max-width: 492px;
   width: 100%;
   .q-item {
+    padding: 0;
+    flex-direction: column;
+    
     .q-focus-helper {
       display: none; 
     }
@@ -203,6 +206,8 @@
       flex-direction: row;
       align-items: flex-start;
       flex: 0 0 100%;
+      padding: 26px 23px 23px 26px;
+      border-bottom: 1px solid rgba(240, 240, 240, 0.3);
       .name {
         display: flex;
         flex-direction: row;
@@ -288,7 +293,70 @@
       }
     }
     .foot {
-
+      margin-left: 0;
+      padding: 13px 22px 14px 26px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      .q-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .q-item {
+          align-items: center;
+          display: flex;
+          flex-direction: row;
+          min-height: auto;
+          justify-content: center;
+          margin-right: 10px;
+        }
+        .link-mail {
+          background: #222222;
+          width: 50px;
+          height: 32px;
+          border-radius: 16px;
+          margin-right: 17px;
+          &:active {
+            .q-icon {
+              opacity: 0.3;
+            }
+          }
+        }
+        .link-whatsap,
+        .link-telegram,
+        .link-insta {
+          width: 24px;
+          height: 24px;
+          border-radius: 100%;
+        }
+        .link-whatsap {
+          background: linear-gradient(180deg, #72BF44 0.22%, #03AA4B 100.45%);
+          position: relative;
+          &:after {
+            content: ''; 
+            position: absolute;
+            left: -3px;
+            top: 22.5px;
+            transform: rotate(125deg);
+            border: 4px solid transparent;
+            border-left: 7px solid #03AA4B;
+          }
+        }
+        .link-telegram {
+          background: linear-gradient(180deg, #2EBFE8 0%, #13A9DC 99.64%);
+        }
+        .link-insta {
+          background: linear-gradient(180deg, #FBE18A -67.78%, #FCBB45 -19.18%, #F75274 19.82%, #D53692 54.19%, #8F39CE 104.51%, #5B4FE9 165.32%);
+        }
+      }
+      .foot__tel {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 16px;
+        text-align: right;
+        color: #FFFFFF;
+        text-decoration: none;
+      }
     }
   }
 }
