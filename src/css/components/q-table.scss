@@ -1,6 +1,9 @@
 .my-table {
   .q-table {
+    padding-top: 60px;
     thead {
+      position: relative;
+      top: -60px !important;
       tr {
         th {
           font-size: 16px;
@@ -9,6 +12,7 @@
           opacity: 0.6;
           font-weight: 400;
           transition: all 0.25s;
+          padding-bottom: 16px;
           &:hover {
             opacity: 1;
           }
@@ -206,33 +210,6 @@
             font-size: 16px;
             line-height: 16px;
             color: $grey-5;
-          }
-          .q-td__action {
-            .q-btn {
-              padding: 0;
-              width: 44px;
-              height: 44px;
-              &:hover {
-                .q-focus-helper {
-                  display: none;
-                }
-                background: #F5F5F5;
-                @media (max-width: 772px) {
-                  background: rgba(0,0,0,0);
-                }
-              }
-              &:active {
-                .q-icon {
-                  opacity: 0.3;
-                }
-              }
-              &__arrow {
-                display: none;
-              }
-            }
-            .q-icon {
-              cursor: pointer;
-            }
           }
         }
       }
@@ -569,6 +546,143 @@
   }
 }
 
+.projects-table {
+  padding-top: 45px;
+  .q-table__middle {
+    overflow: visible;
+  }
+  .q-table {
+    thead {
+      display: inline-flex;
+      max-width: 1320px;
+      tr {
+        th {
+
+        }
+        .q-th__smaile {
+          padding-left: 0;
+          .notranslate {
+            margin-left: 20px;
+          }
+        }
+        .q-th__image,
+        .q-th__action {
+          display: none;
+        }
+        .q-th__view {
+          padding-right: 25px;
+          opacity: 1;
+          .q-tabs {
+            .q-tab {
+              margin-left: 19px;
+              .q-tab__content {
+                .q-icon {
+                  font-size: 17px;
+                  color: black;
+                  opacity: 0.3;
+                }
+              }
+              &--active {
+                .q-tab__content {
+                  .q-icon {
+                    opacity: 1;
+                  }
+                }
+              }
+            } 
+          }
+        }
+      }
+    }
+    tbody {
+      display: flex;
+      max-width: 1320px;
+      flex-wrap: wrap;
+      tr {
+        border: 1px solid #F0F0F0;
+        border-radius: 10px;
+        overflow: hidden;
+        td {
+          border: none;
+        }
+        &:hover {
+          td {
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+      .q-tr-tiles {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 calc(50% - 30px);
+        max-width: calc(50% - 30px);
+        &:nth-child(1n) {
+          margin-right: 30px;
+        } 
+        &:nth-child(2n) {
+          margin-left: 30px;
+          margin-right: 0;
+        } 
+        .q-td-image {
+          padding: 0;
+          width: 100%;
+          min-height: 329px;
+          background-image: url(../assets/no-image.svg);
+          background-size: 100px 100px;
+          background-repeat: no-repeat;
+          background-position: center center;
+          border-bottom: 1px solid #F0F0F0;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+        .q-td-name {
+          .text-h3 {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 25px;
+            color: #000000;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.q-td__action {
+  width: 44px;
+  height: 44px;
+  .q-btn {
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    &:hover {
+      .q-focus-helper {
+        display: none;
+      }
+      background: #F5F5F5;
+      @media (max-width: 772px) {
+        background: rgba(0,0,0,0);
+      }
+    }
+    &:active {
+      .q-icon {
+        opacity: 0.3;
+      }
+    }
+    &__arrow {
+      display: none;
+    }
+  }
+  .q-icon {
+    cursor: pointer;
+  }
+}
 .q-td__action__list {
   background: #333333;
   box-shadow: 0px 15px 30px rgba(51, 51, 51, 0.15);

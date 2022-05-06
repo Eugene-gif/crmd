@@ -194,45 +194,9 @@
               :props="props"
               :class="`q-td-action`"
             >
-            <div class="q-td__action">
-              <!-- {{props.key}} -->
-              <q-btn
-                unelevated
-                no-caps
-                icon="svguse:icons/financeTable.svg#action"
-                class="my-effect"
-                :ref="el => dropdown[props.key] = el"
-                :auto-close="false" 
-                @click.stop="notify(props.key)"
-              ></q-btn>
-              
-              <!-- :ref="`menu${props.key}`" -->
-              <q-menu
-                :offset="[20, 10]"
-                class="q-td__action__list"
-                :ref="el => menu[props.key] = el"
-              >
-                <q-list>
-                  <q-item clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>Изменить</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>Дублировать</q-item-label>
-                    </q-item-section>
-                  </q-item>
-
-                  <q-item clickable v-close-popup>
-                    <q-item-section>
-                      <q-item-label>Удалить</q-item-label>
-                    </q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </div>
+              <ActionBtn 
+                :propsEl="props"
+              />
             </q-td>
           </q-tr>
           <q-tr
@@ -343,6 +307,7 @@
 <script>
 import Card from 'pages/Finance/card.vue'
 import Dialog from 'pages/Finance/dialog.vue'
+import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref } from 'vue'
 
 const columns = [
@@ -423,12 +388,11 @@ export default {
   name: 'PageFinance',
   components: {
     Card,
-    Dialog
+    Dialog,
+    ActionBtn
   },
   setup () {
     const dialog = ref(false)
-    const dropdown = ref([])
-    const menu = ref([])
     const pagination = ref({
       sortBy: 'id'
     })
@@ -442,45 +406,13 @@ export default {
       ],
       tab: ref('1'),
       columns,
-      dropdown,
-      menu,
       rows,
       pagination,
       dialog,
       maximizedToggle: ref(true),
       modalFalse() {
         dialog.value = false
-      },
-      notify(el) {
-        
-        menu.value[el].show()
-        // menu.value[el] = dropdown.value[el]
-        console.log(menu.value[el]) 
-        Vue.nextTick(() => {menu.value[el].show()});
-        // dropdown.value = $refs.menu
-        // this.$nextTick(()=>{$refs.menu.show()})
       }
-      // customSort (rows, sortBy, descending) {
-      //   const data = [...rows]
-
-      //   if (sortBy) {
-      //     data.sort((a, b) => {
-      //       const x = descending ? b : a
-      //       const y = descending ? a : b
-
-      //       if (sortBy === 'name') {
-      //         // string sort
-      //         return x[ sortBy ] > y[ sortBy ] ? 1 : x[ sortBy ] < y[ sortBy ] ? -1 : 0
-      //       }
-      //       else {
-      //         // numeric sort
-      //         return parseFloat(x[ sortBy ]) - parseFloat(y[ sortBy ])
-      //       }
-      //     })
-      //   }
-      //   pagination.value.sortBy = sortBy
-      //   return data
-      // }
     }
   }
 }

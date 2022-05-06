@@ -1,3 +1,20 @@
+.q-tabs-null {
+  .q-tab {
+    min-height: auto;
+    padding: 0;
+    .q-focus-helper,
+    .q-ripple {
+      display: none;
+    }
+    .q-tab__content {
+      padding: 0;
+      min-width: auto;
+    }
+    .q-tab__indicator {
+      display: none;
+    }
+  }
+}
 .my-tabs {
   .q-tabs__content {
     .q-tab {

@@ -67,4 +67,25 @@
   <symbol viewBox="0 0 24 10" id="tooltip">
     <path d="M24 10H0L12 0L24 10Z" fill="#333333"/>
   </symbol>
+  <symbol viewBox="0 0 17 17" id="tile1">
+    <path d="M7 1V7H1V1H7ZM8 0H0V8H8V0Z"/>
+    <path d="M16 1V7H10V1H16ZM17 0H9V8H17V0Z"/>
+    <path d="M7 10V16H1V10H7ZM8 9H0V17H8V9Z"/>
+    <path d="M16 10V16H10V10H16ZM17 9H9V17H17V9Z"/>
+  </symbol>
+  <symbol viewBox="0 0 17 17" id="tile2">
+    <path d="M4 1V7H1V1H4ZM5 0H0V8H5V0Z"/>
+    <path d="M10 1V7H7V1H10ZM11 0H6V8H11V0Z"/>
+    <path d="M16 1V7H13V1H16ZM17 0H12V8H17V0Z"/>
+    <path d="M4 10V16H1V10H4ZM5 9H0V17H5V9Z"/>
+    <path d="M10 10V16H7V10H10ZM11 9H6V17H11V9Z"/>
+    <path d="M16 10V16H13V10H16ZM17 9H12V17H17V9Z"/>
+  </symbol>
+  <symbol viewBox="0 0 17 17" id="tile3">
+    <path d="M17 0H0V1H17V0Z"/>
+    <path d="M17 4H0V5H17V4Z"/>
+    <path d="M17 8H0V9H17V8Z"/>
+    <path d="M17 12H0V13H17V12Z"/>
+    <path d="M17 16H0V17H17V16Z"/>
+  </symbol>
 </svg>
