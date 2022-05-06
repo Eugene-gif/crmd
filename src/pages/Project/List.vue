@@ -65,6 +65,10 @@
           <q-th :props="props" class="q-th__action">
           </q-th>
         </template>
+        <template v-slot:header-cell-address="props">
+          <q-th :props="props" class="q-th__address">
+          </q-th>
+        </template>
         <template v-slot:header-cell-view="props">
           <q-th :props="props" class="q-th__view">
             <q-tabs v-model="tab" class="q-tabs-null">
@@ -123,14 +127,60 @@
               :props="props"
               class="q-td-square"
             >
-              
+              <div class="text">Квартира, {{props.row.square}}</div>
             </q-td>
             <q-td
               key="changed"
               :props="props"
               class="q-td-changed"
             >
-              
+              <div class="text">Изменен: {{props.row.changed}}</div>
+            </q-td>
+            <q-td
+              key="customer"
+              :props="props"
+              class="q-td-customer"
+            >
+              <div class="text">{{props.row.customer}}</div>
+            </q-td>
+            <q-td
+              key="created"
+              :props="props"
+              class="q-td-created"
+            >
+              <div class="text">Создан: {{props.row.created}}</div>
+            </q-td>
+            <q-td
+              key="address"
+              :props="props"
+              class="q-td-address"
+            >
+              <div class="text">{{props.row.address}}</div>
+            </q-td>
+            <q-td
+              key="readiness"
+              :props="props"
+              class="q-td-readiness"
+            >
+              <q-chip>
+                <div class="text">Готовность: {{props.row.readiness}}</div>
+              </q-chip>
+            </q-td>
+            <q-td
+              key="payment"
+              :props="props"
+              class="q-td-payment"
+            >
+              <q-chip>
+                <div class="text">Оплата: {{props.row.payment}}</div>
+              </q-chip>
+            </q-td>
+            <q-td
+              key="timing"
+              :props="props"
+              class="q-td-timing"
+            >
+              <div class="text">Сроки: осталось {{props.row.timing}} дн</div>
             </q-td>
           </q-tr>
         </template>
@@ -157,7 +207,8 @@ const columns = [
   { name: 'payment', label: 'Оплата', field: 'payment', align: 'left', sortable: true },
   { name: 'readiness', label: 'Готовность', field: 'readiness', align: 'left', sortable: true },
   { name: 'view', label: '', field: 'view', align: 'right' },
-  { name: 'action', label: '', field: 'action', align: 'left' }
+  { name: 'action', label: '', field: 'action', align: 'left' },
+  { name: 'address', label: '', field: 'address', align: 'left' }
 ]
 
 const rows = ref([
@@ -173,7 +224,7 @@ const rows = ref([
     customer: 'Андикаловский А.А.',
     changed: '10:35',
     created: 'позавчера',
-    timing: '50 дней',
+    timing: 50,
     payment: 80,
     readiness: 40    
   },
@@ -189,7 +240,55 @@ const rows = ref([
     customer: 'Андикаловский А.А.',
     changed: '10:35',
     created: 'позавчера',
-    timing: '50 дней',
+    timing: 50,
+    payment: 80,
+    readiness: 30    
+  },
+  {
+    id: 3,
+    status: 1,
+    image: '',
+    name: '🏰 Название проекта, заданное пользователем',
+    type: 1,
+    typeName: 'Квартира',
+    address: 'г. Краснодар, ул. Ставропольская, д. 250',
+    square: 90,
+    customer: 'Андикаловский А.А.',
+    changed: '10:35',
+    created: 'позавчера',
+    timing: 50,
+    payment: 80,
+    readiness: 40    
+  },
+  {
+    id: 4,
+    status: 1,
+    image: '',
+    name: '🏰 Название проекта, заданное пользователем',
+    type: 1,
+    typeName: 'Квартира',
+    address: 'г. Краснодар, ул. Ставропольская, д. 250',
+    square: 90,
+    customer: 'Андикаловский А.А.',
+    changed: '10:35',
+    created: 'позавчера',
+    timing: 50,
+    payment: 80,
+    readiness: 40    
+  },
+  {
+    id: 5,
+    status: 1,
+    image: '',
+    name: '🏰 Название проекта, заданное пользователем',
+    type: 1,
+    typeName: 'Квартира',
+    address: 'г. Краснодар, ул. Ставропольская, д. 250',
+    square: 90,
+    customer: 'Андикаловский А.А.',
+    changed: '10:35',
+    created: 'позавчера',
+    timing: 50,
     payment: 80,
     readiness: 40    
   },

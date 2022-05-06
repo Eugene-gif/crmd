@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 export default ({
   name: 'ActionBtn',
@@ -49,13 +49,22 @@ export default ({
   setup () {
     const dropdown = ref([])
     const menu = ref([])
+    // onMounted(() => {
+    //   handleScroll()
+    // })
     return {
       dropdown,
       menu,
       notify(el) {
         menu.value[el].show()
+        console.log(menu.value[el].infoBox)
+      },
+      handleScroll() {
+        console.log('asdasd')
       }
     }
+    
   }
+
 })
 </script>
