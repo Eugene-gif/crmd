@@ -69,6 +69,10 @@
           <q-th :props="props" class="q-th__address">
           </q-th>
         </template>
+        <template v-slot:header-cell-share="props">
+          <q-th :props="props" class="q-th__share">
+          </q-th>
+        </template>
         <template v-slot:header-cell-view="props">
           <q-th :props="props" class="q-th__view">
             <q-tabs v-model="tab" class="q-tabs-null">
@@ -118,9 +122,17 @@
               :props="props"
               class="q-td-action"
             >
-              <ActionBtn 
+              <!-- <ActionBtn 
                 :propsEl="props"
-              />
+              /> -->
+              <div class="q-td__action">
+                <q-btn
+                  unelevated
+                  no-caps
+                  icon="svguse:icons/financeTable.svg#action"
+                  class="my-effect"
+                ></q-btn>
+              </div>
             </q-td>
             <q-td
               key="square"
@@ -163,7 +175,7 @@
               class="q-td-readiness"
             >
               <q-chip>
-                <div class="text">Готовность: {{props.row.readiness}}</div>
+                <div class="text">Готовность: {{props.row.readiness}}%</div>
               </q-chip>
             </q-td>
             <q-td
@@ -172,7 +184,7 @@
               class="q-td-payment"
             >
               <q-chip>
-                <div class="text">Оплата: {{props.row.payment}}</div>
+                <div class="text">Оплата: {{props.row.payment}}%</div>
               </q-chip>
             </q-td>
             <q-td
@@ -182,7 +194,31 @@
             >
               <div class="text">Сроки: осталось {{props.row.timing}} дн</div>
             </q-td>
+            <q-td
+              key="share"
+              :props="props"
+              class="q-td-share"
+            >
+              <q-list>
+                <q-item
+                  v-for="item in props.row.share.slice(0, 5)" :key="item.link"
+                >
+                  <q-btn :to="item.link">
+                    <img :src="item.icon" alt="">
+                  </q-btn>
+                </q-item>
+                <q-item
+                  v-if="props.row.share.length > 5"
+                >
+                  <q-btn class="q-td-share__btn__limit" :label="`+${props.row.share.length - 5}`" />
+                </q-item>
+                <q-item class="q-item-add">
+                  <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
+                </q-item>
+              </q-list>
+            </q-td>
           </q-tr>
+          <!-- q-th__share -->
         </template>
       </q-table>
     </div>
@@ -208,9 +244,11 @@ const columns = [
   { name: 'readiness', label: 'Готовность', field: 'readiness', align: 'left', sortable: true },
   { name: 'view', label: '', field: 'view', align: 'right' },
   { name: 'action', label: '', field: 'action', align: 'left' },
+  { name: 'share', label: '', field: 'share', align: 'left' },
   { name: 'address', label: '', field: 'address', align: 'left' }
 ]
-
+// /icons/anton.jpg
+// /icons/stroipro.jpg
 const rows = ref([
   {
     id: 1,
@@ -226,7 +264,33 @@ const rows = ref([
     created: 'позавчера',
     timing: 50,
     payment: 80,
-    readiness: 40    
+    readiness: 40,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: 's'
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]    
   },
   {
     id: 2,
@@ -242,12 +306,34 @@ const rows = ref([
     created: 'позавчера',
     timing: 50,
     payment: 80,
-    readiness: 30    
+    readiness: 30,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]      
   },
   {
     id: 3,
     status: 1,
-    image: '',
+    image: 'project-2.jpg',
     name: '🏰 Название проекта, заданное пользователем',
     type: 1,
     typeName: 'Квартира',
@@ -258,12 +344,34 @@ const rows = ref([
     created: 'позавчера',
     timing: 50,
     payment: 80,
-    readiness: 40    
+    readiness: 40,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]       
   },
   {
     id: 4,
     status: 1,
-    image: '',
+    image: 'project-3.jpg',
     name: '🏰 Название проекта, заданное пользователем',
     type: 1,
     typeName: 'Квартира',
@@ -274,7 +382,29 @@ const rows = ref([
     created: 'позавчера',
     timing: 50,
     payment: 80,
-    readiness: 40    
+    readiness: 40,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]        
   },
   {
     id: 5,
@@ -290,7 +420,29 @@ const rows = ref([
     created: 'позавчера',
     timing: 50,
     payment: 80,
-    readiness: 40    
+    readiness: 40,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]       
   },
 ])
 

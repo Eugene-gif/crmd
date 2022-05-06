@@ -113,4 +113,7 @@
     </linearGradient>
     </defs>
   </symbol>
+  <symbol viewBox="0 0 12 12" id="plus">
+    <path d="M12 5H7V0H5V5H0V7H5V12H7V7H12V5Z" fill="black"/>
+  </symbol>
 </svg>
