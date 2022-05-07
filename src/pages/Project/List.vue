@@ -122,17 +122,10 @@
               :props="props"
               class="q-td-action"
             >
-              <!-- <ActionBtn 
+              <ActionBtn 
                 :propsEl="props"
-              /> -->
-              <div class="q-td__action">
-                <q-btn
-                  unelevated
-                  no-caps
-                  icon="svguse:icons/financeTable.svg#action"
-                  class="my-effect"
-                ></q-btn>
-              </div>
+                :offsetYX="[55, -258]"
+              />
             </q-td>
             <q-td
               key="square"

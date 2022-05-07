@@ -196,6 +196,7 @@
             >
               <ActionBtn 
                 :propsEl="props"
+                :offsetYX="[55, -258]"
               />
             </q-td>
           </q-tr>

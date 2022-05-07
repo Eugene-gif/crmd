@@ -10,31 +10,31 @@
       @click.stop="notify(propsEl.key)"
     ></q-btn>
 
-    <q-menu
-      :offset="[20, 10]"
+    <div
       class="q-td__action__list"
       :ref="el => menu[propsEl.key] = el"
+      :style="{ top: offsetYX[0] + 'px', left: offsetYX[1] + 'px' }"
     >
       <q-list>
-        <q-item clickable v-close-popup>
+        <q-item clickable>
           <q-item-section>
             <q-item-label>Изменить</q-item-label>
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-close-popup>
+        <q-item clickable>
           <q-item-section>
             <q-item-label>Дублировать</q-item-label>
           </q-item-section>
         </q-item>
 
-        <q-item clickable v-close-popup>
+        <q-item clickable>
           <q-item-section>
             <q-item-label>Удалить</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
-    </q-menu>
+    </div>
   </div>
 </template>
 
@@ -44,27 +44,32 @@ import { ref, onMounted } from 'vue'
 export default ({
   name: 'ActionBtn',
   props: {
-    propsEl: Number
+    propsEl: Object,
+    offsetYX: Array
   },
   setup () {
     const dropdown = ref([])
     const menu = ref([])
-    // onMounted(() => {
-    //   handleScroll()
-    // })
+
+    function onClickOtside() {
+      menu.value.forEach(function(element){
+        if (element.classList != null) {
+          element.classList.remove("visible");
+        }
+      });
+    }
+    onMounted(() => {
+      window.addEventListener('click', onClickOtside);
+    })
+
     return {
       dropdown,
       menu,
+      onClickOtside,
       notify(el) {
-        menu.value[el].show()
-        console.log(menu.value[el].infoBox)
-      },
-      handleScroll() {
-        console.log('asdasd')
+        menu.value[el].classList.add('visible')
       }
     }
-    
   }
-
 })
 </script>

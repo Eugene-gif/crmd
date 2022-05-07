@@ -212,6 +212,10 @@
             color: $grey-5;
           }
         }
+        .q-td-action {
+          display: flex;
+          justify-content: flex-end;
+        }
       }
       .q-tr__transfer {
         .q-td__from {
@@ -247,6 +251,7 @@
           }
         }
         .q-td__action {
+          
           .q-icon {
             margin-right: 12px;
           }
@@ -778,6 +783,8 @@
 
 
 .q-td__action {
+  position: relative;
+  max-width: 44px;
   .q-btn {
     padding: 0;
     width: 44px;
@@ -810,6 +817,10 @@
   border-radius: 10px;
   min-width: 321px !important;
   overflow: visible;
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+  transition: all 0.3s;
   &:after,
   &:before {
     top: -20px;
@@ -843,6 +854,7 @@
         line-height: 18px;
         color: white;
         transition: all 0.25s;
+        text-align: left;
       }
       &:hover {
         .q-item__label {
@@ -856,4 +868,9 @@
       }
     }
   }
+  &.visible {
+    opacity: 1;
+    z-index: 10000;
+  }
 }
+
