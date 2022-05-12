@@ -91,8 +91,8 @@
       <!-- :sort-method="customSort" -->
       <q-table
         flat
-        :rows="rows"
         :columns="columns"
+        :rows="rows"
         row-key="id"
         hide-pagination
         class="my-table finance-table"
@@ -382,7 +382,7 @@ const rows = ref([
       visible: true
     },
     type: 'Агентские'
-  },
+  }
 ])
 
 export default {
@@ -395,7 +395,8 @@ export default {
   setup () {
     const dialog = ref(false)
     const pagination = ref({
-      sortBy: 'id'
+      sortBy: 'id',
+      rowsPerPage: 0
     })
     return {
       model: ref('id'),

@@ -75,10 +75,17 @@
         border: none;
         padding-bottom: 4px;
       }
+      .q-focus-helper {
+        display: none;
+      }
       .q-item__section {
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
+        transition: all 0.25s;
+        * {
+          transition: all 0.25s;
+        }
         &.kind {
           width: 100%;
           .q-item__label {
@@ -127,10 +134,35 @@
       &:last-child {
         border-bottom: none;
       }
+      &:hover {
+        background: #f7f7f7; 
+      }
+      &:active {
+        .q-item__section {
+          &.kind {
+            .q-icon {
+              opacity: 0.2;
+            }
+            .q-item__label {
+              opacity: 0.3;
+            }
+            .time {
+              opacity: 0.3;
+            }
+          }
+          &.message {
+            opacity: 0.3;
+          }
+
+        }
+      }
     }
     .head {
       display: flex;
       padding: 18px 36px 18px 28px;
+      &:hover {
+        background: none;
+      }
       .q-item__section {
         flex-direction: row;
         justify-content: space-between;

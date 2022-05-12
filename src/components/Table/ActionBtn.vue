@@ -52,11 +52,9 @@ export default ({
     const menu = ref([])
 
     function onClickOtside() {
-      menu.value.forEach(function(element){
-        if (element.classList != null) {
-          element.classList.remove("visible");
-        }
-      });
+      for (let item of document.querySelectorAll('.q-td__action__list')) {
+        item.classList.remove('visible');
+      } 
     }
     onMounted(() => {
       window.addEventListener('click', onClickOtside);
@@ -67,6 +65,7 @@ export default ({
       menu,
       onClickOtside,
       notify(el) {
+        onClickOtside()
         menu.value[el].classList.add('visible')
       }
     }

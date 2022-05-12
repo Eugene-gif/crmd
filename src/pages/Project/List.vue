@@ -41,12 +41,12 @@
         row-key="id"
         hide-pagination
         class="my-table projects-table"
+        :class="{'projects-table-cubes': tab === 'cubes', 'projects-table-stripes': tab === 'stripes'}"
         :pagination="pagination"
-        binary-state-sort
       >
         <template v-slot:header-cell-status="props">
           <q-th :props="props" class="q-th__smaile">
-            Сортировать:
+            <!-- Сортировать: -->
             <i
               class="notranslate material-icons q-icon q-table__sort-icon q-table__sort-icon--left"
               aria-hidden="true"
@@ -132,7 +132,7 @@
               :props="props"
               class="q-td-square"
             >
-              <div class="text">Квартира, {{props.row.square}}</div>
+              <div class="text">Квартира, {{props.row.square}} м<sup>2</sup></div>
             </q-td>
             <q-td
               key="changed"
@@ -162,14 +162,18 @@
             >
               <div class="text">{{props.row.address}}</div>
             </q-td>
+            <q-td style="flex: 0 0 100%;order: 4;" v-if="tab === 'stripes'"></q-td>
             <q-td
               key="readiness"
               :props="props"
               class="q-td-readiness"
             >
               <q-chip>
-                <div class="text">Готовность: {{props.row.readiness}}%</div>
+                <div class="text">Готовность: <span>{{props.row.readiness}}</span>%</div>
               </q-chip>
+              <div class="flex toolbar">
+                <div class="toolbar-procent bg-primary" :style="{width: props.row.readiness + '%'}"></div>
+              </div>
             </q-td>
             <q-td
               key="payment"
@@ -177,8 +181,11 @@
               class="q-td-payment"
             >
               <q-chip>
-                <div class="text">Оплата: {{props.row.payment}}%</div>
+                <div class="text">Оплата: <span>{{props.row.payment}}</span>%</div>
               </q-chip>
+              <div class="flex toolbar">
+                <div class="toolbar-procent bg-positive" :style="{width: props.row.payment + '%'}"></div>
+              </div>
             </q-td>
             <q-td
               key="timing"
@@ -187,6 +194,7 @@
             >
               <div class="text">Сроки: осталось {{props.row.timing}} дн</div>
             </q-td>
+            <q-td style="flex: 0 0 100%;order: 7;" v-if="tab === 'stripes'"></q-td>
             <q-td
               key="share"
               :props="props"
@@ -339,33 +347,14 @@ const rows = ref([
     payment: 80,
     readiness: 40,
     share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
+      
     ]       
   },
   {
     id: 4,
     status: 1,
     image: 'project-3.jpg',
-    name: '🏰 Название проекта, заданное пользователем',
+    name: '🏰 Название проекта',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -403,7 +392,7 @@ const rows = ref([
     id: 5,
     status: 1,
     image: '',
-    name: '🏰 Название проекта, заданное пользователем',
+    name: '🏰 Название проекта, пользователем 2',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -437,6 +426,82 @@ const rows = ref([
       }
     ]       
   },
+  {
+    id: 6,
+    status: 1,
+    image: '',
+    name: '🏰 Название, заданное пользовате',
+    type: 1,
+    typeName: 'Квартира',
+    address: 'г. Краснодар, ул. Ставропольская, д. 250',
+    square: 90,
+    customer: 'Андикаловский А.А.',
+    changed: '10:35',
+    created: 'позавчера',
+    timing: 50,
+    payment: 80,
+    readiness: 40,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]       
+  },
+  {
+    id: 7,
+    status: 1,
+    image: '',
+    name: '🏰 Название, заданное пользовате',
+    type: 1,
+    typeName: 'Квартира',
+    address: 'г. Краснодар, ул. Ставропольская, д. 250',
+    square: 90,
+    customer: 'Андикаловский А.А.',
+    changed: '10:35',
+    created: 'позавчера',
+    timing: 50,
+    payment: 80,
+    readiness: 40,
+    share: [
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/anton.jpg',
+        link: ''
+      },
+      {
+        icon: '/icons/stroipro.jpg',
+        link: ''
+      }
+    ]       
+  }
 ])
 
 export default {
@@ -448,7 +513,8 @@ export default {
   setup () {
     const dialog = ref(false)
     const pagination = ref({
-      sortBy: 'id'
+      sortBy: 'id',
+      rowsPerPage: 0
     })
     return {
       model: ref('id'),
