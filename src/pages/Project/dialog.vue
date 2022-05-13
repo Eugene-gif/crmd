@@ -242,7 +242,7 @@ export default ({
       val3: ref(false),
       val4: ref(false),
       val5: ref(false),
-      addCustomer: ref(true),
+      addCustomer: ref(false),
       type: [
         {
           label: 'Квартира',
