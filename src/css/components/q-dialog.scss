@@ -104,10 +104,29 @@
         &:nth-child(2) {
           flex: 0 0 60px;
           max-width: 60px;
-          .dialog-btn {
+          .my-checkbox {
             width: 60px;
             border-radius: 10px;
             height: 60px;
+            .q-checkbox__inner {
+              width: 100%;
+            }
+
+            .q-checkbox__inner--falsy {
+              .q-icon {
+                font-size: 12px;
+                opacity: 0.3;
+              }
+            }
+            .q-checkbox__inner--truthy {
+              .q-icon {
+                font-size: 22px;
+              }
+            }
+            &[aria-checked="true"] {
+              background: rgba(0, 0, 0, 0) !important;
+              border: 1px solid #F0F0F0;
+            }
           }
         }
       }
@@ -297,6 +316,42 @@
       }
       .q-btn-actions {
         margin-top:50px;
+      }
+    }
+    .q-card-actions-add-customer {
+      padding-top: 44px;
+      .q-card__section {
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        &:first-child {
+          margin-top: 0;
+        }
+        &.form-section-social {
+          margin-top: 10px;
+        }
+        &.form-section-whatsapp {
+          margin-top: 55px;
+        }
+      }
+    }
+    .form-section-upload {
+      display: flex;
+      align-items: center;
+      .my-textarea {
+        flex: 1 1 calc(100% - 140px);
+        max-width: calc(100% - 140px);
+        border-radius: 10px 0 0 10px;
+        border-right: 1px solid #e5e5e5;
+      }
+      .my-file-upload {
+        flex: 0 0 140px;
+        max-width: 140px;
+        
+        .q-uploader {
+          width: 100%;
+          height: 140px;
+        }
       }
     }
   }

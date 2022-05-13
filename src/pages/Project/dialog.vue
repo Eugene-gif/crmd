@@ -52,16 +52,84 @@
         </div>
         <div class="form-col">
           <label class="lable-title" style="opacity: 0;">-</label>
-          <q-btn
-            class="dialog-btn bg-grey-3"
-            flat
-          >
-          <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" style="opacity: 0.3;" />
-          </q-btn>
+          <q-checkbox
+            v-model="addCustomer"
+            checked-icon="svguse:icons/allIcons.svg#check-close"
+            unchecked-icon="svguse:icons/allIcons.svg#plus"
+            class="my-checkbox flat bg-grey-3"
+            color="black"
+          />
         </div>
       </q-card-section>
 
-      <q-card-actions align="center">
+      <q-card-actions class="q-card-actions-add-customer" v-show="addCustomer === true">
+        <q-card-section class="form-section">
+          <label class="lable-title">Фамилия</label>
+          <q-input v-model="customer1" class="my-input bg-grey-3" placeholder="Введите фамилию" />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Имя</label>
+          <q-input v-model="customer2" class="my-input bg-grey-3" placeholder="Введите имя" />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Отчество</label>
+          <q-input v-model="customer3" class="my-input bg-grey-3" placeholder="Введите отчество" />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Телефон</label>
+          <q-input v-model="customer4" class="my-input bg-grey-3" placeholder="+7 (999)-999-99-99" />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">E-mail</label>
+          <q-input v-model="customer5" class="my-input bg-grey-3" placeholder="email@gmail.com" />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Дата рождения</label>
+          <BtnDate />
+        </q-card-section>
+
+        <q-card-section class="form-section form-section-whatsapp">
+          <q-input v-model="whatsapp" class="my-input bg-grey-3" placeholder="Ссылка на WhatsApp">
+            <template v-slot:after>
+              <img src="~assets/whatsapp.svg" alt="" class="q-mr-md">
+            </template>
+          </q-input>
+        </q-card-section>
+        <q-card-section class="form-section form-section-social">
+          <q-input v-model="telegram" class="my-input bg-grey-3" placeholder="Ссылка на Telegram">
+            <template v-slot:after>
+              <img src="~assets/telegram.svg" alt="" class="q-mr-md">
+            </template>
+          </q-input>
+        </q-card-section>
+        <q-card-section class="form-section form-section-social">
+          <q-input v-model="instagram" class="my-input bg-grey-3" placeholder="Ссылка на Instagram">
+            <template v-slot:after>
+              <img src="~assets/instagram.svg" alt="" class="q-mr-md">
+            </template>
+          </q-input>
+        </q-card-section>
+
+        <q-card-section class="form-section form-section-upload">
+          <q-input
+            filled
+            type="textarea"
+            v-model="textarea"
+            class="my-textarea bg-grey-3"
+            placeholder="Введите примечание"
+          />
+          <div class="my-file-upload">
+            <q-uploader
+              url="http://localhost:8080/upload"
+              style="max-width: 300px"
+            />
+          </div>
+          
+          <!-- <UploadFile /> -->
+        </q-card-section>
+      </q-card-actions>
+
+      <q-card-actions>
         <div class="text-subtitle1">Какие услуги оказываем:</div>
         <q-list class="q-list-options">
           <q-item>
@@ -138,6 +206,7 @@
           class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
           label="Добавить проект"
         />
+        
       </q-card-actions>
     </div>
   </q-card>
@@ -148,13 +217,15 @@
 import { ref } from 'vue'
 import BtnDate from 'components/BtnDate.vue'
 import DropBox from 'components/DropBox.vue'
+import UploadFile from 'components/UploadFile.vue'
 
 export default ({
   name: 'FinanceDialog',
   emits: ['modalFalse'],
   components: {
     BtnDate,
-    DropBox
+    DropBox,
+    UploadFile
   }, 
   setup () {
     const selectDropbox = ref();
@@ -171,6 +242,7 @@ export default ({
       val3: ref(false),
       val4: ref(false),
       val5: ref(false),
+      addCustomer: ref(true),
       type: [
         {
           label: 'Квартира',
@@ -197,6 +269,19 @@ export default ({
       show: ref(false),
       text3: ref(),
       text4: ref(15),
+
+      customer1: ref(),
+      customer2: ref(),
+      customer3: ref(),
+      customer4: ref(),
+      customer5: ref(),
+
+      whatsapp: ref(),
+      telegram: ref(),
+      instagram: ref(),
+      textarea: ref(),
+
+      file: ref(),
       focusSelect() {
         function func() {
           selectDropbox.value.blur()
@@ -205,7 +290,14 @@ export default ({
       },
       beforeHide() {
         show.value = true;
-      }
+      },
+      onFileChange: function(e) {
+        // let files = e.target.file;
+        console.log(e.target)
+        // if (!files.length)
+        //     return;
+        // file.value = files;
+      },
     }
   }
 })
