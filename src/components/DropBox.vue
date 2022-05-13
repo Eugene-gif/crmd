@@ -72,21 +72,21 @@
                       link
                       :href="`mailto:${scope.opt.whatsapp}`"
                     >
-                      <q-icon size="24px" name="svguse:icons/allIcons.svg#whatsapp" />
+                      <img src="~assets/whatsapp.svg" alt="">
                     </q-item>
                     <q-item
                       class="link-telegram"
                       link
-                      :href="`mailto:${scope.opt.telegram}`"
+                      :href="`${scope.opt.telegram}`"
                     >
-                      <q-icon size="24px" name="svguse:icons/allIcons.svg#telegram" />
+                      <img src="~assets/telegram.svg" alt="">
                     </q-item>
                     <q-item
                       class="link-insta"
                       link
-                      :href="`mailto:${scope.opt.instagram}`"
+                      :href="`${scope.opt.instagram}`"
                     >
-                      <q-icon size="24px" name="svguse:icons/allIcons.svg#instagram" />
+                      <img src="~assets/instagram.svg" alt="">
                     </q-item>
                   </q-list>
                 </q-item-section>

@@ -8,7 +8,7 @@
       </q-card-section>
 
       <q-card-section class="form-section">
-        <label>Тип</label>
+        <label class="lable-title">Тип</label>
         <q-select
           filled
           v-model="select1"
@@ -26,32 +26,32 @@
       </q-card-section>
 
       <q-card-section class="form-section">
-        <label>Проект</label>
+        <label class="lable-title">Проект</label>
         <DropBox />
       </q-card-section>
 
       <q-card-section class="form-section"  v-show="select1.value === 1 || select1.value === 2 || select1.value === 3">
-        <label>От кого</label>
+        <label class="lable-title">От кого</label>
         <DropBox />
       </q-card-section>
       
       <q-card-section class="form-section" v-show="select1.value === 3 || select1.value === 4">
-        <label>Кому</label>
+        <label class="lable-title">Кому</label>
         <DropBox />
       </q-card-section>
 
       <q-card-section class="form-section" v-show="select1.value === 1 || select1.value === 2 || select1.value === 4">
-        <label>Сумма, руб.</label>
+        <label class="lable-title">Сумма, руб.</label>
         <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Введите сумму" />
       </q-card-section>
 
       <q-card-section class="form-section form-section-row" v-show="select1.value === 3">
         <div class="form-col">
-          <label>Сумма, руб.</label>
+          <label class="lable-title">Сумма, руб.</label>
           <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Введите сумму" />
         </div>
         <div class="form-col">
-          <label>Агентские, %</label>
+          <label class="lable-title">Агентские, %</label>
           <q-input v-model="text4" class="my-input bg-grey-3" placeholder="Введите сумму" />
         </div>
         <div class="form-col form-col-hint">
@@ -60,7 +60,7 @@
       </q-card-section>
 
       <q-card-section class="form-section">
-        <label>Дата</label>
+        <label class="lable-title">Дата</label>
         <BtnDate />
       </q-card-section>
 

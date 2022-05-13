@@ -1,0 +1,21 @@
+.my-checkbox {
+  border-radius: 4px;
+  &.flat {
+    .q-checkbox__bg {
+      border: none;
+      background: none;
+    }
+  }
+  .q-checkbox__inner {
+    font-size: 32px;
+    &:before {
+      display: none;
+    }
+    .q-icon {
+      font-size: 14px;
+    }
+  }
+
+  .q-checkbox__inner--truthy {
+  }
+}

@@ -57,7 +57,7 @@
     }
     .form-section {
       margin-top: 28px;
-      label {
+      .lable-title {
         font-weight: 500;
         font-size: 18px;
         line-height: 18px;
@@ -91,6 +91,25 @@
       .form-col-hint .hint{
         margin-left: 20px;
         margin-top: 8px;
+      }
+    }
+    .form-section-row-2 {
+      display: flex;
+      flex-wrap: wrap;
+      .form-col {
+        &:nth-child(1) {
+          flex: 1 1 calc(100% - 92px);
+          margin-right: 22px;
+        }
+        &:nth-child(2) {
+          flex: 0 0 60px;
+          max-width: 60px;
+          .dialog-btn {
+            width: 60px;
+            border-radius: 10px;
+            height: 60px;
+          }
+        }
       }
     }
     .q-btn-actions {
@@ -132,7 +151,7 @@
       }
       .form-section {
         margin-top: 19px;
-        label {
+        .lable-title {
           font-size: 16px;
           line-height: 16px;
           margin-bottom: 12px;
@@ -155,7 +174,7 @@
           }
           &:nth-child(2) {
             flex: 0 0 100px;
-            label {
+            .lable-title {
               margin-top: 19px;
             }
             .q-field {
@@ -199,6 +218,89 @@
   }
 }
 
+.projects-dialog {
+  .q-card {
+    .form-section-row {
+      display: flex;
+      flex-wrap: wrap;
+      .form-col {
+        &:nth-child(1) {
+          flex: 0 0 140px;
+          margin-right: 0;
+        }
+        &:nth-child(2) {
+          flex: 1 1 calc(100% - 204px);
+          padding-left: 64px;
+        }
+      }
+    }
+  }
+  .dialog-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    .q-card__section,
+    .q-card__actions {
+      padding-left: 62px;
+      padding-right: 62px;
+    }
+    .q-card__actions {
+      margin-top: 56px;
+      padding-top: 52px;
+      border-top: 1px solid #F0F0F0;
+      justify-content: flex-start;
+      flex-direction: column;
+      .text-subtitle1 {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 18px;
+        width: 100%;
+      }
+      .q-list-options {
+        width: 100%;
+        padding-top: 34px;
+        .q-item {
+          padding: 0;
+          min-height: auto;
+          margin-bottom: 10px;
+          display: flex;
+          align-items: center;
+          .name-field {
+            font-size: 18px;
+            line-height: 18px;
+            color: $grey-5;
+            margin-left: 22px;
+          }
+          .circle-warning {
+            margin-left: 10px;
+            width: 15px;
+            height: 15px;
+            background: $grey-7;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.25s;
+            .q-ripple {
+              display: none;
+            }
+            &:hover {
+              background: $positive;
+              .q-icon {
+                color: white !important;
+                svg {
+                  color: white !important;
+                }
+              }
+            }
+          }
+        }
+      }
+      .q-btn-actions {
+        margin-top:50px;
+      }
+    }
+  }
+}
 
 
 .active {

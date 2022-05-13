@@ -179,6 +179,9 @@
       display: flex;
       padding: 0 28px 30px 28px ;
       position: relative;
+      &:hover {
+        background: none;
+      }
       &:before {
         content: '';
         width: 100%;
@@ -360,25 +363,6 @@
           width: 24px;
           height: 24px;
           border-radius: 100%;
-        }
-        .link-whatsap {
-          background: linear-gradient(180deg, #72BF44 0.22%, #03AA4B 100.45%);
-          position: relative;
-          &:after {
-            content: ''; 
-            position: absolute;
-            left: -3px;
-            top: 22.5px;
-            transform: rotate(125deg);
-            border: 4px solid transparent;
-            border-left: 7px solid #03AA4B;
-          }
-        }
-        .link-telegram {
-          background: linear-gradient(180deg, #2EBFE8 0%, #13A9DC 99.64%);
-        }
-        .link-insta {
-          background: linear-gradient(180deg, #FBE18A -67.78%, #FCBB45 -19.18%, #F75274 19.82%, #D53692 54.19%, #8F39CE 104.51%, #5B4FE9 165.32%);
         }
       }
       .foot__tel {

@@ -4,7 +4,7 @@
     :maximized="maximizedToggle"
     transition-show="fade"
     transition-hide="fade" 
-    class="my-dialog finance-dialog"
+    class="my-dialog projects-dialog"
   >
     <Dialog @modalFalse="modalFalse" />
   </q-dialog>
@@ -40,7 +40,7 @@
         :columns="columns"
         row-key="id"
         hide-pagination
-        class="my-table projects-table"
+        class="my-table projects-table "
         :class="{'projects-table-cubes': tab === 'cubes', 'projects-table-stripes': tab === 'stripes'}"
         :pagination="pagination"
       >
