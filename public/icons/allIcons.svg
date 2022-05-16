@@ -114,7 +114,7 @@
     </defs>
   </symbol>
   <symbol viewBox="0 0 12 12" id="plus">
-    <path d="M12 5H7V0H5V5H0V7H5V12H7V7H12V5Z" fill="black"/>
+    <path d="M12 5H7V0H5V5H0V7H5V12H7V7H12V5Z" />
   </symbol>
   <symbol viewBox="0 0 14 14" id="check">
     <path d="M14 0L4.35556 9.33333L0 4.97778V9.64444L4.35556 14L14 4.66667V0Z" fill="black"/>

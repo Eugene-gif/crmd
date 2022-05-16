@@ -12,12 +12,13 @@
   <q-page class="page-projects">
     <div class="row justify-between items-center">
       <div class="text-h2">Проекты</div>
+      <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
       <div class="head-btns">
         <q-btn
           rounded
           unelevated
           no-caps
-          class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite lg-visible"
+          class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
           label="Выбрать"
         />
         <q-btn
@@ -25,11 +26,28 @@
           unelevated
           no-caps
           class="bg-positive text-white q-mr-xs my-btn my-effect h-dark q-ml-xs"
-          label="Добавить проект"
           @click="dialog = true"
-        />
+        >
+          <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" color="white" class="mb-visible" />
+          <div class="block">Добавить <span class="lg-visible">проект</span></div>
+        </q-btn>
       </div>
-      <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
+      <div class="sorted">
+        <div class="sorted-section mb-visible">
+          <div class="title">Сортировка: </div>
+          <q-select
+            borderless
+            v-model="model"
+            :options="options2"
+            behavior="menu"
+            popup-content-class="select-menu-mobile"
+          />
+        </div>
+        <div class="sorted-btns mb-visible">
+          <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
+          <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
+        </div>
+      </div>
     </div>
 
     <div class="projects">
@@ -114,7 +132,7 @@
               class="q-td-name"
             >
               <div class="text-h3">
-                {{props.row.name}}
+                <span class="name-ico">{{props.row.iconName}}</span>{{props.row.name}}
               </div>
             </q-td>
             <q-td
@@ -202,16 +220,16 @@
             >
               <q-list>
                 <q-item
-                  v-for="item in props.row.share.slice(0, 5)" :key="item.link"
+                  v-for="item in props.row.share.slice(0, 3)" :key="item.link"
                 >
                   <q-btn :to="item.link">
                     <img :src="item.icon" alt="">
                   </q-btn>
                 </q-item>
                 <q-item
-                  v-if="props.row.share.length > 5"
+                  v-if="props.row.share.length > 3"
                 >
-                  <q-btn class="q-td-share__btn__limit" :label="`+${props.row.share.length - 5}`" />
+                  <q-btn class="q-td-share__btn__limit" :label="`+${props.row.share.length - 3}`" />
                 </q-item>
                 <q-item class="q-item-add">
                   <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
@@ -255,7 +273,8 @@ const rows = ref([
     id: 1,
     status: 1,
     image: '/project-1.jpg',
-    name: '🏰 Название проекта, заданное пользователем',
+    iconName: '🏰',
+    name: 'Название проекта, заданное пользователем',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -297,7 +316,8 @@ const rows = ref([
     id: 2,
     status: 1,
     image: '',
-    name: '🏰 Название проекта, заданное пользователем',
+    iconName: '🏰',
+    name: 'Название проекта, заданное пользователем',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -335,7 +355,8 @@ const rows = ref([
     id: 3,
     status: 1,
     image: 'project-2.jpg',
-    name: '🏰 Название проекта, заданное пользователем',
+    iconName: '🏰',
+    name: 'Название проекта, заданное пользователем',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -354,7 +375,8 @@ const rows = ref([
     id: 4,
     status: 1,
     image: 'project-3.jpg',
-    name: '🏰 Название проекта',
+    iconName: '🏰',
+    name: 'Название проекта',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -392,7 +414,8 @@ const rows = ref([
     id: 5,
     status: 1,
     image: '',
-    name: '🏰 Название проекта, пользователем 2',
+    iconName: '🏰',
+    name: 'Название проекта, пользователем 2',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -430,7 +453,8 @@ const rows = ref([
     id: 6,
     status: 1,
     image: '',
-    name: '🏰 Название, заданное пользовате',
+    iconName: '🏰',
+    name: 'Название, заданное пользовате',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -468,7 +492,8 @@ const rows = ref([
     id: 7,
     status: 1,
     image: '',
-    name: '🏰 Название, заданное пользовате',
+    iconName: '🏰',
+    name: 'Название, заданное пользовате',
     type: 1,
     typeName: 'Квартира',
     address: 'г. Краснодар, ул. Ставропольская, д. 250',
@@ -517,8 +542,19 @@ export default {
       rowsPerPage: 0
     })
     return {
-      model: ref('id'),
+      model: ref('Имя'),
       tab: ref('tiles'),
+      options2: [
+        'Имя',
+        'Тип',
+        'Площадь',
+        'Заказчик',
+        'Изменен',
+        'Создан',
+        'Сроки',
+        'Оплата',
+        'Готовность'
+      ],
       columns,
       rows,
       pagination,

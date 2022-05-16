@@ -126,6 +126,21 @@
             &[aria-checked="true"] {
               background: rgba(0, 0, 0, 0) !important;
               border: 1px solid #F0F0F0;
+              position: relative;
+              &:after {
+                content: '';
+                z-index: 5;
+                width: 22px;
+                height: 11px;
+                position: absolute;
+                bottom: -58px;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                background-image: url(../assets/triangle-dopinfo.svg);
+                background-size: 22px 11px;
+                background-repeat: no-repeat;
+              }
             }
           }
         }
@@ -351,6 +366,137 @@
         .q-uploader {
           width: 100%;
           height: 140px;
+        }
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    .q-card {
+      .form-section-row {
+        display: flex;
+        flex-wrap: wrap;
+        .form-col {
+          &:nth-child(1) {
+            flex: 0 0 100%;
+            margin-right: 0;
+          }
+          &:nth-child(2) {
+            flex: 1 1 100%;
+            padding-left: 0;
+          }
+        }
+      }
+      
+      .form-section-row-2 {
+        .form-col {
+          &:nth-child(1) {
+            flex: 1 1 calc(100% - 51px);
+            max-width: calc(100% - 51px);
+            margin-right: 10px;
+          }
+          &:nth-child(2) {
+            flex: 0 0 40px;
+            max-width: 40px;
+            .my-checkbox {
+              width: 40px;
+              border-radius: 6px;
+              height: 40px; 
+              &[aria-checked="true"] {
+                &:after {
+                  bottom: -23px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .dialog-section {
+      .q-card__section,
+      .q-card__actions {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+      .q-card__actions {
+        margin-top: 20px;
+        padding-top: 18px;
+        position: relative;
+        &:after {
+          content: '';
+          position: absolute;
+          left: 0;
+          bottom: 63px;
+          width: 100%;
+          height: 1px;
+          background: $grey-3;
+        }
+        .text-subtitle1 {
+          font-size: 16px;
+          line-height: 16px;
+        }
+        .q-list-options {
+          width: 100%;
+          padding-top: 19px;
+          padding-bottom: 7px;
+          .q-item {
+            padding: 0;
+            min-height: auto;
+            margin-bottom: 13px;
+            .my-checkbox {
+              .q-checkbox__inner {
+                font-size: 24px;
+                .q-icon {
+                  font-size: 10px;
+                }
+              }
+            }
+            .name-field {
+              font-size: 16px;
+              line-height: 16px;
+              margin-left: 12px;
+            }
+          }
+        }
+        .q-btn-actions {
+          margin-top: 21px;
+        }
+      }
+      .q-card-actions-add-customer {
+        padding-top: 18px;
+        .q-card__section {
+          &.form-section-whatsapp {
+            margin-top: 19px;
+            img {
+              width: 18px;
+              margin-right: 12px;
+            }
+          }
+          &.form-section-social {
+            img {
+              width: 18px;
+              margin-right: 12px;
+            }
+          }
+        }
+      }
+      
+      .form-section-upload {
+        display: flex;
+        align-items: center;
+        .my-textarea {
+          flex: 1 1 calc(100% - 140px);
+          max-width: calc(100% - 140px);
+          border-radius: 10px 0 0 10px;
+          border-right: 1px solid #e5e5e5;
+        }
+        .my-file-upload {
+          flex: 0 0 140px;
+          max-width: 140px;
+          
+          .q-uploader {
+            width: 100%;
+            height: 140px;
+          }
         }
       }
     }

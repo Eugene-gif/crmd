@@ -9,9 +9,9 @@
 
       <q-card-section class="form-section">
         <label class="lable-title">Название</label>
-        <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Введите название">
+        <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите название">
           <template v-slot:after>
-            <q-icon size="16px" name="svguse:icons/financeTable.svg#smaile" class="q-mr-md" />
+            <q-icon size="16px" name="svguse:icons/financeTable.svg#smaile" class="q-mr-md q-pr-xs" />
           </template>
         </q-input>
       </q-card-section>

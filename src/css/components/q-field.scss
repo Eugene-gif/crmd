@@ -1,3 +1,4 @@
+
 .q-field.q-input {
   .q-field__control {
     height: 60px;
@@ -6,8 +7,16 @@
     .q-field__control {
       height: 40px;
     }
+    .q-field__after {
+      height: 36px;
+      .q-icon {
+        padding-right: 0;
+        margin-right: 10px;
+      }
+    }
   }
 }
+
 .q-input.header__input__search {
   .q-field__control {
     height: auto ;
@@ -398,6 +407,14 @@
         span {
           flex: 1 1 40vw;
           font-size: 16px;
+          @media (max-width: 380px) {
+            flex: 1 1 30vw;
+          }
+        }
+        .q-field__input {
+          @media (max-width: 380px) {
+            min-width: 10px !important;
+          }
         }
       }
       .ellipsis {

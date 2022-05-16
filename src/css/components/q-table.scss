@@ -570,16 +570,24 @@
           flex: auto;
           padding-left: 0;
           padding-right: 0;
+          .q-th__title {
+            position: relative;
+            top: 3px;
+          }
           &.sorted {
             .q-th__title {
               border-bottom: 1px solid black;
-              padding-bottom: 23px;
+              padding-bottom: 20px;
+              position: relative;
             }
           }
           &.q-th__smaile.sorted {       
             i {
               &:after {
                 bottom: -22px;
+                @media (max-width: 1441px) {
+                  bottom: -21px;
+                }
               }
             }
           }
@@ -588,6 +596,12 @@
           padding-left: 0;
           .notranslate {
             margin-left: 20px;
+            @media (max-width: 1441px) {
+              margin-left: 0;
+              position: relative;
+              top: 1px;
+              margin-right: 15px;
+            }
           }
         }
         .q-th__image,
@@ -620,6 +634,9 @@
           }
         }
       }
+      @media (max-width: 772px) {
+        display: none;
+      }
     }
     tbody {
       display: flex;
@@ -638,6 +655,7 @@
             font-size: 16px;
             line-height: 24px;
             color: $grey-5;
+            white-space: break-spaces;
           }
         }
         &:hover {
@@ -663,6 +681,18 @@
           margin-left: 30px;
           margin-right: 0;
         } 
+        @media (max-width: 1441px) {
+          flex: 1 1 calc(50% - 15px);
+          max-width: calc(50% - 15px);
+          margin-bottom: 30px;
+          &:nth-child(1n) {
+            margin-right: 15px;
+          } 
+          &:nth-child(2n) {
+            margin-left: 15px;
+            margin-right: 0;
+          }
+        }
         .q-td-image {
           padding: 0;
           width: 100%;
@@ -692,12 +722,26 @@
             line-height: 25px;
             color: #000000;
             white-space: pre-wrap;
+            .name-ico {
+              @media (min-width: 772px) {
+                margin-right: 4px;
+              }
+            }
           }
         }
         .q-td-action {
           margin-left: auto;
           flex: 0 0 70px;
           margin-bottom: 15px;
+          padding-right: 16px;
+          .q-td__action {
+            .q-btn {
+              &:hover,
+              &:active {
+                background: none;
+              }
+            }
+          }
         }
         .q-td-square,
         .q-td-changed,
@@ -795,6 +839,7 @@
             }
             .q-item-add {
               margin-left: auto;
+              margin-right: 0;
             }
           }
         }
@@ -829,6 +874,15 @@
           margin-left: 60px;
           margin-right: 60px;
         } 
+        @media (max-width: 1441px) {
+          flex: 1 1 calc(33.333% - 30px);
+          max-width: calc(33.333% - 15px);
+          padding-bottom: 16px;
+          &:nth-child(3n + 2) {
+            margin-left: 30px;
+            margin-right: 30px;
+          } 
+        }
         .q-td-image {
           display: none;
         }
@@ -846,6 +900,9 @@
           order: 10;
           padding-left: 0;
           margin-top: 14px;
+          display: flex;
+          justify-content: flex-end;
+          padding-right: 16px;
         }
         .q-td-changed {
           order: 2;
@@ -951,10 +1008,11 @@
               }
               .q-td-share__btn__limit {
                 width: max-content;
+                margin: 0 7px;
               }
             }
             .q-item-add {
-              margin-left: auto;
+              margin-left: 0;
             }
           }
         }
@@ -1138,6 +1196,176 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    padding-top: 13px;
+    .q-table {
+      padding-top: 0;
+      tbody {
+        tr {
+          td {
+            padding: 0 20px;
+            .text {
+              font-size: 16px;
+              line-height: 16px;
+            }
+          }
+        }
+        .q-tr-tiles {
+          flex: 0 0 100%;
+          max-width: 100%;
+          margin-bottom: 5px;
+          padding-bottom: 16px;
+          overflow: visible;
+          &:nth-child(1n) {
+            margin-right: 0;
+          } 
+          &:nth-child(2n) {
+            margin-left: 0;
+            margin-right: 0;
+          } 
+          .q-td-image {
+            padding: 0;
+            width: 100%;
+            flex: 0 0 100%;
+            height: 194px;
+            margin-bottom: 21px;
+            order: 1;
+          }
+          .q-td-name {
+            flex: 0 0 100%;
+            max-width: 100%;
+            margin-bottom: 15px;
+            order: 2;
+            .text-h3 {
+              display: flex;
+              padding-right: 62px;
+              position: relative;
+              font-size: 23px;
+              line-height: 24.9px;
+              .name-ico {
+                position: absolute;
+                right: 0;
+                top: 0;
+              }
+            }
+          }
+          .q-td-action {
+            margin: 0;
+            margin-left: auto;
+            flex: 0 0 70px;
+            margin-bottom: 0;
+            order: 11;
+            padding: 0;
+            padding-right: 9px;
+            display: flex;
+            justify-content: flex-end;
+            .q-td__action {
+              margin-top: 18px;
+            }
+          }
+          .q-td-square {
+            order: 5;
+            margin-top: 15px;
+          }
+          .q-td-changed {
+            order: 3;
+            margin-top: 5px;
+          }
+          .q-td-customer {
+            order: 7;
+            margin-top: 24px;
+          }
+          .q-td-created {
+            order: 4;
+            margin-top: 4px;
+          }
+
+          .q-td-square,
+          .q-td-changed,
+          .q-td-customer,
+          .q-td-created {
+            flex: 0 0 100%;
+            max-width: 100%;
+            text-align: left;
+          }
+          .q-td-address {
+            flex: 0 0 100%;
+            margin-top: 4px;
+            order: 6;
+          }
+          .q-td-readiness,
+          .q-td-payment {
+            margin-top: 26px;
+            flex: 0 0 100%;
+            max-width: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-left: 0;
+            margin-left: 0;
+            order: 8;
+            .q-chip {
+              background: #fff !important;
+              margin: 0;
+              height: auto !important; 
+              line-height: 1;
+              padding: 0 !important;
+              width: 100%;
+              .text {
+                width: 100%;
+                display: flex;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 18px;
+                span {
+                  margin-left: auto;
+                }
+              }
+              .q-ripple {
+                display: none;
+              }
+            }
+            .toolbar {
+              width: 100%;
+              height: 4px;
+              margin-left: auto;
+              flex: 0 0 100%;
+              max-width: 100%;
+              margin-top: 9px;
+              margin-right: 0;
+              margin-bottom: 0;
+              background-color: #ECECEC;
+              border-radius: 2px;
+              .toolbar-procent {
+                height: 4px;
+                border-radius: 2px;
+              }
+            }
+          }
+          .q-td-payment {
+            margin-top: 10px;
+          }
+          .q-td-timing {
+            flex: 1 1 100%;
+            margin-top: 24px;
+            order: 9;
+          }
+          .q-td-share {
+            flex: 1 1 calc(100% - 96px);
+            max-width: calc(100% - 96px);
+            order: 10;
+            margin-top: 5px;
+            .q-list {
+              display: flex;
+              padding-top: 20px;
+              .q-item-add {
+                margin-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 
@@ -1148,10 +1376,10 @@
     padding: 0;
     width: 44px;
     height: 44px;
+    .q-focus-helper {
+      display: none;
+    }
     &:hover {
-      .q-focus-helper {
-        display: none;
-      }
       background: #F5F5F5;
       @media (max-width: 772px) {
         background: rgba(0,0,0,0);
