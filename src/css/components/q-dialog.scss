@@ -108,6 +108,10 @@
             width: 60px;
             border-radius: 10px;
             height: 60px;
+            transition: all 0.3s;
+            .q-checkbox__icon-container {
+              transition: all 0.3s;
+            }
             .q-checkbox__inner {
               width: 100%;
             }
@@ -121,6 +125,16 @@
             .q-checkbox__inner--truthy {
               .q-icon {
                 font-size: 22px;
+              }
+            }
+            &[aria-checked="false"] {
+              &:hover {
+                background: #ECECEC !important;
+              }
+              &:active {
+                .q-checkbox__icon-container {
+                  opacity: 0.3 !important;
+                }
               }
             }
             &[aria-checked="true"] {
@@ -140,6 +154,17 @@
                 background-image: url(../assets/triangle-dopinfo.svg);
                 background-size: 22px 11px;
                 background-repeat: no-repeat;
+              }
+              &:hover {
+                border: 1px solid #DDDDDD;
+                .q-checkbox__icon-container {
+                  transform: rotate(180deg);
+                }
+              }
+              &:active {
+                .q-checkbox__icon-container {
+                  opacity: 0.3 !important;
+                }
               }
             }
           }
@@ -353,19 +378,34 @@
     .form-section-upload {
       display: flex;
       align-items: center;
+      position: relative;
       .my-textarea {
-        flex: 1 1 calc(100% - 140px);
-        max-width: calc(100% - 140px);
-        border-radius: 10px 0 0 10px;
-        border-right: 1px solid #e5e5e5;
+        flex: 0 0 100%;
+        max-width: 100%;
+        border-radius: 10px;
+        position: relative;
+        z-index: 2;
+        textarea {
+          padding-right: 136px;
+        }
+        &.q-field--focused + .my-file-upload {
+          .q-uploader {
+            background: white;
+          }
+        }
       }
       .my-file-upload {
-        flex: 0 0 140px;
-        max-width: 140px;
-        
+        width: 136px;
+        border-left: 1px solid #e5e5e5;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        z-index: 2;
+        border-radius: 0 11px 11px 0;
+        overflow: hidden;
         .q-uploader {
           width: 100%;
-          height: 140px;
+          height: 136px;
         }
       }
     }
