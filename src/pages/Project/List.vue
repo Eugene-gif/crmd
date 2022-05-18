@@ -10,7 +10,7 @@
   </q-dialog>
   
   <q-page class="page-projects">
-    <div class="row justify-between items-center">
+    <div class="row justify-between items-center head">
       <div class="text-h2">Проекты</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
       <div class="head-btns">

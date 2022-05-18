@@ -1,6 +1,9 @@
 .page-projects {
-  .sorted {
-    display: none;
+  
+  .head {
+    .sorted {
+      display: none;
+    }
   }
   @media (max-width: 772px) {
     .head-btns {
@@ -20,12 +23,15 @@
         }
       }
     }
-    .sorted {
-      display: inherit;
-      .sorted-btns {
-        margin-right: 0;
+    .head {
+      .sorted {
+        display: inherit;
+        .sorted-btns {
+          margin-right: 0;
+        }
       }
     }
+    
   }
   
 }

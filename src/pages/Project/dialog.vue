@@ -9,11 +9,7 @@
 
       <q-card-section class="form-section">
         <label class="lable-title">Название</label>
-        <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите название">
-          <template v-slot:after>
-            <q-icon size="16px" name="svguse:icons/financeTable.svg#smaile" class="q-mr-md q-pr-xs" />
-          </template>
-        </q-input>
+        <Emoji />
       </q-card-section>
 
       <q-card-section class="form-section">
@@ -119,6 +115,7 @@
             placeholder="Введите примечание"
           />
           <div class="my-file-upload">
+            <label class="lable-title">Изображение</label>
             <q-uploader
               url="http://localhost:8080/upload"
               style="max-width: 300px"
@@ -215,9 +212,10 @@
 
 <script>
 import { ref } from 'vue'
-import BtnDate from 'components/BtnDate.vue'
-import DropBox from 'components/DropBox.vue'
-import UploadFile from 'components/UploadFile.vue'
+import BtnDate from 'components/BtnDate'
+import DropBox from 'components/DropBox'
+import UploadFile from 'components/UploadFile'
+import Emoji from 'components/Emoji'
 
 export default ({
   name: 'FinanceDialog',
@@ -225,7 +223,8 @@ export default ({
   components: {
     BtnDate,
     DropBox,
-    UploadFile
+    UploadFile,
+    Emoji
   }, 
   setup () {
     const selectDropbox = ref();
