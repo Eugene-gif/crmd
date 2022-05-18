@@ -13,6 +13,7 @@
         
       </template>
     </q-input>
+    
     <q-card :class="{active: openModal}">
       <q-item class="content" v-show="!openTabs">
         <q-item-section class="head">
@@ -37,8 +38,8 @@
             animated
             swipeable
             vertical
-            transition-prev="jump-up"
-            transition-next="jump-up"
+            transition-prev="slide-right"
+            transition-next="slide-left"
           >
             <q-tab-panel name="Символы">
               <div

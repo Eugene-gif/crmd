@@ -2,13 +2,17 @@
   position: relative;
   .emoji-div {
     cursor: pointer;
-    opacity: 0.5;
-    transition: all 0.3s;
-    &:hover {
-      opacity: 1;
-    }
-    &:active {
+    font-size: 18px;
+    .q-icon {
       opacity: 0.3;
+      transition: all 0.3s;
+      font-size: 18px !important;
+      &:hover {
+        opacity: 0.6;
+      }
+      &:active {
+        opacity: 0.1;
+      }
     }
   }
   .q-card {
@@ -41,7 +45,7 @@
         width: 100%;
         padding-top: 30px;
         padding-bottom: 37px;
-        border-bottom: 1px solid rgba(240, 240, 240, 0.3);
+        border-bottom: 1px solid rgba(240, 240, 240, 0.1);
         padding-left: 36px;
         padding-right: 36px;
         .q-item__label {
@@ -166,6 +170,7 @@
           padding-bottom: 10px;
           padding-left: 0px;
           padding-right: 0px;
+          min-height: 50px;
           .q-item__label {
             font-size: 18px;
             line-height: 20px;          

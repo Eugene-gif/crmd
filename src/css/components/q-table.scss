@@ -574,6 +574,10 @@
             position: relative;
             top: 3px;
           }
+          .q-table__sort-icon {
+            position: relative;
+            top: 2.5px;
+          }
           &.sorted {
             .q-th__title {
               border-bottom: 1px solid black;
@@ -581,8 +585,9 @@
               position: relative;
             }
           }
-          &.q-th__smaile.sorted {       
+          &.q-th__smaile.sorted {   
             i {
+              top: inherit;
               &:after {
                 bottom: -22px;
                 @media (max-width: 1441px) {
