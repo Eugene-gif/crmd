@@ -1103,6 +1103,7 @@
           justify-content: flex-end;
           padding-bottom: 0;
           padding-right: 0;
+          flex:  0 1 auto;
         }
         .q-td-square,
         .q-td-address,
@@ -1114,19 +1115,19 @@
         .q-td-square {
           order: 8;
           margin-top: 0;
-          flex: 0 0 max-content;
+          flex: 0 0 auto;
           padding-right: 20px;
         }
         .q-td-address {
           order: 9;
-          flex: 0 0 max-content;
+          flex: 0 0 auto;
           margin-top: 0;
           padding-left: 0;
         }
         .q-td-customer {
           order: 10;
           margin-top: 0;
-          flex: 1 1 max-content;
+          flex: 1 1 auto;
           margin-left: auto;
           justify-content: flex-end;
           .text:before {
@@ -1136,7 +1137,7 @@
         
         .q-td-readiness,
         .q-td-payment{
-          flex: 0 0 max-content;
+          flex: 0 0 auto;
           order: 4;
           padding-left: 26px;
           padding-right: 5px;
@@ -1171,12 +1172,13 @@
           padding-right: 25px;
           padding-left: 77px;
           justify-content: flex-end;
+          flex:  0 1 auto;
         }
         
 
         .q-td-share {
-          flex: 1 1 max-content;
-          max-width: max-content;
+          flex: 1 1 auto;
+          max-width: auto;
           padding-right: 0;
           order: 2;
           margin-left: auto;
@@ -1189,7 +1191,7 @@
               .q-btn {
               }
               .q-td-share__btn__limit {
-                width: max-content;
+                width: auto;
                 margin-left: 8px;
                 margin-right: 8px;
               }
