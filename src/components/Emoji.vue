@@ -301,13 +301,13 @@ export default {
         if (val === 'prev') {
           nextSlideIndex = indexCurrent - 1
           if (nextSlideIndex < 0) {
-            nextSlideIndex = 0
+            nextSlideIndex = lengthTabs
           }
         }
         if (val === 'next') {
           nextSlideIndex = indexCurrent + 1
           if (nextSlideIndex > lengthTabs) {
-            nextSlideIndex = lengthTabs
+            nextSlideIndex = 0
           }
         }
         tab.value = tabList[nextSlideIndex]
