@@ -79,6 +79,20 @@
             display: none;
           }
         }
+        .q-field__native {
+          span {
+            &:after {
+              content: '';
+              width: 8px;
+              height: 5px;
+              background: url(../assets/arrow-down.svg);
+              display: inline-block;
+              opacity: 0.3;
+              vertical-align: middle;
+              margin-left: 6px;
+            }
+          }
+        }
       }
     }
     .sorted-btns {
@@ -86,8 +100,10 @@
       margin-right: 16px;
       .q-icon {
         &:last-child {
-          opacity: 0.3;
-          margin-left: 13px;
+          margin-left: 5px;
+          svg {
+            opacity: 0.3;
+          }
         }
       }
     }

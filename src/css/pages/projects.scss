@@ -28,6 +28,12 @@
         display: inherit;
         .sorted-btns {
           margin-right: 0;
+          .q-icon {
+            width: 19px;
+            height: 19px;
+            border-radius: 100%;
+            background: $grey-3;
+          }
         }
       }
     }
