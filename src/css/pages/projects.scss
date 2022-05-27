@@ -39,5 +39,95 @@
     }
     
   }
-  
+}
+
+
+// внутренняя страница проекта
+.page-project {
+  .head-btns {
+    margin-left: auto;
+  }
+  .header-btns {
+    padding-top: 42px;
+    .q-btn {
+      margin-top: 5px;
+    }
+  }
+  .header-btns-2 {
+    .q-btn {
+      margin-top: 5px;
+      .q-icon {
+        position: relative;
+        sup {
+          position: absolute;
+          background: #73C949;
+          width: 15px;
+          height: 15px;
+          border-radius: 100%;
+          font-weight: 500;
+          font-size: 8px;
+          line-height: 15px;
+          text-align: center;
+          color: #FFFFFF;
+          left: 10px;
+          top: -4px;
+        }
+      }
+    }
+  }
+  .project-sections {
+    .q-expansion-item {
+      .q-item {
+        display: flex;
+        align-items: center;
+        border-top: 1px solid $grey-3;
+        padding: 34px 0 33px 0;
+        .q-focus-helper {
+          display: none;
+        }
+        .title {
+          font-weight: 700;
+          font-size: 24px;
+          line-height: 25px;
+          letter-spacing: -0.02em;
+          color: #000000;          
+        }
+        .settings-icon {
+          opacity: 0.3;
+          margin-left: auto;
+        }
+        .q-expansion-item__toggle-icon {
+          width: 35px;
+          height: 35px;
+          background: $grey-3;
+          border-radius: 100%;
+          margin-left: 29px;
+        }
+      }
+    }
+  }
+  .dashboard {
+    margin-top: 41px;
+    .q-card {
+      display: flex;
+      .q-card__section {
+        padding: 0;
+        
+        &:first-child,
+        &:last-child {
+          flex: 1 1 calc(50% - 30px);
+        }
+        &:first-child {
+          margin-right: 30px;
+        }
+        &:last-child {
+          margin-left: 30px;
+          img {
+            width: 100%;
+            border-radius: 10px;
+          }
+        }
+      }
+    }
+  }
 }
