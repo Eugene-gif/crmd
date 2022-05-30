@@ -44,6 +44,44 @@
 
 // внутренняя страница проекта
 .page-project {
+  .link-icon {
+    position: relative;
+    svg {
+      opacity: 0.3;
+    }
+    .circle {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      top: 0;
+      right: 2px;
+      z-index: 2;
+      &:after {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #73C949;
+        border-radius: 100%;
+        display: block;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        margin: auto;
+      }
+      &:before {
+        content: '';
+        width: 10px;
+        height: 5px;
+        position: absolute;
+        background: white;
+        top: 2px;
+        right: -1px;
+        z-index: 1;
+        display: block;
+      }
+    }
+  }
   .head-btns {
     margin-left: auto;
   }
@@ -77,31 +115,37 @@
   }
   .project-sections {
     .q-expansion-item {
-      .q-item {
-        display: flex;
-        align-items: center;
-        border-top: 1px solid $grey-3;
-        padding: 34px 0 33px 0;
-        .q-focus-helper {
-          display: none;
-        }
-        .title {
-          font-weight: 700;
-          font-size: 24px;
-          line-height: 25px;
-          letter-spacing: -0.02em;
-          color: #000000;          
-        }
-        .settings-icon {
-          opacity: 0.3;
-          margin-left: auto;
-        }
-        .q-expansion-item__toggle-icon {
-          width: 35px;
-          height: 35px;
-          background: $grey-3;
-          border-radius: 100%;
-          margin-left: 29px;
+      .q-expansion-item__border--bottom {
+        display: none !important;
+      }
+      .q-expansion-item__container {
+        
+        & > .q-item {
+          display: flex;
+          align-items: center;
+          border-top: 1px solid $grey-3;
+          padding: 34px 0 33px 0;
+          .q-focus-helper {
+            display: none;
+          }
+          .title {
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 25px;
+            letter-spacing: -0.02em;
+            color: #000000;          
+          }
+          .settings-icon {
+            opacity: 0.3;
+            margin-left: auto;
+          }
+          .q-expansion-item__toggle-icon {
+            width: 35px;
+            height: 35px;
+            background: $grey-3;
+            border-radius: 100%;
+            margin-left: 29px;
+          }
         }
       }
     }
@@ -110,6 +154,7 @@
     margin-top: 41px;
     .q-card {
       display: flex;
+      align-items: stretch;
       .q-card__section {
         padding: 0;
         
@@ -119,13 +164,251 @@
         }
         &:first-child {
           margin-right: 30px;
+          display: flex;
+          flex-direction: column;
+          .section {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            .square {
+              display: flex;
+              flex-direction: column;
+              padding: 19px 24px 14px 24px;
+              border: 1px solid #F0F0F0;
+              border-radius: 10px;
+              .title {
+                color: $grey-5;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 16px;
+              }
+              .number {
+                font-weight: 500;
+                font-size: 55px;
+                line-height: 55px;
+                color: black;
+                margin-top: 26px;
+              }
+            }
+            .info {
+              flex-direction: column;
+              max-width: 211px;
+              margin-left: 60px;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 20px;
+              color: $grey-5;
+              .adres {
+                margin: 0;
+              }
+              .type { 
+                margin: 0; 
+                margin-top: 19px;
+              }
+            }
+          }
+          
+          .section-toolbar {
+            flex: 0 0 100%;
+            border: 1px solid #F0F0F0;
+            border-radius: 10px;
+            padding: 33px 26px 35px 25px;
+            margin-top: auto;
+            max-height: 168px;
+            .item {
+              &:first-child {
+                margin-bottom: 24px;
+              }
+              .title {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 18px;
+                color: black;
+                display: flex;
+                justify-content: space-between;
+                span {
+                  font-weight: 500;
+                  font-size: 18px;
+                  line-height: 18px;
+                  letter-spacing: -0.02em;
+                  color: black;
+                }
+              }
+              .toolbar {
+                width: 100%;
+                height: 6px;
+                margin-left: auto;
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 14px;
+                margin-right: 0;
+                margin-bottom: 0;
+                background-color: #ECECEC;
+                border-radius: 4px;
+                
+                .toolbar-procent {
+                  height: 6px;
+                  border-radius: 4px;
+                }
+              }
+            }
+          }
         }
         &:last-child {
           margin-left: 30px;
           img {
             width: 100%;
+            height: 100%;
             border-radius: 10px;
           }
+        }
+      }
+    }
+  }
+  .graffic {
+    margin-top: 34px;
+  }
+  .documents {
+    margin-top: 61px;
+    .q-card {
+      .q-card__section {
+        padding: 0;
+      }
+    }
+  }
+  .data {
+    margin-top: 61px;
+    .q-card {
+      .q-card__section {
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 0;
+        .q-item {
+          flex-direction: column;
+          padding: 0;
+          min-height: auto;
+          .title {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 18px;
+            color: black;
+            margin-bottom: 20px;
+          }
+          &:nth-child(1) {
+            flex: 1 1 100%;
+            padding-right: 60px;
+            max-width: 828px;
+          }
+          &:nth-child(2) {
+            flex: 0 0 170px;
+            max-width: 170px;
+            padding-right: 60px;
+          }
+          &:nth-child(3) {
+            flex: 0 0 322px;
+            max-width: 322px;
+          }
+        }
+        &.q-card-head {
+          margin-bottom: 28px;
+        }
+        &.q-card-content {
+          .q-item {
+            margin-bottom: 10px;
+          }
+        }
+        &.q-card-add {
+          padding-top: 20px;
+        }
+        &.q-card-all {
+          padding-top: 58px;
+          .q-input {
+            .block {
+              font-weight: 400;
+              font-size: 18px;
+              line-height: 18px;
+              opacity: 0.6;
+            }
+          }
+        }
+      }
+    }
+  }
+  .estimates {
+    margin-top: 61px;
+    .q-card {
+      display: flex;
+      flex-wrap: wrap;
+      .q-card__section {
+        padding: 27px 25px 26px 25px;
+        border: 1px solid #F0F0F0;
+        border-radius: 10px;
+        flex: 0 0 calc(25% - 45px);
+        max-width: calc(25% - 30px);
+        margin: 0 30px 60px 30px;
+        min-height: 307px;
+        display: flex;
+        flex-direction: column;
+        &:nth-child(1) {
+          margin-left: 0;
+        }
+        &:nth-child(4n) {
+          margin-right: 0;
+        } 
+        &:nth-child(4n + 1 ) {
+          margin-left: 0;
+        } 
+        .title {
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 21px;
+          color: black;
+        }
+        .text {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 16px;
+          color: $grey-5;
+          margin-top: auto;
+        }
+        .access {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: space-between;
+          margin-top: 32px;
+          .text {
+            margin-top: 0;
+          }
+        }
+        .q-list-share {
+          margin-top: 18px;
+          .q-item-add {
+            margin-left: 2px;
+          }
+          .q-item-action {
+            margin-left: auto;
+            .q-td__action {
+              .q-btn {
+                opacity: 1;
+                &:hover {
+                  background: none;
+                }
+              }
+            }
+          }
+        }
+      }
+      .q-card-add {
+        align-items: center;
+        justify-content: center;
+        .q-btn {
+          width: 100px;
+          height: 100px;
+          border-radius: 100%;
+        }
+        .text {
+          margin-top: 41px;
+          text-align: center;
         }
       }
     }

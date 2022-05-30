@@ -28,6 +28,60 @@
 }
 
 
+.q-list-share {
+  display: flex;
+  .q-item {
+    padding: 0;
+    min-height: auto;
+    margin-right: 5px;
+    .q-btn {
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      min-height: auto;
+      border-radius: 100%;
+      overflow: hidden;
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.6;
+      }
+      &:active {
+        opacity: 0.3;
+      }
+      &:before {
+        box-shadow: none;
+      }
+      .q-focus-helper,
+      .q-ripple {
+        display: none;
+      }
+      img {
+        width: 100%;
+        object-fit: cover;
+        image-rendering: -webkit-optimize-contrast;
+      }
+    }
+    .q-td-share__btn__limit {
+      .block{
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 16px;
+        color: $grey-5;
+      }
+    }
+    .q-td-share__btn__add {
+      background: #F0F0F0;
+      .q-icon {
+        font-size: 12px;
+      }
+    }
+  }
+  .q-item-add {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
 .q-tooltip,
 .circle-warning-tooltip {
   font-weight: 400;

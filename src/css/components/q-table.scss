@@ -1376,6 +1376,103 @@
   }
 }
 
+.project-table {
+  .q-table__middle {
+    overflow: visible;
+  }
+  .q-table {
+    flex-direction: column;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+    thead {
+      tr {
+        th {
+          &.q-th__id,
+          &.q-th__action {
+            display: none;
+          }
+          &:nth-child(2) {
+            padding-left: 26px;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        border-radius: 10px;
+        td {
+          border-bottom: 1px solid $grey-3;
+          border-top: 1px solid $grey-3;
+          margin-bottom: 10px;
+          &:first-child {
+            border-left: 1px solid $grey-3;
+            border-radius: 10px 0 0 10px;
+          }
+          &:last-child {
+            border-right: 1px solid $grey-3;
+            border-radius: 0 10px 10px 0;
+          }
+          .content {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 16px;
+            color: $grey-5;
+          }
+          &.q-td-name {
+            padding-left: 26px;
+            .content {
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 18px;
+              color: black;
+            }
+          }
+          &.q-td-status {
+            .row {
+              .circle {
+                width: 5px;
+                height: 5px;
+                margin-right: 16px;
+                border-radius: 100%;
+                &.active {
+                  background: #FF744C;
+                }
+              }
+              .q-td__action {
+                margin-left: auto;
+              }
+            }
+          }
+        }
+        &:hover {
+          td {
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+      
+    }
+  }
+  .q-table__bottom {
+    border-top: none;
+    padding: 0;
+    tr {
+      display: flex;
+      width: 100%;
+      .q-btn {
+        width: 100%;
+        padding: 0 32px 0 26px;
+        min-height: 67px;
+        border-radius: 10px;
+        .q-btn__content {
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
 
 .q-td__action {
   position: relative;

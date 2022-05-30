@@ -73,7 +73,9 @@
             3
           </sup>
         </q-icon>
-        <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-md" />
+        <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-md link-icon">
+          <div class="circle"></div>
+        </q-icon>
         <div class="block text-grey-5">Настройки доступа</div>
       </q-btn>
       <q-btn
@@ -114,18 +116,396 @@
       
         <q-card>
           <q-card-section>
-            <q-item>
-              
-            </q-item>
-            <q-item>
-              
-            </q-item>
+            <div class="section">
+              <q-item class="square">
+                <div class="title">Площадь</div>
+                <div class="number">115 м2</div>
+              </q-item>
+              <q-item class="info">
+                <p class="adres">
+                  Адрес: г. Краснодар,
+                  ул. Ленина, д. 15
+                </p>
+                <p class="type">
+                  Тип: Квартира<br>
+                  Заказчик: Иванов Петр
+                </p>
+              </q-item>
+            </div>
+            <div class="q-item section-toolbar">
+              <div class="item">
+                <div class="title">Прогресс проекта <span>40%</span></div>
+                <div class="flex toolbar">
+                  <div class="toolbar-procent bg-primary" style="width: 40%"></div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="title">Оплата <span>20%</span></div>
+                <div class="flex toolbar">
+                  <div class="toolbar-procent bg-positive" style="width: 30%"></div>
+                </div>
+              </div>
+            </div>
           </q-card-section>
           <q-card-section>
             <img src="~assets/project-1.jpg" alt="">
           </q-card-section>
         </q-card>
       </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="graffic"
+      >
+      <template v-slot:header>
+        <div class="title">
+          План-график проекта
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section>
+            
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="documents"
+      >
+      <template v-slot:header>
+        <div class="title">
+          Документы
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section>
+            <q-table
+              flat
+              :rows="rows"
+              :columns="columns"
+              row-key="id"
+              hide-pagination
+              class="my-table project-table "
+              :pagination="pagination"
+            >
+              <template v-slot:header-cell-id="props">
+                <q-th :props="props" class="q-th__id">
+                </q-th>
+              </template>
+              <template v-slot:header-cell-action="props">
+                <q-th :props="props" class="q-th__action">
+                </q-th>
+              </template>
+              <template v-slot:header-cell="props">
+                <q-th :props="props">
+                  <span class="q-th__title">
+                    {{ props.col.label }}
+                  </span>
+                  <i
+                    class="notranslate material-icons q-icon q-table__sort-icon q-table__sort-icon--left"
+                    aria-hidden="true"
+                    role="presentation"
+                  >
+                    <q-icon size="7px" color="grey-5" name="svguse:icons/financeTable.svg#tableArrrow" />
+                  </i>
+                </q-th>
+              </template>
+
+              <template #body="props">
+                <q-tr
+                  :props="props"
+                >
+                  <q-td
+                    key="name"
+                    :props="props"
+                    class="q-td-name"
+                  >
+                    <div class="content">{{props.row.name}}</div>
+                  </q-td>
+                  <q-td
+                    key="sum"
+                    :props="props"
+                  >
+                    <div class="content">{{props.row.sum}} руб.</div>
+                  </q-td>
+                  <q-td
+                    key="changed"
+                    :props="props"
+                  >
+                    <div class="content">{{props.row.changed}}</div>
+                  </q-td>
+                  <q-td
+                    key="created"
+                    :props="props"
+                  >
+                    <div class="content">{{props.row.created}}</div>
+                  </q-td>
+                  <q-td
+                    key="status"
+                    :props="props"
+                    class="q-td-status"
+                  >
+                    <div class="row items-center">
+                      <div class="circle" :class="{active: props.row.status > 1}"></div>
+                      <div class="content">{{props.row.statusName}}</div>
+                      <ActionBtn 
+                        :propsEl="props"
+                        :offsetYX="[55, -258]"
+                      />
+                    </div>
+                  </q-td>
+                </q-tr>
+              </template>
+              <template #bottom>
+                <q-tr
+                  :props="props"
+                >
+                  <q-btn
+                    unelevated
+                    no-caps
+                    class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+                  >
+                    <div class="block">Создать новый документ</div>
+                    <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
+                  </q-btn>
+                </q-tr>
+              </template>
+            </q-table>
+
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="data"
+      >
+      <template v-slot:header>
+        <div class="title">
+          Данные объекта
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section class="q-card-head">
+            <q-item>
+              <div class="title">Адрес</div>
+              <q-input v-model="text" class="my-input bg-grey-3" />
+            </q-item>
+            <q-item>
+              <div class="title">Площадь, м2</div>
+              <q-input v-model="text2" class="my-input bg-grey-3" />
+            </q-item>
+            <q-item>
+              <div class="title">Тип</div>
+              <q-select
+                filled
+                v-model="select1"
+                :options="type"
+                stack-label
+                placeholder="Выбрать"
+                dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
+                class="my-select"
+                behavior="menu"
+                ref="selectDropbox"
+                popup-content-class="my-select-menu"
+              />
+            </q-item>
+          </q-card-section>
+          <q-card-section>
+            <q-item>
+              <div class="title">Помещения</div>
+            </q-item>
+            <q-item>
+              <div class="title">Площадь, м2</div>
+            </q-item>
+          </q-card-section>
+          <q-card-section 
+            v-for="premis in premises"
+            :key="premis"
+            class="q-card-content"
+          >
+            <q-item>
+              <q-input v-model="premis.input" class="my-input bg-grey-3" placeholder="Введите название">
+                <template v-slot:append>
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" />
+                </template>
+              </q-input>
+            </q-item>
+            <q-item>
+              <q-input v-model="premis.s" class="my-input bg-grey-3" />
+            </q-item>
+          </q-card-section>
+          <q-card-section 
+            class="q-card-add"
+          >
+            <q-item>
+              <q-btn
+                unelevated
+                no-caps
+                outline
+                class="bg-white text-grey-3 my-btn my-effect h-dark-lite"
+                style="border-radius: 10px;"
+                padding="24px 24px 24px 19px"
+              >
+                <div class="block text-grey-5">Создать новый документ</div>
+                <q-icon
+                  name="svguse:icons/allIcons.svg#plus"
+                  size="12px"
+                  color="black"
+                  style="opacity: 0.3;margin-left: auto;"
+                />
+              </q-btn>
+            </q-item>
+          </q-card-section>
+          <q-card-section 
+            class="q-card-all"
+          >
+            <q-item>
+              <div class="title">Общий гонорар</div>
+              <q-input v-model="text4" class="my-input bg-grey-3" placeholder="Укажите общий гонорар">
+                <template v-slot:append>
+                  <div class="block">руб.</div>
+                </template>
+              </q-input>
+            </q-item>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="estimates"
+      >
+      <template v-slot:header>
+        <div class="title">
+          Сметы
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section>
+            <div class="title">
+              Общая смета проекта
+            </div>
+            <div class="text">
+              Сумма всех<br>
+              отдельных смет
+            </div>
+          </q-card-section>
+          <q-card-section
+            v-for="item in estimates" :key="item.id"
+          >
+            <div class="title">{{item.name}}</div>
+            <div class="text">
+              Изменена: {{item.changed}} <br>
+              Создана: {{item.created}}
+            </div>
+            <div class="access q-pr-xs">
+              <div class="text">
+                Общий доступ
+              </div>
+              <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
+                <div class="circle"></div>
+              </q-icon>
+            </div>
+            <q-list class="q-list-share">
+              <q-item
+                v-for="el in item.share.slice(0, 1)" :key="el.link"
+              >
+                <q-btn :to="el.link">
+                  <img :src="el.icon" alt="">
+                </q-btn>
+              </q-item>
+              <q-item
+                v-if="item.share.length > 1"
+              >
+                <q-btn class="q-td-share__btn__limit" :label="`+${item.share.length - 1}`" />
+              </q-item>
+              <q-item class="q-item-add">
+                <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
+              </q-item>
+              <q-item class="q-item-action">
+                <ActionBtn 
+                  :propsEl="item.id"
+                  :offsetYX="[55, -266]"
+                />
+              </q-item>
+            </q-list>
+          </q-card-section>
+          <q-card-section class="q-card-add">
+            <q-btn
+              rounded
+              unelevated
+              no-caps
+              icon="svguse:icons/btnIcons.svg#plus"
+              class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+            />
+            <div class="text">
+              Добавить<br>
+              смету
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="visual"
+      >
+      <template v-slot:header>
+        <div class="title">
+          Визуал
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section>
+            <img src="" alt="">
+            <div class="row desc">
+              <div class="title"></div>
+            </div>
+            <div class="row security">
+              <q-btn
+                rounded
+                unelevated
+                no-caps
+                class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+                padding="9px 14px"
+              >
+                Доступ по ссылке
+              </q-btn>
+              <!-- <q-list class="q-list-share">
+                <q-item
+                  v-for="el in item.share.slice(0, 1)" :key="el.link"
+                >
+                  <q-btn :to="el.link">
+                    <img :src="el.icon" alt="">
+                  </q-btn>
+                </q-item>
+                <q-item
+                  v-if="item.share.length > 1"
+                >
+                  <q-btn class="q-td-share__btn__limit" :label="`+${item.share.length - 1}`" />
+                </q-item>
+                <q-item class="q-item-add">
+                  <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
+                </q-item>
+              </q-list> -->
+            </div>
+            <!-- action -->
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
     </q-list>
   </q-page>
 </template>
@@ -136,24 +516,43 @@ import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref } from 'vue'
 
 const columns = [
-  { name: 'image', label: '', field: 'image', align: 'left' },
-  { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
-  { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
-  { name: 'type', label: 'Тип', field: 'type', align: 'left', sortable: true },
-  { name: 'square', label: 'Площадь', field: 'square', align: 'left', sortable: true },
-  { name: 'customer', label: 'Заказчик', field: 'customer', align: 'left', sortable: true },
+  { name: 'id', label: '', field: 'id', align: 'left' },
+  { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
+  { name: 'sum', label: 'Сумма', field: 'sum', align: 'left', sortable: true },
   { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
   { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
-  { name: 'timing', label: 'Сроки', field: 'timing', align: 'left', sortable: true },
-  { name: 'payment', label: 'Оплата', field: 'payment', align: 'left', sortable: true },
-  { name: 'readiness', label: 'Готовность', field: 'readiness', align: 'left', sortable: true },
-  { name: 'view', label: '', field: 'view', align: 'right' },
-  { name: 'action', label: '', field: 'action', align: 'left' },
-  { name: 'share', label: '', field: 'share', align: 'left' },
-  { name: 'address', label: '', field: 'address', align: 'left' }
+  { name: 'status', label: 'Статус', field: 'status', align: 'left', sortable: true }
 ]
-// /icons/anton.jpg
-// /icons/stroipro.jpg
+
+const rows = ref([
+  {
+    id: 1,
+    name: 'Договор №150',
+    sum: '900 000',
+    changed: '10:35',
+    created: 'Вчера',
+    status: 1,
+    statusName: 'Подписан'
+  },
+  {
+    id: 2,
+    name: 'Счет №25',
+    sum: '80 000',
+    changed: '10:35',
+    created: 'Позавчера',
+    status: 2,
+    statusName: 'Не оплачен'
+  },
+  {
+    id: 3,
+    name: 'Счет №25',
+    sum: '80 000',
+    changed: '10:35',
+    created: 'Позавчера',
+    status: 3,
+    statusName: 'Отправка'
+  },
+])
 
 export default {
   name: 'PageFinance',
@@ -163,22 +562,354 @@ export default {
   },
   setup () {
     const dialog = ref(false)
-
+    const estimates = ref([
+      {
+        id: 1,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 2,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 3,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 4,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 5,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 6,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 7,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 8,
+        name: 'Напольные покрытия',
+        changed: '10:35',
+        created: '24/05/2021',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      
+    ])
+    const visual = ref([
+      {
+        images: [
+          '/project-1.jpg',
+          '',
+          '',
+        ],
+        name: '',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      }
+    ])
     return {
-      model: ref('Имя'),
-      tab: ref('tiles'),
-      options2: [
-        'Имя',
-        'Тип',
-        'Площадь',
-        'Заказчик',
-        'Изменен',
-        'Создан',
-        'Сроки',
-        'Оплата',
-        'Готовность'
-      ],
+      columns,
+      rows,
       dialog,
+      select1: ref(
+        {
+          label: 'Квартира',
+          value: 1
+        },
+      ),
+      type: [
+        {
+          label: 'Квартира',
+          value: 1
+        },
+        {
+          label: 'Офис',
+          value: 2
+        },
+        {
+          label: 'Коттедж',
+          value: 3
+        },
+        {
+          label: 'Бар',
+          value: 4
+        }
+      ],
+      premises: ref([
+        {
+          input: 'Кухня',
+          s: 115
+        },
+        {
+          input: 'Прихожая',
+          s: 5
+        },
+        {
+          input: 'Спальня',
+          s: 13
+        },
+        {
+          input: '',
+          s: 0
+        },
+      ]),
+      estimates,
+      visual,
+      text: ref('г. Краснодар, ул. Ленина, д. 15'),
+      text2: ref('115'),
+      text3: ref(''),
+      text4: ref(''),
+      text5: ref(''),
       maximizedToggle: ref(true),
       modalFalse() {
         dialog.value = false
