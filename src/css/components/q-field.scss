@@ -663,6 +663,13 @@
   .q-toggle__inner--falsy + .q-toggle__label {
     opacity: 0.3;
   }
+  @media (max-width: 772px) {
+    .q-toggle__label {
+      font-size: 12px;
+      line-height: 12px;
+      margin-top: 7px;
+    }
+  }
 }
 
 .q-field {

@@ -1170,7 +1170,7 @@
     }
 
     .files {
-      padding-bottom: 60px;
+      padding-bottom: 17px;
       .q-card {
         .q-card__section {
           padding: 0;
@@ -1288,9 +1288,21 @@
             .q-btn {
               padding: 0 20px 0 20px;
               min-height: 43px;
+              background: none !important;
+              border: 1px solid #F0F0F0;
+              border-radius: 6px;
             }
           }
         }
+      }
+    }
+    .q-card-prev {
+      padding-top: 20px;
+      padding-left: 15px;
+      padding-right: 15px;
+      .q-btn {
+        padding: 12px 24px 12px 19px !important;
+        border-radius: 6px !important;
       }
     }
   }
