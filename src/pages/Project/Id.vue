@@ -4,7 +4,7 @@
     :maximized="maximizedToggle"
     transition-show="fade"
     transition-hide="fade" 
-    class="my-dialog projects-dialog"
+    class="my-dialog projects-dialog projects-dialog-create"
   >
     <Dialog @modalFalse="modalFalse" />
   </q-dialog>
@@ -67,6 +67,7 @@
         outline
         color="grey-3"
         class="q-mr-xs my-btn my-effect h-dark"
+        @click="dialog = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#user" size="16px" class="q-mr-md">
           <sup>
@@ -132,6 +133,10 @@
                 </p>
               </q-item>
             </div>
+            <div class="img-section mb-visible">
+              <img src="~assets/project-1-mb.jpg" alt="">
+            </div>
+            
             <div class="q-item section-toolbar">
               <div class="item">
                 <div class="title">Прогресс проекта <span>40%</span></div>
@@ -145,9 +150,9 @@
                   <div class="toolbar-procent bg-positive" style="width: 30%"></div>
                 </div>
               </div>
-            </div>
+            </div> 
           </q-card-section>
-          <q-card-section>
+          <q-card-section class="img-section">
             <img src="~assets/project-1.jpg" alt="">
           </q-card-section>
         </q-card>
@@ -184,14 +189,29 @@
       </template>
         <q-card>
           <q-card-section>
+            <div class="sorted">
+              <div class="sorted-section mb-visible">
+                <div class="title">Сортировка: </div>
+                <q-select
+                  borderless
+                  v-model="model"
+                  :options="columns"
+                  behavior="menu"
+                  popup-content-class="select-menu-mobile"
+                />
+              </div>
+              <div class="sorted-btns mb-visible">
+                <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
+                <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
+              </div>
+            </div>
             <q-table
               flat
               :rows="rows"
               :columns="columns"
               row-key="id"
               hide-pagination
-              class="my-table project-table "
-              :pagination="pagination"
+              class="my-table project-table"
             >
               <template v-slot:header-cell-id="props">
                 <q-th :props="props" class="q-th__id">
@@ -230,18 +250,21 @@
                   <q-td
                     key="sum"
                     :props="props"
+                    class="q-td-sum"
                   >
                     <div class="content">{{props.row.sum}} руб.</div>
                   </q-td>
                   <q-td
                     key="changed"
                     :props="props"
+                    class="q-td-changed"
                   >
                     <div class="content">{{props.row.changed}}</div>
                   </q-td>
                   <q-td
                     key="created"
                     :props="props"
+                    class="q-td-created"
                   >
                     <div class="content">{{props.row.created}}</div>
                   </q-td>
@@ -318,7 +341,7 @@
               />
             </q-item>
           </q-card-section>
-          <q-card-section>
+          <q-card-section class="q-card-titles">
             <q-item>
               <div class="title">Помещения</div>
             </q-item>
@@ -329,7 +352,7 @@
           <q-card-section 
             v-for="premis in premises"
             :key="premis"
-            class="q-card-content"
+            class="q-card-content q-card-room"
           >
             <q-item>
               <q-input v-model="premis.input" class="my-input bg-grey-3" placeholder="Введите название">
@@ -354,7 +377,7 @@
                 style="border-radius: 10px;"
                 padding="24px 24px 24px 19px"
               >
-                <div class="block text-grey-5">Создать новый документ</div>
+                <div class="block text-grey-5">Добавить</div>
                 <q-icon
                   name="svguse:icons/allIcons.svg#plus"
                   size="12px"
@@ -446,13 +469,30 @@
               unelevated
               no-caps
               icon="svguse:icons/btnIcons.svg#plus"
-              class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+              class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite lg-visible"
             />
-            <div class="text">
+            <div class="text lg-visible">
               Добавить<br>
               смету
             </div>
+            <q-btn
+                unelevated
+                no-caps
+                outline
+                class="bg-white text-grey-3 my-btn my-effect h-dark-lite mb-visible"
+                style="border-radius: 10px;"
+                padding="24px 24px 24px 19px"
+              >
+                <div class="block text-grey-5">Добавить</div>
+                <q-icon
+                  name="svguse:icons/allIcons.svg#plus"
+                  size="12px"
+                  color="black"
+                  style="opacity: 0.3;margin-left: auto;"
+                />
+            </q-btn>
           </q-card-section>
+          
         </q-card>
       </q-expansion-item>
 
@@ -468,24 +508,35 @@
         <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
       </template>
         <q-card>
-          <q-card-section>
-            <img src="" alt="">
+          <q-card-section
+            v-for="item in visual"
+            :key="item.id"
+          >
+            <VisualSlider
+              :images="item.images"
+            />
             <div class="row desc">
-              <div class="title"></div>
+              <div class="title">{{item.name}}</div>
+              <ActionBtn 
+                :propsEl="item.id"
+                :offsetYX="[55, -266]"
+              />
             </div>
             <div class="row security">
               <q-btn
-                rounded
                 unelevated
                 no-caps
                 class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
                 padding="9px 14px"
               >
                 Доступ по ссылке
+                <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
+                  <div class="circle"></div>
+                </q-icon>
               </q-btn>
-              <!-- <q-list class="q-list-share">
+              <q-list class="q-list-share">
                 <q-item
-                  v-for="el in item.share.slice(0, 1)" :key="el.link"
+                  v-for="el in item.share.slice(0, 4)" :key="el.link"
                 >
                   <q-btn :to="el.link">
                     <img :src="el.icon" alt="">
@@ -499,30 +550,252 @@
                 <q-item class="q-item-add">
                   <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
                 </q-item>
-              </q-list> -->
+              </q-list>
             </div>
             <!-- action -->
           </q-card-section>
+          <q-card-section class="q-card-btn">
+            <q-btn
+              unelevated
+              no-caps
+              class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite " 
+            >
+              <div class="block">Добавить альбом</div>
+              <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
+            </q-btn>
+          </q-card-section>
         </q-card>
       </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="visual visual-2"
+      >
+      <template v-slot:header>
+        <div class="title">
+          Визуал
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section
+            v-for="item in visual"
+            :key="item.id"
+          >
+            <VisualSlider
+              :images="item.images"
+            />
+            <div class="row desc">
+              <div class="title">{{item.name}}</div>
+              <ActionBtn 
+                :propsEl="item.id"
+                :offsetYX="[55, -266]"
+              />
+            </div>
+            <div class="row security">
+              <q-btn
+                unelevated
+                no-caps
+                class="bg-white text-grey-5 my-btn my-effect h-dark-lite"
+                padding="9px 14px"
+              >
+                Доступ по ссылке
+                <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
+                  <div class="circle"></div>
+                </q-icon>
+              </q-btn>
+              <br>
+              <q-list class="q-list-share">
+                <q-item
+                  v-for="el in item.share.slice(0, 2)" :key="el.link"
+                >
+                  <q-btn :to="el.link">
+                    <img :src="el.icon" alt="">
+                  </q-btn>
+                </q-item>
+                <q-item
+                  v-if="item.share.length > 2"
+                >
+                  <q-btn class="q-td-share__btn__limit" :label="`+${item.share.length - 2}`" />
+                </q-item>
+                <q-item class="q-item-add">
+                  <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
+                </q-item>
+              </q-list>
+            </div>
+            <!-- action -->
+          </q-card-section>
+          <q-card-section class="q-card-add">
+            <q-btn
+              rounded
+              unelevated
+              no-caps
+              icon="svguse:icons/btnIcons.svg#plus"
+              class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+            />
+            <div class="text">
+              Добавить<br>
+              альбом
+            </div>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
+      <q-expansion-item
+        expand-separator
+        default-opened
+        class="files"
+      >
+      <template v-slot:header>
+        <div class="title">
+          Приложенные файлы
+        </div>
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+      </template>
+        <q-card>
+          <q-card-section>
+            <q-table
+              flat
+              :rows="rows2"
+              :columns="columns2"
+              row-key="id"
+              hide-pagination
+              class="my-table project-table"
+            >
+              <template v-slot:header-cell-id="props">
+                <q-th :props="props" class="q-th__id">
+                </q-th>
+              </template>
+              <template v-slot:header-cell-action="props">
+                <q-th :props="props" class="q-th__action">
+                </q-th>
+              </template>
+              <template v-slot:header-cell="props">
+                <q-th :props="props">
+                  <span class="q-th__title">
+                    {{ props.col.label }}
+                  </span>
+                  <i
+                    class="notranslate material-icons q-icon q-table__sort-icon q-table__sort-icon--left"
+                    aria-hidden="true"
+                    role="presentation"
+                  >
+                    <q-icon size="7px" color="grey-5" name="svguse:icons/financeTable.svg#tableArrrow" />
+                  </i>
+                </q-th>
+              </template>
+
+              <template #body="props">
+                <q-tr
+                  :props="props"
+                >
+                  <q-td
+                    key="name"
+                    :props="props"
+                    class="q-td-name"
+                  >
+                    <div class="row items-center">
+                      <q-icon size="17px" name="svguse:icons/allIcons.svg#download" class="q-mr-md" />
+                      <div class="content">{{props.row.name}}</div>
+                    </div>
+                    
+                  </q-td>
+                  <q-td
+                    key="created"
+                    :props="props"
+                    class="q-td-created"
+                  >
+                    <div class="content">{{props.row.created}}</div>
+                  </q-td>
+                  <q-td
+                    key="changed"
+                    :props="props"
+                    class="q-td-changed"
+                  >
+                    <div class="content">{{props.row.changed}}</div>
+                  </q-td>
+                  <q-td
+                    key="type"
+                    :props="props"
+                    class="q-td-type"
+                  >
+                    <div class="content">{{props.row.type}}</div>
+                  </q-td>
+                  <q-td
+                    key="size"
+                    :props="props"
+                    class="q-td-status"
+                  >
+                    <div class="row items-center">
+                      <div class="content">{{props.row.size}}</div>
+                      <ActionBtn 
+                        :propsEl="props"
+                        :offsetYX="[55, -258]"
+                      />
+                    </div>
+                  </q-td>
+                </q-tr>
+              </template>
+              <template #bottom>
+                <q-tr
+                  :props="props"
+                >
+                  <q-btn
+                    unelevated
+                    no-caps
+                    class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+                  >
+                    <div class="block">Загрузить файл</div>
+                    <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
+                  </q-btn>
+                </q-tr>
+              </template>
+            </q-table>
+          </q-card-section>
+        </q-card>
+      </q-expansion-item>
+
+      <div class="q-card-prev">
+        <q-btn
+            unelevated
+            no-caps
+            outline
+            class="bg-white text-grey-3 my-btn my-effect h-dark-lite"
+            style="border-radius: 10px;width: 100%;"
+            padding="24px 24px 24px 19px"
+          >
+            <div class="block text-grey-5">Назад к списку проектов</div>
+            <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
+          </q-btn>
+      </div>
 
     </q-list>
   </q-page>
 </template>
 
 <script>
-import Dialog from 'pages/Project/dialog.vue'
+import Dialog from 'pages/Project/dialog-create.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
+import VisualSlider from 'components/projects/VisualSlider.vue'
 import { ref } from 'vue'
 
-const columns = [
+const columns = ref([
   { name: 'id', label: '', field: 'id', align: 'left' },
   { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
   { name: 'sum', label: 'Сумма', field: 'sum', align: 'left', sortable: true },
   { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
   { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
   { name: 'status', label: 'Статус', field: 'status', align: 'left', sortable: true }
-]
+])
+const columns2 = ref([
+  { name: 'id', label: '', field: 'id', align: 'left' },
+  { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
+  { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
+  { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
+  { name: 'type', label: 'Тип', field: 'type', align: 'left', sortable: true },
+  { name: 'size', label: 'Размер', field: 'size', align: 'left', sortable: true }
+])
 
 const rows = ref([
   {
@@ -553,12 +826,31 @@ const rows = ref([
     statusName: 'Отправка'
   },
 ])
+const rows2 = ref([
+  {
+    id: 1,
+    name: 'Архив с 3д-моделями столов',
+    created: 'Позавчера',
+    changed: '14:23',
+    type: 'ZIP',
+    size: '1 мб',
+  },
+  {
+    id: 2,
+    name: 'Архив с 3д-моделями стульев',
+    created: '25 / 05 / 2021',
+    changed: '25 / 05 / 2021',
+    type: 'Ссылка',
+    size: '',
+  },
+])
 
 export default {
   name: 'PageFinance',
   components: {
     Dialog,
-    ActionBtn
+    ActionBtn,
+    VisualSlider
   },
   setup () {
     const dialog = ref(false)
@@ -823,12 +1115,13 @@ export default {
     ])
     const visual = ref([
       {
+        id: 1,
         images: [
           '/project-1.jpg',
-          '',
-          '',
+          '/project-2.jpg',
+          '/project-3.jpg',
         ],
-        name: '',
+        name: 'Планы, чертежи, схемы',
         share: [
           {
             icon: '/icons/anton.jpg',
@@ -855,11 +1148,118 @@ export default {
             link: ''
           }
         ]
-      }
+      },
+      {
+        id: 2,
+        images: [
+          '/project-1.jpg',
+          '/project-2.jpg',
+          '/project-3.jpg',
+        ],
+        name: 'Планы, чертежи, схемы',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 3,
+        images: [
+          '/project-1.jpg',
+          '/project-2.jpg',
+          '/project-3.jpg',
+        ],
+        name: 'Планы, чертежи, схемы',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
+      {
+        id: 4,
+        images: [
+          '/project-1.jpg',
+          '/project-2.jpg',
+          '/project-3.jpg',
+        ],
+        name: 'Планы, чертежи, схемы',
+        share: [
+          {
+            icon: '/icons/anton.jpg',
+            link: 's'
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/anton.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          },
+          {
+            icon: '/icons/stroipro.jpg',
+            link: ''
+          }
+        ]
+      },
     ])
     return {
       columns,
       rows,
+      columns2,
+      rows2,
       dialog,
       select1: ref(
         {
@@ -911,6 +1311,18 @@ export default {
       text4: ref(''),
       text5: ref(''),
       maximizedToggle: ref(true),
+      model: ref('Название'),
+      options2: [
+        'Имя',
+        'Тип',
+        'Площадь',
+        'Заказчик',
+        'Изменен',
+        'Создан',
+        'Сроки',
+        'Оплата',
+        'Готовность'
+      ],
       modalFalse() {
         dialog.value = false
       }

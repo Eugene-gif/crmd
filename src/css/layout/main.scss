@@ -126,6 +126,7 @@ $width-sm: 100%;
   .gorisont-nav {
     position: relative;
     display: flex;
+    border-top: 1px solid $grey-3;
     border-bottom: 1px solid $grey-3;
     padding: 0 10.5px;
     overflow-x: scroll !important;
@@ -265,7 +266,7 @@ $width-sm: 100%;
       min-width: 100%;
       margin: 0 auto;
       padding: 0 15px;
-      padding-top: 48px;
+      padding-top: 49px;
       padding-bottom: 20px;
     }
   }

@@ -577,6 +577,106 @@
   }
 }
 
+.projects-dialog-create {
+  .form-section-dropdown-1 {
+    margin-top: 60px;
+    border-top: 1px solid #F0F0F0;
+  }
+  .form-section-dropdown {
+    border-bottom: 1px solid #F0F0F0;
+    .q-separator {
+      visibility: hidden;
+    }
+    .q-item {
+      padding-left: 60px;
+      padding-right: 60px;
+      padding-top: 37px;
+      padding-bottom: 40px;
+      .q-focus-helper {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .q-item__label {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 25px;
+        color: black;
+      }
+    }
+    .q-expansion-item__content {
+      .q-card {
+        padding: 0;
+        flex-direction: column;
+        padding-bottom: 20px;
+        .q-card__section {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 20px;
+          .desc {
+            .title {
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 18px;
+              color: black;
+            }
+            .info {
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 14px;
+              color: $grey-5;
+              margin-top: 8px;
+              &:after {
+                content: '';
+              }
+            }
+            &-disactive {
+              .title,
+              .info {
+                opacity: 0.3;
+              }
+            }
+          }
+        }
+        
+      }
+    }
+  }
+  .form-section-btn {
+    margin-top: 60px !important;
+    .q-btn {
+      width: 100%;
+      box-shadow: 0px 7px 20px rgba(115, 201, 73, 0.3);
+      border-radius: 10px;
+      min-height: 60px;
+    }
+  }
+}
+
+.tooltip-project {
+  line-height: 1.5;
+  position: relative;
+  overflow: visible !important;
+  &:after,
+  &:before {
+    top: -20px;
+    left: 50%;
+    border: solid transparent;
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    transform: rotate(180deg);
+  }
+  &:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-top-color: #444444;
+    border-width: 10px;
+    margin-left: -10px;
+  }
+}
+// 
 
 .active {
   background: green;

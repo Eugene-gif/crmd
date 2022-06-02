@@ -154,7 +154,7 @@
       margin-right: 16px;
       .q-icon {
         &:last-child {
-          margin-left: 5px;
+          margin-left: 13px;
           svg {
             opacity: 0.3;
           }
@@ -194,6 +194,7 @@
 @import 'components/q-menu';
 @import 'components/q-checkbox';
 @import 'components/emoji';
+@import 'components/visual-slider';
 
 
 

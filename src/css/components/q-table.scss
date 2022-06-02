@@ -1473,6 +1473,23 @@
     }
   }
 }
+@media (max-width: 772px) {
+  .project-table {
+    
+    .q-table__middle {
+      overflow: visible;
+    }
+    .q-table {
+      flex-direction: column;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      padding-top: 18.5px;
+      thead {
+        display: none;
+      }
+    }
+  }
+}
 
 .q-td__action {
   position: relative;
