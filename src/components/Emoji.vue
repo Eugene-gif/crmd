@@ -289,7 +289,11 @@ export default {
         }
       ],
       emojiFunc(icon) {
-        emojiIcon.value = icon
+        emojiIcon.value = ''
+        function func() {
+          emojiIcon.value = icon
+        }
+        setTimeout(func, 10);
         openModal.value = false
       },
       nextTab(val) {

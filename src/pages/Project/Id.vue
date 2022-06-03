@@ -66,7 +66,7 @@
         no-caps
         outline
         color="grey-3"
-        class="q-mr-xs my-btn my-effect h-dark"
+        class="q-mr-xs my-btn my-effect h-dark my-btn--outline"
         @click="dialog = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#user" size="16px" class="q-mr-md">
@@ -84,7 +84,7 @@
         no-caps
         outline
         color="grey-3"
-        class="my-btn my-effect h-dark q-mr-xs"
+        class="my-btn my-effect h-dark q-mr-xs my-btn--outline"
       >
         <q-icon name="svguse:icons/btnIcons.svg#edit" size="17px" class="q-mr-sm" />
         <div class="block text-grey-5">Редактировать</div>
@@ -94,7 +94,7 @@
         no-caps
         outline
         color="grey-3"
-        class="my-btn my-effect h-dark q-mr-xs"
+        class="my-btn my-effect h-dark q-mr-xs my-btn--outline"
       >
         <q-icon name="svguse:icons/btnIcons.svg#delete" size="17px" class="q-mr-sm" />
         <div class="block text-grey-5">Удалить проект</div>

@@ -1,7 +1,7 @@
 .my-btn {
   padding: 12px 27.5px;
   .block {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 18px;
     line-height: 18px;
     letter-spacing: -0.02em;
@@ -25,6 +25,11 @@
         line-height: 14px;
       }
     }
+  }
+}
+.my-btn--outline {
+  .q-focus-helper {
+    display: none;
   }
 }
 

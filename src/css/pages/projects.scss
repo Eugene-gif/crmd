@@ -321,7 +321,7 @@
           &:nth-child(1) {
             flex: 1 1 100%;
             padding-right: 60px;
-            max-width: 828px;
+            max-width: calc(50% + 30px);
           }
           &:nth-child(2) {
             flex: 0 0 170px;
@@ -441,6 +441,12 @@
           width: 100px;
           height: 100px;
           border-radius: 100%;
+          &:first-child {
+            display: flex;
+            @media(max-width: 772px) {
+              display: none;
+            }
+          }
         }
         .text {
           margin-top: 41px;
