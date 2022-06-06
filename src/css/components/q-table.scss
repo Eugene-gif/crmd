@@ -599,6 +599,9 @@
         }
         .q-th__smaile {
           padding-left: 0;
+          i {
+            top: inherit;
+          }
           .notranslate {
             margin-left: 20px;
             @media (max-width: 1441px) {
@@ -1579,7 +1582,7 @@
   }
   &.visible {
     opacity: 1;
-    z-index: 9999;
+    z-index: 1999;
   }
 }
 

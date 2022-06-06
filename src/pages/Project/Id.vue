@@ -86,7 +86,7 @@
         color="grey-3"
         class="my-btn my-effect h-dark q-mr-xs my-btn--outline"
       >
-        <q-icon name="svguse:icons/btnIcons.svg#edit" size="17px" class="q-mr-sm" />
+        <q-icon name="svguse:icons/btnIcons.svg#edit" size="17px" class="q-mr-md" />
         <div class="block text-grey-5">Редактировать</div>
       </q-btn>
       <q-btn
@@ -96,7 +96,7 @@
         color="grey-3"
         class="my-btn my-effect h-dark q-mr-xs my-btn--outline"
       >
-        <q-icon name="svguse:icons/btnIcons.svg#delete" size="17px" class="q-mr-sm" />
+        <q-icon name="svguse:icons/btnIcons.svg#delete" size="17px" class="q-mr-md" />
         <div class="block text-grey-5">Удалить проект</div>
       </q-btn>
     </div>
@@ -120,7 +120,7 @@
             <div class="section">
               <q-item class="square">
                 <div class="title">Площадь</div>
-                <div class="number">115 м2</div>
+                <div class="number">115 м<sup>2</sup></div>
               </q-item>
               <q-item class="info">
                 <p class="adres">
@@ -655,6 +655,22 @@
       </template>
         <q-card>
           <q-card-section>
+            <div class="sorted">
+              <div class="sorted-section mb-visible">
+                <div class="title">Сортировка: </div>
+                <q-select
+                  borderless
+                  v-model="model"
+                  :options="columns"
+                  behavior="menu"
+                  popup-content-class="select-menu-mobile"
+                />
+              </div>
+              <div class="sorted-btns mb-visible">
+                <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
+                <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
+              </div>
+            </div>
             <q-table
               flat
               :rows="rows2"

@@ -121,7 +121,9 @@
         display: none !important;
       }
       .q-expansion-item__container {
-        
+        .q-card {
+          padding-bottom: 61px;
+        }
         & > .q-item {
           display: flex;
           align-items: center;
@@ -189,7 +191,13 @@
                 font-size: 55px;
                 line-height: 55px;
                 color: black;
-                margin-top: 26px;
+                margin-top: 22px;
+                sup {
+                  font-size: 26px;
+                  font-weight: 600;
+                  position: relative;
+                  top: -5px;
+                }
               }
             }
             .info {
@@ -290,10 +298,8 @@
     }
   }
   .graffic {
-    margin-top: 34px;
   }
   .documents {
-    margin-top: 61px;
     .q-card {
       .q-card__section {
         padding: 0;
@@ -301,7 +307,6 @@
     }
   }
   .data {
-    margin-top: 61px;
     .q-card {
       .q-card__section {
         display: flex;
@@ -371,10 +376,10 @@
     }
   }
   .estimates {
-    margin-top: 61px;
     .q-card {
       display: flex;
       flex-wrap: wrap;
+      padding-bottom: 0 !important;
       .q-card__section {
         padding: 27px 25px 26px 25px;
         border: 1px solid #F0F0F0;
@@ -471,6 +476,7 @@
     .q-card {
       display: flex;
       flex-wrap: wrap;
+      padding-bottom: 0 !important;
       .q-card__section {
         padding: 0;
         border: 1px solid #F0F0F0;
@@ -672,6 +678,7 @@
   .files {
     padding-bottom: 60px;
     .q-card {
+      padding-bottom: 0 !important;
       .q-card__section {
         padding: 0;
       }
@@ -711,6 +718,7 @@
           .q-card {
             padding-left: 15px;
             padding-right: 15px;
+            padding-bottom: 31px;
           }
           & > .q-item {
             padding: 12px 10px 17px 15px !important;
@@ -940,7 +948,6 @@
       }
     }
     .data {
-      margin-top: 26px;
       .q-card {
         .q-card__section {
           display: flex;
@@ -1039,7 +1046,6 @@
     }
 
     .estimates {
-      margin-top: 12px;
       .q-card {
         padding-top: 9px;
         .q-card__section {
@@ -1105,7 +1111,6 @@
     }
 
     .visual {
-      margin-top: 24px;
       .q-card {
         .q-card__section {
           flex: 0 0 100%;
@@ -1176,10 +1181,13 @@
     }
 
     .files {
-      padding-bottom: 17px;
+      padding-bottom: 0;
       .q-card {
         .q-card__section {
           padding: 0;
+          .sorted {
+
+          }
         }
       }
       border-bottom: 1px solid $grey-3;
@@ -1288,6 +1296,7 @@
           }
         }
         .q-table__bottom {
+          padding-bottom: 17px;
           tr {
             display: flex;
             width: 100%;
