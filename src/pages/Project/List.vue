@@ -125,7 +125,9 @@
               :props="props"
               class="q-td-image"
             >
-              <img v-show="props.row.image" :src="props.row.image" alt="">
+              <q-item to="id">
+                <img v-show="props.row.image" :src="props.row.image" alt="">
+              </q-item>
             </q-td>
             <q-td
               key="name"
