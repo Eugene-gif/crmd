@@ -119,6 +119,7 @@
             :props="props"
             class="q-tr-tiles"
           >
+            <q-item to="id" class="q-tr-tiles__link" />
             <q-td
               key="image"
               :props="props"

@@ -66,15 +66,15 @@
         no-caps
         outline
         color="grey-3"
-        class="q-mr-xs my-btn my-effect h-dark my-btn--outline"
+        class="q-mr-xs my-btn my-effect my-btn--outline"
         @click="dialog = true"
       >
-        <q-icon name="svguse:icons/btnIcons.svg#user" size="16px" class="q-mr-md">
+        <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="16px" class="q-mr-md">
           <sup>
             3
           </sup>
         </q-icon>
-        <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-md link-icon">
+        <q-icon name="svguse:icons/btnIcons.svg#link" color="grey-8" size="18px" class="q-mr-md link-icon">
           <div class="circle"></div>
         </q-icon>
         <div class="block text-grey-5">Настройки доступа</div>
@@ -84,9 +84,9 @@
         no-caps
         outline
         color="grey-3"
-        class="my-btn my-effect h-dark q-mr-xs my-btn--outline"
+        class="my-btn my-effect q-mr-xs my-btn--outline"
       >
-        <q-icon name="svguse:icons/btnIcons.svg#edit" size="17px" class="q-mr-md" />
+        <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="17px" class="q-mr-md" />
         <div class="block text-grey-5">Редактировать</div>
       </q-btn>
       <q-btn
@@ -94,9 +94,9 @@
         no-caps
         outline
         color="grey-3"
-        class="my-btn my-effect h-dark q-mr-xs my-btn--outline"
+        class="my-btn my-effect q-mr-xs my-btn--outline"
       >
-        <q-icon name="svguse:icons/btnIcons.svg#delete" size="17px" class="q-mr-md" />
+        <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="17px" class="q-mr-md" />
         <div class="block text-grey-5">Удалить проект</div>
       </q-btn>
     </div>
@@ -373,7 +373,7 @@
                 unelevated
                 no-caps
                 outline
-                class="bg-white text-grey-3 my-btn my-effect h-dark-lite"
+                class="bg-white text-grey-3 my-btn my-effect my-btn--outline"
                 style="border-radius: 10px;"
                 padding="24px 24px 24px 19px"
               >
@@ -777,7 +777,7 @@
             unelevated
             no-caps
             outline
-            class="bg-white text-grey-3 my-btn my-effect h-dark-lite"
+            class="bg-white text-grey-3 my-btn my-effect my-btn--outline"
             style="border-radius: 10px;width: 100%;"
             padding="24px 24px 24px 19px"
           >

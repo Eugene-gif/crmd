@@ -142,6 +142,13 @@
           .settings-icon {
             opacity: 0.3;
             margin-left: auto;
+            transition: all 0.3s;
+            &:hover {
+              opacity: 0.6;
+            }
+            &:active {
+              opacity: 0.1;
+            }
           }
           .q-expansion-item__toggle-icon {
             width: 35px;
@@ -149,6 +156,13 @@
             background: $grey-3;
             border-radius: 100%;
             margin-left: 29px;
+            transition: all 0.3s;
+            &:hover {
+              background: #ECECEC;
+            }
+            &:active {
+              opacity: 0.6;
+            }
           }
         }
       }

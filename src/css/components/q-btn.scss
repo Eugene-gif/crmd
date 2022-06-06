@@ -28,8 +28,23 @@
   }
 }
 .my-btn--outline {
+  transition: all 0.3s;
   .q-focus-helper {
     display: none;
+  }
+  &:before {
+    transition: all 0.3s;
+  }
+  &:hover {
+    .q-focus-helper {
+      opacity: 0 !important;
+    }
+    &:before {
+      border-color: #E5E5E5;
+    }
+  }
+  &:active {
+    opacity: 0.3;
   }
 }
 
