@@ -479,7 +479,7 @@
                 unelevated
                 no-caps
                 outline
-                class="bg-white text-grey-3 my-btn my-effect h-dark-lite mb-visible"
+                class="bg-white text-grey-3 my-btn my-effect my-btn--outline mb-visible"
                 style="border-radius: 10px;"
                 padding="24px 24px 24px 19px"
               >
@@ -777,7 +777,7 @@
             unelevated
             no-caps
             outline
-            class="bg-white text-grey-3 my-btn my-effect my-btn--outline"
+            class="bg-white text-grey-3 my-btn my-effect с"
             style="border-radius: 10px;width: 100%;"
             padding="24px 24px 24px 19px"
           >

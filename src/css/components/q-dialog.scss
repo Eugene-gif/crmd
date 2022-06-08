@@ -781,19 +781,31 @@
     margin-left: -10px;
   }
   @media (max-width: 772px) {
+    &:before,
+    &:after {
+      display: none;
+    }
+    background: #333333;
+    border-radius: 0;
+    top: inherit !important;
+    bottom: 0;
+    min-width: 100% !important;
     left: 0 !important;
+    padding: 31px 35px;
+    padding-bottom: 90px;
     .q-virtual-scroll__content {
-      padding: 15px 15px 3px 15px;
+      padding: 0;
       .q-item {
         min-height: auto;
         padding: 0;
-        margin-bottom: 12px;
+        margin-bottom: 16px;
         .q-focus-helper {
           display: none;
         }
         .q-item__label {
-          font-size: 12px;
-          line-height: 12px;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 1;
         }
         &:hover {
           .q-item__label {
