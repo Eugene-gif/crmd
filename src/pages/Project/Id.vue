@@ -277,7 +277,7 @@
                       <div class="circle" :class="{active: props.row.status > 1}"></div>
                       <div class="content">{{props.row.statusName}}</div>
                       <ActionBtn 
-                        :propsEl="props"
+                        :propsEl="props.key"
                         :offsetYX="[55, -258]"
                       />
                     </div>
@@ -746,7 +746,7 @@
                     <div class="row items-center">
                       <div class="content">{{props.row.size}}</div>
                       <ActionBtn 
-                        :propsEl="props"
+                        :propsEl="props.key"
                         :offsetYX="[55, -258]"
                       />
                     </div>

@@ -22,11 +22,11 @@
 }
 .rotate {
   transition: all 0.25s;
+  cursor: pointer;
   &:hover {
     transform: rotate(180deg);
   }
 }
-
 
 .q-list-share {
   display: flex;

@@ -1,16 +1,88 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="main-layout">
     <q-header class="bg-white">
+      <q-card v-show="showing" class="header-menu" ref="qCardHeaderMenu">
+        <div class="head">
+          <q-btn
+            rounded
+            unelevated
+            no-caps
+            class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
+            label="Найти"
+            padding="12px 48px"
+          />
+          <q-icon color="black" class="rotate" size="13px" name="svguse:icons/allIcons.svg#close-modal" @click="showing = false" />
+        </div>
+        <div class="content">
+          <q-list class="q-list-projects">
+            <q-item
+              v-for="item in filterHeaderMenu"
+              :key="item"
+              to="#"
+            >
+              <q-item-section avatar>
+                {{item.icon}}
+              </q-item-section>
+              <q-item-section>
+                <div class="text">{{item.name}}</div>
+              </q-item-section>
+              <q-item-section class="type">{{item.type}}</q-item-section>
+            </q-item>
+            <q-item>
+              <q-item-section avatar></q-item-section>
+              <q-item-section>
+                <q-btn
+                  unelevated
+                  no-caps
+                  class="bg-grey-6 text-white my-btn my-effect h-opacity btn-sup"
+                  padding="16.5px 0"
+                >
+                  <span class="block">
+                    Все уведомления <sup>12</sup>
+                  </span>
+                </q-btn>
+              </q-item-section>
+            </q-item>
+          </q-list>
+          <q-list class="q-list-params">
+            <q-item
+              v-for="item in serchBox"
+              :key="item"
+            >
+              <q-checkbox
+                v-model="item.value"
+                checked-icon="svguse:icons/allIcons.svg#check"
+                class="my-checkbox flat bg-grey-3"
+                color="black"
+              />
+              <div class="text">
+                {{item.title}}
+              </div>
+            </q-item>
+          </q-list>
+        </div>
+      </q-card>
       <q-toolbar>
         <q-item-label
           header
           class="mb-visible"
         >
-          CRMD
+          CRMD 
         </q-item-label>
-        <q-input color="grey-2" class="header__input__search" v-model="text">
+        <q-input
+          color="grey-2"
+          class="header__input__search"
+          v-model="text" 
+          @update:model-value="filterFn(headerMenu)"
+          ref="headerInputSerach"
+        >
           <template v-slot:prepend>
-            <q-icon color="grey-2" size="18px" name="svguse:icons/allIcons.svg#search" />
+            <q-icon
+              color="grey-2"
+              size="18px"
+              name="svguse:icons/allIcons.svg#search"
+              @click="focusInput"
+            />
           </template>
         </q-input>
         <q-btn flat round class="my-effect h-primary header__btn__mail"> 
@@ -29,7 +101,6 @@
           <span></span>
           <span></span>
         </q-btn>
-
       </q-toolbar>
     </q-header>
 
@@ -147,7 +218,7 @@ const links = [
   }
 ];
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 export default ({
   name: 'MainLayout',
@@ -159,14 +230,128 @@ export default ({
 
   setup () {
     const leftDrawerOpen = ref(false)
+    const text = ref('')
+    const showing = ref(false)
+    const headerMenu = ref([
+      {
+        icon: '🏰',
+        name: 'Квартира на патриарших прудах',
+        type: 'проекты'
+      },
+      {
+        icon: '🏰',
+        name: 'Квартира в ЖК Адмирал',
+        type: 'проекты'
+      },
+      {
+        icon: '🏰',
+        name: 'Название сметы, в котором есть слово квартира ',
+        type: 'сметы'
+      },
+      {
+        icon: '',
+        name: 'Довольно длинное название сметы, в котором есть слово квартира в котором есть слово квартира в котором есть слово квартира в котором есть слово квартира',
+        type: 'сметы'
+      },
+      {
+        icon: '',
+        name: 'Название сметы, в котором есть слово квартира ',
+        type: 'сметы'
+      },
+      {
+        icon: '',
+        name: 'Название сметы, в котором есть слово квартира ',
+        type: 'сметы'
+      },
+      {
+        icon: '',
+        name: 'Довольно длинное название сметы, в котором есть слово ква ква ква',
+        type: 'сметы'
+      },
+      {
+        icon: '',
+        name: 'Название сметы, в котором есть слово квартира',
+        type: 'сметы'
+      },
+    ])
+    const serchBox = ref([
+      {
+        value: true,
+        title: 'Проекты'
+      },
+      {
+        value: true,
+        title: 'Сметы'
+      },
+      {
+        value: true,
+        title: 'Финансы'
+      },
+      {
+        value: false,
+        title: 'Заказчики'
+      },
+      {
+        value: false,
+        title: 'Подрядчики'
+      },
+      {
+        value: false,
+        title: 'Документы'
+      },
+    ]) 
+    const filterHeaderMenu = ref([])
+    const headerInputSerach = ref();
+    const qCardHeaderMenu = ref();
+
+    onMounted(() => {
+      window.addEventListener('click', qCardHeaderMenu);
+    })
+    
+    // function onClickOtside(el) {
+    //   if (
+    //     el.path[0].classList == 'head' ||
+    //     el.path[0].classList == 'content' ||
+    //     el.path[0].classList == 'q-list'
+    //   ) {
+    //     return
+    //   } else {
+    //     showing.value = false
+    //   }
+    //   console.log(el.path)
+    // }
+    
+     
     return {
+      showing,
       essentialLinks: linksList,
       links,
+      serchBox,
+      headerMenu,
+      filterHeaderMenu,
       leftDrawerOpen,
-      text: ref(''),
+      headerInputSerach,
+      // onClickOtside,
+      qCardHeaderMenu,
+      text,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
+
+      filterFn (arrayMenu) {
+        con
+        if (text.value.length > 1) {
+          showing.value = true
+        } else {
+          showing.value = false
+        }
+        const needle = text.value.toLowerCase()
+        filterHeaderMenu.value = arrayMenu.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
+      },
+
+      focusInput() {
+        headerInputSerach.value.focus()
+      }
     }
   }
 })

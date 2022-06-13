@@ -61,3 +61,16 @@
     }
   }
 }
+
+.btn-sup {
+  .block {
+    position: relative;
+    sup {
+      position: absolute;
+      font-size: 10px;
+      font-weight: 500;
+      right: -12px;
+      top: -5px;
+    }
+  }
+}

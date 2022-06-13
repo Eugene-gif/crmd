@@ -5,14 +5,14 @@
       no-caps
       icon="svguse:icons/financeTable.svg#action"
       class="my-effect"
-      :ref="el => dropdown[propsEl.key] = el"
+      :ref="el => dropdown[propsEl] = el"
       :auto-close="false" 
-      @click.stop="notify(propsEl.key)"
+      @click.stop="notify(propsEl)"
     ></q-btn>
 
     <div
       class="q-td__action__list"
-      :ref="el => menu[propsEl.key] = el"
+      :ref="el => menu[propsEl] = el"
       :style="{ top: offsetYX[0] + 'px', left: offsetYX[1] + 'px' }"
     >
       <q-list>
@@ -44,7 +44,7 @@ import { ref, onMounted } from 'vue'
 export default ({
   name: 'ActionBtn',
   props: {
-    propsEl: Object,
+    propsEl: Number,
     offsetYX: Array
   },
   setup () {
