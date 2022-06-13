@@ -1524,6 +1524,19 @@
       thead {
         display: none;
       }
+      tbody {
+        tr {
+          td {
+            &.q-td-status {
+              .row {
+                .circle {
+                  margin-right: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

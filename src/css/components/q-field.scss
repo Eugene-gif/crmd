@@ -173,6 +173,7 @@
     .q-field__control-container {
       span {
         flex: 1 1 320px;
+        max-width: 320px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
