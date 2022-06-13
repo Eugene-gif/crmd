@@ -3,6 +3,21 @@
     <q-header class="bg-white">
       <q-card v-show="showing" class="header-menu" ref="qCardHeaderMenu">
         <div class="head">
+          <q-input
+            color="grey-2"
+            class="header__input__search"
+            v-model="text" 
+            @update:model-value="filterFn(headerMenu)"
+          >
+            <template v-slot:prepend>
+              <q-icon
+                color="grey-2"
+                size="18px"
+                name="svguse:icons/allIcons.svg#search"
+                @click="focusInput"
+              />
+            </template>
+          </q-input>
           <q-btn
             rounded
             unelevated
@@ -16,7 +31,7 @@
         <div class="content">
           <q-list class="q-list-projects">
             <q-item
-              v-for="item in filterHeaderMenu"
+              v-for="item in filterHeaderMenu.slice(0, 8)"
               :key="item"
               to="#"
             >
@@ -305,21 +320,16 @@ export default ({
     const qCardHeaderMenu = ref();
 
     onMounted(() => {
-      window.addEventListener('click', qCardHeaderMenu);
+      window.addEventListener('click', dropdown);
     })
     
-    // function onClickOtside(el) {
-    //   if (
-    //     el.path[0].classList == 'head' ||
-    //     el.path[0].classList == 'content' ||
-    //     el.path[0].classList == 'q-list'
-    //   ) {
-    //     return
-    //   } else {
-    //     showing.value = false
-    //   }
-    //   console.log(el.path)
-    // }
+    function dropdown(e){
+      let el = qCardHeaderMenu.value.$el
+      const click = e.composedPath().includes(el)
+      if (!click) {
+        showing.value = false
+      }
+    } 
     
      
     return {
@@ -331,15 +341,14 @@ export default ({
       filterHeaderMenu,
       leftDrawerOpen,
       headerInputSerach,
-      // onClickOtside,
+      dropdown,
       qCardHeaderMenu,
       text,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-
+      
       filterFn (arrayMenu) {
-        con
         if (text.value.length > 1) {
           showing.value = true
         } else {
