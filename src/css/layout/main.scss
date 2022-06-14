@@ -308,7 +308,7 @@ $width-sm: 100%;
   .content {
     display: flex;
     padding-top: 34px;
-    padding-bottom: 60px;
+    padding-bottom: 30px;
     position: relative;
     .q-list-projects {
       padding-left: 60px;
@@ -317,10 +317,11 @@ $width-sm: 100%;
       padding-right: 58px;
       display: flex;
       flex-direction: column;
+      padding-top: 5px;
       .q-item {
         padding: 0;
         min-height: auto;
-        margin-top: 24px;
+        margin-bottom: 30px;
         display: flex;
         width: 100%;
         .q-focus-helper {
@@ -367,6 +368,8 @@ $width-sm: 100%;
       }
       .q-item-btn {
         position: relative;
+        margin-bottom: 0;
+        top: -26px;
         &:before {
           content: '';
           width: 100%;
@@ -378,15 +381,16 @@ $width-sm: 100%;
           left: 0;
         }
       }
+      .q-item-noresult {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 16px;
+        color: #444444;
+      }
     }
     @media (min-width: 772px) and (max-width: 1460px) {
       .q-list-projects {
-        padding-left: 60px;
-        border-right: 1px solid $grey-3;
         flex: 0 0 67.5%;
-        padding-right: 58px;
-        display: flex;
-        flex-direction: column;
         .q-item {
           .q-item__section {
             .text {
@@ -413,5 +417,40 @@ $width-sm: 100%;
         }
       }
     }
+  }
+}
+
+.q-card-search {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  z-index: 3000;
+  position: fixed;
+  box-shadow: none;
+  min-height: 28px;
+  padding: 0 17px 0 15px;
+  left: 0;
+  top: 50px;
+  width: 100vw;
+  background: #F5F5F5;
+  border-bottom: 1px solid $grey-3;
+  transition: all 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  &.visibility {
+    opacity: 1;
+    visibility: visible;
+  }
+  .q-field {
+    input  {
+      font-size: 14px;
+      margin-left: 0;
+    }
+    .q-field__prepend {
+      padding-right: 7px;
+    }
+  }
+  .q-btn {
+    margin-right: 14px;
   }
 }

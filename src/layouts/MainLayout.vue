@@ -26,10 +26,14 @@
             label="Найти"
             padding="12px 48px"
           />
-          <q-icon color="black" class="rotate" size="13px" name="svguse:icons/allIcons.svg#close-modal" @click="showing = false" />
+          <q-icon color="black" class="rotate" size="13px" name="svguse:icons/allIcons.svg#close-modal" @click="closeHeaderMenu" />
         </div>
         <div class="content">
           <q-list class="q-list-projects">
+            <q-item class="q-item-noresult" v-if="filterHeaderMenu.length === 0">
+              <q-item-section avatar></q-item-section>
+              <q-item-section>Нет результатов</q-item-section>
+            </q-item>
             <q-item
               v-for="item in filterHeaderMenu.slice(0, 8)"
               :key="item"
@@ -53,7 +57,10 @@
                   padding="16.5px 0"
                 >
                   <span class="block">
-                    Все уведомления <sup>12</sup>
+                    Все уведомления 
+                    <sup v-if="filterHeaderMenu.length > 8">
+                      {{filterHeaderMenu.length - 8 }}
+                    </sup>
                   </span>
                 </q-btn>
               </q-item-section>
@@ -86,7 +93,7 @@
         </q-item-label>
         <q-input
           color="grey-2"
-          class="header__input__search"
+          class="header__input__search lg-visible"
           v-model="text" 
           @update:model-value="filterFn(headerMenu)"
           ref="headerInputSerach"
@@ -97,6 +104,20 @@
               size="18px"
               name="svguse:icons/allIcons.svg#search"
               @click="focusInput"
+            />
+          </template>
+        </q-input>
+        <q-input
+          color="grey-2"
+          class="header__input__search mb-visible"
+          ref="mobIconOpenSearch"
+        >
+          <template v-slot:prepend>
+            <q-icon
+              color="grey-2"
+              size="18px"
+              name="svguse:icons/allIcons.svg#search"
+              @click="openMobileSearch"
             />
           </template>
         </q-input>
@@ -159,6 +180,38 @@
     </q-drawer>
 
     <q-page-container>
+      <q-card class="q-card-search" :class="{visibility: showingMob}">
+        <q-input
+          color="grey-2"
+          class="header__input__search"
+          v-model="text" 
+          ref="InputSerachMobile"
+        >
+          <template v-slot:prepend>
+            <q-icon
+              color="black"
+              size="12px"
+              name="svguse:icons/allIcons.svg#search"
+            />
+          </template>
+        </q-input>
+        <q-btn
+          rounded
+          unelevated
+          no-caps
+          class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
+          label="найти"
+          padding="2px 12px"
+          t="asd"
+        />
+        <q-icon
+          color="black"
+          class="rotate"
+          size="10px"
+          name="svguse:icons/allIcons.svg#close-modal"
+          @click="showingMob = false"
+        />
+      </q-card>
       <q-list class="gorisont-nav mb-visible">
         <q-item
           v-for="link in essentialLinks"
@@ -247,6 +300,7 @@ export default ({
     const leftDrawerOpen = ref(false)
     const text = ref('')
     const showing = ref(false)
+    const showingMob = ref(false)
     const headerMenu = ref([
       {
         icon: '🏰',
@@ -316,11 +370,14 @@ export default ({
       },
     ]) 
     const filterHeaderMenu = ref([])
-    const headerInputSerach = ref();
-    const qCardHeaderMenu = ref();
+    const headerInputSerach = ref()
+    const qCardHeaderMenu = ref()
+    const InputSerachMobile = ref()
+    const mobIconOpenSearch = ref()
 
     onMounted(() => {
-      window.addEventListener('click', dropdown);
+      window.addEventListener('click', dropdown)
+      window.addEventListener('click', dropdownMob)
     })
     
     function dropdown(e){
@@ -328,12 +385,24 @@ export default ({
       const click = e.composedPath().includes(el)
       if (!click) {
         showing.value = false
+        text.value = ''
+      }
+    } 
+    function dropdownMob(e){
+      let el = InputSerachMobile.value.$el
+      let el2 = mobIconOpenSearch.value.$el
+      const click = e.composedPath().includes(el)
+      const click2 = e.composedPath().includes(el2)
+      if (!click2 && !click) {
+        showingMob.value = false
+        text.value = ''
       }
     } 
     
      
     return {
       showing,
+      showingMob,
       essentialLinks: linksList,
       links,
       serchBox,
@@ -341,8 +410,11 @@ export default ({
       filterHeaderMenu,
       leftDrawerOpen,
       headerInputSerach,
+      InputSerachMobile,
       dropdown,
+      dropdownMob,
       qCardHeaderMenu,
+      mobIconOpenSearch,
       text,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
@@ -360,6 +432,15 @@ export default ({
 
       focusInput() {
         headerInputSerach.value.focus()
+      },
+      closeHeaderMenu() {
+        showing.value = false
+        text.value = ''
+      },
+      openMobileSearch() {
+        showingMob.value = true
+        InputSerachMobile.value.focus()
+        InputSerachMobile.value.focus()
       }
     }
   }
