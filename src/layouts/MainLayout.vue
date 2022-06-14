@@ -57,7 +57,7 @@
                   padding="16.5px 0"
                 >
                   <span class="block">
-                    Все уведомления 
+                    Все результаты 
                     <sup v-if="filterHeaderMenu.length > 8">
                       {{filterHeaderMenu.length - 8 }}
                     </sup>
