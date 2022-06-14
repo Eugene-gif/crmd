@@ -281,6 +281,13 @@ $width-sm: 100%;
   z-index: 999;
   box-shadow: none;
   border-bottom: 1px solid $grey-3;
+  transition: all 0.3s;
+  opacity: 0;
+  visibility: hidden;
+  &.visibility {
+    opacity: 1;
+    visibility: visible;
+  }
   .head {
     width: 100%;
     min-height: 88px;
@@ -356,6 +363,36 @@ $width-sm: 100%;
           margin-left: auto;
           flex: 0 0 max-content;
           max-width: max-content;
+        }
+      }
+      .q-item-btn {
+        position: relative;
+        &:before {
+          content: '';
+          width: 100%;
+          height: 38px;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%);
+          display: block;
+          position: absolute;
+          top: -38px;
+          left: 0;
+        }
+      }
+    }
+    @media (min-width: 772px) and (max-width: 1460px) {
+      .q-list-projects {
+        padding-left: 60px;
+        border-right: 1px solid $grey-3;
+        flex: 0 0 67.5%;
+        padding-right: 58px;
+        display: flex;
+        flex-direction: column;
+        .q-item {
+          .q-item__section {
+            .text {
+              max-width: 400px;
+            }
+          }
         }
       }
     }

@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="main-layout">
     <q-header class="bg-white">
-      <q-card v-show="showing" class="header-menu" ref="qCardHeaderMenu">
+      <q-card :class="{visibility: showing}" class="header-menu" ref="qCardHeaderMenu">
         <div class="head">
           <q-input
             color="grey-2"
@@ -43,7 +43,7 @@
               </q-item-section>
               <q-item-section class="type">{{item.type}}</q-item-section>
             </q-item>
-            <q-item>
+            <q-item class="q-item-btn">
               <q-item-section avatar></q-item-section>
               <q-item-section>
                 <q-btn
