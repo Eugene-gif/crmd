@@ -108,16 +108,15 @@
           </template>
         </q-input>
         <q-input
-          color="grey-2"
           class="header__input__search mb-visible"
           ref="mobIconOpenSearch"
         >
           <template v-slot:prepend>
             <q-icon
-              color="grey-2"
               size="18px"
               name="svguse:icons/allIcons.svg#search"
               @click="openMobileSearch"
+              :class="{activate: showingMob}"
             />
           </template>
         </q-input>
