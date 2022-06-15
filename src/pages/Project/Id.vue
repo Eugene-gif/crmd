@@ -171,7 +171,7 @@
       </template>
         <q-card>
           <q-card-section>
-            
+            <grafic/>
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -794,6 +794,8 @@
 import Dialog from 'pages/Project/dialog-create.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
+import grafic from 'components/GraficGant.vue'
+
 import { ref } from 'vue'
 
 const columns = ref([
@@ -866,7 +868,8 @@ export default {
   components: {
     Dialog,
     ActionBtn,
-    VisualSlider
+    VisualSlider,
+    grafic
   },
   setup () {
     const dialog = ref(false)
