@@ -1,11 +1,6 @@
 <template>
   <div class="graficgant">
-    <div class="info">
-      
-    </div>
-    <div class="grafic">
-      <canvas id="chart" ref="chartCanvas"></canvas> 
-    </div>
+    <canvas id="chart" ref="chartCanvas"></canvas> 
   </div>
 </template>
 
@@ -18,7 +13,7 @@ export default ({
     const chartCanvas = ref()
     const STEP_HEIGHT = 7
     const PADDING = 20
-    const WIDTH = 600
+    const WIDTH = 659
     const HEIGHT = 32 * STEP_HEIGHT + (PADDING * 2) + 84
     const DPI_WIDTH = WIDTH * 2
     const DPI_HEIGHT = HEIGHT * 2

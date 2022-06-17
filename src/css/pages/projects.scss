@@ -1,5 +1,4 @@
 .page-projects {
-  
   .head {
     .sorted {
       display: none;
@@ -37,10 +36,8 @@
         }
       }
     }
-    
   }
 }
-
 
 // внутренняя страница проекта
 .page-project {
@@ -318,6 +315,112 @@
     }
   }
   .graffic {
+    .q-card-graffic-option {
+      @media (max-width: 772px) {
+        display: none;
+      }
+      .q-card__section {
+        display: flex;
+        flex-wrap: nowrap;
+        padding: 0;
+        .q-item {
+          flex-direction: column;
+          padding: 0;
+          min-height: auto;
+          .title {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 18px;
+            color: black;
+            margin-bottom: 20px;
+          }
+          &:nth-child(1) {
+            flex: 1 1 50%;
+            padding-right: 60px;
+            width: 100%;
+            max-width: 50%;
+          }
+          &:nth-child(2) {
+            flex: 0 0 170px;
+            max-width: 170px;
+            padding-right: 60px;
+          }
+          &:nth-child(3) {
+            flex: 0 0 480px;
+            max-width: 480px;
+          }
+        }
+        &.q-card-content {
+          .q-item {
+            margin-bottom: 10px;
+          }
+        }
+        &.q-card-add {
+          padding-top: 20px;
+        }
+      }
+      @media (min-width: 772px) and (max-width: 1441px) {
+        .q-card__section {
+          .q-item {
+            &:nth-child(1) {
+              padding-right: 30px;
+              max-width: 462px;
+            }
+            &:nth-child(2) {
+              padding-right: 30px;
+            }
+          }
+        }
+      }
+    }
+    .q-card-graffic {
+      display: flex;
+      border: 1px solid #F0F0F0;
+      border-radius: 10px;
+      padding-bottom: 0 !important;
+      margin-bottom: 61px;
+      @media (max-width: 772px) {
+        display: none;
+      }
+      .info {
+        flex: 1 1 50%;
+        max-width: 50%;
+        .head {
+          font-weight: 400;
+          font-size: 13px;
+          line-height: 16px;
+          text-transform: uppercase;
+          color: $grey-5;
+          padding: 20px 0;
+          p {
+            padding-left: 26px;
+          }
+          .line {
+            background: #F7F7F7;
+            border-top: 1px solid $grey-3;
+            border-bottom: 1px solid $grey-3;
+            height: 27px;
+          }
+        }
+        .content {
+          padding-left: 25px;
+          .item {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 18px;
+            color: black;
+            margin-bottom: 11px;
+            min-height: 30px;
+          }
+        }
+      }
+      .canvas {
+        flex: 0 0 50%;
+      }
+      .q-card__section {
+        padding: 0;
+      }
+    }
   }
   .documents {
     .q-card {

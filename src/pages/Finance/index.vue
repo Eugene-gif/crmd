@@ -327,7 +327,7 @@ const rows = ref([
     sum: '40 000',
     date: '17.04.2020',
     project: 'Квартира на Ленина',
-    fromName : 'Антон Глуханько',
+    fromName : 'Антон Глуханько ',
     fromImage: '/icons/anton.jpg',
     type: 'Гонорар'
   },
@@ -347,7 +347,7 @@ const rows = ref([
     sum: '5 000',
     date: '17.04.2021',
     project: 'Квартира на Ленина',
-    fromName : ' Антон Глуханько',
+    fromName : ' Антон Глуханько ',
     fromImage: '/icons/anton.jpg',
     type: 'Возврат',
   },
@@ -357,7 +357,7 @@ const rows = ref([
     sum: '5 000',
     date: '17.04.2021',
     project: 'Квартира на Ленина',
-    fromName : 'Антон Глуханько',
+    fromName : 'Антон Глуханько ',
     fromImage: '/icons/anton.jpg',
     to: {
       image: '/icons/stroipro.jpg',
@@ -374,7 +374,7 @@ const rows = ref([
     sum: '5 000',
     date: '17.04.2021',
     project: 'Квартира на Ленина',
-    fromName : 'Антон Глуханько',
+    fromName : 'Антон Глуханько ',
     fromImage: '/icons/anton.jpg',
     to: {
       image: '/icons/stroipro.jpg',

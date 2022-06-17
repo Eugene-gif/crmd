@@ -162,7 +162,7 @@
       <q-item class="q-item__avatar">
         <q-item-section>
           <img src="~assets/anton.jpg">
-          <q-item-label>Антон Глуханько</q-item-label>
+          <q-item-label>Антон Глуханько </q-item-label>
           <q-icon size="14px"  name="svguse:icons/allIcons.svg#exit" />
         </q-item-section>
       </q-item>

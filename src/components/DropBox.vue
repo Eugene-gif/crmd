@@ -112,8 +112,8 @@ import { ref } from 'vue'
 
 const stringOptions = [
   {
-    label: 'Антон Глуханько',
-    value: 'Антон Глуханько',
+    label: 'Антон Глуханько ',
+    value: 'Антон Глуханько ',
     icon: '/icons/anton.jpg',
     email: 'stroypro@mail.ru',
     like: 25,
@@ -140,8 +140,8 @@ const stringOptions = [
     tab: ''
   },
   {
-    label: 'Антон Глуханько',
-    value: 'Антон Глуханько',
+    label: 'Антон Глуханько ',
+    value: 'Антон Глуханько ',
     icon: '/icons/anton.jpg',
     email: 'stroypro@mail.ru',
     like: 25,

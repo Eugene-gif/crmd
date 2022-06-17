@@ -35,7 +35,7 @@
         </q-item-section>
         <q-item-section class="d-flex row message">
           <q-item-section class="info">
-            <div class="name">Антон Глуханько</div>
+            <div class="name">Антон Глуханько </div>
             <div class="text">
               Привезем без проблем, если границы не закроют снова!
             </div>
@@ -52,7 +52,7 @@
         </q-item-section>
         <q-item-section class="d-flex row message">
           <q-item-section class="info">
-            <div class="name">Антон Глуханько</div>
+            <div class="name">Антон Глуханько </div>
             <div class="text">
               Привезем без проблем, если границы не закроют снова!
             </div>
@@ -69,7 +69,7 @@
         </q-item-section>
         <q-item-section class="d-flex row message">
           <q-item-section class="info">
-            <div class="name">Антон Глуханько</div>
+            <div class="name">Антон Глуханько </div>
             <div class="text">
               Привезем без проблем, если границы не закроют снова!
             </div>
@@ -86,7 +86,7 @@
         </q-item-section>
         <q-item-section class="d-flex row message">
           <q-item-section class="info">
-            <div class="name">Антон Глуханько</div>
+            <div class="name">Антон Глуханько </div>
             <div class="text">
               Привезем без проблем, если границы не закроют снова!
             </div>
