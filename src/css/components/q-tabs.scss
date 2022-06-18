@@ -64,3 +64,51 @@
     }
   }
 }
+
+
+.q-tabs-reviews {
+  .q-tab {
+    padding: 0;
+    min-height: auto;
+    flex: 0 0 max-content;
+    .q-tab__content {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      color: white;
+      padding: 0;
+      padding-bottom: 3px;
+      .q-icon {
+        width: 18px;
+        font-size: 18px;
+      }
+      .q-tab__label {
+        line-height: 1;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 16px;
+        margin-left: 7px;
+      }
+    }
+    .q-tab__indicator,
+    .q-ripple {
+      display: none;
+    }
+    &--active {
+      .q-tab__content {
+        .q-icon {
+          color: $positive;
+        }
+      }
+    }
+    &:last-child {
+      margin-left: 17px;
+      .q-tab__content {
+        .q-icon {
+          position: relative;
+          top: 6px;
+        }
+      }
+    }
+  }
+}

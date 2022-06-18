@@ -626,6 +626,28 @@
   }
 }
 
+.select-section {
+  font-size: 18px;
+  align-items: center;
+  .q-field {
+    min-height: auto;
+    height: auto;
+    font-size: 18px;
+    margin-left: 5px;
+    .q-field__control,
+    .q-field__marginal,
+    .q-field__native {
+      min-height: auto;
+      height: auto;
+      padding: 0;
+    }
+    .q-select__dropdown-icon {
+      font-size: 12px;
+      margin-left: 13px;
+    }
+  }
+}
+
 .toggle-mini {
   flex-direction: column;
   .q-toggle__inner {

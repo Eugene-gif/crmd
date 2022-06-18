@@ -1633,3 +1633,209 @@
   }
 }
 
+
+.contractor-table {
+  margin-top: 47px;
+  .q-table__middle {
+    flex: 0 0 auto;
+    display: block;
+    overflow: visible;
+  }
+  .q-table {
+    width: 100%;
+    thead {
+      display: flex;
+      width: 100%;
+      tr {
+        display: flex;
+        width: 100%;
+        th {
+          flex: 1;
+          padding-left: 0;
+          padding-right: 0;
+          &.q-th__content {
+            display: none;
+          }
+          &:nth-child(1) {
+            max-width: 97px;
+            padding-left: 26px;
+          }
+          &:nth-child(2) {
+            max-width: 249px;
+            flex: 1 1 249px;
+          }
+          &:nth-child(3) {
+            margin-left: 39px;
+          }
+          // &:nth-child(4) {
+          //   max-width: 8vw;
+          //   flex: 1 1 8vw;
+          // }
+        }
+      }
+    }
+    tbody {
+      display: flex;
+      width: 100%;
+      tr {
+        border: 1px solid #F0F0F0;
+        border-radius: 10px;
+        display: flex;
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 11px;
+        td {
+          height: auto;
+          width: 100%;
+          &:before {
+            display: none;
+          }
+          &.q-td-content {
+            color: $grey-5;
+            font-size: 16px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            .item {
+              flex: 1;
+            }
+            .avatar {
+              height: 50px;
+              padding-left: 26px;
+              flex: 0 0 50px;
+              img {
+                width: 50px;
+                height: 50px;
+                border-radius: 10px;
+                image-rendering: -webkit-optimize-contrast;
+              }
+            }
+            
+            .name {
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 18px;              
+              color: black;
+              max-width: 249px;
+              margin-left: 20px;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+              flex: 1 1 249px;
+            }
+            .status {
+              margin-left: 38px;
+              flex: 1 1 30px;
+            }
+            .q-tabs-reviews {
+              .q-tab {
+                .q-tab__label {
+                  font-weight: 500;
+                  font-size: 16px;
+                  line-height: 16px;
+                  color: #000000; 
+                }
+                .q-icon {
+                  color: $grey-3;
+                }
+                .q-focus-helper {
+                  display: none;
+                }
+                &:first-child[aria-selected="true"] {
+                  .q-icon {
+                    color: $positive;
+                  } 
+                }
+                &:last-child[aria-selected="true"] {
+                  .q-icon {
+                    color: $negative;
+                  } 
+                }
+              }
+            }
+            .reviews {
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 16px;
+              color: #000000;
+              margin-left: 37px;
+            }
+            .estimates {
+              .q-icon {
+                &:first-child {
+                  margin-right: 28px;
+                }
+              }
+            }
+            .bid {
+              
+            }
+            .q-td__action {
+              margin-right: 15px;
+              .q-focus-helper {
+                display: none;
+              }
+            }
+            .projects-section {
+              flex: 0 0 100%;
+              background: #F7F7F7;
+              border-top: 1px solid #F0F0F0;
+              border-bottom: 1px solid #F0F0F0;
+              display: flex;
+              align-items: center;
+              position: relative;
+              margin-top: 17px;
+              margin-bottom: 10px;
+              &:after {
+                content: '';
+                width: 147px;
+                height: 35px;
+                position: absolute;
+                display: block;
+                top: 1;
+                right: 0;
+                background: linear-gradient(180deg, rgba(247, 247, 247, 0) 0%, #F7F7F7 13.54%);
+              }
+              .projects {
+                padding: 5px 25px;
+                padding-right: 0;
+                .q-chip {
+                  margin-right: 5px;
+                  height: 26px;
+                  &:last-child {
+                    margin-right: 0;
+                  }
+                }
+              }
+              .city {
+                margin-left: auto;
+                position: relative;
+                z-index: 1;
+                flex: 0 0 max-content;
+                opacity: 0.4;
+                margin-right: 24px;
+              }
+            }
+            
+            .city {
+
+            }
+            .q-list-user-info {
+
+            }
+            .sait {
+
+            }
+            .email {
+
+            }
+            .phone {
+
+            }
+          }
+        }
+      }
+    }
+  }
+}

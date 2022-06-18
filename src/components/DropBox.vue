@@ -50,6 +50,7 @@
                 <q-item-section class="reviews">
                   <q-tabs
                     v-model="scope.opt.tab"
+                    class="q-tabs-reviews"
                   >
                     <q-tab name="1" icon="svguse:icons/allIcons.svg#like" :label="scope.opt.like" />
                     <q-tab name="2" icon="svguse:icons/allIcons.svg#dislike" :label="scope.opt.dislike" />
@@ -59,7 +60,7 @@
               </q-item-section>
               <q-item-section class="foot">
                 <q-item-section class="message">
-                  <q-list>
+                  <q-list class="q-list-user-info">
                     <q-item
                       class="link-mail"
                       link

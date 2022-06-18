@@ -256,7 +256,7 @@ const linksList = [
   },
   {
     title: 'Подрядчики',
-    link: 'contractors',
+    link: 'contractor',
     number: 150
   },
   {
