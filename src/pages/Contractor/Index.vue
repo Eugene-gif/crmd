@@ -114,7 +114,10 @@
             <div class="name item">
               {{props.row.name}}
             </div>
-            <div class="status item">{{props.row.statusName}}</div>
+            <div class="status item">
+              <div class="circle" :class="{active: props.row.status > 1}"></div>
+              {{props.row.statusName}}
+            </div>
             <q-tabs
               v-model="props.row.tab"
               class="q-tabs-reviews item"
@@ -250,6 +253,164 @@ const rows = ref([
       },
       {
         name: 'ремонт под ключ',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+    ],
+    city: 'Краснодар',
+    email: 'stroypro@mail.ru',
+    sait: 'stroypro.ru',
+    whatsapp: 79184550216,
+    tel: '+7 (918) 455-02-16',
+    telegram: '',
+    instagram: '',
+  },
+  {
+    id: 2,
+    image: '/icons/anton.jpg',
+    name: 'Антон Глуханько длинное и название',
+    status: 1,
+    statusName: 'Нет статуса',
+    tab: '',
+    like: 25,
+    dislike: 2,
+    reviews: 12,
+    documents: 3,
+    pay: true,
+    bid: 13,
+    projects: [
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'натяжные потолки',
+        link: ''
+      },
+      {
+        name: 'ремонт под ключ',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'натяжные потолки',
+        link: ''
+      },
+      {
+        name: 'ремонт под ключ',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+    ],
+    city: 'Краснодар',
+    email: 'stroypro@mail.ru',
+    sait: 'stroypro.ru',
+    whatsapp: 79184550216,
+    tel: '+7 (918) 455-02-16',
+    telegram: '',
+    instagram: '',
+  },
+  {
+    id: 3,
+    image: '/icons/anton.jpg',
+    name: 'Антон Глуханько длинное и название',
+    status: 1,
+    statusName: 'Нет статуса',
+    tab: '',
+    like: 25,
+    dislike: 2,
+    reviews: 12,
+    documents: 3,
+    pay: true,
+    bid: 13,
+    projects: [
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'натяжные потолки',
+        link: ''
+      },
+      {
+        name: 'ремонт под ключ',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'натяжные потолки',
+        link: ''
+      },
+      {
+        name: 'ремонт под ключ',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
+        link: ''
+      },
+      {
+        name: 'освещение',
         link: ''
       },
       {

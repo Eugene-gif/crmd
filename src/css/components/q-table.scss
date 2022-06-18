@@ -1646,6 +1646,7 @@
     thead {
       display: flex;
       width: 100%;
+      
       tr {
         display: flex;
         width: 100%;
@@ -1653,6 +1654,9 @@
           flex: 1;
           padding-left: 0;
           padding-right: 0;
+          &.sorted .q-th__title {
+            padding-bottom: 23px;
+          }
           &.q-th__content {
             display: none;
           }
@@ -1665,7 +1669,9 @@
             flex: 1 1 249px;
           }
           &:nth-child(3) {
-            margin-left: 39px;
+            padding-left: 39px;
+            flex: 1 1 226px;
+            max-width: 226px
           }
           // &:nth-child(4) {
           //   max-width: 8vw;
@@ -1677,6 +1683,7 @@
     tbody {
       display: flex;
       width: 100%;
+      flex-direction: column;
       tr {
         border: 1px solid #F0F0F0;
         border-radius: 10px;
@@ -1684,6 +1691,7 @@
         width: 100%;
         padding-top: 20px;
         padding-bottom: 11px;
+        margin-bottom: 10px;
         td {
           height: auto;
           width: 100%;
@@ -1697,6 +1705,8 @@
             display: flex;
             align-items: center;
             flex-wrap: wrap;
+            position: relative;
+            border: none;
             .item {
               flex: 1;
             }
@@ -1727,6 +1737,16 @@
             .status {
               margin-left: 38px;
               flex: 1 1 30px;
+              position: relative;
+              .circle {
+                width: 5px;
+                height: 5px;
+                border-radius: 100%;
+                background: red;
+                position: absolute;
+                top: 9px;
+                left: -20px;
+              }
             }
             .q-tabs-reviews {
               .q-tab {
@@ -1762,7 +1782,7 @@
               margin-left: 37px;
             }
             .estimates {
-              .q-icon {
+              .q-icon-info {
                 &:first-child {
                   margin-right: 28px;
                 }
@@ -1773,33 +1793,50 @@
             }
             .q-td__action {
               margin-right: 15px;
-              .q-focus-helper {
-                display: none;
+              .q-btn {
+                background: none !important;
               }
             }
             .projects-section {
               flex: 0 0 100%;
-              background: #F7F7F7;
               border-top: 1px solid #F0F0F0;
               border-bottom: 1px solid #F0F0F0;
               display: flex;
               align-items: center;
-              position: relative;
               margin-top: 17px;
               margin-bottom: 10px;
+              position: relative;
+              background: #F7F7F7;
               &:after {
                 content: '';
-                width: 147px;
-                height: 35px;
+                width: 15vw;
+                height: 36px;
                 position: absolute;
+                z-index: 1;
                 display: block;
-                top: 1;
+                top: 0;
                 right: 0;
-                background: linear-gradient(180deg, rgba(247, 247, 247, 0) 0%, #F7F7F7 13.54%);
+                background: linear-gradient(90deg, rgba(247, 247, 247, 0) 0%, #f0f0f0fa 13.67%);
               }
               .projects {
                 padding: 5px 25px;
                 padding-right: 0;
+                flex: 1 1 60vw;
+                overflow-x: scroll;
+                max-width: 60vw;
+                display: flex;
+                position: relative;
+                @media (max-width: 1800px) {
+                  flex: 1 1 65vw;
+                  max-width: 65vw;
+                }
+                // @media (max-width: 1240px) {
+                //   flex: 1 1 900px;
+                //   max-width: 900px;
+                // }
+                &::-webkit-scrollbar {
+                  height: 0;
+                }
                 .q-chip {
                   margin-right: 5px;
                   height: 26px;
@@ -1811,8 +1848,9 @@
               .city {
                 margin-left: auto;
                 position: relative;
-                z-index: 1;
-                flex: 0 0 max-content;
+                text-align: right;
+                z-index: 2;
+                flex: 0 0 167px;
                 opacity: 0.4;
                 margin-right: 24px;
               }
@@ -1822,16 +1860,21 @@
 
             }
             .q-list-user-info {
-
+              margin-left: 26px;
+              flex: 1 1 358px;
+              max-width: 358px;
             }
             .sait {
-
+              flex: 1 1 187px;
+              max-width: 187px
             }
             .email {
 
             }
             .phone {
-
+              margin-left: auto;
+              text-align: right;
+              padding-right: 24px;
             }
           }
         }
