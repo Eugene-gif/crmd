@@ -1995,4 +1995,174 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    margin-top: 47px;
+    .q-table {
+      padding-top: 0;
+      display: flex;
+      thead {
+        display: none;
+      }
+      tbody {
+        tr {
+          padding-top: 19px;
+          padding-bottom: 19px;
+          margin-bottom: 5px;
+          td {
+            &.q-td-content {
+              .name,
+              .status,
+              .q-tabs-reviews,
+              .reviews,
+              .estimates,
+              .q-list-user-info {
+                max-width: auto;
+                flex:0 0 100%;
+              }
+              .avatar {
+                height: 30px;
+                padding-left: 20px;
+                flex: 0 0 30px;
+                img {
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 100%;
+                }
+              }
+              
+              .name {             
+                margin-left: 9px;
+                flex: 0 0 calc(100% - 75px);
+                max-width: calc(100% - 75px);
+              }
+
+              .status {
+                margin-left: 38px;
+                flex: 1 1 192px;
+                max-width: 192px;
+                position: relative;
+                .circle {
+                  width: 5px;
+                  height: 5px;
+                  border-radius: 100%;
+                  background: red;
+                  position: absolute;
+                  top: 9px;
+                  left: -20px;
+                }
+              }
+              .q-tabs-reviews {
+                flex: 1 1 148px;
+                max-width: 148px;
+                .q-tab {
+                  .q-tab__label {
+                    font-weight: 500;
+                    font-size: 16px;
+                    line-height: 16px;
+                    color: #000000; 
+                  }
+                  .q-icon {
+                    color: $grey-3;
+                  }
+                  .q-focus-helper {
+                    display: none;
+                  }
+                  &:first-child[aria-selected="true"] {
+                    .q-icon {
+                      color: $positive;
+                    } 
+                  }
+                  &:last-child[aria-selected="true"] {
+                    .q-icon {
+                      color: $negative;
+                    } 
+                  }
+                }
+              }
+              .reviews {
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 16px;
+                color: #000000;
+                margin-left: 37px;
+                flex: 1 1 167px;
+                max-width: 167px;
+              }
+              .estimates {
+                flex: 1 1 166px;
+                max-width: 166px;
+                .q-icon-info {
+                  &:first-child {
+                    margin-right: 28px;
+                  }
+                }
+              }
+              .bid {
+                
+              }
+              .q-td__action {
+                margin-right: 15px;
+                .q-btn {
+                  background: none !important;
+                }
+              }
+              .projects-section {
+                margin-top: 14px;
+                margin-bottom: 15px;
+                flex-wrap: wrap;
+                &:after {
+                  display: none;
+                }
+                .projects {
+                  padding: 3px 7px;
+                  padding-right: 0;
+                  flex: 0 0 100%;
+                  overflow-x: scroll;
+                  max-width: 100%;
+                  display: flex;
+                  position: relative;
+                  flex-wrap: wrap;
+                  &::-webkit-scrollbar {
+                    height: 0;
+                  }
+                  .q-chip {
+                    margin: 2px;
+                    height: 26px;
+                    &:last-child {
+                      margin-right: 0;
+                    }
+                  }
+                }
+                .city {
+                  display: none;
+                }
+              }
+              
+              .city {
+
+              }
+              .q-list-user-info {
+                margin-left: 26px;
+                flex: 1 1 358px;
+                max-width: 358px;
+              }
+              .sait {
+                flex: 1 1 187px;
+                max-width: 187px
+              }
+              .email {
+
+              }
+              .phone {
+                margin-left: auto;
+                text-align: right;
+                padding-right: 24px;
+              }
+              
+            }
+          }
+        }
+      }
+    }
+  }
 }

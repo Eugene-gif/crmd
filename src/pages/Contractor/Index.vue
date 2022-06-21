@@ -21,7 +21,8 @@
   <q-page class="page-contractor">
     <div class="row justify-between items-center">
       <div class="text-h2">Подрядчики</div>
-      <div class="lg-visible">
+      <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
+      <div class="sectiobn-btns">
         <q-btn
           rounded
           unelevated
@@ -39,7 +40,6 @@
           @click="dialog = true"
         />
       </div>
-      <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
     </div>
     <div class="head row">
       <q-btn
@@ -65,7 +65,9 @@
           borderless
           v-model="model"
           :options="options"
+          behavior="menu"
           dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
+          popup-content-class="tooltip-project tooltip-project-contractor"
         />
       </div>
       <div class="select-section row">
@@ -74,9 +76,28 @@
           borderless
           v-model="model2"
           :options="options2"
+          behavior="menu"
+          popup-content-class="tooltip-project tooltip-project-contractor"
           dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
         />
       </div>   
+    </div>
+
+    <div class="sorted">
+      <div class="sorted-section mb-visible">
+        <div class="title">Сортировка: </div>
+        <q-select
+          borderless
+          v-model="model"
+          :options="options2"
+          behavior="menu"
+          popup-content-class="select-menu-mobile"
+        />
+      </div>
+      <div class="sorted-btns mb-visible" style="margin-right: 0;">
+        <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
+        <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
+      </div>
     </div>
 
     <q-table

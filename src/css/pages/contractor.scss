@@ -2,12 +2,81 @@
   .head {
     padding-top: 47px;
     .select-section {
+      
       &:nth-child(2) {
         margin-left: 10vw;
       }
       &:nth-child(3) {
         margin-left: 12vw;
       }
+      label {
+        color: $grey-5 !important;
+        span {
+          color: $grey-5 !important;
+        }
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    .sectiobn-btns {
+      display: flex;
+      flex-direction: column-reverse;
+      padding-top: 28px;
+      .q-btn {
+        max-width: max-content;
+        &:first-child {
+          margin-top: 5px;
+        }
+      }
+    }
+    .head {
+      padding-top: 37px;
+      .q-btn {
+        width: 100%;
+        border-radius: 0;
+        padding-left: 0;
+        padding-right: 0;
+        min-height: 41px;
+        &:before {
+          border: none;
+          border-top: 1px solid $grey-3;
+          border-bottom: 1px solid $grey-3;
+        }
+        .q-btn__content {
+          flex-direction: row-reverse;
+          .block {
+            margin: 0;
+            font-size: 18px;
+            line-height: 18px;
+          }
+          .q-icon {
+            margin-left: auto;
+            margin-right: 0;
+          }
+        }
+      }
+
+      .select-section {
+        padding-top: 11px;
+        padding-bottom: 11px;
+        width: 100%;
+        border-bottom: 1px solid $grey-3;
+        &:nth-child(2) {
+          margin-left: 0;
+        }
+        &:nth-child(3) {
+          margin-left: 0;
+        }
+        .q-field {
+          flex: 1;
+        }
+      }
+    }
+    .sorted {
+      margin-top: 19px;
+    }
+    .contractor-table {
+      margin-top: 26px;
     }
   }
 }
