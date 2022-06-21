@@ -151,4 +151,26 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    .q-tabs__content {
+      
+      .q-tab {
+        min-height: 25px;
+        border-radius: 4px;
+        margin-bottom: 4px;
+        padding-left: 13px;
+        padding-right: 10px;
+        .q-tab__content {
+          height: 24px;
+        }
+        .q-tab__label {
+          font-size: 14px;
+          line-height: 14px;
+        }
+        .q-icon {
+          font-size: 13px;
+        }
+      }
+    }
+  }
 }

@@ -33,6 +33,41 @@
           </q-tab>
         </q-tabs>
       </q-card-section>
+      <q-card-section class="form-section">
+        <label class="lable-title">Или из своих собственных</label>
+        <q-input
+          v-model="text"
+          class="my-input my-input-btn"
+          placeholder="Название статуса"
+        >
+          <template v-slot:append>
+            <q-icon name="close" size="18px" color="black" @click="text = ''" class="cursor-pointer" />
+          </template>
+
+          <template v-slot:after>
+            <q-btn class="my-effect h-dark bg-positive" no-caps unelevated>
+              <span class="block text-white">Добавить</span>
+              <q-icon size="12px" color="white" name="svguse:icons/allIcons.svg#plus" />
+            </q-btn>
+          </template>
+        </q-input>
+        <q-tabs
+          v-model="tab"
+          narrow-indicator
+          dense
+          class="q-tabs-null q-tabs-contractor-status q-tabs-contractor-status-2"
+        >
+          <q-tab class="" no-caps name="5" label="Норм">
+            <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-4" @click.stop="" />
+          </q-tab>
+          <q-tab class="" no-caps name="6" label="Пойдет">
+            <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-4" @click.stop="" />
+          </q-tab>
+          <q-tab class="" no-caps name="7" label="Крутыши">
+            <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-4" @click.stop="" />
+          </q-tab>
+        </q-tabs>
+      </q-card-section>
 
       <q-card-actions align="center">
         <q-btn
@@ -40,7 +75,7 @@
           no-caps
           padding="20px 10px"
           class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
-          label="Отправить приглашение"
+          label="Готово"
         />
       </q-card-actions>
     </div>
@@ -60,7 +95,7 @@ export default ({
   }, 
   setup () {
     return {     
-      email: ref(''),
+      text: ref(''),
       textarea: ref(''),
       tab: ref('1')
     }
