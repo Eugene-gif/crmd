@@ -20,4 +20,12 @@
       color: white;
     }
   }
+  .circle {
+    width: 5px;
+    height: 5px;
+    position: absolute;
+    border-radius: 100%;
+    top: -4px;
+    right: -4px;
+  }
 }

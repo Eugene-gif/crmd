@@ -112,3 +112,43 @@
     }
   }
 }
+
+.q-tabs-contractor-status {
+  .q-tabs__content {
+    flex-direction: column;
+    .q-tab {
+      opacity: 1;
+      min-height: 42px;
+      background: #F7F7F7;
+      border: 1px solid #ECECEC;
+      border-radius: 8px;
+      margin-bottom: 5px;
+      padding-left: 19px;
+      padding-right: 24px;
+      .q-tab__content {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .q-tab__label {
+        color: $grey-5;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 18px;
+      }
+      .circle {
+        width: 5px;
+        height: 5px;
+        border-radius: 100%;
+      }
+      &--active {
+        background: #FFFFFF;
+        border: 2px solid #CCCCCC;
+        .q-tab__label {
+          color: $grey-5 !important;
+        } 
+      }
+    }
+  }
+}

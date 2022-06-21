@@ -1,13 +1,22 @@
 <template>
-  <!-- <q-dialog
+  <q-dialog
     v-model="dialog"
     :maximized="maximizedToggle"
     transition-show="fade"
     transition-hide="fade" 
-    class="my-dialog finance-dialog"
+    class="my-dialog contractor-dialog-share"
   >
-    <Dialog @modalFalse="modalFalse" />
-  </q-dialog> -->
+    <DialogShare @modalFalse="modalFalse" />
+  </q-dialog>
+  <q-dialog
+    v-model="dialog2"
+    :maximized="maximizedToggle2"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-status"
+  >
+    <DialogStatus @modalFalse="modalFalse2"  />
+  </q-dialog>
   
   <q-page class="page-contractor">
     <div class="row justify-between items-center">
@@ -19,6 +28,7 @@
           no-caps
           class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-mr-xs"
           label="Выбрать"
+          @click="dialog2 = true"
         />
         <q-btn
           rounded
@@ -26,6 +36,7 @@
           no-caps
           class="bg-positive text-white my-btn my-effect h-dark"
           label="Пригласить подрядчика"
+          @click="dialog = true"
         />
       </div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -130,10 +141,15 @@
             </div>
             <div class="estimates item">
               <q-icon color="grey-7" name="svguse:icons/allIcons.svg#document" class="q-icon-info">
-                <sup><div class="number">3</div></sup>
+                <sup v-show="props.row.documents"><div class="number">{{props.row.documents}}</div></sup>
               </q-icon>
-              <q-icon color="grey-7" name="svguse:icons/allIcons.svg#rub" class="q-icon-info">
-                <sup><q-icon size="7px" color="white" name="svguse:icons/allIcons.svg#check" class="icon-check" /></sup>
+              <q-icon
+                color="grey-7"
+                name="svguse:icons/allIcons.svg#rub"
+                class="q-icon-info"
+              >
+                <sup v-show="props.row.pay"><q-icon size="7px" color="white" name="svguse:icons/allIcons.svg#check" class="icon-check" /></sup>
+                <div v-show="props.row.pay === false" class="circle bg-negative"></div>
               </q-icon>
             </div>
             <div class="bid item">
@@ -202,7 +218,8 @@
 </template>
 
 <script>
-import Dialog from 'pages/Finance/dialog.vue'
+import DialogShare from 'pages/Contractor/DialogShare.vue'
+import DialogStatus from 'pages/Contractor/DialogStatus.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref } from 'vue'
 
@@ -227,8 +244,8 @@ const rows = ref([
     like: 25,
     dislike: 2,
     reviews: 12,
-    documents: 3,
-    pay: true,
+    documents: 2,
+    pay: false,
     bid: 13,
     projects: [
       {
@@ -298,8 +315,8 @@ const rows = ref([
     like: 25,
     dislike: 2,
     reviews: 12,
-    documents: 3,
-    pay: true,
+    documents: 0,
+    pay: null,
     bid: 13,
     projects: [
       {
@@ -435,11 +452,13 @@ const rows = ref([
 export default {
   name: 'PageFinance',
   components: {
-    Dialog,
+    DialogShare,
+    DialogStatus,
     ActionBtn
   },
   setup () {
     const dialog = ref(false)
+    const dialog2 = ref(false)
     const pagination = ref({
       sortBy: 'id',
       rowsPerPage: 0
@@ -458,9 +477,15 @@ export default {
       rows,
       pagination,
       dialog,
+      dialog2,
       maximizedToggle: ref(true),
+      maximizedToggle2: ref(true),
+ 
       modalFalse() {
         dialog.value = false
+      },
+      modalFalse2() {
+        dialog2.value = false
       }
     }
   }
