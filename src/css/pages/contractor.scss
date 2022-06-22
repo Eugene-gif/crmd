@@ -18,6 +18,7 @@
     }
   }
   @media (max-width: 772px) {
+    overflow-x: hidden;
     .sectiobn-btns {
       display: flex;
       flex-direction: column-reverse;
@@ -57,8 +58,8 @@
       }
 
       .select-section {
-        padding-top: 11px;
-        padding-bottom: 11px;
+        padding-top: 7px;
+        padding-bottom: 7px;
         width: 100%;
         border-bottom: 1px solid $grey-3;
         &:nth-child(2) {

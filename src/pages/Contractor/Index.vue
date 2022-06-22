@@ -192,7 +192,9 @@
                 {{props.row.city}}
               </div>
             </div>
-            
+            <div class="city mb-visible">
+              {{props.row.city}}
+            </div>
             <q-list class="q-list-user-info item">
               <q-item
                 class="link-mail"
