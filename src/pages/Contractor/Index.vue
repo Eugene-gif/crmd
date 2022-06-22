@@ -134,6 +134,7 @@
       <template #body="props">
         <q-tr
           :props="props"
+          :class="{visibility: props.row.show}"
         >
           <q-td
             key="content"
@@ -146,6 +147,14 @@
             <div class="name item">
               {{props.row.name}}
             </div>
+            <q-icon
+              size="12px"
+              color="black"
+              class="icon-toggle mb-visible"
+              name="svguse:icons/allIcons.svg#select-arrow"
+              :class="{rotate: props.row.show}"
+              @click="props.row.show = !props.row.show"
+            />
             <div class="status item">
               <div class="circle" :class="{active: props.row.status > 1}"></div>
               {{props.row.statusName}}
@@ -176,6 +185,7 @@
             <div class="bid item">
               {{props.row.bid}}%
             </div>
+            <div class="br mb-visible"></div>
             <ActionBtn 
               :propsEl="props.id"
               :offsetYX="[55, -258]"
@@ -327,6 +337,7 @@ const rows = ref([
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
+    show: false
   },
   {
     id: 2,
@@ -398,6 +409,7 @@ const rows = ref([
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
+    show: false
   },
   {
     id: 3,
@@ -469,6 +481,7 @@ const rows = ref([
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
+    show: true
   },
 ])
 

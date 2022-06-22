@@ -1727,6 +1727,12 @@
               max-width: calc(166px - 5.5vw);
             }
           }
+          @media (max-width: 1140px) {
+            &:nth-child(3) {
+              flex: 1 1 calc(226px - 6vw);
+              max-width: calc(226px - 6vw)
+            }
+          }
         }
       }
     }
@@ -1802,6 +1808,10 @@
             .q-tabs-reviews {
               flex: 1 1 148px;
               max-width: 148px;
+              @media (min-width: 772px) {
+                position: relative;
+                top: -3px;
+              }
               .q-tab {
                 .q-tab__label {
                   font-weight: 500;
@@ -1866,7 +1876,7 @@
               background: #F7F7F7;
               &:after {
                 content: '';
-                width: 15vw;
+                width: 20vw;
                 height: 36px;
                 position: absolute;
                 z-index: 1;
@@ -1875,12 +1885,17 @@
                 right: 0;
                 background: linear-gradient(90deg, rgba(247, 247, 247, 0) 0%, #f0f0f0fa 13.67%);
               }
+              @media (min-width: 772px) {
+                &:after {
+                  width: 12.5vw;
+                }
+              }
               .projects {
                 padding: 5px 25px;
                 padding-right: 0;
-                flex: 1 1 60vw;
+                flex: 1 1 70vw;
                 overflow-x: scroll;
-                max-width: 60vw;
+                max-width: 70vw;
                 display: flex;
                 position: relative;
                 @media (max-width: 1800px) {
@@ -1966,7 +1981,6 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
-                flex: 1 1 24220px9px;
               }
               .status {
                 flex: 1 1 calc(192px - 5vw);
@@ -1990,6 +2004,12 @@
               }
 
             }
+            @media (max-width: 1140px) {
+              .status {
+                flex: 1 1 calc(192px - 6.5vw);
+                max-width: calc(192px - 6.5vw);
+              }
+            }
           }
         }
       }
@@ -2008,8 +2028,17 @@
           padding-top: 19px;
           padding-bottom: 19px;
           margin-bottom: 5px;
+          max-height: 68px;
+          display: flex;
+          transition: max-height 0.3s; 
+          overflow: hidden;
+          &.visibility {
+            max-height: 100%;
+            overflow: visible;
+          }
           td {
             &.q-td-content {
+              position: relative;
               .name,
               .status,
               .q-tabs-reviews,
@@ -2033,9 +2062,19 @@
               
               .name {             
                 margin-left: 9px;
-                flex: 0 0 calc(100% - 75px);
-                max-width: calc(100% - 75px);
+                flex: 0 0 calc(100% - 90px);
+                max-width: calc(100% - 90px);
                 margin-bottom: 15px;
+              }
+
+              .icon-toggle {
+                position: absolute;
+                right: 19px;
+                top: 10px;
+                transition: all 0.3s;
+                .rotate {
+                  transform: rotate(180deg);
+                }
               }
 
               .q-tabs-reviews {
@@ -2044,9 +2083,13 @@
                 order: 3;
                 margin-left: 20px;
                 position: relative;
-                top: 1.5px;
-                margin-top: 13px;
-                margin-bottom: 15px;
+                top: 0;
+                margin-top: 11px;
+                margin-bottom: 19px;
+                .q-tabs__content {
+                  position: relative;
+                  top: 0px;
+                }
                 &:before,
                 &:after {
                   content: '';
@@ -2073,7 +2116,7 @@
                 max-width: max-content;
 
                 order: 4;
-                margin-top: 13px;
+                margin-top: 11px;
                 margin-bottom: 15px;
               }
               
@@ -2083,8 +2126,12 @@
                 max-width: max-content;
                 margin-left: auto;
                 margin-right: 20px;
-                margin-top: 13px;
+                margin-top: 11px;
                 margin-bottom: 15px;
+              }
+              .br {
+                flex: 0 0 100%;
+                order: 5;
               }
               .estimates {
                 flex: 1 1 max-content;
@@ -2099,7 +2146,7 @@
                 order: 7;
               }
               .projects-section {
-                margin-top: 14px;
+                margin-top: 10px;
                 margin-bottom: 15px;
                 flex-wrap: wrap;
                 order: 8;
@@ -2183,7 +2230,7 @@
                   background: none !important;
                 }
               }
-
+              
             }
           }
         }
