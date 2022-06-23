@@ -438,8 +438,11 @@ export default ({
       },
       openMobileSearch() {
         showingMob.value = true
-        InputSerachMobile.value.focus()
-        InputSerachMobile.value.focus()
+        
+        function func() {
+          InputSerachMobile.value.focus()
+        }
+        setTimeout(func, 100);
       }
     }
   }

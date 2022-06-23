@@ -2072,7 +2072,7 @@
                 right: 19px;
                 top: 10px;
                 transition: all 0.3s;
-                .rotate {
+                &.rotate {
                   transform: rotate(180deg);
                 }
               }
@@ -2179,7 +2179,7 @@
               .city {
                 order: 9;
                 flex: 0 0 100%;
-                margin-left: 20px;
+                padding-left: 20px;
               }
               .email {
                 order: 10;

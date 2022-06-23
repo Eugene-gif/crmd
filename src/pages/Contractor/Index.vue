@@ -141,10 +141,10 @@
             :props="props"
             class="q-td-content"
           >
-            <div class="avatar item">
+            <div class="avatar item" @click="props.row.show = !props.row.show">
               <img :src="props.row.image" alt="">
             </div>
-            <div class="name item">
+            <div class="name item" @click="props.row.show = !props.row.show">
               {{props.row.name}}
             </div>
             <q-icon
