@@ -1,0 +1,19 @@
+.page-clients {
+  @media (max-width: 772px) {
+    .sectiobn-btns {
+      flex: 0 0 100%;
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+      padding-top: 28px;
+      .q-btn {
+        &:last-child {
+          margin-right: 5px;
+          .q-icon {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+}
