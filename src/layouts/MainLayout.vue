@@ -251,7 +251,7 @@ const linksList = [
   },
   {
     title: 'Заказчики',
-    link: 'customers',
+    link: 'clients',
     number: 2
   },
   {
