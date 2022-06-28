@@ -6,7 +6,7 @@
     class="my-effect h-opacity"
   >
     <q-item-section>
-      <q-item-label>{{ title }} <sup>{{number}}</sup></q-item-label>
+      <q-item-label>{{ title }} <!-- <sup>{{number}}</sup> --></q-item-label>
       <q-icon size="12px" name="svguse:icons/allIcons.svg#essentialPlus" />
     </q-item-section>
   </q-item>
