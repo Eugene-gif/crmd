@@ -23,12 +23,28 @@
           </span>
         </q-btn>
       </div>
-    </div>    
+    </div> 
+     <div class="sorted">
+      <div class="sorted-section mb-visible">
+        <div class="title">Сортировка: </div>
+        <q-select
+          borderless
+          v-model="model"
+          :options="options2"
+          behavior="menu"
+          popup-content-class="select-menu-mobile"
+        />
+      </div>
+      <div class="sorted-btns mb-visible" style="margin-right: 0;">
+        <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
+        <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
+      </div>
+    </div>
     <q-table
       flat
-      :rows="rows"
+      :rows="sortRows"
       :columns="columns"
-      row-key="id"
+      row-key="index"
       hide-pagination
       class="my-table clients-table"
       :pagination="pagination"
@@ -68,7 +84,27 @@
         <q-th :props="props" class="q-th__image">
         </q-th>
       </template>
+      <template #top-row>
+        <div class="sort-number">
+          <q-checkbox
+            v-for="item in checkArray"
+            :key="item"
+            v-model="sort"
+            :label="item"
+            :val="item"
+            @click="sortedTable"
+          />
+        </div>
+      </template>
       <template #body="props">
+        <div
+          class="number"
+          v-if="props.row.letter"
+        >
+          {{props.row.letter}}
+        </div>
+          <!-- {{props.key}}<br> -->
+          <!-- {{sortRows[props.row.index].letter}} -->
         <q-tr
           :props="props"
           :class="{visibility: props.row.show}"
@@ -236,7 +272,7 @@
 <script>
 
 import ActionBtn from 'components/Table/ActionBtn.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
  
 const columns = [
   { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
@@ -248,6 +284,46 @@ const columns = [
 ]
 
 const rows = ref([
+  {
+    id: 11,
+    status: 2,
+    image: '/icons/anton.jpg',
+    name: 'Константин Лавров',
+    city: 'Краснодар',
+    tel: '+7 (918) 455-02-16',
+    whatsapp: '',
+    telegram: '',
+    instagram: '',
+    email: '',
+    show: false,
+    showProjects: false,
+    projects: [
+      {
+        icon: '',
+        name: 'Квартира на Мира',
+        progress: 20,
+        pay: 0,
+        city: 'Краснодар',
+        link: ''
+      },
+      {
+        icon: '🏰',
+        name: 'Название объекта, заданное пользователем',
+        progress: 50,
+        pay: 20,
+        city: 'Сочи',
+        link: ''
+      },
+      {
+        icon: '🏡',
+        name: 'Короткое название',
+        progress: 100,
+        pay: 100,
+        city: 'Санкт-Петербург',
+        link: ''
+      },
+    ]    
+  },
   {
     id: 1,
     status: 2,
@@ -288,6 +364,7 @@ const rows = ref([
       },
     ]    
   },
+  
   {
     id: 2,
     status: 1,
@@ -311,23 +388,150 @@ const rows = ref([
       },
     ]    
   },
+  {
+    id: 22,
+    status: 1,
+    image: '/icons/anton.jpg',
+    name: 'Армен Бармен',
+    city: 'Краснодар',
+    tel: '+7 (918) 455-02-16',
+    whatsapp: '',
+    telegram: '',
+    instagram: '',
+    email: '',
+    show: false,
+    projects: [
+      {
+        icon: '🏰',
+        name: 'Квартира на Мира',
+        progress: 20,
+        pay: 0,
+        city: 'Краснодар',
+        link: ''
+      },
+    ]    
+  },
+  {
+    id: 3,
+    status: 1,
+    image: '/icons/anton.jpg',
+    name: 'Богдан Алиев',
+    city: 'Краснодар',
+    tel: '+7 (918) 455-02-16',
+    whatsapp: '',
+    telegram: '',
+    instagram: '',
+    email: '',
+    show: false,
+    projects: [
+      {
+        icon: '🏰',
+        name: 'Квартира на Мира',
+        progress: 20,
+        pay: 0,
+        city: 'Краснодар',
+        link: ''
+      },
+    ]    
+  },
+  {
+    id: 4,
+    status: 1,
+    image: '/icons/anton.jpg',
+    name: 'Богдан Алиев',
+    city: 'Краснодар',
+    tel: '+7 (918) 455-02-16',
+    whatsapp: '',
+    telegram: '',
+    instagram: '',
+    email: '',
+    show: false,
+    projects: [
+      {
+        icon: '🏰',
+        name: 'Квартира на Мира',
+        progress: 20,
+        pay: 0,
+        city: 'Краснодар',
+        link: ''
+      },
+    ]    
+  },
 ])
+const sortRows = ref([])
+const checkArray = ref([
+  'а',
+  'б',
+  'в',
+  'г',
+  'д',
+  'е',
+  'ж',
+  'з',
+  'и',
+  'к',
+  'л',
+  'м',
+  'н',
+  'о',
+  'п',
+  'р',
+  'с',
+  'т',
+  'у',
+  'ф',
+  'х',
+  'ц',
+  'ч',
+  'ш',
+  'щ',
+  'ы',
+  'э',
+  'ю',
+  'я'
+])
+const sort = ref(['а','к', 'б'])
+const pagination = ref({
+  sortBy: '',
+  rowsPerPage: 0
+})
 
-
+function sortedTable() {
+  let arr = []
+  let index = 0
+  let oneLetter = ''
+  rows.value.filter((item) => {
+    let letter = item.name.toLowerCase().substr(0, 1)
+    if (sort.value.includes(letter)) {
+      if (oneLetter != letter) {
+        oneLetter = letter
+        item.letter = oneLetter
+        // item.letter = letter
+        item.index = index
+        index++
+      }
+      return arr.push(item)
+    }
+  })
+  sortRows.value = arr
+}
 export default {
   name: 'PageСlients',
   components: {
     ActionBtn
   },
   setup () {
-    const pagination = ref({
-      sortBy: 'id',
-      rowsPerPage: 0
+    onMounted(() => {
+      sortedTable()
     })
     return {
       columns,
       rows,
-      pagination
+      sortRows,
+      pagination,
+      checkArray,
+      sort,
+      sortedTable
     }
   }
 }

@@ -2302,6 +2302,15 @@
       display: flex;
       width: 100%;
       flex-direction: column;
+      .number {
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 30px;
+        line-height: 30px;
+        color: #000000;
+        margin-top: 36px;
+        margin-bottom: 39px;
+      }
       tr {
         display: flex;
         width: 100%;
@@ -2502,6 +2511,9 @@
         display: none;
       }
       tbody {
+        .number {
+          display: none;
+        }
         tr {
           margin-bottom: 5px;
           max-height: 67px;
