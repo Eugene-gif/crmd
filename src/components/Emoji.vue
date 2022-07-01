@@ -41,7 +41,11 @@
             transition-prev="slide-right"
             transition-next="slide-left"
           >
-            <q-tab-panel name="Символы">
+            <q-tab-panel
+              name="Символы"
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+            >
               <div
                 class="symbol"
                 v-for="symbol in symbols[0]"
@@ -50,7 +54,11 @@
                 <span @click="emojiFunc(symbol)">{{symbol}}</span>
               </div>
             </q-tab-panel>
-            <q-tab-panel name="Природа">
+            <q-tab-panel
+              name="Природа"
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+            >
               <div
                 class="symbol"
                 v-for="symbol in symbols[1]"
@@ -59,7 +67,11 @@
                 <span @click="emojiFunc(symbol)">{{symbol}}</span>
               </div>
             </q-tab-panel>
-            <q-tab-panel name="Еда">
+            <q-tab-panel 
+              name="Еда"
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+            >
               <div
                 class="symbol"
                 v-for="symbol in symbols[2]"
@@ -68,7 +80,11 @@
                 <span @click="emojiFunc(symbol)">{{symbol}}</span>
               </div>
             </q-tab-panel>
-            <q-tab-panel name="Занятия">
+            <q-tab-panel 
+              name="Занятия"
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+            >
               <div
                 class="symbol"
                 v-for="symbol in symbols[3]"
@@ -77,7 +93,11 @@
                 <span @click="emojiFunc(symbol)">{{symbol}}</span>
               </div>
             </q-tab-panel>
-            <q-tab-panel name="Здания">
+            <q-tab-panel 
+              name="Здания"
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+            >
               <div
                 class="symbol"
                 v-for="symbol in symbols[4]"
@@ -86,7 +106,11 @@
                 <span @click="emojiFunc(symbol)">{{symbol}}</span>
               </div>
             </q-tab-panel>
-            <q-tab-panel name="Предметы">
+            <q-tab-panel 
+              name="Предметы"
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+            >
               <div
                 class="symbol"
                 v-for="symbol in symbols[5]"
@@ -124,6 +148,7 @@ import { ref } from 'vue'
 
 export default {
   setup() {
+    const info = ref(null)
     const emojiIcon = ref()
     const tab = ref('Символы')
     const openTabs = ref(false)
@@ -136,6 +161,26 @@ export default {
       'Здания',
       'Предметы'
     ]
+    function nextTab(val) {
+      const lengthTabs = tabList.length - 1
+      const currentTab = tab.value
+      const indexCurrent = tabList.indexOf(currentTab)
+      let nextSlideIndex = 0
+
+      if (val === 'prev') {
+        nextSlideIndex = indexCurrent - 1
+        if (nextSlideIndex < 0) {
+          nextSlideIndex = lengthTabs
+        }
+      }
+      if (val === 'next') {
+        nextSlideIndex = indexCurrent + 1
+        if (nextSlideIndex > lengthTabs) {
+          nextSlideIndex = 0
+        }
+      }
+      tab.value = tabList[nextSlideIndex]
+    }
     return {
       emojiIcon,
       openModal,
@@ -296,26 +341,14 @@ export default {
         setTimeout(func, 10);
         openModal.value = false
       },
-      nextTab(val) {
-        const lengthTabs = tabList.length - 1
-        const currentTab = tab.value
-        const indexCurrent = tabList.indexOf(currentTab)
-        let nextSlideIndex = 0
-  
-        if (val === 'prev') {
-          nextSlideIndex = indexCurrent - 1
-          if (nextSlideIndex < 0) {
-            nextSlideIndex = lengthTabs
-          }
-        }
-        if (val === 'next') {
-          nextSlideIndex = indexCurrent + 1
-          if (nextSlideIndex > lengthTabs) {
-            nextSlideIndex = 0
-          }
-        }
-        tab.value = tabList[nextSlideIndex]
-      }
+      nextTab,
+      info,
+      handleSwipeNext ({ evt, ...newInfo }) {
+        nextTab('next')
+      },
+      handleSwipePrev ({ evt, ...newInfo }) {
+        nextTab('prev')
+      },
     }
   }
 }

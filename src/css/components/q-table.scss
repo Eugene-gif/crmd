@@ -1643,6 +1643,7 @@
   }
   .q-table {
     width: 100%;
+    display: block;
     thead {
       display: flex;
       width: 100%;
@@ -1874,38 +1875,17 @@
               margin-bottom: 10px;
               position: relative;
               background: #F7F7F7;
-              &:after {
-                content: '';
-                width: 20vw;
-                height: 36px;
-                position: absolute;
-                z-index: 1;
-                display: block;
-                top: 0;
-                right: 0;
-                background: linear-gradient(90deg, rgba(247, 247, 247, 0) 0%, #f0f0f0fa 13.67%);
-              }
-              @media (min-width: 772px) {
-                &:after {
-                  width: 12.5vw;
-                }
-              }
+              overflow: hidden;
+              
               .projects {
                 padding: 5px 25px;
                 padding-right: 0;
-                flex: 1 1 63vw;
+                flex: 0 0 100%;
                 overflow-x: scroll;
-                max-width: 63vw;
+                max-width: 100%;
                 display: flex;
+                z-index: 1;
                 position: relative;
-                @media (max-width: 1800px) {
-                  flex: 1 1 65vw;
-                  max-width: 65vw;
-                }
-                // @media (max-width: 1240px) {
-                //   flex: 1 1 900px;
-                //   max-width: 900px;
-                // }
                 &::-webkit-scrollbar {
                   height: 0;
                 }
@@ -1921,10 +1901,23 @@
                 margin-left: auto;
                 position: relative;
                 text-align: right;
-                z-index: 2;
-                flex: 0 0 167px;
-                opacity: 0.4;
+                z-index: 3;
+                flex: 0 0 max-content;
+                opacity: 1;
                 margin-right: 24px;
+                position: absolute;
+                right: 0;
+                &:before {
+                  content: '';
+                  width: calc(100% + 80px);
+                  height: 36px;
+                  position: absolute;
+                  z-index: -1;
+                  display: block;
+                  top: -6px;
+                  right: -24px;
+                  background: linear-gradient(90deg, rgba(247, 247, 247, 0) 0%, #f0f0f0fa 13.67%);
+                }
               }
             }
             
@@ -2150,9 +2143,6 @@
                 margin-bottom: 15px;
                 flex-wrap: wrap;
                 order: 8;
-                &:after {
-                  display: none;
-                }
                 .projects {
                   padding: 3px 7px;
                   padding-right: 0;
