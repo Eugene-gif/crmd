@@ -51,19 +51,19 @@
     }
   }
   @media (max-width: 772px) {
-    padding: 15.5px 0px;
+    padding: 15.5px 20px;
     flex-wrap: wrap;
-    // justify-content: flex-start;
+    justify-content: flex-start;
     .q-checkbox {
-      flex: 0 0 12.5%;
-      min-width: 25px;
+      flex: 0 0 20px;
+      min-width: 20px;
       min-height: 16px;
-      margin: 4.5px;
+      margin: 5.5px;
+      justify-content: flex-start;
       .q-checkbox__label {
         font-size: 16px;
         line-height: 16px;
         text-align: center;
-        justify-content: center;
       }
     }
   }

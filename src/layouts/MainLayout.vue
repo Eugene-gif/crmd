@@ -398,7 +398,6 @@ export default ({
       }
     } 
     
-     
     return {
       showing,
       showingMob,
@@ -442,7 +441,7 @@ export default ({
         function func() {
           InputSerachMobile.value.focus()
         }
-        setTimeout(func, 100);
+        setTimeout(func, 400);
       }
     }
   }

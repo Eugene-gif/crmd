@@ -410,6 +410,9 @@
         .q-uploader {
           width: 100%;
           height: 136px;
+          .q-uploader__dnd {
+            display: none;
+          }
         }
       }
     }
@@ -819,6 +822,11 @@
     }
   }
 }
+.tooltip-project-contractor {
+  max-width: 280px !important;
+  transform: translateY(12px) translateX(-100px);
+}
+
 // 
 
 .contractor-dialog-share,

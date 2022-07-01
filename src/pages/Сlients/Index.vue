@@ -103,8 +103,6 @@
         >
           {{props.row.letter}}
         </div>
-          <!-- {{props.key}}<br> -->
-          <!-- {{sortRows[props.row.index].letter}} -->
         <q-tr
           :props="props"
           :class="{visibility: props.row.show}"
@@ -115,13 +113,13 @@
             class="q-td-content"
           >
             <div class="head">
-              <div class="avatarka item">
+              <div class="avatarka item" @click="props.row.show = !props.row.show">
                 <img :src="props.row.image" alt="">
                 <div class="circle" v-show="props.row.status === 2">
                   <div class="img">👑</div>
                 </div>
               </div>
-              <div class="name item">{{props.row.name}}</div>
+              <div class="name item" @click="props.row.show = !props.row.show">{{props.row.name}}</div>
               <div class="icon-toggle mb-visible">
                 <q-icon
                   size="12px"
@@ -252,18 +250,6 @@
             </div>
           </q-td>
         </q-tr>
-        <!-- 
-          <ActionBtn 
-            :propsEl="props"
-            :offsetYX="[55, -258]"
-          />
-          <q-chip>
-            <div class="text">Готовность: <span>{{props.row.readiness}}</span>%</div>
-          </q-chip
-          <q-chip>
-            <div class="text">Оплата: <span>{{props.row.payment}}</span>%</div>
-          </q-chip>
-         -->
       </template>
     </q-table>
   </q-page>

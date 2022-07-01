@@ -78,6 +78,7 @@
           :options="options2"
           behavior="menu"
           popup-content-class="tooltip-project tooltip-project-contractor"
+          anchor="bottom left" self="top right"
           dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
         />
       </div>   
