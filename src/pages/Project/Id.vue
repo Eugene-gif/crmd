@@ -502,6 +502,7 @@
           <q-card-section
             v-for="item in estimates" :key="item.id"
           >
+            <q-item to="#dsf" class="link-all"></q-item>
             <div class="title">{{item.name}}</div>
             <div class="text">
               Изменена: {{item.changed}} <br>
@@ -512,6 +513,7 @@
                 Общий доступ
               </div>
               <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
+                <q-item class="link-all" to="#eee"></q-item>
                 <div class="circle"></div>
               </q-icon>
             </div>
@@ -602,7 +604,7 @@
               <q-btn
                 unelevated
                 no-caps
-                class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+                class="bg-grey-3 text-grey-5 my-btn my-effect"
                 padding="9px 14px"
               >
                 Доступ по ссылке
@@ -673,7 +675,7 @@
               <q-btn
                 unelevated
                 no-caps
-                class="bg-white text-grey-5 my-btn my-effect h-dark-lite"
+                class="bg-white text-grey-5 my-btn my-effect"
                 padding="9px 14px"
               >
                 Доступ по ссылке

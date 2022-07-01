@@ -513,6 +513,11 @@
         min-height: 307px;
         display: flex;
         flex-direction: column;
+        position: relative;
+        transition: all 0.25s;
+        &:hover {
+          border: 1px solid #E5E5E5;
+        }
         &:nth-child(1) {
           margin-left: 0;
         }
@@ -540,12 +545,16 @@
           flex-wrap: nowrap;
           justify-content: space-between;
           margin-top: 32px;
+          .q-icon {
+            z-index: 2;
+          }
           .text {
             margin-top: 0;
           }
         }
         .q-list-share {
           margin-top: 18px;
+          z-index: 2;
           .q-item-add {
             margin-left: 2px;
           }
@@ -559,6 +568,16 @@
                 }
               }
             }
+          }
+        }
+        .q-item-action {
+          z-index: 2;
+        }
+        .link-all {
+          border-radius: 10px;
+          &:active {
+            z-index: 3;
+            background: rgba(255,255,255,0.7);
           }
         }
       }
@@ -607,6 +626,7 @@
         flex: 0 0 calc(50% - 30px);
         max-width: calc(50% - 30px);
         margin-bottom: 60px;
+        transition: all 0.25s;
         &:nth-child(1n) {
           margin-right: 30px;
         }
@@ -647,6 +667,17 @@
             text-transform: uppercase;
             color: #444444;
             padding: 6px 9.5px !important;
+            .q-btn__conten {
+              transition: all 0.25s;
+              .q-icon {
+                opacity: 1 !important;
+              }
+            }
+            &:active {
+              .q-btn__content {
+                opacity: 0.3;
+              }
+            }
             .link-icon {
               margin-left: 10px;
               color: black;
@@ -665,10 +696,26 @@
                 .q-tab-panels {
                   .q-tab-panel {
                     height: 329px;
+                    img {
+                      transition: all 0.25s;
+                    }
                   }
                 }
               }
             }
+          }
+        }
+        &:hover {
+          border: 1px solid #E5E5E5;
+          .visual-slider {
+            img {
+              transform: scale(1.1)
+            }
+          }
+        }
+        &:active {
+          .q-td-image {
+            opacity: 0.3;
           }
         }
       }
@@ -676,6 +723,9 @@
         flex: 0 0 100%;
         max-width: 100%;
         border: none;
+        &:hover {
+          border: inherit;
+        }
         .q-btn {
           width: 100%;
           padding: 0 32px 0 26px;
@@ -762,6 +812,13 @@
             width: 100%;
             .q-item-add {
               margin-left: auto;
+            }
+          }
+          .link-icon {
+            .circle {
+              &:before {
+                background: white !important;
+              }
             }
           }
         }
