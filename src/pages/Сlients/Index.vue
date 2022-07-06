@@ -85,24 +85,33 @@
         </q-th>
       </template>
       <template #top-row>
-        <div class="sort-number">
-          <q-checkbox
-            v-for="item in checkArray"
-            :key="item"
-            v-model="sort"
-            :label="item"
-            :val="item"
-            @click="sortedTable"
-          />
+        <div class="sort-number-container">
+          <div
+            class="sort-number" 
+            ref="sortNumber"
+            :style="{ width: sortNumberWidth+'px' }"
+          >
+            <q-btn
+              v-for="item in checkArray"
+              :key="item"
+              @click.stop="scrollMeTo(item.number)"
+              :class="{activate: item.active}"
+            >
+              {{item.number}}
+            </q-btn>
+          </div>
         </div>
+        
       </template>
       <template #body="props">
         <div
           class="number"
           v-if="props.row.letter"
+          :ref="el => numberTable[props.row.letter] = el"
         >
           {{props.row.letter}}
         </div>
+        
         <q-tr
           :props="props"
           :class="{visibility: props.row.show}"
@@ -446,53 +455,153 @@ const rows = ref([
 ])
 const sortRows = ref([])
 const checkArray = ref([
-  'а',
-  'б',
-  'в',
-  'г',
-  'д',
-  'е',
-  'ж',
-  'з',
-  'и',
-  'к',
-  'л',
-  'м',
-  'н',
-  'о',
-  'п',
-  'р',
-  'с',
-  'т',
-  'у',
-  'ф',
-  'х',
-  'ц',
-  'ч',
-  'ш',
-  'щ',
-  'ы',
-  'э',
-  'ю',
-  'я'
+  {
+    number: 'а',
+    active: false
+  },
+  {
+    number: 'б',
+    active: false
+  },
+  {
+    number: 'в',
+    active: false
+  },
+  {
+    number: 'г',
+    active: false
+  },
+  {
+    number: 'д',
+    active: false
+  },
+  {
+    number: 'е',
+    active: false
+  },
+  {
+    number: 'ж',
+    active: false
+  },
+  {
+    number: 'з',
+    active: false
+  },
+  {
+    number: 'и',
+    active: false
+  },
+  {
+    number: 'к',
+    active: false
+  },
+  {
+    number: 'л',
+    active: false
+  },
+  {
+    number: 'м',
+    active: false
+  },
+  {
+    number: 'н',
+    active: false
+  },
+  {
+    number: 'о',
+    active: false
+  },
+  {
+    number: 'п',
+    active: false
+  },
+  {
+    number: 'р',
+    active: false
+  },
+  {
+    number: 'с',
+    active: false
+  },
+  {
+    number: 'т',
+    active: false
+  },
+  {
+    number: 'у',
+    active: false
+  },
+  {
+    number: 'ф',
+    active: false
+  },
+  {
+    number: 'х',
+    active: false
+  },
+  {
+    number: 'ц',
+    active: false
+  },
+  {
+    number: 'ч',
+    active: false
+  },
+  {
+    number: 'ш',
+    active: false
+  },
+  {
+    number: 'щ',
+    active: false
+  },
+  {
+    number: 'ы',
+    active: false
+  },
+  {
+    number: 'э',
+    active: false
+  },
+  {
+    number: 'ю',
+    active: false
+  },
+  {
+    number: 'я',
+    active: false
+  }
 ])
-const sort = ref(['а','к', 'б'])
+const sort = ref([])
 const pagination = ref({
   sortBy: '',
   rowsPerPage: 0
 })
+const numberTable = ref([])
+const sortNumber = ref()
+const sortNumberOffset = ref()
+const sortNumberWidth = ref()
 
 function sortedTable() {
   let arr = []
   let index = 0
   let oneLetter = ''
+  
   rows.value.filter((item) => {
     let letter = item.name.toLowerCase().substr(0, 1)
+    sort.value.push(letter)
+    if (checkArray.value.includes(letter)) {
+
+    }
+    checkArray.value.filter((el) => {    
+      if (el.number.toLowerCase().substr(0, 1) === letter) {
+        el.active = true
+      }
+    })
     if (sort.value.includes(letter)) {
       if (oneLetter != letter) {
         oneLetter = letter
         item.letter = oneLetter
-        // item.letter = letter
         item.index = index
         index++
       }
@@ -501,6 +610,20 @@ function sortedTable() {
   })
   sortRows.value = arr
 }
+function scrollMeTo(ref) {
+  window.scrollTo({
+    top: numberTable.value[ref].offsetTop,
+    behavior: 'smooth'
+  })
+}
+function sortNumberScroll() {
+  if (window.pageYOffset > sortNumberOffset.value + 300) {
+    sortNumber.value.classList.add('activate')
+  } else {
+    sortNumber.value.classList.remove('activate')
+  }
+}
+
 export default {
   name: 'PageСlients',
   components: {
@@ -509,6 +632,11 @@ export default {
   setup () {
     onMounted(() => {
       sortedTable()
+      window.addEventListener('scroll', sortNumberScroll)
+      sortNumberOffset.value = sortNumber.value.offsetTop 
+      if (window.innerWidth > 772) {
+        sortNumberWidth.value = sortNumber.value.offsetWidth
+      }     
     })
     return {
       columns,
@@ -517,7 +645,12 @@ export default {
       pagination,
       checkArray,
       sort,
-      sortedTable
+      numberTable,
+      sortNumber,
+      sortNumberOffset,
+      sortNumberWidth,
+      sortedTable,
+      scrollMeTo
     }
   }
 }

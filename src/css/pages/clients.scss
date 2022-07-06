@@ -1,4 +1,8 @@
 .page-clients {
+  .sort-number-container {
+    min-height: 67px;
+    position: relative;
+  }
   @media (max-width: 772px) {
     .sectiobn-btns {
       flex: 0 0 100%;
@@ -23,6 +27,10 @@
     }
     .sort-number {
       margin-bottom: 27px;
+    }
+    .sort-number-container {
+      min-height: 141px;
+      position: relative;
     }
   }
 }
