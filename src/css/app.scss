@@ -28,6 +28,23 @@
   }
 }
 
+.status {
+  display: flex;
+  align-items: center;
+  .circle {
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+  }
+  .desc {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 16px;
+    color: #444444;
+    margin-left: 15px;
+  }
+}
+
 .q-list-share {
   display: flex;
   .q-item {
@@ -182,12 +199,6 @@
 // layouts
 @import 'layout/main';
 
-// pages
-@import 'pages/finance';
-@import 'pages/projects';
-@import 'pages/contractor';
-@import 'pages/clients';
-
 // components
 @import 'components/essentiallink';
 @import 'components/q-field';
@@ -205,7 +216,12 @@
 @import 'components/q-list';
 @import 'components/visual-slider';
 
-
+// pages
+@import 'pages/finance';
+@import 'pages/projects';
+@import 'pages/contractor';
+@import 'pages/clients';
+@import 'pages/estimates';
 
 // modile
 .mb-visible {
@@ -239,4 +255,7 @@
   .q-focus-helper {
     display: none;
   }
+}
+.no-border {
+  border: none;
 }

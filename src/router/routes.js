@@ -10,6 +10,7 @@ const routes = [
       { path: '/id', component: () => import('src/pages/Project/Id.vue') },
       { path: '/contractor', component: () => import('src/pages/Contractor/Index.vue') },
       { path: '/clients', component: () => import('src/pages/Сlients/Index.vue') },
+      { path: '/estimates', component: () => import('src/pages/Estimates/Index.vue') },
     ]
   },
 

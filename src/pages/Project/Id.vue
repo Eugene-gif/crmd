@@ -66,7 +66,7 @@
         no-caps
         outline
         color="grey-3"
-        class="q-mr-xs my-btn my-effect my-btn--outline"
+        class="q-mr-xs my-btn my-effect my-btn--outline q-btn-info"
         @click="dialog = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="16px" class="q-mr-md">
