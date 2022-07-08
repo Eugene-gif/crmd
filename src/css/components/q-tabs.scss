@@ -153,13 +153,12 @@
   }
   @media (max-width: 772px) {
     .q-tabs__content {
-      
       .q-tab {
         min-height: 25px;
         border-radius: 4px;
         margin-bottom: 4px;
         padding-left: 13px;
-        padding-right: 10px;
+        padding-right: 10px !important;
         .q-tab__content {
           height: 24px;
         }

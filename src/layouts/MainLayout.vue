@@ -97,6 +97,7 @@
           v-model="text" 
           @update:model-value="filterFn(headerMenu)"
           ref="headerInputSerach"
+          label="Поиск"
         >
           <template v-slot:prepend>
             <q-icon
@@ -110,6 +111,7 @@
         <q-input
           class="header__input__search mb-visible"
           ref="mobIconOpenSearch"
+          placholder="Поиск"
         >
           <template v-slot:prepend>
             <q-icon

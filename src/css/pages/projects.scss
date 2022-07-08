@@ -42,8 +42,6 @@
 // внутренняя страница проекта
 .page-project {
   position: relative;
-  
-  
   .head-btns {
     margin-left: auto;
   }
@@ -653,7 +651,7 @@
           border: 1px solid #E5E5E5;
           .visual-slider {
             img {
-              transform: scale(1.1)
+              transform: scale(1.03);
             }
           }
         }

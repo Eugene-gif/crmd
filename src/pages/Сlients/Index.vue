@@ -18,7 +18,7 @@
           class="bg-positive text-white my-btn my-effect h-dark"
         >
           <span class="block">
-            <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" class="mb-visible" />
+            <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" class="mb-visible" style="vertical-align: initial;" />
             Добавить <span class="lg-visible">заказчика</span>
           </span>
         </q-btn>
