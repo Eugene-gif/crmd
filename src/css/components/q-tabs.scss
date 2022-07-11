@@ -175,5 +175,39 @@
 }
 
 .q-tabs-estimates {
-  
+  .q-tab {
+    opacity: 0.3;
+    transition: all 0.25s;
+    border-radius: 100%;
+    position: relative;
+    .q-tab__content {
+      padding: 10px;
+    }
+    img,
+    .img-null {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+      border-radius: 100%;
+    }
+    .img-null {
+      background: $primary;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .text {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 12px;
+        color: #FFFFFF;
+      }
+    }
+    &[aria-selected="true"] {
+      opacity: 1;
+      img,
+      .img-null {
+        box-shadow: 0px 7px 10px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
 }

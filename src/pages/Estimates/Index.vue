@@ -184,44 +184,111 @@
         v-model="tab"
         class="q-tabs-null q-tabs-estimates"
       >
-        <q-tab name="mails" />
-        <q-tab name="alarms" />
-        <q-tab name="movies" />
+        <q-tab
+          v-for="tab in tabs"
+          :key="tab"
+          :name="tab.name"
+        >
+          <div class="img-null" v-show="!tab.imageUrl">
+            <div class="text">
+              {{cutTitle(tab.name)}}
+            </div>
+          </div>
+          <img v-show="tab.imageUrl" :src="tab.imageUrl" alt="">
+        </q-tab>
       </q-tabs>
+    </div>
+    <div class="estimates-table-container">
+      <EstimateTable
+        :columns="columnsTable"
+        :rows="rowTable"
+      />
     </div>
 
     <div class="prev-list">
       <q-btn
-          unelevated
-          no-caps
-          outline
-          class="bg-white text-grey-3 my-btn my-effect с"
-          style="border-radius: 10px;width: 100%;"
-          padding="24px 24px 24px 19px"
-        >
-          <div class="block text-grey-5">Назад к списку смет</div>
-          <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
-        </q-btn>
+        unelevated
+        no-caps
+        outline
+        class="bg-white text-grey-3 my-btn my-effect с"
+        style="border-radius: 10px;width: 100%;"
+        padding="24px 24px 24px 19px"
+      >
+        <div class="block text-grey-5">Назад к списку смет</div>
+        <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
+      </q-btn>
     </div>
   </q-page>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
+import EstimateTable from 'components/Table/EstimateTable.vue'
 
 const toggle = ref(true)
+const tabs = ref([
+  {
+    name: '1',
+    imageUrl: '/icons/stroipro.jpg' 
+  },
+  {
+    name: '2',
+    imageUrl: '/icons/anton.jpg' 
+  },
+  {
+    name: '3',
+    imageUrl: '' 
+  },
+])
+const tab = ref()
+const cutTitle = function(title) {
+  return String(title.substring(0,2))
+}
+
+const columnsTable = ref([
+  { name: 'id', label: '№', sortable: true },
+  { name: 'name', label: 'Название', sortable: false },
+  { name: 'room', label: 'Помещение', sortable: false },
+  { name: 'desc', label: 'Описание', sortable: false },
+  { name: 'metrics', label: 'м2/шт', sortable: false },
+  { name: 'price', label: 'Цена', sortable: false },
+  { name: 'total', label: 'Итого', sortable: false },
+  { name: 'dedline', label: 'Сроки', sortable: false },
+  { name: 'status', label: 'Статус', sortable: false },
+  { name: 'procent', label: 'Ставка', sortable: false }
+])
+const rowTable = ref([
+  {
+    id: 1,
+    imageUrl: '/smeta.jpg',
+    name: 'Керамогранит',
+    room: 'Спальня',
+    desc: 'KERAMA MARAZZI',
+    metrics: 20,
+    price: '1 200',
+    total: '24000',
+    dedline: 2,
+    status: 'Оплачено',
+    procent: 15
+  },
+])
 
 export default {
   name: 'PageEstimates',
   components: {
-    
+    EstimateTable
   },
   setup () {
     onMounted(() => {
          
     })
     return {
-      toggle
+      toggle,
+      tabs,
+      tab,
+      columnsTable,
+      rowTable,
+      cutTitle
     }
   }
 }

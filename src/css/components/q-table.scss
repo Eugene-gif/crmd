@@ -2731,3 +2731,69 @@
     }
   }    
 }
+
+.estimates-table {
+  border-radius: 0;
+  .q-table {
+    border: 1px solid $grey-3;
+    border-top: none;
+    thead,
+    tbody {
+      tr {
+        height: 43px;
+        td,
+        th {
+          border-right: 1px solid $grey-3;
+          &:last-child {
+            border-right: none;
+          }
+        }
+      }
+    }
+    thead {
+      border-top: 1px solid $grey-3;
+      tr {
+        background: #F7F7F7;
+        th {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 16px;
+          color: rgba(68, 68, 68, 0.3);
+          border-color: $grey-3;
+          .th-content {
+            display: flex;
+            align-items: center;
+            & > div {
+              display: flex;
+              align-items: center;
+            }
+          }
+          .th-content-name {
+            width: 100%;
+            .icon-photo {
+              margin-right: 18px;
+            }
+            .icon-share {
+              margin-left: auto;
+            }
+          }
+          .sorted-icon {
+            opacity: 0;
+            transition: all 0.25s;
+            transform: rotate(180deg);
+            margin-left: 8px;
+          }
+          &:hover {
+            .sorted-icon {
+              opacity: 0.3;
+            }
+          }
+        }
+      }
+    }
+    tbody {
+
+    }
+  }
+  
+}

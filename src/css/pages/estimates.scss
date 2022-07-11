@@ -53,7 +53,7 @@
     }
   }
   .estimates-info {
-    margin-top: 48px;
+    margin-top: 38px;
     .title {
       font-weight: 500;
       font-size: 18px;
@@ -64,6 +64,16 @@
       margin-left: 12px;
       margin-right: 14px;
     }
+    .q-tabs-estimates {
+      margin-left: 12px;
+      .q-tab {
+        position: relative;
+        margin-left: -10px;
+      }
+    }
+  }
+  .estimates-table-container {
+    padding-top: 19px;
   }
   .prev-list {
     margin-top: 60px;
