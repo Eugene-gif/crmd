@@ -40,7 +40,6 @@
               v-if="column.sortable"
               class="sorted-icon"
               size="7px"
-              color="grey-5"
               name="svguse:icons/financeTable.svg#tableArrrow"
             />
           </div>
@@ -52,19 +51,50 @@
         v-for="row in rows"
         :key="row"
       >
-      <!-- v-for="item in row"
-          :key="item"
-          :class="`td-content`" -->
         <td
-          
+          v-for="(item, index) in row"
+          :key="item"
+          :class="`td-content-${index}`"
         >
-        <!-- {{row[]}} -->
-          <!-- <div v-if="item === 'name'">
-            {{item}}
+          <div
+            v-if="item === row['id']"
+            class="td-content-section"
+          >
+            <div v-if="item === row['dedline']" class="text">{{item}}</div> дней
+          </div>
+          
+          <div
+            v-if="item === row['dedline']"
+            class="td-content-section"
+          >
+            <div v-if="item === row['dedline']" class="text">{{item}}</div> дней
+          </div>
+          <div
+            v-if="item === row['name']"
+            class="td-content-section"
+          >
+            <q-icon
+              color="black"
+              style="opacity: 0.2;"
+              name="svguse:icons/financeTable.svg#image"
+              size="20px"
+            >
+              <q-tooltip anchor="center left" self="center right">
+                Here I am!
+              </q-tooltip>
+            </q-icon>
+       
+            <q-icon
+              color="black"
+              style="opacity: 0.2;"
+              name="svguse:icons/financeTable.svg#copy2"
+              size="17px"
+              class="td-content-name__copy"
+            />
           </div>
           <div v-else>
-            {{item}}
-          </div> -->
+            <div class="text">{{item}}</div>
+          </div>
         </td>
       </tr>
     </tbody>
