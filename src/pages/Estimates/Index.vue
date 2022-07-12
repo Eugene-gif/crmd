@@ -266,8 +266,21 @@ const rowTable = ref([
     desc: 'KERAMA MARAZZI',
     metrics: 20,
     price: '1 200',
-    total: '24000',
+    total: 24000,
     dedline: 2,
+    status: 'Оплачено',
+    procent: 15
+  },
+  {
+    id: 2,
+    imageUrl: '/smeta.jpg',
+    name: 'Ламинат',
+    room: 'Спальня',
+    desc: '1200*200 мм ',
+    metrics: 15,
+    price: '1 200',
+    total: 18000,
+    dedline: 5,
     status: 'Оплачено',
     procent: 15
   },

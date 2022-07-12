@@ -48,9 +48,23 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td class="text-left">
-          {{rows}}
+      <tr
+        v-for="row in rows"
+        :key="row"
+      >
+      <!-- v-for="item in row"
+          :key="item"
+          :class="`td-content`" -->
+        <td
+          
+        >
+        <!-- {{row[]}} -->
+          <!-- <div v-if="item === 'name'">
+            {{item}}
+          </div>
+          <div v-else>
+            {{item}}
+          </div> -->
         </td>
       </tr>
     </tbody>
