@@ -506,6 +506,9 @@
         .col.column.justify-center {
           display: none;
         }
+        .q-uploader__input {
+          height: 136px;
+        }
         .q-btn {
           width: calc(100% - 5px);
           display: block;
@@ -562,6 +565,7 @@
       .q-uploader__file-header-content {
         display: none;
         border-radius: 0 9px 9px 0; 
+        
       }
       .q-uploader__file-header  {
         justify-content: flex-end;
@@ -618,6 +622,7 @@
         }
         .q-uploader__file-header  {
           border-radius: 6px; 
+          
           .q-btn {
             width: 35px !important;
             height: 35px !important;
@@ -867,3 +872,4 @@
     }
   }
 }
+

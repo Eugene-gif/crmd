@@ -180,6 +180,49 @@
       }
     }
   }
+  .dialog-section {
+    .form-section-upload {
+      display: flex;
+      align-items: center;
+      position: relative;
+      .lable-title {
+        @media (min-width: 772px) {
+          display: none;
+        }
+      }
+      .my-textarea {
+        flex: 0 0 100%;
+        max-width: 100%;
+        border-radius: 10px;
+        position: relative;
+        z-index: 2;
+        textarea {
+          padding-right: 136px;
+        }
+        &.q-field--focused + .my-file-upload {
+          .q-uploader {
+            background: white;
+          }
+        }
+      }
+      .my-file-upload {
+        width: 136px;
+        border-left: 1px solid #e5e5e5;
+        position: absolute;
+        right: 2px;
+        top: 2px;
+        z-index: 2;
+        border-radius: 0 11px 11px 0;
+        .q-uploader {
+          width: 100%;
+          height: 136px;
+          .q-uploader__dnd {
+            display: none;
+          }
+        }
+      }
+    }
+  }
   @media (max-width: 772px) {
     .q-card {
       padding-left: 15px;
@@ -269,6 +312,57 @@
           .block {
             font-size: 16px;
             line-height: 16px;
+          }
+        }
+      }
+    }
+    .dialog-section {
+      .form-section-upload {
+        flex-wrap: wrap;
+        .lable-title {
+          margin-top: 19px;
+        }
+        .my-textarea {
+          flex: 0 0 100%;
+          max-width: 100%;
+          border-radius: 6px;
+          &.q-field--focused + .my-file-upload {
+            .q-uploader {
+              background: #ECECEC;
+            }
+          }
+          textarea {
+            padding-right: 0;
+          }
+        }
+        .my-file-upload {
+          flex: 0 0 100%;
+          max-width: 100%;
+          position: relative;
+          border: none;
+          overflow: visible;
+          .q-uploader {
+            width: 125px;
+            height: 125px;
+            border-radius: 6px;
+            .q-uploader__header {
+              .q-uploader__header-content {
+                .q-btn {
+                  &:before {
+                    margin-top: 30px;
+                  }
+                  &:after {
+                    top: 68px;
+                  }
+                }
+              }
+            }
+            .q-uploader__list {
+              min-height: 125px;
+              .q-uploader__file {
+                height: 125px;
+              }
+            }
           }
         }
       }
@@ -372,47 +466,6 @@
         }
         &.form-section-whatsapp {
           margin-top: 55px;
-        }
-      }
-    }
-    .form-section-upload {
-      display: flex;
-      align-items: center;
-      position: relative;
-      .lable-title {
-        @media (min-width: 772px) {
-          display: none;
-        }
-      }
-      .my-textarea {
-        flex: 0 0 100%;
-        max-width: 100%;
-        border-radius: 10px;
-        position: relative;
-        z-index: 2;
-        textarea {
-          padding-right: 136px;
-        }
-        &.q-field--focused + .my-file-upload {
-          .q-uploader {
-            background: white;
-          }
-        }
-      }
-      .my-file-upload {
-        width: 136px;
-        border-left: 1px solid #e5e5e5;
-        position: absolute;
-        right: 2px;
-        top: 2px;
-        z-index: 2;
-        border-radius: 0 11px 11px 0;
-        .q-uploader {
-          width: 100%;
-          height: 136px;
-          .q-uploader__dnd {
-            display: none;
-          }
         }
       }
     }
@@ -527,55 +580,6 @@
         }
       }
       
-      .form-section-upload {
-        flex-wrap: wrap;
-        .lable-title {
-          margin-top: 19px;
-        }
-        .my-textarea {
-          flex: 0 0 100%;
-          max-width: 100%;
-          border-radius: 6px;
-          &.q-field--focused + .my-file-upload {
-            .q-uploader {
-              background: #ECECEC;
-            }
-          }
-          textarea {
-            padding-right: 0;
-          }
-        }
-        .my-file-upload {
-          flex: 0 0 100%;
-          max-width: 100%;
-          position: relative;
-          border: none;
-          overflow: visible;
-          .q-uploader {
-            width: 125px;
-            height: 125px;
-            border-radius: 6px;
-            .q-uploader__header {
-              .q-uploader__header-content {
-                .q-btn {
-                  &:before {
-                    margin-top: 30px;
-                  }
-                  &:after {
-                    top: 68px;
-                  }
-                }
-              }
-            }
-            .q-uploader__list {
-              min-height: 125px;
-              .q-uploader__file {
-                height: 125px;
-              }
-            }
-          }
-        }
-      }
     }
   }
 }
@@ -915,3 +919,7 @@
 // .q-tooltip {
 //   z-index: 10000000000000000000000000000000000000000000000000;
 // }
+
+
+
+

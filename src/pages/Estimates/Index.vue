@@ -1,4 +1,13 @@
 <template>  
+  <q-dialog
+    v-model="dialogPosition"
+    :maximized="maximizedToggle"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogPosition @modalFalse="modalFalse" />
+  </q-dialog>
   <q-page class="page-estimates">
     <div class="row justify-between items-center">
       <div class="text-h2">Название сметы</div>
@@ -33,6 +42,7 @@
         no-caps
         class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
         padding="12px 24px 12px 20px"
+        @click="dialogPosition = true"
       >
         <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
         <span class="block q-ml-xs">Добавить позицию</span>
@@ -205,6 +215,83 @@
       />
     </div>
 
+    <q-item class="smeta-section">
+      <div class="title">Сумма: 90 000 руб.</div>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        padding="7px 18px"
+        class="bg-positive my-btn my-btn-14 no-cursor q-ml-xs"
+      >
+        <span class="block text-white">42 000 руб.</span>
+      </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        padding="7px 18px"
+        class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
+      >
+        <span class="block text-white">18 000 руб.</span>
+      </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        padding="7px 18px"
+        class="bg-grey-3 my-btn my-btn-14 no-cursor q-ml-xs"
+      >
+        <span class="block text-grey-5">30 000 руб.</span>
+      </q-btn>
+    </q-item>
+
+    <q-item class="smeta-section">
+      <div class="title">Агентские: 18 000 руб.</div>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        padding="7px 18px"
+        class="bg-positive my-btn my-btn-14 no-cursor q-ml-xs"
+      >
+        <span class="block text-white">6 300 руб.</span>
+      </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        padding="7px 18px"
+        class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
+      >
+        <span class="block text-white">2 700 руб.</span>
+      </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        padding="7px 18px"
+        class="bg-grey-3 my-btn my-btn-14 no-cursor q-ml-xs"
+      >
+        <span class="block text-grey-5">9 000 руб.</span>
+      </q-btn>
+    </q-item>
+    <q-item class="smeta-section no-border">
+      <div class="subtitle">Обозначения:</div>
+      <div class="status">
+        <div class="circle bg-positive"></div>
+        <div class="desc">Оплачено</div>
+      </div>
+      <div class="status">
+        <div class="circle bg-negative"></div>
+        <div class="desc">Ожидается</div>
+      </div>
+      <div class="status">
+        <div class="circle bg-grey-3"></div>
+        <div class="desc">На согласовании</div>
+      </div>
+    </q-item>
+
     <div class="prev-list">
       <q-btn
         unelevated
@@ -222,8 +309,9 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import EstimateTable from 'components/Table/EstimateTable.vue'
+import DialogPosition from 'pages/Estimates/dialog-position.vue'
 
 const toggle = ref(true)
 const tabs = ref([
@@ -261,7 +349,10 @@ const rowTable = ref([
   {
     id: 1,
     imageUrl: '/smeta.jpg',
-    name: 'Керамогранит',
+    name: {
+      title: 'Керамогранит',
+      imageUrl: '/smeta.jpg'
+    },
     room: 'Спальня',
     desc: 'KERAMA MARAZZI',
     metrics: 20,
@@ -271,15 +362,18 @@ const rowTable = ref([
     status: {
       id: 1,
       name: 'Оплачено',
-      user: '',
-      imageUrl: ''
+      user: 'Иван',
+      imageUrl: '/icons/stroipro.jpg'
     },
     procent: 15
   },
   {
     id: 2,
     imageUrl: '/smeta.jpg',
-    name: 'Ламинат',
+    name: {
+      title: 'Ламинат',
+      imageUrl: ''
+    },
     room: 'Спальня',
     desc: '1200*200 мм ',
     metrics: 15,
@@ -287,8 +381,29 @@ const rowTable = ref([
     total: 18000,
     deadline: 5,
     status: {
-      id: 1,
-      name: 'Оплачено',
+      id: 2,
+      name: 'Не оплачено',
+      user: '',
+      imageUrl: ''
+    },
+    procent: 15
+  },
+  {
+    id: 3,
+    imageUrl: '/smeta.jpg',
+    name: {
+      title: 'Ламинат',
+      imageUrl: ''
+    },
+    room: 'Спальня',
+    desc: '1200*200 мм ',
+    metrics: 15,
+    price: '1 200',
+    total: 18000,
+    deadline: 5,
+    status: {
+      id: 3,
+      name: 'Не согласовано',
       user: '',
       imageUrl: ''
     },
@@ -299,19 +414,22 @@ const rowTable = ref([
 export default {
   name: 'PageEstimates',
   components: {
-    EstimateTable
+    EstimateTable,
+    DialogPosition
   },
   setup () {
-    onMounted(() => {
-         
-    })
+    const dialogPosition = ref(false)
     return {
       toggle,
       tabs,
       tab,
+      dialogPosition,
       columnsTable,
       rowTable,
-      cutTitle
+      cutTitle,
+      modalFalse() {
+        dialogPosition.value = false
+      }
     }
   }
 }

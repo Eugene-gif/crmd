@@ -2734,6 +2734,16 @@
 
 .estimates-table {
   border-radius: 0;
+  padding-bottom: 60px;
+  &::-webkit-scrollbar {
+    height: 6px;
+    border-radius: 3px;
+    background: #F0F0F0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 3px;
+  }
   .q-table {
     border: 1px solid $grey-3;
     border-top: none;
@@ -2765,21 +2775,13 @@
           color: rgba(68, 68, 68, 0.3);
           border-color: $grey-3;
           border-top: 1px solid $grey-3;
+          min-width: 89px;
           .th-content {
             display: flex;
             align-items: center;
             & > div {
               display: flex;
               align-items: center;
-            }
-          }
-          .th-content-name {
-            width: 100%;
-            .icon-photo {
-              margin-right: 18px;
-            }
-            .icon-share {
-              margin-left: auto;
             }
           }
           .sorted-icon {
@@ -2790,8 +2792,31 @@
           }
           &:hover {
             .sorted-icon {
-              opacity: 0.3;
+              opacity: 0.6;
             }
+          }
+
+          &.th-id {
+            min-width: 69px;
+          }
+          &.th-name {
+            min-width: 265px;
+            .th-content-name {
+              width: 100%;
+              .icon-photo {
+                margin-right: 18px;
+              }
+              .icon-share {
+                margin-left: auto;
+              }
+            }
+          }
+          &.th-room,
+          &.th-desc {
+            min-width: max-content;
+          }
+          &.th-status {
+            min-width: 182px;
           }
         }
       }
@@ -2823,6 +2848,14 @@
           }
           &.td-content-name {
             min-width: 265px;
+            .q-icon-tooltip {
+              opacity: 0.2;
+              transition: all 0.25s;
+              &:hover {
+                opacity: 1;
+                color: $primary;
+              }
+            }
             .text {
               font-weight: 500;
               font-size: 18px;
@@ -2832,6 +2865,14 @@
             }
             .td-content-name__copy {
               margin-left: auto;
+            }
+          }
+          &.td-content-status {
+            .status-img {
+              width: 20px;
+              height: 20px;
+              border-radius: 100%;
+              margin-left: 11px;
             }
           }
         }

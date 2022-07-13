@@ -54,7 +54,6 @@
         <td
           v-for="(item, index) in row"
           :key="item"
-          :todos="item"
           :class="`td-content-${index}`"
         > 
           <div
@@ -62,16 +61,22 @@
             class="td-content-section"
           >
             <q-icon
-              color="black"
-              style="opacity: 0.2;"
               name="svguse:icons/financeTable.svg#image"
               size="20px"
+              class="q-icon-tooltip"
             >
-              <q-tooltip anchor="center left" self="center right">
-                Here I am!
+              <q-tooltip
+                anchor="center left"
+                self="center right"
+                class="q-tooltip-estimates-img"
+                v-if="item.imageUrl"
+              >
+                <div class="img">
+                  <img :src="item.imageUrl" alt="">
+                </div>
               </q-tooltip>
             </q-icon>
-            <div class="text">{{item}}</div>
+            <div class="text">{{item.title}}</div>
             <q-icon
               color="black"
               style="opacity: 0.2;"
@@ -84,16 +89,17 @@
             class="td-content-section"
             v-else-if="index === 'deadline'"
           >
-            <div class="text"> {{item}} дней</div>
+            <div class="text">{{item}} дней</div>
           </div>
           <div
             class="td-content-section"
             v-else-if="index === 'status'"
           >
             <div class="status">
-              <div class="circle bg-positive"></div>
-              <div class="desc">Оплачено</div>
+              <div :class="`circle bg-${colorStatus(item.id)}`"></div>
+              <div class="desc">{{item.name}}</div>
             </div>
+            <img v-if="item.imageUrl" :src="item.imageUrl" alt="" class="status-img">
           </div>
           <div
             class="td-content-section"
@@ -120,7 +126,20 @@ export default {
     rows: Array
   },
   setup (props) {
-    return {}
+    function colorStatus(statusId) {
+      if (statusId === 1) {
+        return 'positive'
+      }
+      if (statusId === 2) {
+        return 'negative'
+      }
+      if (statusId === 3) {
+        return 'grey-7'
+      }
+    }
+    return {
+      colorStatus
+    }
   }
 }
 </script>
