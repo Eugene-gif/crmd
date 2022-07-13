@@ -2756,7 +2756,6 @@
       }
     }
     thead {
-      border-top: 1px solid $grey-3;
       tr {
         background: #F7F7F7;
         th {
@@ -2765,6 +2764,7 @@
           line-height: 16px;
           color: rgba(68, 68, 68, 0.3);
           border-color: $grey-3;
+          border-top: 1px solid $grey-3;
           .th-content {
             display: flex;
             align-items: center;
@@ -2804,6 +2804,9 @@
           }
         }
         td {
+          &:last-child {
+            border-right: none !important;
+          }
           .text {
             font-weight: 400;
             font-size: 16px;
@@ -2813,6 +2816,7 @@
           .td-content-section {
             display: flex;
             flex-wrap: nowrap;
+            align-items: center;
           }
           &.td-content-imageUrl {
             display: none;

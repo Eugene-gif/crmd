@@ -267,8 +267,13 @@ const rowTable = ref([
     metrics: 20,
     price: '1 200',
     total: 24000,
-    dedline: 2,
-    status: 'Оплачено',
+    deadline: 2,
+    status: {
+      id: 1,
+      name: 'Оплачено',
+      user: '',
+      imageUrl: ''
+    },
     procent: 15
   },
   {
@@ -280,8 +285,13 @@ const rowTable = ref([
     metrics: 15,
     price: '1 200',
     total: 18000,
-    dedline: 5,
-    status: 'Оплачено',
+    deadline: 5,
+    status: {
+      id: 1,
+      name: 'Оплачено',
+      user: '',
+      imageUrl: ''
+    },
     procent: 15
   },
 ])

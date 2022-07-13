@@ -54,23 +54,11 @@
         <td
           v-for="(item, index) in row"
           :key="item"
+          :todos="item"
           :class="`td-content-${index}`"
-        >
+        > 
           <div
-            v-if="item === row['id']"
-            class="td-content-section"
-          >
-            <div v-if="item === row['dedline']" class="text">{{item}}</div> дней
-          </div>
-          
-          <div
-            v-if="item === row['dedline']"
-            class="td-content-section"
-          >
-            <div v-if="item === row['dedline']" class="text">{{item}}</div> дней
-          </div>
-          <div
-            v-if="item === row['name']"
+            v-if="index === 'name'"
             class="td-content-section"
           >
             <q-icon
@@ -83,7 +71,7 @@
                 Here I am!
               </q-tooltip>
             </q-icon>
-       
+            <div class="text">{{item}}</div>
             <q-icon
               color="black"
               style="opacity: 0.2;"
@@ -92,7 +80,28 @@
               class="td-content-name__copy"
             />
           </div>
-          <div v-else>
+          <div
+            class="td-content-section"
+            v-else-if="index === 'deadline'"
+          >
+            <div class="text"> {{item}} дней</div>
+          </div>
+          <div
+            class="td-content-section"
+            v-else-if="index === 'status'"
+          >
+            <div class="status">
+              <div class="circle bg-positive"></div>
+              <div class="desc">Оплачено</div>
+            </div>
+          </div>
+          <div
+            class="td-content-section"
+            v-else-if="index === 'procent'"
+          >
+            <div class="text">{{item}}%</div>
+          </div>
+          <div class="td-content-section" v-else>
             <div class="text">{{item}}</div>
           </div>
         </td>
