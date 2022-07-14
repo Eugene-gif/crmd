@@ -79,4 +79,73 @@
   .prev-list {
     margin-top: 60px;
   }
+
+  @media (max-width: 772px) {
+    .info {
+      padding-top: 29px;
+      padding-bottom: 18px;
+      .desc {
+        font-size: 16px;
+      }
+      .action {
+        font-size: 16px;
+      }
+    }
+    .sectiobn-btns {
+      margin-top: 30px;
+      padding-bottom: 31px;
+      border-bottom: 1px solid #f0f0f0;
+      .q-btn {
+        padding: 8px 20px 8px 18px !important;
+      }
+    }
+    .smeta-section {
+      padding: 11px 0 13px 0;
+      .title {
+        min-width: 100%;
+      }
+      .q-btn {
+        padding: 5px 12px !important;
+        margin: 0 !important;
+        margin-top: 12px !important;
+        margin-right: 3px !important;
+        &:last-child {
+          margin-right: 0 !important;
+        }
+        .block {
+          font-size: 13px !important;
+          line-height: 13px !important;
+        }
+      }
+      .subtitle {
+        display: none;
+      }
+      .status {
+        margin-right: 17px;
+        margin-bottom: 8px;
+      }
+    }
+    .estimates-info {
+      margin-top: 16px;
+      .title {
+        font-size: 16px;
+        line-height: 16px;
+      }
+      .toggle-small {
+        margin-left: 6px;
+        margin-right: 5px;
+      }
+    }
+    .estimates-table-container {
+      padding-top: 19px;
+      margin-bottom: 32px;
+    }
+    .prev-list {
+      margin-top: 0px;
+      padding-top: 20px;
+      .q-btn {
+        padding: 12.5px 17px 12.5px 20px !important;
+      }
+    }
+  }
 }

@@ -35,7 +35,7 @@
     <div class="row justify-between items-center">
       <div class="text-h2">Название сметы</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
-      <div class="">
+      <div class="lg-visible">
         <q-btn
           rounded
           no-caps
@@ -70,6 +70,14 @@
         <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
         <span class="block q-ml-xs">Добавить позицию</span>
       </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        color="grey-3"
+        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-ml-xs mb-visible"
+        label="Выбрать"
+      />
       <q-btn
         rounded
         no-caps
