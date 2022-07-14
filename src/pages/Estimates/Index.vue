@@ -1,12 +1,35 @@
 <template>  
   <q-dialog
     v-model="dialogPosition"
-    :maximized="maximizedToggle"
     transition-show="fade"
     transition-hide="fade" 
-    class="my-dialog"
+    class="my-dialog estimates-dialog"
   >
     <DialogPosition @modalFalse="modalFalse" />
+  </q-dialog>
+  <q-dialog
+    v-model="dialogSecurity"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog estimates-dialog-security"
+  >
+    <DialogSecurity @modalFalse="modalFalse" />
+  </q-dialog>
+  <q-dialog
+    v-model="dialogExport"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog estimates-dialog-export"
+  >
+    <DialogExport @modalFalse="modalFalse" />
+  </q-dialog>
+  <q-dialog
+    v-model="dialogSettings"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog estimates-dialog-export estimates-dialog-settings"
+  >
+    <DialogSettings @modalFalse="modalFalse" />
   </q-dialog>
   <q-page class="page-estimates">
     <div class="row justify-between items-center">
@@ -53,6 +76,7 @@
         outline
         color="grey-3"
         class="q-mr-xs my-btn my-effect my-btn--outline q-btn-info"
+        @click="dialogSecurity = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="16px" class="q-mr-md">
           <sup>
@@ -70,6 +94,7 @@
         outline
         color="grey-3"
         class="my-btn my-effect q-mr-xs my-btn--outline"
+        @click="dialogSettings = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="17px" class="q-mr-md" />
         <div class="block text-grey-5">Редактировать</div>
@@ -90,6 +115,7 @@
         outline
         color="grey-3"
         class="my-btn my-effect q-mr-xs my-btn--outline"
+        @click="dialogExport = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#export" color="grey-8" size="13px" class="q-mr-md" />
         <div class="block text-grey-5">Экспорт</div>
@@ -312,6 +338,9 @@
 import { ref } from 'vue'
 import EstimateTable from 'components/Table/EstimateTable.vue'
 import DialogPosition from 'pages/Estimates/dialog-position.vue'
+import DialogSecurity from 'pages/Estimates/dialog-security.vue'
+import DialogExport from 'pages/Estimates/dialog-export.vue'
+import DialogSettings from 'pages/Estimates/dialog-settings.vue'
 
 const toggle = ref(true)
 const tabs = ref([
@@ -415,20 +444,32 @@ export default {
   name: 'PageEstimates',
   components: {
     EstimateTable,
-    DialogPosition
+    DialogPosition,
+    DialogSecurity,
+    DialogExport,
+    DialogSettings
   },
   setup () {
     const dialogPosition = ref(false)
+    const dialogSecurity = ref(false)
+    const dialogExport = ref(false)
+    const dialogSettings = ref(false)
     return {
       toggle,
       tabs,
       tab,
       dialogPosition,
+      dialogSecurity,
+      dialogExport,
       columnsTable,
+      dialogSettings,
       rowTable,
       cutTitle,
       modalFalse() {
         dialogPosition.value = false
+        dialogSecurity.value = false
+        dialogExport.value = false
+        dialogSettings.value = false
       }
     }
   }

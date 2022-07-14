@@ -180,6 +180,10 @@
       }
     }
   }
+  .q-card-content {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
   .dialog-section {
     .form-section-upload {
       display: flex;
@@ -219,6 +223,26 @@
           .q-uploader__dnd {
             display: none;
           }
+        }
+      }
+    }
+  }
+  .section-btn {
+    .q-btn {
+      width: 100%;
+      box-shadow: 0px 7px 20px rgb(115 201 73 / 30%);
+      border-radius: 10px;
+      min-height: 60px;
+    }
+    @media (max-width: 772px) {
+      padding-left: 20px;
+      padding-right: 20px;
+      .q-btn {
+        min-height: 41px;
+        border-radius: 6px;
+        .block {
+          font-size: 16px;
+          line-height: 16px;
         }
       }
     }
@@ -319,6 +343,8 @@
     .dialog-section {
       .form-section-upload {
         flex-wrap: wrap;
+        padding-left: 0;
+        padding-right: 0;
         .lable-title {
           margin-top: 19px;
         }
@@ -367,7 +393,155 @@
         }
       }
     }
+  }
+
+  
+}
+
+.estimates-dialog {
+  @media (max-width: 772px) {
+    .form-section-link {
+      margin-top: 1px !important;
+    }
+    .form-section-upload-mb .my-file-upload {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-left: 20px;
+      &.lg-visible {
+        display: none;
+      }
+      .form-col {
+        margin-right: 41px;
+        &:last-child {
+          margin-top: 20px;
+        }
+        .lable-title {
+          flex: 0 0 100%;
+          margin-top: 0;
+        }
+      }
+      .q-uploader {
+        margin-top: 29px;
+        flex: 0 0 125px;
+        margin-right: 20px;
+      }
+    }
+    .form-section-upload-mb {
+      margin-top: 0 !important;
+    }
+    .section-btn {
+      position: relative;
+      &:before {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: #F0F0F0;
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 0px;
+      }
+      .q-btn-actions {
+        margin-top: 41px !important;
+        padding: 12.5px 10px !important;
+        .block {
+          font-size: 16px !important;
+          line-height: 16px !important;
+        }
+      }
+    }
     
+  }
+}
+.estimates-dialog-security {
+  .q-card-content {
+    margin-top: 59px;
+  }
+  .q-card-section-link {
+    margin-top: 56px;
+    margin-bottom: 25px;
+    padding-top: 52px;
+  }
+  .section-btn {
+    margin-top: 31px;
+  }
+  @media (max-width: 772px) {
+    .q-card-content {
+      margin-top: 29px;
+    }
+    .q-card-section-link {
+      margin-top: 26px;
+      margin-bottom: 25px;
+      padding-top: 52px;
+    }
+    .section-btn {
+      margin-top: 31px;
+    }
+  }
+}
+.estimates-dialog-export {
+  .q-card .head {
+    padding-bottom: 49px;
+  }
+  .text-subtitle1 {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    color: #000000;
+    min-height: 36px;
+  }
+  .q-list-options {
+    padding-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    .q-item {
+      flex: 1 1 50%;
+      max-width: 50%;
+    }
+  }
+  .q-btn-actions {
+    margin-top: 50px !important;
+  }
+  @media (max-width: 772px) {
+    .q-card .head {
+      padding-bottom: 32px;
+    }
+    .text-subtitle1 {
+      font-size: 14px;
+      line-height: 14px;
+      min-height: auto;
+    }
+    .q-card .q-card__actions {
+      border-top: none;
+      margin-top: 0;
+    }
+    .q-list-options {
+      padding-top: 19px;
+      padding-bottom: 7px;
+      .q-item {
+        flex: 1 1 100%;
+        max-width: 100%;
+      }
+    }
+    .q-btn-actions {
+      margin-top: 21px !important;
+    }
+  }
+}
+.estimates-dialog-settings {
+  .q-card .head {
+    padding-bottom: 31px;
+  }
+  .q-card__actions {
+    margin-top: 51px;
+  }
+  @media (max-width: 772px) {
+    .q-card .head {
+      padding-bottom: 11px;
+    }
+    .q-card__actions {
+      margin-top: 21px !important;
+    }
   }
 }
 
@@ -409,44 +583,7 @@
         width: 100%;
       }
       .q-list-options {
-        width: 100%;
         padding-top: 34px;
-        .q-item {
-          padding: 0;
-          min-height: auto;
-          margin-bottom: 10px;
-          display: flex;
-          align-items: center;
-          .name-field {
-            font-size: 18px;
-            line-height: 18px;
-            color: $grey-5;
-            margin-left: 22px;
-          }
-          .circle-warning {
-            margin-left: 10px;
-            width: 15px;
-            height: 15px;
-            background: $grey-7;
-            border-radius: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.25s;
-            .q-ripple {
-              display: none;
-            }
-            &:hover {
-              background: $positive;
-              .q-icon {
-                color: white !important;
-                svg {
-                  color: white !important;
-                }
-              }
-            }
-          }
-        }
       }
       .q-btn-actions {
         margin-top:50px;
@@ -535,27 +672,8 @@
           line-height: 16px;
         }
         .q-list-options {
-          width: 100%;
           padding-top: 19px;
           padding-bottom: 7px;
-          .q-item {
-            padding: 0;
-            min-height: auto;
-            margin-bottom: 13px;
-            .my-checkbox {
-              .q-checkbox__inner {
-                font-size: 24px;
-                .q-icon {
-                  font-size: 10px;
-                }
-              }
-            }
-            .name-field {
-              font-size: 16px;
-              line-height: 16px;
-              margin-left: 12px;
-            }
-          }
         }
         .q-btn-actions {
           margin-top: 21px;
