@@ -10,6 +10,7 @@
   </q-dialog>
   
   <q-page class="page-projects">
+    
     <div class="row justify-between items-center head">
       <div class="text-h2">Проекты</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -250,7 +251,8 @@
 <script>
 import Dialog from 'pages/Project/dialog.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
 
 const columns = [
   { name: 'image', label: '', field: 'image', align: 'left' },
@@ -538,13 +540,22 @@ export default {
     Dialog,
     ActionBtn
   },
+  
   setup () {
     const dialog = ref(false)
     const pagination = ref({
       sortBy: 'id',
       rowsPerPage: 0
     })
+    const date = ref()
+
+    onMounted(() => {
+      axios
+        .post('http://api.coindesk.com/v1/bpi/currentprice.json')
+        .then(response => (date.value = response));
+    })
     return {
+      date,
       model: ref('Имя'),
       tab: ref('tiles'),
       options2: [
