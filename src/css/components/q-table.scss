@@ -2755,6 +2755,7 @@
         th {
           border-right: 1px solid $grey-3 !important;
           border-bottom: 1px solid $grey-3 !important;
+          padding: 7px 14px;
           height: 43px;
           &:before {
             display: none;
@@ -2885,5 +2886,57 @@
   }
   @media (max-width: 772px) {
     padding-bottom: 30px;
+    thead,
+    tbody {
+      tr {
+        height: 35px !important;
+        td,
+        th {
+          height: 35px !important;
+        }
+      }
+    }
+    thead {
+      tr {
+        th {
+          font-size: 14px !important;
+          line-height: 14px !important;
+          &.th-name {
+            .th-content-name {
+              .icon-photo {
+                margin-right: 13px !important;
+                font-size: 13px !important;
+              }
+              .icon-share {
+                font-size: 11px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:last-child {
+          td {
+            border-bottom: none !important;
+          }
+        }
+        td {
+          &.td-content-name {
+            .q-icon-tooltip {
+              font-size: 15px !important;
+            }
+            .text {
+              margin-left: 13px !important;
+            }
+            .td-content-name__copy{
+              font-size: 13px !important;
+            }
+          }
+        }
+      }
+    }
+
   }
 }

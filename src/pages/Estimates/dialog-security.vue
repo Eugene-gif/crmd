@@ -20,7 +20,7 @@
         <q-card-section
           v-for="el in data"
           :key="el"
-          class="q-card-section-security" 
+          class="q-card-section-security avatarka" 
         >
           <div class="image">
             <img :src="el.imageUrl" alt="">

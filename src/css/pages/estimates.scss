@@ -121,8 +121,11 @@
         display: none;
       }
       .status {
-        margin-right: 17px;
+        margin-right: 23px;
         margin-bottom: 8px;
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
     .estimates-info {

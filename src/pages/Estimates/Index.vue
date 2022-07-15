@@ -56,7 +56,7 @@
     </div> 
     <div class="info row justify-between">
       <p class="desc"><b>Проект</b>: г. Краснодар, ул. Ленина, д. 15 тест длинного адреса</p>
-      <div class="action">Перенести в другой проект</div>
+      <q-item to="/" class="action q-item-none">Перенести в другой проект</q-item>
     </div>
     <div class="sectiobn-btns">
       <q-btn
@@ -211,13 +211,19 @@
         <div class="desc">Ожидается</div>
       </div>
       <div class="status">
-        <div class="circle bg-grey-3"></div>
+        <div class="circle bg-grey-7"></div>
         <div class="desc">На согласовании</div>
       </div>
     </q-item>
 
     <div class="estimates-info row items-center">
-      <div class="title">Прогноз цены</div>
+      <div
+        @click="toggle = !toggle"
+        class="title"
+        :class="{disable: !toggle}"
+      >
+        Прогноз цены
+      </div>
       <q-toggle
         v-model="toggle"
         color="primary"
@@ -321,7 +327,7 @@
         <div class="desc">Ожидается</div>
       </div>
       <div class="status">
-        <div class="circle bg-grey-3"></div>
+        <div class="circle bg-grey-7"></div>
         <div class="desc">На согласовании</div>
       </div>
     </q-item>
