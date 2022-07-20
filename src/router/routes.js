@@ -1,8 +1,10 @@
-
 const routes = [
   {
-    path: '/auth',
-    meta: {auth: false},
+    path: '/login',
+    name: 'login',
+    meta: {
+      requireLogin: false
+    },
     component: () => import('layouts/AuthLayout.vue'),
     children: [
       {
@@ -17,7 +19,9 @@ const routes = [
   },
   {
     path: '/',
-    meta: {auth: true},
+    meta: {
+      requireLogin: true
+    },
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { 
@@ -50,6 +54,7 @@ const routes = [
       },
     ]
   },
+  
 
   // Always leave this as last one,
   // but you can also remove it
