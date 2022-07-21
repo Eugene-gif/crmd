@@ -26,7 +26,13 @@
             label="Найти"
             padding="12px 48px"
           />
-          <q-icon color="black" class="rotate" size="13px" name="svguse:icons/allIcons.svg#close-modal" @click="closeHeaderMenu" />
+          <q-icon
+            color="black"
+            class="rotate"
+            size="13px"
+            name="svguse:icons/allIcons.svg#close-modal"
+            @click="closeHeaderMenu"
+          />
         </div>
         <div class="content">
           <q-list class="q-list-projects">
@@ -129,6 +135,15 @@
         <q-btn flat class="header__btn__avatar my-effect h-img lg-visible"> 
           <img src="~assets/anton.jpg">
         </q-btn>
+        <q-icon
+          color="black"
+          class="q-ml-md"
+          size="16px"
+          name="svguse:icons/allIcons.svg#logout"
+          style="cursor: pointer;"
+          @click="logout"
+        />
+        <!-- <p style="color: black;">{{tokken}}</p> -->
         <q-btn
           flat
           class="btn-burger my-effect h-img mb-visible"
@@ -232,8 +247,11 @@
 </template>
 
 <script>
+import { ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex';
 import EssentialLink from 'components/EssentialLink.vue'
 import Notifications from 'components/MainLayout/Notifications.vue'
+import { useRouter } from 'vue-router';
 
 const linksList = [
   {
@@ -286,8 +304,6 @@ const links = [
     link: '#'
   }
 ];
-
-import { ref, onMounted } from 'vue'
 
 export default ({
   name: 'MainLayout',
@@ -376,6 +392,10 @@ export default ({
     const InputSerachMobile = ref()
     const mobIconOpenSearch = ref()
 
+    const router = useRouter();
+    const store = useStore()
+    const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)
+
     onMounted(() => {
       window.addEventListener('click', dropdown)
       window.addEventListener('click', dropdownMob)
@@ -398,6 +418,10 @@ export default ({
         showingMob.value = false
         text.value = ''
       }
+    }      
+    function logout(){
+      store.dispatch('auth/singOut')
+      router.push({ path: '/login' })
     } 
     
     return {
@@ -416,6 +440,8 @@ export default ({
       qCardHeaderMenu,
       mobIconOpenSearch,
       text,
+      logout,
+      isAuthenticated,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },

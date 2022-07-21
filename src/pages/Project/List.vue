@@ -145,7 +145,7 @@
               class="q-td-action"
             >
               <ActionBtn 
-                :propsEl="props"
+                :propsEl="props.id"
                 :offsetYX="[55, -258]"
               />
             </q-td>
@@ -252,7 +252,7 @@
 import Dialog from 'pages/Project/dialog.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import { useStore } from 'vuex';
 
 const columns = [
   { name: 'image', label: '', field: 'image', align: 'left' },
@@ -271,8 +271,6 @@ const columns = [
   { name: 'share', label: '', field: 'share', align: 'left' },
   { name: 'address', label: '', field: 'address', align: 'left' }
 ]
-// /icons/anton.jpg
-// /icons/stroipro.jpg
 const rows = ref([
   {
     id: 1,
@@ -542,20 +540,26 @@ export default {
   },
   
   setup () {
+    const store = useStore()
     const dialog = ref(false)
     const pagination = ref({
       sortBy: 'id',
       rowsPerPage: 0
     })
-    const date = ref()
+    async function start() {
+      try {
+        await store.dispatch('orders/getOrders')
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
     onMounted(() => {
-      axios
-        .post('http://api.coindesk.com/v1/bpi/currentprice.json')
-        .then(response => (date.value = response));
+      start()
     })
+
     return {
-      date,
+      store,
       model: ref('Имя'),
       tab: ref('tiles'),
       options2: [
@@ -571,6 +575,7 @@ export default {
       ],
       columns,
       rows,
+      start,
       pagination,
       dialog,
       maximizedToggle: ref(true),
