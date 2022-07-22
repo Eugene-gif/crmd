@@ -51,6 +51,7 @@
       </div>
     </div>
 
+    {{rows2}}
     <div class="projects">
       <!-- :sort-method="customSort" -->
       <q-table
@@ -252,7 +253,7 @@
 import Dialog from 'pages/Project/dialog.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref, onMounted } from 'vue'
-import { useStore } from 'vuex';
+import { projectsApi } from 'src/api/projects';
 
 const columns = [
   { name: 'image', label: '', field: 'image', align: 'left' },
@@ -314,222 +315,40 @@ const rows = ref([
         link: ''
       }
     ]    
-  },
-  {
-    id: 2,
-    status: 1,
-    image: '',
-    iconName: '🏰',
-    name: 'Название проекта, заданное пользователем',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 30,
-    share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
-    ]      
-  },
-  {
-    id: 3,
-    status: 1,
-    image: 'project-2.jpg',
-    iconName: '🏰',
-    name: 'Название проекта, заданное пользователем',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 40,
-    share: [
-      
-    ]       
-  },
-  {
-    id: 4,
-    status: 1,
-    image: 'project-3.jpg',
-    iconName: '🏰',
-    name: 'Название проекта',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 40,
-    share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
-    ]        
-  },
-  {
-    id: 5,
-    status: 1,
-    image: '',
-    iconName: '🏰',
-    name: 'Название проекта, пользователем 2',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 40,
-    share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
-    ]       
-  },
-  {
-    id: 6,
-    status: 1,
-    image: '',
-    iconName: '🏰',
-    name: 'Название, заданное пользовате',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 40,
-    share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
-    ]       
-  },
-  {
-    id: 7,
-    status: 1,
-    image: '',
-    iconName: '🏰',
-    name: 'Название, заданное пользовате',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 40,
-    share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
-    ]       
   }
+])
+
+const rows2 = ref([
+  // {
+  //   "id": 7,
+  //   "user_id": 1,
+  //   "project_type_id": 4, 
+  //   "name": "Schmitt and Sons",
+  //   "address": "949 Mervin Parks\nNorth Adolfoberg, TX 45844-6373",
+  //   "square": 143.28,
+  //   "orderer": { 
+  //     "id": 11,
+  //     "user_id": 2, 
+  //     "first_name": "Melvin", 
+  //     "second_name": "Sys Admin", 
+  //     "last_name": "Dach", 
+  //     "birth_date": "17-04-2017", 
+  //     "phone": "979-355-0697", 
+  //     "email": "quitzon.sydney@example.net", 
+  //     "soc_inst": "inst.com/yschuppe", 
+  //     "soc_wa": "wa.com/979-355-0697",
+  //     "soc_tg": "t.me/yschuppe",
+  //     "photo": "assets/admin/img/no-image.jpg", 
+  //     "personal_info": "Tenetur est dolores expedita ullam occaecati perspiciatis.", 
+  //     "created_at": "2022-07-12T09:35:41.000000Z", 
+  //     "updated_at": "2022-07-12T09:35:41.000000Z" 
+  //   },
+  //   "emoji": "😞",
+  //   "created_at": "2022-07-12T09:35:41.000000Z",
+  //   "updated_at": "2022-07-12T09:35:41.000000Z",
+  //   "explications": [],
+  //   "albums": [] 
+  // }
 ])
 
 export default {
@@ -540,15 +359,17 @@ export default {
   },
   
   setup () {
-    const store = useStore()
     const dialog = ref(false)
     const pagination = ref({
       sortBy: 'id',
       rowsPerPage: 0
     })
+
     async function start() {
       try {
-        await store.dispatch('orders/getOrders')
+        await projectsApi.getAll(1).then(resp => {
+          rows2.value = resp.data
+        })
       } catch (err) {
         console.log(err)
       }
@@ -559,7 +380,7 @@ export default {
     })
 
     return {
-      store,
+      rows2,
       model: ref('Имя'),
       tab: ref('tiles'),
       options2: [

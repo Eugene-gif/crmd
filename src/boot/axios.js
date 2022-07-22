@@ -4,9 +4,9 @@ const tokenPost = JSON.parse(localStorage.getItem('token'))
 
 const api = axios.create({
   baseURL: `${process.env.API_BASE_URL}`,
-  // headers: {
-  //   'Authorization': `Bearer ${tokenPost}`
-  // }
+  headers: {
+    'Authorization': `Bearer ${tokenPost}`
+  }
 })
 
 export default boot(({ app }) => {
