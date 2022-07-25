@@ -51,12 +51,12 @@
       </div>
     </div>
 
-    {{rows2}}
+
     <div class="projects">
       <!-- :sort-method="customSort" -->
       <q-table
         flat
-        :rows="rows"
+        :rows="rows2"
         :columns="columns"
         row-key="id"
         hide-pagination
@@ -318,38 +318,7 @@ const rows = ref([
   }
 ])
 
-const rows2 = ref([
-  // {
-  //   "id": 7,
-  //   "user_id": 1,
-  //   "project_type_id": 4, 
-  //   "name": "Schmitt and Sons",
-  //   "address": "949 Mervin Parks\nNorth Adolfoberg, TX 45844-6373",
-  //   "square": 143.28,
-  //   "orderer": { 
-  //     "id": 11,
-  //     "user_id": 2, 
-  //     "first_name": "Melvin", 
-  //     "second_name": "Sys Admin", 
-  //     "last_name": "Dach", 
-  //     "birth_date": "17-04-2017", 
-  //     "phone": "979-355-0697", 
-  //     "email": "quitzon.sydney@example.net", 
-  //     "soc_inst": "inst.com/yschuppe", 
-  //     "soc_wa": "wa.com/979-355-0697",
-  //     "soc_tg": "t.me/yschuppe",
-  //     "photo": "assets/admin/img/no-image.jpg", 
-  //     "personal_info": "Tenetur est dolores expedita ullam occaecati perspiciatis.", 
-  //     "created_at": "2022-07-12T09:35:41.000000Z", 
-  //     "updated_at": "2022-07-12T09:35:41.000000Z" 
-  //   },
-  //   "emoji": "😞",
-  //   "created_at": "2022-07-12T09:35:41.000000Z",
-  //   "updated_at": "2022-07-12T09:35:41.000000Z",
-  //   "explications": [],
-  //   "albums": [] 
-  // }
-])
+const rows2 = ref([])
 
 export default {
   name: 'PageFinance',
@@ -367,8 +336,8 @@ export default {
 
     async function start() {
       try {
-        await projectsApi.getAll(1).then(resp => {
-          rows2.value = resp.data
+        await projectsApi.getAll().then(resp => {
+          rows2.value = resp
         })
       } catch (err) {
         console.log(err)
