@@ -202,6 +202,7 @@
           padding="20px 10px"
           class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
           label="Добавить проект"
+          @click="addProject"
         />
         
       </q-card-actions>
@@ -216,6 +217,7 @@ import BtnDate from 'components/BtnDate'
 import DropBox from 'components/DropBox'
 import UploadFile from 'components/UploadFile'
 import Emoji from 'components/Emoji'
+import { projectsApi } from 'src/api/projects';
 
 export default ({
   name: 'FinanceDialog',
@@ -228,7 +230,18 @@ export default ({
   }, 
   setup () {
     const selectDropbox = ref();
+    async function addProject() {
+      try {
+        await projectsApi.createProject().then(resp => {
+          
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
     return {
+      addProject,
       select1: ref(
         {
           label: 'Квартира',
@@ -291,11 +304,7 @@ export default ({
         show.value = true;
       },
       onFileChange: function(e) {
-        // let files = e.target.file;
         console.log(e.target)
-        // if (!files.length)
-        //     return;
-        // file.value = files;
       },
     }
   }

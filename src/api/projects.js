@@ -22,7 +22,7 @@ export const projectsApi = {
             iconName: el.emoji,
             name: el.name,
             type: el.project_type_id,
-            typeName: 'Квартира',
+            typeName: el.project_type.name,
             address: el.address,
             square: el.square,
             customer: `${el.orderer.last_name} ${el.orderer.first_name}`,
@@ -64,5 +64,25 @@ export const projectsApi = {
       console.log(err)
     }
   },
-  
+  createProject() {
+    try {
+      return httpClient.post(`${url}/create`, {
+        project: {
+          data: {
+            name: 'Название проекта',
+            address: 'Краснодар ул Береговая',
+            square: '99',
+            project_type_id: 4,
+            orderer: 2
+          }
+        }
+      }).then(({ data }) => {
+        console.log(data)
+        // return data = data.data.map(el => {
+        // })
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  }
 }
