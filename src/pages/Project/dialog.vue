@@ -14,13 +14,13 @@
 
       <q-card-section class="form-section">
         <label class="lable-title">Адрес</label>
-        <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Введите адрес" />
+        <q-input v-model="formData.adress" class="my-input bg-grey-3" placeholder="Введите адрес" />
       </q-card-section>
 
       <q-card-section class="form-section form-section-row">
         <div class="form-col">
           <label class="lable-title">Площадь, м<sup style="font-size: 10px;font-weight: bold;">2</sup></label>
-          <q-input v-model="text3" class="my-input bg-grey-3" placeholder="115" />
+          <q-input v-model="formData.square" class="my-input bg-grey-3" placeholder="115" />
         </div>
         <div class="form-col">
           <label class="lable-title">Тип</label>
@@ -229,8 +229,17 @@ export default ({
     Emoji
   }, 
   setup () {
+    const formData = ref({
+      name: '',
+      address: '',
+      square: '',
+      project_type_id: '',
+      orderer: ''
+    })
     const selectDropbox = ref();
     async function addProject() {
+      
+      console.log(formData.value)
       try {
         await projectsApi.createProject().then(resp => {
           
@@ -242,6 +251,7 @@ export default ({
 
     return {
       addProject,
+      formData,
       select1: ref(
         {
           label: 'Квартира',
@@ -277,9 +287,7 @@ export default ({
       selectDropbox,
 
       text: ref(''),
-      text2: ref(''),
       show: ref(false),
-      text3: ref(),
       text4: ref(15),
 
       customer1: ref(),

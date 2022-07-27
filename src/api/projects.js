@@ -73,7 +73,7 @@ export const projectsApi = {
             address: 'Краснодар ул Береговая',
             square: '99',
             project_type_id: 4,
-            orderer: 2
+            // orderer: 2
           }
         }
       }).then(({ data }) => {
