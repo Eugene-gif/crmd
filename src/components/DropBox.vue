@@ -1,7 +1,7 @@
 <template>
   <q-select
     filled
-    v-model="select2"
+    v-model="select"
     :options="options"
     stack-label
     use-input
@@ -12,17 +12,18 @@
     behavior="menu"
     @popup-hide="focusSelect"
     popup-content-class="my-dopbox-menu"
-    :label="select2 ? undefined : 'Введите имя или e-mail'"
+    :label="select ? undefined : 'Введите имя или e-mail'"
   >
     <template v-slot:prepend>
       <q-icon size="18px" name="svguse:icons/allIcons.svg#field-search" @click.stop class="search-input" />
     </template>
     <template v-slot:append>
-      <q-icon name="svguse:icons/allIcons.svg#clear-field" @click.stop="select2 = null" class="cursor-pointer clear-input rotate" />
+      <q-icon name="svguse:icons/allIcons.svg#clear-field" @click.stop="select = null" class="cursor-pointer clear-input rotate" />
     </template>
     <template v-slot:option="scope">
       <q-item v-if="!scope.opt.group"
         v-bind="scope.itemProps"
+        @click="sendData"
       >      
         <q-item-section avatar>
           <img :src="scope.opt.icon" alt="">
@@ -106,10 +107,9 @@
       </q-item>
     </template>
   </q-select>
-  
 </template>
 <script>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 const stringOptions = [
   {
@@ -124,7 +124,8 @@ const stringOptions = [
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
-    tab: ''
+    tab: '',
+    user_id: 4
   },
   {
     label: 'Довольно длинное название объекта, которое нуфывфывыф...',
@@ -138,7 +139,8 @@ const stringOptions = [
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
-    tab: ''
+    tab: '',
+    user_id: 4
   },
   {
     label: 'Антон Глуханько ',
@@ -152,7 +154,8 @@ const stringOptions = [
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
-    tab: ''
+    tab: '',
+    user_id: 4
   },
   {
     label: 'СтройПро',
@@ -166,24 +169,29 @@ const stringOptions = [
     tel: '+7 (918) 455-02-16',
     telegram: '',
     instagram: '',
-    tab: ''
+    tab: '',
+    user_id: 4
   },
 ]
 
-export default ({
+export default defineComponent({
   name: 'DropBox',
 
-  setup () {
+  setup (props, { emit }) {
     const options = ref(stringOptions)
     const selectDropbox = ref();
+    const select = ref({
+      label: 'Выбрать',
+      value: null
+    })
+
+    function sendData() {
+      emit('getOrderer', select)
+    }
 
     return {
-      select2: ref(
-        {
-          label: 'Выбрать',
-          value: null
-        }
-      ),
+      select,
+      sendData,
 
       stringOptions,
       options,

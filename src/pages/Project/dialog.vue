@@ -9,7 +9,7 @@
 
       <q-card-section class="form-section">
         <label class="lable-title">Название</label>
-        <Emoji />
+        <Emoji @getEmojik="ongetEmojik"/>
       </q-card-section>
 
       <q-card-section class="form-section">
@@ -44,7 +44,7 @@
       <q-card-section class="form-section form-section-row-2">
         <div class="form-col">
           <label class="lable-title">Заказчик</label>
-          <DropBox />
+          <DropBox @getOrderer="ongetOrderer" />
         </div>
         <div class="form-col">
           <label class="lable-title" style="opacity: 0;">-</label>
@@ -221,7 +221,6 @@ import { projectsApi } from 'src/api/projects';
 
 export default ({
   name: 'FinanceDialog',
-  emits: ['modalFalse'],
   components: {
     BtnDate,
     DropBox,
@@ -229,35 +228,43 @@ export default ({
     Emoji
   }, 
   setup () {
+    const select1 = ref({
+      label: 'Квартира',
+      value: 1
+    })
     const formData = ref({
       name: '',
-      address: '',
+      emoji: '',
+      adress: '',
       square: '',
       project_type_id: '',
       orderer: ''
     })
     const selectDropbox = ref();
     async function addProject() {
-      
-      console.log(formData.value)
+      formData.value.project_type_id = select1.value.value
       try {
-        await projectsApi.createProject().then(resp => {
-          
+        await projectsApi.createProject(formData.value).then(resp => {
+          console.log(resp)
         })
       } catch (err) {
         console.log(err)
       }
     }
+    function ongetEmojik(data) {
+      formData.value.name = data.text.value
+      formData.value.emoji = data.emojiIcon.value
+    }
+    function ongetOrderer(select) {
+      formData.value.orderer = select.value.user_id
+    }
 
     return {
+      ongetOrderer,
+      ongetEmojik,
       addProject,
       formData,
-      select1: ref(
-        {
-          label: 'Квартира',
-          value: 1
-        },
-      ),
+      select1,
       val: ref(false),
       val1: ref(false),
       val2: ref(true),

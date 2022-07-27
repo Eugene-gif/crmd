@@ -1,6 +1,6 @@
 <template>
   <div class="emoji">
-    <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите название">
+    <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите название" @change="sendData">
       <template v-slot:after>
         <div class="q-mr-md q-pr-xs emoji-div" @click="openModal = !openModal">
           <q-icon
@@ -144,15 +144,18 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
-export default {
-  setup() {
+export default defineComponent ({
+  emits: ['getEmojik'],
+  setup(props, { emit }) {
+    
     const info = ref(null)
     const emojiIcon = ref()
     const tab = ref('Символы')
     const openTabs = ref(false)
     const openModal = ref(false)
+    const text = ref('')
     const tabList = [
       'Символы',
       'Природа',
@@ -181,11 +184,16 @@ export default {
       }
       tab.value = tabList[nextSlideIndex]
     }
+
+    function sendData() {
+      emit('getEmojik', {text, emojiIcon})
+    }
+
     return {
       emojiIcon,
       openModal,
       openTabs,
-      text: ref(),
+      text,
       tab,
       tabList,
       symbols: [
@@ -333,10 +341,12 @@ export default {
           icon20: '👒',
         }
       ],
+      sendData,
       emojiFunc(icon) {
         emojiIcon.value = ''
         function func() {
           emojiIcon.value = icon
+          sendData()
         }
         setTimeout(func, 10);
         openModal.value = false
@@ -351,5 +361,5 @@ export default {
       },
     }
   }
-}
+})
 </script>

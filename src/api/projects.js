@@ -64,20 +64,20 @@ export const projectsApi = {
       console.log(err)
     }
   },
-  createProject() {
+  createProject(formData) {
     try {
       return httpClient.post(`${url}/create`, {
         project: {
           data: {
-            name: 'Название проекта',
-            address: 'Краснодар ул Береговая',
-            square: '99',
-            project_type_id: 4,
-            // orderer: 2
+            name: formData.name,
+            address: formData.adress,
+            square: formData.square,
+            project_type_id: formData.project_type_id,
+            orderer: formData.orderer
           }
         }
       }).then(({ data }) => {
-        console.log(data)
+        return data
         // return data = data.data.map(el => {
         // })
       });
