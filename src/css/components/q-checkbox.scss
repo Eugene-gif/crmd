@@ -8,6 +8,8 @@
   }
   .q-checkbox__inner {
     font-size: 32px;
+    background: $grey-3;
+    border-radius: 4px;
     &:before {
       display: none;
     }
@@ -15,7 +17,13 @@
       font-size: 14px;
     }
   }
-
+  .q-checkbox__label {
+    margin-left: 22px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    color: #444444;
+  }
   .q-checkbox__inner--truthy {
   }
 }

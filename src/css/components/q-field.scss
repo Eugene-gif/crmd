@@ -37,7 +37,8 @@
   }
 }
 
-.my-input {
+.my-input,
+.input-auth {
   border-radius: 10px;
   font-weight: 400;
   font-size: 18px;
@@ -82,6 +83,10 @@
     }
   }
 }
+.input-auth {
+  background: $grey-3;
+}
+
 .my-textarea {
   border-radius: 10px;
   opacity: 1;

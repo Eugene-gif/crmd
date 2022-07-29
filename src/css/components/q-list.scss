@@ -34,9 +34,6 @@
   }
 }
 
-body {
-  min-height: 1500px;
-}
 .sort-number {
   background: #F7F7F7;
   border: 1px solid #F0F0F0;
@@ -278,6 +275,9 @@ body {
 .q-item-none {
   padding: 0;
   min-height: auto;
+  .q-focus-helper {
+    display: none;
+  }
 }
 
 // .q-card-section-avatar {

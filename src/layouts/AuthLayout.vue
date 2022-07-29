@@ -1,13 +1,16 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="main-layout">
-    <q-header class="bg-white">
-      
+  <q-layout class="auth-layout">
+    <q-header>
       <q-toolbar>
-        
+        <q-item-label
+          header
+        >
+          CRMD 
+        </q-item-label>
       </q-toolbar>
     </q-header>
 
-    <q-page-container>
+    <q-page-container>      
       <router-view />
     </q-page-container>
   </q-layout>
@@ -21,7 +24,6 @@ export default ({
   components: {},
 
   setup () {
-    
     return {
       
     }
