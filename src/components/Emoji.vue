@@ -10,7 +10,6 @@
           />
           {{emojiIcon}}
         </div>
-        
       </template>
     </q-input>
     

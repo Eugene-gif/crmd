@@ -1,78 +1,161 @@
 <template>
-  <q-form
+  <q-page class="page-register">
+    <q-form
       @submit="onSubmit"
+      @reset="onReset"
       class="q-gutter-md"
     >
-      <q-input
-        filled
-        type="text"
-        v-model="form.login"
-        label="Ваш логин *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
-      />
-      <q-input
-        filled
-        type="text"
-        v-model="form.name"
-        label="Ваше имя *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
-      />
-      <q-input
-        filled
-        type="text"
-        v-model="form.lastName"
-        label="Ваша фамилия *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
-      />
-      <q-input
-        filled
-        type="email"
-        v-model="form.email"
-        label="Ваш email *"
-        lazy-rules
-        :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
-      />
+      <div class="form-section">
+        <div class="head">
+          <q-item to="/login">
+            <span>Вход</span>
+          </q-item>
+          <q-item to="/register">
+            <span>Регистрация</span>
+          </q-item>
+          <q-item></q-item>
+        </div>
 
-      <q-input
-        filled
-        type="password"
-        v-model="form.password"
-        label="Пароль *"
-        lazy-rules
-        :rules="[
-          val => val !== null && val !== '' || 'Поле не должно быть пустым'
-        ]"
-      />
-      <q-input
-        filled
-        type="password"
-        v-model="form.confirmPassword"
-        label="Подтвердите пароль *"
-        lazy-rules
-        :rules="[
-          val => val !== null && val !== '' || 'Поле не должно быть пустым'
-        ]"
-      />
+        <!-- <q-input
+          filled
+          type="text"
+          v-model="form.login"
+          placeholder="Ваш логин"
+          class="input-auth"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
+        /> -->
 
-      <q-toggle v-model="accept" label="I accept the license and terms" />
+        <div class="form-cell">
+          <div class="item">
+            <q-input
+              filled
+              type="text"
+              v-model="form.name"
+              placeholder="Ваше имя"
+              class="input-auth"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
+            />
+            <q-input
+              filled
+              type="text"
+              v-model="form.lastName"
+              placeholder="Ваша фамилия"
+              class="input-auth"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
+            />
+          </div>
+          <div class="item">
+            <div class="my-file-upload my-file-upload-rounded">
+              <q-uploader
+                url="http://localhost:8080/upload"
+                style="max-width: 300px"
+              />
+            </div>
+          </div>
+        </div>
 
-      <div>
-        <q-btn label="Зарегистрироваться" type="submit" color="primary"/>
-        <q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />
+        <q-input
+          filled
+          type="email"
+          v-model="form.email"
+          placeholder="Ваш e-mail (он же логин)"
+          class="input-auth input-email"
+          lazy-rules
+          :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
+        />
+
+        <q-input
+          filled
+          type="password"
+          v-model="form.password"
+          placeholder="Пароль"
+          class="input-auth"
+          lazy-rules
+          :rules="[
+            val => val !== null && val !== '' || 'Поле не должно быть пустым'
+          ]"
+        >
+          <template v-slot:after>
+            <div class="q-pr-md emoji-div">
+              <q-icon
+                size="24px"
+                name="svguse:icons/allIcons.svg#eye-no"
+              />
+            </div>
+          </template>
+        </q-input>
+
+        <q-input
+          filled
+          type="password"
+          v-model="form.confirmPassword"
+          placeholder="Повторите пароль"
+          class="input-auth"
+          lazy-rules
+          :rules="[
+            val => val !== null && val !== '' || 'Поле не должно быть пустым'
+          ]"
+        >
+          <template v-slot:after>
+            <div class="q-pr-md emoji-div">
+              <q-icon
+                size="24px"
+                name="svguse:icons/allIcons.svg#eye-no"
+              />
+            </div>
+          </template>
+        </q-input>
+        
+        <div class="dop-info row items-center justify-between">
+          <q-checkbox
+            v-model="policy"
+            checked-icon="svguse:icons/allIcons.svg#check"
+            class="my-checkbox flat"
+            color="black"
+          >
+            Я принимаю <q-item to="/policy" class="q-item-none"> политику конфиденциальности.</q-item>
+          </q-checkbox>
+        </div>
+        
+        <div class="section-btn">
+          <q-btn
+            unelevated
+            no-caps
+            type="submit"
+            padding="20px 10px"
+            class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
+            label="Зарегистрироваться"
+          />
+        </div>
+      </div>
+      <div class="form-section form-auth">
+        <LoginIn />
       </div>
     </q-form>
+    <AuthInformation />
+  </q-page>
 </template>
+
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex';
 
+import AuthInformation from 'src/components/auth/AuthInformation.vue'
+import LoginIn from 'src/components/auth/LoginIn.vue'
+
 export default {
+  components: {
+    AuthInformation,
+    LoginIn
+  },
   setup () {
     const accept = ref(false)
     const store = useStore();    
+    const policy = ref(true);
+
     const form = ref({
       login: '',
       name: '',
@@ -89,6 +172,7 @@ export default {
       accept,
       form,
       isValidPass,
+      policy,
 
       async onSubmit () {
         if (isValidPass.value) {

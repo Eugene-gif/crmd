@@ -14,6 +14,14 @@ const routes = [
       {
         path: '/register',
         component: () => import('pages/Auth/Register.vue')
+      },
+      {
+        path: '/reset',
+        component: () => import('pages/Auth/Reset.vue')
+      },
+      {
+        path: '/pass',
+        component: () => import('pages/Auth/Pass.vue')
       }
     ]
   },

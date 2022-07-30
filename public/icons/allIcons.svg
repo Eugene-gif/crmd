@@ -169,6 +169,20 @@
 			c-6.641,0-12.03,5.438-12.03,12.151c0,6.713,5.39,12.151,12.03,12.151h247.74l-62.558,63.46c-4.704,4.752-4.704,12.439,0,17.179
 			c4.704,4.752,12.319,4.752,17.011,0l82.997-84.2C386.113,196.588,386.161,188.756,381.481,184.088z"/>
   </symbol>
+  <symbol width="24" height="24" id="eye-no">
+    <g opacity="0.2">
+      <path d="M6.87232 17.129C5.02689 15.8181 3.56706 14.1146 2.7429 13.039C2.26859 12.4199 2.26771 11.5813 2.74198 10.9622C4.23513 9.01321 7.81738 5 11.9991 5C13.8746 5 15.6296 5.80728 17.1296 6.87355" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M14.1292 9.88664C13.5857 9.33907 12.8325 9 12 9C10.3431 9 9 10.3431 9 12C9 12.8324 9.339 13.5856 9.88646 14.1291" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M4 20L19.9999 4" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M10 18.7037C10.6462 18.8923 11.3151 19 12 19C16.1818 19 19.764 14.9868 21.2572 13.0378C21.7314 12.4187 21.7302 11.5795 21.2558 10.9605C20.843 10.4217 20.2707 9.72547 19.5704 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
+  <symbol width="24" height="24" id="eye-yes">
+    <g opacity="0.2">
+      <path d="M21.2568 10.9622C21.731 11.5813 21.731 12.4187 21.2568 13.0378C19.7636 14.9868 16.1814 19 11.9996 19C7.81782 19 4.23557 14.9868 2.74243 13.0378C2.26816 12.4187 2.26815 11.5813 2.74242 10.9622C4.23557 9.01321 7.81782 5 11.9996 5C16.1814 5 19.7636 9.01321 21.2568 10.9622Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </symbol>
 
 </svg>
 

@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page-login">
+  <q-page class="page-reset">
     <q-form
       @submit="onSubmit"
       @reset="onReset"
@@ -7,53 +7,26 @@
     >
       <div class="form-section">
         <div class="head">
-          <q-item to="/login">
-            <span>Вход</span>
-          </q-item>
-          <q-item to="/register">
-            <span>Регистрация</span>
+          <q-item to="/reset">
+            <span>Восстановить пароль</span>
           </q-item>
           <q-item></q-item>
         </div>
-
+  
         <q-input
           type="email"
           v-model="form.email"
-          placeholder="Ваш e-mail (он же логин)"
+          placeholder="Введите e-mail"
           lazy-rules
           class="input-auth"
           :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
         />
 
-        <q-input
-          v-model="form.password"
-          placeholder="Ваш пароль"
-          lazy-rules
-          class="input-auth"
-          :rules="[
-            val => val !== null && val !== '' || 'Поле не должно быть пустым'
-          ]"
-        >
-          <template v-slot:after>
-            <div class="q-pr-md emoji-div">
-              <q-icon
-                size="24px"
-                name="svguse:icons/allIcons.svg#eye-no"
-              />
-            </div>
-          </template>
-        </q-input>
-        
-        <div class="dop-info row items-center justify-between">
-          <q-checkbox
-            v-model="followeMe"
-            checked-icon="svguse:icons/allIcons.svg#check"
-            class="my-checkbox flat"
-            label="Запомнить меня"
-            color="black"
-          />
-          <q-item to="/reset" class="q-item-none reset lg-visible">Восстановить пароль</q-item>
+        <div class="form-text">
+          Если ваша почта уже зарегистрирована в CRMD, 
+          то на нее придет письмо со ссылкой для сброса пароля.
         </div>
+        <q-item to="/reset" class="q-item-none reset lg-visible">Обратно к форме входа</q-item>
         
         <div class="section-btn">
           <q-btn
@@ -64,7 +37,7 @@
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
             label="Войти"
           />
-          <q-item to="/reset" class="q-item-none reset mb-visible">Восстановить пароль</q-item>
+          <q-item to="/reset" class="q-item-none reset mb-visible">Отправить</q-item>
         </div>
       </div>
       <div class="form-section form-auth">

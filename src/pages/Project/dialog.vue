@@ -121,8 +121,6 @@
               style="max-width: 300px"
             />
           </div>
-          
-          <!-- <UploadFile /> -->
         </q-card-section>
       </q-card-actions>
 
@@ -215,7 +213,6 @@
 import { ref } from 'vue'
 import BtnDate from 'components/BtnDate'
 import DropBox from 'components/DropBox'
-import UploadFile from 'components/UploadFile'
 import Emoji from 'components/Emoji'
 import { projectsApi } from 'src/api/projects';
 
@@ -224,7 +221,6 @@ export default ({
   components: {
     BtnDate,
     DropBox,
-    UploadFile,
     Emoji
   }, 
   setup () {

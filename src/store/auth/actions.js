@@ -16,7 +16,7 @@ export const doLogin = async ({commit}, payload) => {
 
 export const doRegister = async ({commit}, payload) => {
   api.post(`/auth/register`, {
-    name: payload.login,
+    name: payload.email,
     email: payload.email,
     password: payload.password,
     password_confirmation: payload.confirmPassword,
