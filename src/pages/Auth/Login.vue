@@ -26,21 +26,26 @@
         />
 
         <q-input
+          :type="passEye1 ? 'password' : 'text'"
           v-model="form.password"
           placeholder="Ваш пароль"
           lazy-rules
-          class="input-auth"
+          class="input-auth pass-input"
           :rules="[
             val => val !== null && val !== '' || 'Поле не должно быть пустым'
           ]"
         >
-          <template v-slot:after>
-            <div class="q-pr-md emoji-div">
-              <q-icon
-                size="24px"
-                name="svguse:icons/allIcons.svg#eye-no"
-              />
-            </div>
+          <template v-slot:after @click="passEye1">
+            <q-icon
+              @click="passEye1 = !passEye1"
+              v-show="!passEye1"
+              name="svguse:icons/allIcons.svg#eye-no"
+            />
+            <q-icon
+              @click.stop="passEye1 = !passEye1"
+              v-show="passEye1"
+              name="svguse:icons/allIcons.svg#eye-yes"
+            />
           </template>
         </q-input>
         
@@ -99,11 +104,15 @@ export default {
     })
     const stateToken = computed(() => store.state['auth'].token)    
 
+    const passEye1 = ref(true)
+
     return {
       accept,
       form,
       stateToken,
       followeMe,
+
+      passEye1,
 
       async onSubmit () {
         if (accept.value !== true) {

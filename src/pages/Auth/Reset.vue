@@ -26,7 +26,7 @@
           Если ваша почта уже зарегистрирована в CRMD, 
           то на нее придет письмо со ссылкой для сброса пароля.
         </div>
-        <q-item to="/reset" class="q-item-none reset lg-visible">Обратно к форме входа</q-item>
+        <q-item to="/login" class="q-item-none reset lg-visible">Обратно к форме входа</q-item>
         
         <div class="section-btn">
           <q-btn
@@ -35,9 +35,9 @@
             type="submit"
             padding="20px 10px"
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
-            label="Войти"
+            label="Отправить"
           />
-          <q-item to="/reset" class="q-item-none reset mb-visible">Отправить</q-item>
+          <q-item to="/login" class="q-item-none reset mb-visible">Обратно к форме входа</q-item>
         </div>
       </div>
       <div class="form-section form-auth">
@@ -81,7 +81,7 @@ export default {
       async onSubmit () {
         if (accept.value !== true) {
           try {
-            await store.dispatch('auth/doLogin', form.value)
+            await store.dispatch('auth/doReset', form.value)
           } catch (err) {
             console.log(err)
           }

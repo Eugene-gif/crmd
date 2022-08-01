@@ -69,43 +69,51 @@
 
         <q-input
           filled
-          type="password"
+          :type="passEye1 ? 'password' : 'text'"
           v-model="form.password"
           placeholder="Пароль"
-          class="input-auth"
+          class="input-auth pass-input"
           lazy-rules
           :rules="[
             val => val !== null && val !== '' || 'Поле не должно быть пустым'
           ]"
         >
-          <template v-slot:after>
-            <div class="q-pr-md emoji-div">
-              <q-icon
-                size="24px"
-                name="svguse:icons/allIcons.svg#eye-no"
-              />
-            </div>
+          <template v-slot:after @click="passEye1">
+            <q-icon
+              @click="passEye1 = !passEye1"
+              v-show="!passEye1"
+              name="svguse:icons/allIcons.svg#eye-no"
+            />
+            <q-icon
+              @click="passEye1 = !passEye1"
+              v-show="passEye1"
+              name="svguse:icons/allIcons.svg#eye-yes"
+            />
           </template>
         </q-input>
 
         <q-input
           filled
-          type="password"
+          :type="passEye2 ? 'password' : 'text'"
           v-model="form.confirmPassword"
           placeholder="Повторите пароль"
-          class="input-auth"
+          class="input-auth pass-input"
           lazy-rules
           :rules="[
             val => val !== null && val !== '' || 'Поле не должно быть пустым'
           ]"
         >
-          <template v-slot:after>
-            <div class="q-pr-md emoji-div">
-              <q-icon
-                size="24px"
-                name="svguse:icons/allIcons.svg#eye-no"
-              />
-            </div>
+          <template v-slot:after @click="passEye1">
+            <q-icon
+              @click="passEye2 = !passEye2"
+              v-show="!passEye2"
+              name="svguse:icons/allIcons.svg#eye-no"
+            />
+            <q-icon
+              @click="passEye2 = !passEye2"
+              v-show="passEye2"
+              name="svguse:icons/allIcons.svg#eye-yes"
+            />
           </template>
         </q-input>
         
@@ -168,11 +176,17 @@ export default {
       return form.value.password == form.value.confirmPassword
     })    
 
+    const passEye1 = ref(true)    
+    const passEye2 = ref(true)
+
     return {
       accept,
       form,
       isValidPass,
       policy,
+
+      passEye1,
+      passEye2,
 
       async onSubmit () {
         if (isValidPass.value) {
