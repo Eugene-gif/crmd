@@ -1,8 +1,23 @@
 .auth-layout {
   background-image: url(../assets/fon-login.jpg);
-  background-size: cover;
-  background-position: center center;
+  background-size: 100vw 100vh;
+  background-position: 0 0;
   background-color: #F5F5F5;
+  background-repeat: no-repeat;
+  @media (max-width: 772px) {
+    background-image: url(../assets/fon-login-mb.jpg);
+  }
+
+  .q-item {
+    color: #444444;
+    transition: all 0.25s;
+    &:hover {
+      color: $primary !important;
+    }
+    &:active {
+      opacity: 0.3;
+    }
+  }
 
   .q-page-container {
     width: 100%;
@@ -116,9 +131,12 @@
           a {
             margin-left: 6px;
             color: $primary;
-            text-decoration: underline;
+            border-bottom: 1px solid $primary;
             &:hover {
-              text-decoration: none;
+              border-bottom: none;
+            }
+            @media (max-width: 772px) {
+              border-bottom: none;
             }
           }
         }
@@ -142,12 +160,21 @@
       .btn-auth {
         display: flex;
         align-items: center;
+        transition: all 0.25s;
         span {
           font-weight: 400;
           font-size: 18px;
           line-height: 18px;
           color: $grey-5;
           margin-left: 24px;
+        }
+        &:hover {
+          span {
+            color: $primary;
+          }
+        }
+        &:active {
+          opacity: 0.3;
         }
       }
     }
@@ -222,6 +249,9 @@
             font-size: 16px;
             line-height: 16px;
             margin-left: 0;
+          }
+          span {
+            min-width: 20px;
           }
         }
       }

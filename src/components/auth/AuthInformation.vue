@@ -1,8 +1,7 @@
 <template>
   <div class="auth-info">
     <div class="title">
-      Добро пожаловать <br>
-      в CRMD — здесь подрядчики и дизайнеры находят друг друга и продуктивно работают. Вам понравится! 
+      Добро пожаловать в&nbsp;CRMD —&nbsp;здесь подрядчики и&nbsp;дизайнеры находят друг друга и&nbsp;продуктивно работают. Вам&nbsp;понравится!
     </div>
     <div class="security">
       <img src="~assets/security-ico.svg" alt="">

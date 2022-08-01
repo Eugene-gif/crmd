@@ -20,6 +20,16 @@
     }
   }
 }
+.q-field {
+  input {
+    &:focus::-webkit-textfield-decoration-container {
+      visibility: hidden;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+    }
+  }
+}
 
 .q-input.header__input__search {
   cursor: pointer;
@@ -536,7 +546,7 @@
             background: url(../assets/foto.svg);
             background-repeat: no-repeat;
             background-position: center;
-            background-size: 32px 28px;
+            background-size: 34px 25px;
             margin: 0 auto;
             margin-top: 36px;
           }
@@ -910,6 +920,13 @@
   border: 2px solid $red;
   background: white;
   margin-bottom: calc(1em + 20px) !important;
+  .q-field__control {
+    padding-right: 20px;
+  }
+  &:hover {
+    background: white !important;
+    border-color: #D24242;
+  }
   .q-field__append {
     .q-icon {
       color: $red !important;
@@ -919,6 +936,14 @@
   }
   @media (max-width: 772px) {
     margin-bottom: calc(1em + 10px) !important;
+    .q-field__control {
+      padding-right: 13px;
+    }
+    .q-field__append {
+      .q-icon {
+        font-size: 20px;
+      }
+    }
   }
 }
 .q-field {
@@ -940,9 +965,7 @@
 }
 
 .pass-input.q-field--error {
-  .q-field__control {
-    padding-right: 20px;
-  }
+  
   .q-field__after {
     .q-icon {
       margin-right: 62px;
@@ -955,9 +978,7 @@
     }
   }
   @media (max-width: 772px) {
-    .q-field__control {
-      padding-right: 13px;
-    }
+    
     .q-field__after {
       .q-icon {
         margin-right: 44px;

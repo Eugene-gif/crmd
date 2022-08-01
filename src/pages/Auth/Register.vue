@@ -124,7 +124,7 @@
             class="my-checkbox flat"
             color="black"
           >
-            Я принимаю <q-item to="/policy" class="q-item-none"> политику конфиденциальности.</q-item>
+            Я принимаю<q-item to="/policy" class="q-item-none">политику конфиденциальности.</q-item>
           </q-checkbox>
         </div>
         
