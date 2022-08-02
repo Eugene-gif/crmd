@@ -22,7 +22,7 @@
           placeholder="Ваш e-mail (он же логин)"
           lazy-rules
           class="input-auth"
-          :rules="[ val => val && val.length > 0 || 'Поле не должно быть пустым']"
+          :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
         />
 
         <q-input
@@ -32,7 +32,7 @@
           lazy-rules
           class="input-auth pass-input"
           :rules="[
-            val => val !== null && val !== '' || 'Поле не должно быть пустым'
+            val => val !== null && val !== '' || 'Пожалуйста, заполните это поле'
           ]"
         >
           <template v-slot:after @click="passEye1">
