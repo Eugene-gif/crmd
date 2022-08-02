@@ -1,5 +1,8 @@
 <template>
   <q-page class="page-login">
+    <LoaderDate
+      v-show="true"
+    />
     <q-form
       @submit="onSubmit"
       @reset="onReset"
@@ -22,7 +25,7 @@
           placeholder="Ваш e-mail (он же логин)"
           lazy-rules
           class="input-auth"
-          :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
+          :rules="[ val => val && val.length > 0 || '']"
         />
 
         <q-input
@@ -32,7 +35,7 @@
           lazy-rules
           class="input-auth pass-input"
           :rules="[
-            val => val !== null && val !== '' || 'Пожалуйста, заполните это поле'
+            val => val !== null && val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye1">
@@ -87,11 +90,13 @@ import { useStore } from 'vuex';
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoginIn from 'src/components/auth/LoginIn.vue'
+import LoaderDate from 'src/components/LoaderDate.vue'
 
 export default {
   components: {
     AuthInformation,
-    LoginIn
+    LoginIn,
+    LoaderDate
   },
   setup () {
     const router = useRouter();

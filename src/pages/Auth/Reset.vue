@@ -19,7 +19,7 @@
           placeholder="Введите e-mail"
           lazy-rules
           class="input-auth"
-          :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
+          :rules="[ val => val && val.length > 0 || '']"
         />
 
         <div class="form-text">

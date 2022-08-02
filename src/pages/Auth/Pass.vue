@@ -21,7 +21,7 @@
           class="input-auth pass-input"
           lazy-rules
           :rules="[
-            val => val !== null && val !== '' || 'Пожалуйста, заполните это поле'
+            val => val !== null && val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye1">
@@ -46,7 +46,7 @@
           class="input-auth pass-input"
           lazy-rules
           :rules="[
-            val => val !== null && val !== '' || 'Пожалуйста, заполните это поле'
+            val => val !== null && val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye2">

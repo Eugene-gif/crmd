@@ -917,6 +917,7 @@
 .q-field--error {
   border: 2px solid $red;
   background: white;
+  // margin-bottom: calc(1em + 20px) !important;
   .q-field__control {
     padding-right: 16px;
   }
@@ -932,6 +933,7 @@
     }
   }
   @media (max-width: 772px) {
+    // margin-bottom: calc(1em + 10px) !important;
     .q-field__control {
       padding-right: 10px;
     }
@@ -944,74 +946,24 @@
 }
 .q-field {
   .q-field__bottom {
-    padding-top: 0;
+    padding-top: 29px;
     padding-left: 0;
-    z-index: 2;
-    padding-right: 5px;
-
     .q-field__messages {
-      display: flex;
-      justify-content: flex-end;
-      div[role="alert"] {
-        font-size: 16px;
-        color: white !important;
-        background-color: $grey-5;
-        max-width: 282px;
-        padding: 16px 19px;
-        text-align: center;
-        border-radius: 6px;
-        position: absolute;
-        z-index: 2;
-
-        top: 15px;
-        &:after,
-        &:before {
-          top: -16px;
-          right: 14px;
-          border: solid transparent;
-          content: "";
-          height: 0;
-          width: 0;
-          position: absolute;
-          pointer-events: none;
-          transform: rotate(180deg);
-        }
-        &:before {
-          border-color: rgba(194, 225, 245, 0);
-          border-top-color: $grey-5;
-          border-width: 8px;
-          margin-left: -8px;
-        }
-      }
+      font-size: 16px;
+      color: $red !important;
     }
     @media (max-width: 772px) {
-      padding-top: 0;
+      padding-top: 26px;
       padding-left: 0;
-      padding-right: 0;
       .q-field__messages {
-        div[role="alert"] {
-          font-size: 14px;
-          max-width: 100%;
-          width: 100%;
-          padding: 8px 14px;
-          text-align: left;
-          border-radius: 4px;
-          &:after,
-          &:before {
-            top: -8px;
-            right: 16px;
-          }
-          &:before {
-            border-width: 4px;
-            margin-left: -4px;
-          }
-        }
+        font-size: 14px;
       }
     }
   }
 }
 
 .pass-input.q-field--error {
+  
   .q-field__after {
     .q-icon {
       margin-right: 48px;
@@ -1024,6 +976,7 @@
     }
   }
   @media (max-width: 772px) {
+    
     .q-field__after {
       .q-icon {
         margin-right: 44px;
@@ -1031,3 +984,122 @@
     }
   }
 }
+
+// плде 
+// .q-field--error {
+//   border: 2px solid $red;
+//   background: white;
+//   .q-field__control {
+//     padding-right: 16px;
+//   }
+//   &:hover {
+//     background: white !important;
+//     border-color: #D24242;
+//   }
+//   .q-field__append {
+//     .q-icon {
+//       color: $red !important;
+//       transform: rotate(180deg);
+//       opacity: 1;
+//     }
+//   }
+//   @media (max-width: 772px) {
+//     .q-field__control {
+//       padding-right: 10px;
+//     }
+//     .q-field__append {
+//       .q-icon {
+//         font-size: 20px;
+//       }
+//     }
+//   }
+// }
+// .q-field {
+//   .q-field__bottom {
+//     padding-top: 0;
+//     padding-left: 0;
+//     z-index: 2;
+//     padding-right: 5px;
+
+//     .q-field__messages {
+//       display: flex;
+//       justify-content: flex-end;
+//       div[role="alert"] {
+//         font-size: 16px;
+//         color: white !important;
+//         background-color: $grey-5;
+//         max-width: 282px;
+//         padding: 16px 19px;
+//         text-align: center;
+//         border-radius: 6px;
+//         position: absolute;
+//         z-index: 2;
+
+//         top: 15px;
+//         &:after,
+//         &:before {
+//           top: -16px;
+//           right: 14px;
+//           border: solid transparent;
+//           content: "";
+//           height: 0;
+//           width: 0;
+//           position: absolute;
+//           pointer-events: none;
+//           transform: rotate(180deg);
+//         }
+//         &:before {
+//           border-color: rgba(194, 225, 245, 0);
+//           border-top-color: $grey-5;
+//           border-width: 8px;
+//           margin-left: -8px;
+//         }
+//       }
+//     }
+//     @media (max-width: 772px) {
+//       padding-top: 0;
+//       padding-left: 0;
+//       padding-right: 0;
+//       .q-field__messages {
+//         div[role="alert"] {
+//           font-size: 14px;
+//           max-width: 100%;
+//           width: 100%;
+//           padding: 8px 14px;
+//           text-align: left;
+//           border-radius: 4px;
+//           &:after,
+//           &:before {
+//             top: -8px;
+//             right: 16px;
+//           }
+//           &:before {
+//             border-width: 4px;
+//             margin-left: -4px;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+// .pass-input.q-field--error {
+//   .q-field__after {
+//     .q-icon {
+//       margin-right: 48px;
+//     }
+//   }
+//   .q-field__append {
+//     .q-icon {
+//       transform: rotate(180deg);
+//       opacity: 1;
+//     }
+//   }
+//   @media (max-width: 772px) {
+//     .q-field__after {
+//       .q-icon {
+//         margin-right: 44px;
+//       }
+//     }
+//   }
+// }

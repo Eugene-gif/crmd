@@ -23,7 +23,7 @@
           placeholder="Ваш логин"
           class="input-auth"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
+          :rules="[ val => val && val.length > 0 || '']"
         /> -->
 
         <div class="form-cell">
@@ -35,7 +35,7 @@
               placeholder="Ваше имя"
               class="input-auth"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
+              :rules="[ val => val && val.length > 0 || '']"
             />
             <q-input
               filled
@@ -44,7 +44,7 @@
               placeholder="Ваша фамилия"
               class="input-auth"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
+              :rules="[ val => val && val.length > 0 || '']"
             />
           </div>
           <div class="item">
@@ -64,7 +64,7 @@
           placeholder="Ваш e-mail (он же логин)"
           class="input-auth input-email"
           lazy-rules
-          :rules="[ val => val && val.length > 0 || 'Пожалуйста, заполните это поле']"
+          :rules="[ val => val && val.length > 0 || '']"
         />
 
         <q-input
@@ -75,7 +75,7 @@
           class="input-auth pass-input"
           lazy-rules
           :rules="[
-            val => val !== null && val !== '' || 'Пожалуйста, заполните это поле'
+            val => val !== null && val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye1">
@@ -100,7 +100,7 @@
           class="input-auth pass-input"
           lazy-rules
           :rules="[
-            val => val !== null && val !== '' || 'Пожалуйста, заполните это поле'
+            val => val !== null && val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye1">
