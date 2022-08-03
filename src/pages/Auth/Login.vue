@@ -87,6 +87,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { useQuasar } from 'quasar'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoginIn from 'src/components/auth/LoginIn.vue'
@@ -99,6 +100,8 @@ export default {
     LoaderDate
   },
   setup () {
+    const $q = useQuasar()
+
     const router = useRouter();
     const accept = ref(false)
     const store = useStore();    
@@ -130,9 +133,12 @@ export default {
           } catch (err) {
             console.log(err)
             loading.value = false
+            $q.notify({
+              color: 'red',
+              message: 'Произошла ошибка, повторите попытку позже'
+            })
           } 
         }
-
       },
 
       onReset () {
