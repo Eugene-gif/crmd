@@ -10,6 +10,10 @@
   </q-dialog>
   
   <q-page class="page-projects">
+
+    <LoaderDate
+      v-show="loading"
+    />
     
     <div class="row justify-between items-center head">
       <div class="text-h2">Проекты</div>
@@ -54,6 +58,10 @@
 
     <div class="projects">
       <!-- :sort-method="customSort" -->
+      <NoDate 
+        text="Список проектов пуст"
+        v-show="nodate"
+      />
       <q-table
         flat
         :rows="rows2"
@@ -63,6 +71,7 @@
         class="my-table projects-table "
         :class="{'projects-table-cubes': tab === 'cubes', 'projects-table-stripes': tab === 'stripes'}"
         :pagination="pagination"
+        v-show="!nodate"
       >
         <template v-slot:header-cell-status="props">
           <q-th :props="props" class="q-th__smaile">
@@ -254,6 +263,8 @@ import Dialog from 'pages/Project/dialog.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref, onMounted } from 'vue'
 import { projectsApi } from 'src/api/projects';
+import LoaderDate from 'src/components/LoaderDate.vue'
+import NoDate from 'src/components/NoDate.vue'
 
 const columns = [
   { name: 'image', label: '', field: 'image', align: 'left' },
@@ -273,49 +284,7 @@ const columns = [
   { name: 'address', label: '', field: 'address', align: 'left' }
 ]
 const rows = ref([
-  {
-    id: 1,
-    status: 1,
-    image: '/project-1.jpg',
-    iconName: '🏰',
-    name: 'Название проекта, заданное пользователем',
-    type: 1,
-    typeName: 'Квартира',
-    address: 'г. Краснодар, ул. Ставропольская, д. 250',
-    square: 90,
-    customer: 'Андикаловский А.А.',
-    changed: '10:35',
-    created: 'позавчера',
-    timing: 50,
-    payment: 80,
-    readiness: 40,
-    share: [
-      {
-        icon: '/icons/anton.jpg',
-        link: 's'
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/anton.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      },
-      {
-        icon: '/icons/stroipro.jpg',
-        link: ''
-      }
-    ]    
-  }
+  
 ])
 
 const rows2 = ref([])
@@ -324,7 +293,9 @@ export default {
   name: 'PageFinance',
   components: {
     Dialog,
-    ActionBtn
+    ActionBtn,
+    LoaderDate,
+    NoDate
   },
   
   setup () {
@@ -334,13 +305,23 @@ export default {
       rowsPerPage: 0
     })
 
+    const loading = ref(false)
+    const nodate = ref(true)
+
     async function start() {
+      loading.value = true
       try {
         await projectsApi.getAll().then(resp => {
           rows2.value = resp
         })
       } catch (err) {
         console.log(err)
+      }
+      loading.value = false
+      if (rows2.value === '') {
+        nodate.value = true
+      } else {
+        nodate.value = false
       }
     }
 
@@ -369,6 +350,10 @@ export default {
       pagination,
       dialog,
       maximizedToggle: ref(true),
+
+      loading,
+      nodate,
+
       modalFalse() {
         dialog.value = false
       }

@@ -1,5 +1,8 @@
 <template>
   <q-page class="page-register">
+    <LoaderDate
+      v-show="loading"
+    />
     <q-form
       @submit="onSubmit"
       @reset="onReset"
@@ -153,11 +156,13 @@ import { useStore } from 'vuex';
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoginIn from 'src/components/auth/LoginIn.vue'
+import LoaderDate from 'src/components/LoaderDate.vue'
 
 export default {
   components: {
     AuthInformation,
-    LoginIn
+    LoginIn,
+    LoaderDate
   },
   setup () {
     const accept = ref(false)
@@ -179,24 +184,31 @@ export default {
     const passEye1 = ref(true)    
     const passEye2 = ref(true)
 
+    const loading = ref(false);
+
     return {
       accept,
       form,
       isValidPass,
       policy,
 
+      loading,
+
       passEye1,
       passEye2,
 
       async onSubmit () {
+        loading.value = true
         if (isValidPass.value) {
           try {
             await store.dispatch('auth/doRegister', form.value)
           } catch (error) {
             console.log(error)
+            loading.value = false
           }
         } else {
           alert('пароли должны совпадать')
+          loading.value = false
         }
       }
 

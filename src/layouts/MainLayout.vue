@@ -137,7 +137,7 @@
         </q-btn>
         <q-icon
           color="black"
-          class="q-ml-md"
+          class="q-ml-md lg-visible"
           size="16px"
           name="svguse:icons/allIcons.svg#logout"
           style="cursor: pointer;"
@@ -180,7 +180,7 @@
         <q-item-section>
           <img src="~assets/anton.jpg">
           <q-item-label>Антон Глуханько </q-item-label>
-          <q-icon size="14px"  name="svguse:icons/allIcons.svg#exit" />
+          <q-icon size="14px" name="svguse:icons/allIcons.svg#exit" @click="logout" />
         </q-item-section>
       </q-item>
       <q-list class="essential-about">

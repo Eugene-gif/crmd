@@ -1,7 +1,7 @@
 <template>
   <q-page class="page-login">
     <LoaderDate
-      v-show="true"
+      v-show="loading"
     />
     <q-form
       @submit="onSubmit"
@@ -111,22 +111,28 @@ export default {
 
     const passEye1 = ref(true)
 
+    const loading = ref(false);
+
     return {
       accept,
       form,
       stateToken,
       followeMe,
+      loading,
 
       passEye1,
 
-      async onSubmit () {
+      onSubmit () {
+        loading.value = true
         if (accept.value !== true) {
           try {
-            await store.dispatch('auth/doLogin', form.value)
+            store.dispatch('auth/doLogin', form.value)
           } catch (err) {
             console.log(err)
-          }
+            loading.value = false
+          } 
         }
+
       },
 
       onReset () {
