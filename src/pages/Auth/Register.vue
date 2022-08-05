@@ -191,32 +191,31 @@ export default {
     const loading = ref(false);
 
     async function onSubmit () {
-    loading.value = true
-    if (isValidPass.value) {
-      try {
-        await authApi.doRegister(form.value).then(resp => {
-          const token = resp.data.data.token
-          store.commit('auth/setToken', token)
-          window.location.href = '/';
-        })
-        loading.value = false
-      } catch (err) {
-        console.log(err)
-        loading.value = false
+      loading.value = true
+      if (isValidPass.value) {
+        try {
+          await authApi.doRegister(form.value).then(resp => {
+            const token = resp.data.data.token
+            store.commit('auth/setToken', token)
+            window.location.href = '/';
+          })
+          loading.value = false
+        } catch (err) {
+          console.log(err)
+          loading.value = false
           $q.notify({
+            color: 'red',
+            message: 'Произошла ошибка, повторите попытку позже'
+          })
+        }
+      } else {
+        loading.value = false
+        $q.notify({
           color: 'red',
-          message: 'Произошла ошибка, повторите попытку позже'
+          message: 'пароли должны совпадать'
         })
       }
-    } else {
-      loading.value = false
-        $q.notify({
-        color: 'red',
-        message: 'пароли должны совпадать'
-      })
-      loading.value = false
     }
-  }
 
     return {
       accept,

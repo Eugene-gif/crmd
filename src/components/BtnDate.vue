@@ -21,24 +21,29 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 
-export default ({
+export default defineComponent({
   name: 'BtnDate',
   props: {
     addClass: String,
     info: String
   },
   
-  setup (props) {
+  setup (props, { emit }) {
     const dateActive = ref(false)
     const date = ref()
     const dateInfo = ref('Выберите дату')
+
     function toggleDate () {
       dateActive.value = !dateActive.value
     }
+    function getTime() {
+      emit('getTime', date.value)
+    }
     function update () {
       setupDate()
+      getTime()
       dateActive.value = !dateActive.value
     }
     function setupDate () {
@@ -62,6 +67,7 @@ export default ({
       }
       dateInfo.value = `${day} ${arrMounth[mounth]} ${year}`
     }
+
     onMounted(() => {
       if (props.info) {
         date.value = props.info
@@ -74,7 +80,8 @@ export default ({
       dateActive,
       toggleDate,
       update,
-      setupDate
+      setupDate,
+      getTime
     }
   }
 })

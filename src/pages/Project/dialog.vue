@@ -61,11 +61,11 @@
       <q-card-actions class="q-card-actions-add-customer" v-show="addCustomer === true">
         <q-card-section class="form-section">
           <label class="lable-title">Фамилия</label>
-          <q-input v-model="last_name" class="my-input bg-grey-3" placeholder="Введите фамилию" />
+          <q-input v-model="formOrderers.last_name" class="my-input bg-grey-3" placeholder="Введите фамилию" />
         </q-card-section>
         <q-card-section class="form-section">
           <label class="lable-title">Имя</label>
-          <q-input v-model="first_name" class="my-input bg-grey-3" placeholder="Введите имя" />
+          <q-input v-model="formOrderers.first_name" class="my-input bg-grey-3" placeholder="Введите имя" />
         </q-card-section>
         <!-- <q-card-section class="form-section">
           <label class="lable-title">Отчество</label>
@@ -73,33 +73,33 @@
         </q-card-section> -->
         <q-card-section class="form-section">
           <label class="lable-title">Телефон</label>
-          <q-input v-model="customer4" class="my-input bg-grey-3" placeholder="+7 (999)-999-99-99" />
+          <q-input v-model="formOrderers.phone" class="my-input bg-grey-3" placeholder="+7 (999)-999-99-99" />
         </q-card-section>
         <q-card-section class="form-section">
           <label class="lable-title">E-mail</label>
-          <q-input v-model="customer5" class="my-input bg-grey-3" placeholder="email@gmail.com" />
+          <q-input v-model="formOrderers.email" class="my-input bg-grey-3" placeholder="email@gmail.com" />
         </q-card-section>
         <q-card-section class="form-section">
           <label class="lable-title">Дата рождения</label>
-          <BtnDate />
+          <BtnDate @getTime="ongetTime" />
         </q-card-section>
 
         <q-card-section class="form-section form-section-whatsapp">
-          <q-input v-model="whatsapp" class="my-input bg-grey-3" placeholder="Ссылка на WhatsApp">
+          <q-input v-model="formOrderers.soc_wa" class="my-input bg-grey-3" placeholder="Ссылка на WhatsApp">
             <template v-slot:after>
               <img src="~assets/whatsapp.svg" alt="" class="q-mr-md">
             </template>
           </q-input>
         </q-card-section>
         <q-card-section class="form-section form-section-social">
-          <q-input v-model="telegram" class="my-input bg-grey-3" placeholder="Ссылка на Telegram">
+          <q-input v-model="formOrderers.soc_tg" class="my-input bg-grey-3" placeholder="Ссылка на Telegram">
             <template v-slot:after>
               <img src="~assets/telegram.svg" alt="" class="q-mr-md">
             </template>
           </q-input>
         </q-card-section>
         <q-card-section class="form-section form-section-social">
-          <q-input v-model="instagram" class="my-input bg-grey-3" placeholder="Ссылка на Instagram">
+          <q-input v-model="formOrderers.soc_inst" class="my-input bg-grey-3" placeholder="Ссылка на Instagram">
             <template v-slot:after>
               <img src="~assets/instagram.svg" alt="" class="q-mr-md">
             </template>
@@ -110,13 +110,14 @@
           <q-input
             filled
             type="textarea"
-            v-model="textarea"
+            v-model="formOrderers.personal_info"
             class="my-textarea bg-grey-3"
             placeholder="Введите примечание"
           />
           <div class="my-file-upload">
             <label class="lable-title">Изображение</label>
             <q-uploader
+              @added="onFileChange"
               url="http://localhost:8080/upload"
               style="max-width: 300px"
             />
@@ -200,7 +201,7 @@
           padding="20px 10px"
           class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
           label="Добавить проект"
-          @click="addProject"
+          @click="onSubmit"
         />
         
       </q-card-actions>
@@ -215,6 +216,7 @@ import BtnDate from 'components/BtnDate'
 import DropBox from 'components/DropBox'
 import Emoji from 'components/Emoji'
 import { projectsApi } from 'src/api/projects';
+import { orderersApi } from 'src/api/orderers';
 
 export default ({
   name: 'FinanceDialog',
@@ -255,22 +257,49 @@ export default ({
       personal_info: '',
     })
     
+    // addCustomer
+
+    async function onSubmit() {
+      if (addCustomer.value === true) {
+        createOrderer()
+      }
+    }
+
     async function addProject() {
       formData.value.project_type_id = select1.value.value
       try {
-        await projectsApi.createProject(formData.value).then(resp => {
+        await projectsApi.createProject(formData.value)
+        .then(resp => {
           console.log(resp)
         })
       } catch (err) {
         console.log(err)
       }
     }
+
+    async function createOrderer() {
+      try {
+        await orderersApi.createOrderers(formOrderers.value)
+        .then(resp => {
+          console.log(resp)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
     function ongetEmojik(data) {
       formData.value.name = data.text.value
       formData.value.emoji = data.emojiIcon.value
     }
     function ongetOrderer(select) {
       formData.value.orderer = select.value.user_id
+    }
+    function ongetTime(time) {
+      formOrderers.value.birth_date = time
+    }
+    function onFileChange(file) {
+      formOrderers.value.photo = file[0]
     }
 
     return {
@@ -288,6 +317,7 @@ export default ({
       val4: ref(false),
       val5: ref(false),
       addCustomer,
+
       type: [
         {
           label: 'Квартира',
@@ -312,16 +342,9 @@ export default ({
       show: ref(false),
       text4: ref(15),
 
-      customer1: ref(),
-      customer2: ref(),
-      customer3: ref(),
-      customer4: ref(),
-      customer5: ref(),
-
-      whatsapp: ref(),
-      telegram: ref(),
-      instagram: ref(),
-      textarea: ref(),
+      ongetTime,
+      onFileChange,
+      onSubmit,
 
       file: ref(),
       focusSelect() {
@@ -333,9 +356,7 @@ export default ({
       beforeHide() {
         show.value = true;
       },
-      onFileChange: function(e) {
-        console.log(e.target)
-      },
+      
     }
   }
 })
