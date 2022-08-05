@@ -61,16 +61,16 @@
       <q-card-actions class="q-card-actions-add-customer" v-show="addCustomer === true">
         <q-card-section class="form-section">
           <label class="lable-title">Фамилия</label>
-          <q-input v-model="customer1" class="my-input bg-grey-3" placeholder="Введите фамилию" />
+          <q-input v-model="last_name" class="my-input bg-grey-3" placeholder="Введите фамилию" />
         </q-card-section>
         <q-card-section class="form-section">
           <label class="lable-title">Имя</label>
-          <q-input v-model="customer2" class="my-input bg-grey-3" placeholder="Введите имя" />
+          <q-input v-model="first_name" class="my-input bg-grey-3" placeholder="Введите имя" />
         </q-card-section>
-        <q-card-section class="form-section">
+        <!-- <q-card-section class="form-section">
           <label class="lable-title">Отчество</label>
           <q-input v-model="customer3" class="my-input bg-grey-3" placeholder="Введите отчество" />
-        </q-card-section>
+        </q-card-section> -->
         <q-card-section class="form-section">
           <label class="lable-title">Телефон</label>
           <q-input v-model="customer4" class="my-input bg-grey-3" placeholder="+7 (999)-999-99-99" />
@@ -228,6 +228,10 @@ export default ({
       label: 'Квартира',
       value: 1
     })
+
+    const addCustomer = ref(false)
+    const selectDropbox = ref();
+    
     const formData = ref({
       name: '',
       emoji: '',
@@ -236,7 +240,21 @@ export default ({
       project_type_id: '',
       orderer: ''
     })
-    const selectDropbox = ref();
+    const formOrderers = ref({
+      user_id: '',
+      first_name: '',
+      second_name: '',
+      last_name: '',
+      birth_date: '',
+      phone: '',
+      email: '',
+      soc_inst: '',
+      soc_wa: '',
+      soc_tg: '',
+      photo: '',
+      personal_info: '',
+    })
+    
     async function addProject() {
       formData.value.project_type_id = select1.value.value
       try {
@@ -260,14 +278,16 @@ export default ({
       ongetEmojik,
       addProject,
       formData,
+      formOrderers,
       select1,
+
       val: ref(false),
       val1: ref(false),
       val2: ref(true),
       val3: ref(false),
       val4: ref(false),
       val5: ref(false),
-      addCustomer: ref(false),
+      addCustomer,
       type: [
         {
           label: 'Квартира',
@@ -289,7 +309,6 @@ export default ({
       
       selectDropbox,
 
-      text: ref(''),
       show: ref(false),
       text4: ref(15),
 

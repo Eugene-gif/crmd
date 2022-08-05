@@ -73,7 +73,8 @@ export const projectsApi = {
             address: formData.adress,
             square: formData.square,
             project_type_id: formData.project_type_id,
-            orderer: formData.orderer
+            orderer: formData.orderer,
+            emoji: formData.emoji
           }
         }
       }).then(({ data }) => {

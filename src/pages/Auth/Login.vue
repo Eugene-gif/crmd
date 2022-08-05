@@ -87,6 +87,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import { authApi } from 'src/api/auth';
 import { useQuasar } from 'quasar'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
@@ -105,7 +106,8 @@ export default {
     const router = useRouter();
     const accept = ref(false)
     const store = useStore();    
-    const followeMe = ref(false);    
+    const followeMe = ref(false);   
+     
     const form = ref({
       email: 'admin@mail.com',
       password: '123123'
@@ -125,19 +127,25 @@ export default {
 
       passEye1,
 
-      onSubmit () {
+      async onSubmit () {
         loading.value = true
         if (accept.value !== true) {
           try {
-            store.dispatch('auth/doLogin', form.value)
+            await authApi.doLogin(form.value).then(resp => {
+              let token = resp.data.data.token
+              store.commit('auth/setToken', token)
+              token = localStorage.getItem('token')
+              window.location.href = '/';
+            })
+            loading.value = false
           } catch (err) {
             console.log(err)
             loading.value = false
-            $q.notify({
+             $q.notify({
               color: 'red',
               message: 'Произошла ошибка, повторите попытку позже'
             })
-          } 
+          }
         }
       },
 

@@ -3,9 +3,10 @@
     <LoaderDate
       v-show="loading"
     />
+    <!-- @reset="onReset" -->
     <q-form
       @submit="onSubmit"
-      @reset="onReset"
+      
       class="q-gutter-md"
     >
       <div class="form-section">
@@ -153,6 +154,8 @@
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex';
+import { authApi } from 'src/api/auth';
+import { useQuasar } from 'quasar'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoginIn from 'src/components/auth/LoginIn.vue'
@@ -168,6 +171,7 @@ export default {
     const accept = ref(false)
     const store = useStore();    
     const policy = ref(true);
+    const $q = useQuasar()
 
     const form = ref({
       login: '',
@@ -186,6 +190,34 @@ export default {
 
     const loading = ref(false);
 
+    async function onSubmit () {
+    loading.value = true
+    if (isValidPass.value) {
+      try {
+        await authApi.doRegister(form.value).then(resp => {
+          const token = resp.data.data.token
+          store.commit('auth/setToken', token)
+          window.location.href = '/';
+        })
+        loading.value = false
+      } catch (err) {
+        console.log(err)
+        loading.value = false
+          $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, повторите попытку позже'
+        })
+      }
+    } else {
+      loading.value = false
+        $q.notify({
+        color: 'red',
+        message: 'пароли должны совпадать'
+      })
+      loading.value = false
+    }
+  }
+
     return {
       accept,
       form,
@@ -197,21 +229,7 @@ export default {
       passEye1,
       passEye2,
 
-      async onSubmit () {
-        loading.value = true
-        if (isValidPass.value) {
-          try {
-            await store.dispatch('auth/doRegister', form.value)
-          } catch (error) {
-            console.log(error)
-            loading.value = false
-          }
-        } else {
-          alert('пароли должны совпадать')
-          loading.value = false
-        }
-      }
-
+      onSubmit
     }
   }
 }
