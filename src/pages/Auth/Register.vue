@@ -56,6 +56,7 @@
               <q-uploader
                 url="http://localhost:8080/upload"
                 style="max-width: 300px"
+                @added="onFileChange"
               />
             </div>
           </div>
@@ -180,6 +181,7 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
+      image: ''
     })   
     const isValidPass = computed(() => {
       return form.value.password == form.value.confirmPassword
@@ -197,7 +199,8 @@ export default {
           await authApi.doRegister(form.value).then(resp => {
             const token = resp.data.data.token
             store.commit('auth/setToken', token)
-            window.location.href = '/';
+            // window.location.href = '/';
+            console.log(resp)
           })
           loading.value = false
         } catch (err) {
@@ -217,6 +220,11 @@ export default {
       }
     }
 
+    function onFileChange(file) {
+      let uploadFile = file[0]
+      form.value.image = uploadFile
+    }
+
     return {
       accept,
       form,
@@ -228,7 +236,8 @@ export default {
       passEye1,
       passEye2,
 
-      onSubmit
+      onSubmit,
+      onFileChange
     }
   }
 }

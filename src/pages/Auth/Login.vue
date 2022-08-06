@@ -103,10 +103,10 @@ export default {
   setup () {
     const $q = useQuasar()
 
-    const router = useRouter();
+    const router = useRouter()
     const accept = ref(false)
-    const store = useStore();    
-    const followeMe = ref(false);   
+    const store = useStore()    
+    const followeMe = ref(false) 
      
     const form = ref({
       email: 'admin@mail.com',
@@ -116,7 +116,7 @@ export default {
 
     const passEye1 = ref(true)
 
-    const loading = ref(false);
+    const loading = ref(false)
 
     return {
       accept,
@@ -135,7 +135,7 @@ export default {
               let token = resp.data.data.token
               store.commit('auth/setToken', token)
               token = localStorage.getItem('token')
-              window.location.href = '/';
+              window.location.href = '/'
             })
             loading.value = false
           } catch (err) {

@@ -27,9 +27,10 @@ export const orderersApi = {
             soc_wa: formData.soc_wa,
             soc_tg: formData.soc_tg,
             photo: formData.photo,
-            personal_info: formData.personal_info
+            personal_info: formData.personal_info,
+            second_name: formData.second_name,
           }
-        }
+        }  
       }).then(({ data }) => {
         return data
         // return data = data.data.map(el => {
