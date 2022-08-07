@@ -14,7 +14,7 @@
     <LoaderDate
       v-show="loading"
     />
-    
+
     <div class="row justify-between items-center head">
       <div class="text-h2">Проекты</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -60,7 +60,7 @@
       <!-- :sort-method="customSort" -->
       <NoDate 
         text="Список проектов пуст"
-        v-show="nodate"
+        v-show="!nodate"
       />
       <q-table
         flat
@@ -71,7 +71,7 @@
         class="my-table projects-table "
         :class="{'projects-table-cubes': tab === 'cubes', 'projects-table-stripes': tab === 'stripes'}"
         :pagination="pagination"
-        v-show="!nodate"
+        v-show="rows2 != ''"
       >
         <template v-slot:header-cell-status="props">
           <q-th :props="props" class="q-th__smaile">

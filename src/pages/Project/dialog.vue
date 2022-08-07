@@ -338,6 +338,7 @@ export default ({
       try {
         await projectsApi.createProject(formData.value)
         .then(resp => {
+          
           console.log(resp)
         })
       } catch (err) {

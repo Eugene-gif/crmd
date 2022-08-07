@@ -199,7 +199,7 @@ export default {
           await authApi.doRegister(form.value).then(resp => {
             const token = resp.data.data.token
             store.commit('auth/setToken', token)
-            // window.location.href = '/';
+            window.location.href = '/';
             console.log(resp)
           })
           loading.value = false
