@@ -6,7 +6,10 @@
     transition-hide="fade" 
     class="my-dialog projects-dialog"
   >
-    <Dialog @modalFalse="modalFalse" />
+    <Dialog
+      @modalFalse="modalFalse"
+      @updateData="start"
+    />
   </q-dialog>
   
   <q-page class="page-projects">
@@ -60,8 +63,9 @@
       <!-- :sort-method="customSort" -->
       <NoDate 
         text="Список проектов пуст"
-        v-show="!nodate"
+        v-show="nodate"
       />
+
       <q-table
         flat
         :rows="rows2"
@@ -155,8 +159,12 @@
               class="q-td-action"
             >
               <ActionBtn 
-                :propsEl="props.id"
+                :propsEl="props.row.id"
                 :offsetYX="[55, -258]"
+                :actionfunc="actionfunc"
+                @actionUpdate="onActionUpdate"
+                @actionCopy="onActionCopy"
+                @actionDel="onActionDel"
               />
             </q-td>
             <q-td
@@ -283,9 +291,6 @@ const columns = [
   { name: 'share', label: '', field: 'share', align: 'left' },
   { name: 'address', label: '', field: 'address', align: 'left' }
 ]
-const rows = ref([
-  
-])
 
 const rows2 = ref([])
 
@@ -305,6 +310,21 @@ export default {
       rowsPerPage: 0
     })
 
+    const actionfunc = ref([
+      {
+        title: 'Изменить',
+        emmit: 'actionUpdate'
+      },
+      {
+        title: 'Дублировать',
+        emmit: 'actionCopy'
+      },
+      {
+        title: 'Удалить',
+        emmit: 'actionDel'
+      },
+    ])
+
     const loading = ref(false)
     const nodate = ref(true)
 
@@ -318,11 +338,21 @@ export default {
         console.log(err)
       }
       loading.value = false
-      if (rows2.value === '') {
+      if (rows2.value == '') {
         nodate.value = true
       } else {
         nodate.value = false
       }
+    }
+
+    function onActionUpdate(id) {
+      console.log('onActionUpdate' + id)
+    }
+    function onActionCopy(id) {
+      console.log('onActionCopy' + id)
+    }
+    function onActionDel(id) {
+      console.log('onActionDel' + id)
     }
 
     onMounted(() => {
@@ -331,6 +361,7 @@ export default {
 
     return {
       rows2,
+      actionfunc,
       model: ref('Имя'),
       tab: ref('tiles'),
       options2: [
@@ -345,11 +376,14 @@ export default {
         'Готовность'
       ],
       columns,
-      rows,
       start,
       pagination,
       dialog,
       maximizedToggle: ref(true),
+
+      onActionUpdate,
+      onActionCopy,
+      onActionDel,
 
       loading,
       nodate,

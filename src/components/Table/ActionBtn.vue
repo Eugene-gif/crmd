@@ -16,21 +16,14 @@
       :style="{ top: offsetYX[0] + 'px', left: offsetYX[1] + 'px' }"
     >
       <q-list>
-        <q-item clickable>
+        <q-item
+          clickable
+          v-for="item in actionfunc"
+          :key="item"
+          @click="$emit(item.emmit, propsEl)"
+        >
           <q-item-section>
-            <q-item-label>Изменить</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable>
-          <q-item-section>
-            <q-item-label>Дублировать</q-item-label>
-          </q-item-section>
-        </q-item>
-
-        <q-item clickable>
-          <q-item-section>
-            <q-item-label>Удалить</q-item-label>
+            <q-item-label>{{item.title}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -45,7 +38,8 @@ export default ({
   name: 'ActionBtn',
   props: {
     propsEl: Number,
-    offsetYX: Array
+    offsetYX: Array,
+    actionfunc: Array
   },
   setup () {
     const dropdown = ref([])
@@ -53,11 +47,11 @@ export default ({
 
     function onClickOtside() {
       for (let item of document.querySelectorAll('.q-td__action__list')) {
-        item.classList.remove('visible');
+        item.classList.remove('visible')
       } 
     }
     onMounted(() => {
-      window.addEventListener('click', onClickOtside);
+      window.addEventListener('click', onClickOtside)
     })
 
     return {

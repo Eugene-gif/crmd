@@ -4,7 +4,6 @@
     <div class="dialog-section">
       <q-form
         @submit="onSubmit"
-        enctype="multipart/form-data"
       >
         <q-card-section class="row items-center justify-between head">
           <div class="title">Добавить проект</div>
@@ -28,20 +27,7 @@
           </div>
           <div class="form-col">
             <label class="lable-title">Тип</label>
-            <q-select
-              filled
-              v-model="select1"
-              :options="type"
-              stack-label
-              placeholder="Выбрать"
-              dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
-              class="my-select"
-              behavior="menu"
-              ref="selectDropbox"
-              @popup-hide="focusSelect"
-              popup-content-class="my-select-menu"
-              :label="select1 ? undefined : 'Выбрать'"
-            />
+            <SelectType @getData="getSelectType" />
           </div>
         </q-card-section>
 
@@ -265,30 +251,28 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import BtnDate from 'components/BtnDate'
 import DropBox from 'components/DropBox'
+import SelectType from 'components/projects/SelectType'
 import Emoji from 'components/Emoji'
 import { projectsApi } from 'src/api/projects';
 import { orderersApi } from 'src/api/orderers';
 import { useQuasar } from 'quasar'
     
 
-export default ({
+export default defineComponent({
   name: 'FinanceDialog',
   components: {
     BtnDate,
     DropBox,
-    Emoji
+    Emoji,
+    SelectType
   }, 
-  setup () {
+  setup (props, { emit }) {
     const $q = useQuasar()
     const loading = ref(false)
-    const select1 = ref({
-      label: 'Квартира',
-      value: 1
-    })
-
+    
     const addCustomer = ref(false)
     const selectDropbox = ref();
     
@@ -301,19 +285,19 @@ export default ({
       orderer: ''
     })
     const formOrderers = ref({
-      user_id: '',
-      first_name: '',
-      second_name: '',
-      last_name: '',
-      birth_date: '',
-      phone: '',
-      email: '',
-      soc_inst: '',
-      soc_wa: '',
-      soc_tg: '',
+      // user_id: '',
+      first_name: 'Вася',
+      second_name: 'отчество',
+      last_name: 'ивановов',
+      birth_date: '27-09-1998',
+      phone: '8999999999999',
+      email: 'email@gmil.com',
+      soc_inst: 'link',
+      soc_wa: 'link',
+      soc_tg: 'link',
       photo: '',
       personal_info: '',
-      second_name: ''
+      second_name: 'Вася ивановов'
     })
     
     // addCustomer
@@ -322,6 +306,7 @@ export default ({
       if (addCustomer.value === true) {
         if (formOrderers.value.birth_date != '') {
           createOrderer()
+          updateData()
         } else {
           $q.notify({
             color: 'red',
@@ -330,7 +315,13 @@ export default ({
         }
       } else {
         addProject()
+        updateData()
       }
+    }
+
+    function updateData() {
+      emit('updateData')
+      emit('modalFalse')
     }
 
     async function addProject() {
@@ -338,7 +329,6 @@ export default ({
       try {
         await projectsApi.createProject(formData.value)
         .then(resp => {
-          
           console.log(resp)
         })
       } catch (err) {
@@ -370,14 +360,18 @@ export default ({
     function onFileChange(file) {
       formOrderers.value.photo = file[0]
     }
+    function getSelectType(data) {
+      formData.value.project_type_id = data.value
+    }
 
     return {
       ongetOrderer,
       ongetEmojik,
       addProject,
+      updateData,
+      getSelectType,
       formData,
       formOrderers,
-      select1,
 
       val: ref(false),
       val1: ref(false),
@@ -386,25 +380,6 @@ export default ({
       val4: ref(false),
       val5: ref(false),
       addCustomer,
-
-      type: [
-        {
-          label: 'Квартира',
-          value: 1
-        },
-        {
-          label: 'Офис',
-          value: 2
-        },
-        {
-          label: 'Коттедж',
-          value: 3
-        },
-        {
-          label: 'Бар',
-          value: 4
-        }
-      ],
       
       selectDropbox,
 

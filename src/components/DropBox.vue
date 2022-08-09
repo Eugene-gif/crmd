@@ -11,6 +11,7 @@
     ref="selectDropbox"
     behavior="menu"
     @popup-hide="focusSelect"
+    @update:model-value="getforuser"
     popup-content-class="my-dopbox-menu"
     :label="select ? undefined : 'Введите имя или e-mail'"
   >
@@ -72,7 +73,7 @@
                     <q-item
                       class="link-whatsap"
                       link
-                      :href="`mailto:${scope.opt.whatsapp}`"
+                      :href="`${scope.opt.whatsapp}`"
                     >
                       <img src="~assets/whatsapp.svg" alt="">
                     </q-item>
@@ -92,7 +93,7 @@
                     </q-item>
                   </q-list>
                 </q-item-section>
-                <a :href="`tel:${scope.opt.whatsapp}`" class="foot__tel">{{scope.opt.tel}}</a>
+                <a :href="`tel:${scope.opt.tel}`" class="foot__tel">{{scope.opt.tel}}</a>
               </q-item-section>
             </q-item>
           </q-menu>
@@ -109,76 +110,32 @@
   </q-select>
 </template>
 <script>
-import { defineComponent, ref } from 'vue'
-
-const stringOptions = [
-  {
-    label: 'Антон Глуханько ',
-    value: 'Антон Глуханько ',
-    icon: '/icons/anton.jpg',
-    email: 'stroypro@mail.ru',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    tab: '',
-    user_id: 4
-  },
-  {
-    label: 'Довольно длинное название объекта, которое нуфывфывыф...',
-    value: 'СтройПро',
-    icon: '/icons/stroipro.jpg',
-    email: 'stroypro@mail.ru',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    tab: '',
-    user_id: 4
-  },
-  {
-    label: 'Антон Глуханько ',
-    value: 'Антон Глуханько ',
-    icon: '/icons/anton.jpg',
-    email: 'stroypro@mail.ru',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    tab: '',
-    user_id: 4
-  },
-  {
-    label: 'СтройПро',
-    value: 'СтройПро',
-    icon: '/icons/stroipro.jpg',
-    email: 'stroypro@mail.ru',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    tab: '',
-    user_id: 4
-  },
-]
+import { defineComponent, ref, onMounted } from 'vue'
+import { orderersApi } from 'src/api/orderers';
 
 export default defineComponent({
   name: 'DropBox',
 
   setup (props, { emit }) {
-    const options = ref(stringOptions)
+    const stringOptions = ref([
+      {
+        label: 'Антон Глуханько ',
+        value: 'Антон Глуханько ',
+        icon: '/icons/anton.jpg',
+        email: 'stroypro@mail.ru',
+        like: 25,
+        dislike: 2,
+        reviews: 12,
+        whatsapp: 79184550216,
+        tel: '+7 (918) 455-02-16',
+        telegram: '',
+        instagram: '',
+        tab: '',
+        user_id: 4
+      }
+    ])
+    const options = ref()
+    
     const selectDropbox = ref();
     const select = ref({
       label: 'Выбрать',
@@ -189,9 +146,25 @@ export default defineComponent({
       emit('getOrderer', select)
     }
 
+    async function getforuser() {
+      try {
+        await orderersApi.getAll()
+        .then(resp => {
+          stringOptions.value = resp
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    onMounted(() => {
+      getforuser()
+    })
+
     return {
       select,
       sendData,
+      getforuser,
 
       stringOptions,
       options,
@@ -200,14 +173,14 @@ export default defineComponent({
       filterFn (val, update) {
         if (val === '') {
           update(() => {
-            options.value = stringOptions
+            options.value = stringOptions.value
           })
           return
         }
 
         update(() => {
           const needle = val.toLowerCase()
-          options.value = stringOptions.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
+          options.value = stringOptions.value.filter(v => v.label.toLowerCase().indexOf(needle) > -1)
         })
       },
 

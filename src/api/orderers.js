@@ -1,6 +1,7 @@
 import httpClient from "./httpClient.js";
 
 const url = 'orderers'
+const photoUrl = 
 
 function getMyDate(time) {
   let respDate = new Date(time)
@@ -11,31 +12,60 @@ function getMyDate(time) {
 }
 
 export const orderersApi = {
-  createOrderers(formData) {
+
+  getAll() {
     try {
-      return httpClient.post(`${url}/create`, {
-        orderer: {
-          data: {
-            user_id: formData.user_id,
-            first_name: formData.first_name,
-            second_name: formData.second_name,
-            last_name: formData.last_name,
-            birth_date: formData.birth_date,
-            phone: formData.phone,
-            email: formData.email,
-            soc_inst: formData.soc_inst,
-            soc_wa: formData.soc_wa,
-            soc_tg: formData.soc_tg,
-            photo: formData.photo,
-            personal_info: formData.personal_info,
-            second_name: formData.second_name,
+      return httpClient({
+        method: "post",
+        url: `${url}/get`
+      }).then(response => {
+        return response = response.data.map(el => {
+          return {
+            label: `${el.first_name} ${el.last_name}`,
+            value: `${el.first_name} ${el.last_name}`,
+            icon: `https://crmd.crookedweb.site/${el.photo}`,
+            email: el.email,
+            like: 25,
+            dislike: 2,
+            reviews: 12,
+            whatsapp: el.soc_wa,
+            tel: el.phone,
+            telegram: `//${el.soc_tg}`,
+            instagram: `//${el.soc_inst}`,
+            tab: '',
+            user_id: el.id
           }
-        }  
-      }).then(({ data }) => {
-        return data
-        // return data = data.data.map(el => {
-        // })
-      });
+        })
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  createOrderers(data) {
+    const formData = new FormData()
+    formData.append("user_id", data.user_id)
+    formData.append("first_name", data.first_name)
+    formData.append("second_name", data.second_name)
+    formData.append("last_name", data.last_name)
+    formData.append("birth_date", data.birth_date)
+    formData.append("phone", data.phone)
+    formData.append("email", data.email)
+    formData.append("soc_inst", data.soc_inst)
+    formData.append("soc_wa", data.soc_wa)
+    formData.append("soc_tg", data.soc_tg)
+    formData.append("photo", data.photo)
+    formData.append("personal_info", data.personal_info)
+    formData.append("second_name", data.second_name)
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/create`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(response => {
+        return response
+      })
     } catch (err) {
       console.log(err)
     }
