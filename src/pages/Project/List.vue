@@ -345,14 +345,22 @@ export default {
       }
     }
 
-    function onActionUpdate(id) {
-      console.log('onActionUpdate' + id)
+    async function onActionUpdate(id) {
+      loading.value = true
+      try {
+        await projectsApi.getAll().then(resp => {
+          rows2.value = resp
+        })
+      } catch (err) {
+        console.log(err)
+      }
+      loading.value = false
     }
     function onActionCopy(id) {
-      console.log('onActionCopy' + id)
+      
     }
     function onActionDel(id) {
-      console.log('onActionDel' + id)
+      
     }
 
     onMounted(() => {
