@@ -273,6 +273,7 @@ import { ref, onMounted } from 'vue'
 import { projectsApi } from 'src/api/projects';
 import LoaderDate from 'src/components/LoaderDate.vue'
 import NoDate from 'src/components/NoDate.vue'
+import { useQuasar } from 'quasar'
 
 const columns = [
   { name: 'image', label: '', field: 'image', align: 'left' },
@@ -304,6 +305,7 @@ export default {
   },
   
   setup () {
+    const $q = useQuasar()
     const dialog = ref(false)
     const pagination = ref({
       sortBy: 'id',
@@ -345,22 +347,64 @@ export default {
       }
     }
 
+
     async function onActionUpdate(id) {
+      
+    }
+    async function onActionCopy(id) {
       loading.value = true
+      let element 
+      rows2.value.map((item) => {
+        if (item.id === id) {
+          return element = {
+            name: item.name,
+            adress: item.address,
+            square: item.square,
+            project_type_id: item.type,
+            orderer: 1,
+            emoji: item.iconName
+          }
+        }
+      })
       try {
-        await projectsApi.getAll().then(resp => {
-          rows2.value = resp
+        await projectsApi.createProject(element)
+        .then(resp => {
+          console.log(resp)
+          start()
+          $q.notify({
+            color: 'positive',
+            message: 'Проект скопирован'
+          })
         })
       } catch (err) {
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
         console.log(err)
       }
       loading.value = false
     }
-    function onActionCopy(id) {
-      
-    }
-    function onActionDel(id) {
-      
+    
+    async function onActionDel(id) {
+      loading.value = true
+      try {
+        await projectsApi.delProject(id).then(resp => {
+          console.log(resp)
+          start()
+          $q.notify({
+            color: 'positive',
+            message: 'Проект удален'
+          })
+        })
+      } catch (err) {
+        console.log(err)
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }
+      loading.value = false
     }
 
     onMounted(() => {

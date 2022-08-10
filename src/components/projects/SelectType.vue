@@ -9,7 +9,6 @@
     class="my-select"
     behavior="menu"
     ref="selectDropbox"
-    @popup-hide="focusSelect"
     @update:model-value="onGetData"
     popup-content-class="my-select-menu"
     :label="select1 ? undefined : 'Выбрать'"
@@ -55,14 +54,7 @@ export default defineComponent ({
     return {
       select1,
       type,
-      onGetData,
-
-      focusSelect() {
-        function func() {
-          selectDropbox.value.blur()
-        }
-        setTimeout(func, 100);
-      }
+      onGetData
     }
   },
 })

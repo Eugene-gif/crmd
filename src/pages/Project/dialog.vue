@@ -281,7 +281,7 @@ export default defineComponent({
       emoji: '',
       adress: '',
       square: '',
-      project_type_id: '',
+      project_type_id: 1,
       orderer: ''
     })
     const formOrderers = ref({
@@ -325,7 +325,6 @@ export default defineComponent({
     }
 
     async function addProject() {
-      formData.value.project_type_id = select1.value.value
       try {
         await projectsApi.createProject(formData.value)
         .then(resp => {
@@ -362,6 +361,7 @@ export default defineComponent({
     }
     function getSelectType(data) {
       formData.value.project_type_id = data.value
+      console.log(formData.value.project_type_id)
     }
 
     return {

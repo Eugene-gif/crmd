@@ -64,6 +64,7 @@ export const projectsApi = {
       console.log(err)
     }
   },
+
   createProject(formData) {
     try {
       return httpClient.post(`${url}/create`, {
@@ -79,9 +80,19 @@ export const projectsApi = {
         }
       }).then(({ data }) => {
         return data
-        // return data = data.data.map(el => {
-        // })
-      });
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  delProject(id) {
+    try {
+      return httpClient.post(`${url}/delete`, {
+        id: id 
+      }).then(({ data }) => {
+        return data
+      })
     } catch (err) {
       console.log(err)
     }
