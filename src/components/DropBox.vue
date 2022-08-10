@@ -14,6 +14,7 @@
     @update:model-value="getforuser"
     popup-content-class="my-dopbox-menu"
     :label="select ? undefined : 'Введите имя или e-mail'"
+    :disable="disableSelect"
   >
     <template v-slot:prepend>
       <q-icon size="18px" name="svguse:icons/allIcons.svg#field-search" @click.stop class="search-input" />
@@ -115,7 +116,9 @@ import { orderersApi } from 'src/api/orderers';
 
 export default defineComponent({
   name: 'DropBox',
-
+  props: {
+    disableSelect: Boolean
+  },
   setup (props, { emit }) {
     const stringOptions = ref([
       {

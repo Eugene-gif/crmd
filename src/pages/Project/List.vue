@@ -361,7 +361,7 @@ export default {
             adress: item.address,
             square: item.square,
             project_type_id: item.type,
-            orderer: 1,
+            orderer: item.orderer.id,
             emoji: item.iconName
           }
         }

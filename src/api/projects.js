@@ -29,6 +29,7 @@ export const projectsApi = {
             changed: getMyDate(el.created_at),
             created: getMyDate(el.updated_at),
             timing: 50,
+            orderer: el.orderer,
             payment: 80,
             readiness: 40,
             share: [

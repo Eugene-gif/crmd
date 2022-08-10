@@ -43,9 +43,8 @@ export const orderersApi = {
   },
 
   createOrderers(data) {
-    console.log(dataForm)
     const formData = new FormData()
-    formData.append("orderer[data][user_id]", data.user_id)
+    // formData.append("orderer[data][user_id]", data.user_id)
     formData.append("orderer[data][first_name]", data.first_name)
     formData.append("orderer[data][second_name]", data.second_name)
     formData.append("orderer[data][last_name]", data.last_name)

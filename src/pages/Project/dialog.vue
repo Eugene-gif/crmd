@@ -34,7 +34,7 @@
         <q-card-section class="form-section form-section-row-2">
           <div class="form-col">
             <label class="lable-title">Заказчик</label>
-            <DropBox @getOrderer="ongetOrderer" />
+            <DropBox @getOrderer="ongetOrderer" :disableSelect="addCustomer" />
           </div>
           <div class="form-col">
             <label class="lable-title" style="opacity: 0;">-</label>
@@ -292,11 +292,11 @@ export default defineComponent({
       birth_date: '27-09-1998',
       phone: '8999999999999',
       email: 'email@gmil.com',
-      soc_inst: 'link',
-      soc_wa: 'link',
-      soc_tg: 'link',
+      soc_inst: 'https://link',
+      soc_wa: 'https://link',
+      soc_tg: 'https://link',
       photo: '',
-      personal_info: '',
+      personal_info: ' ',
       second_name: 'Вася ивановов'
     })
     
@@ -306,7 +306,6 @@ export default defineComponent({
       if (addCustomer.value === true) {
         if (formOrderers.value.birth_date != '') {
           createOrderer()
-          updateData()
         } else {
           $q.notify({
             color: 'red',
@@ -315,7 +314,6 @@ export default defineComponent({
         }
       } else {
         addProject()
-        updateData()
       }
     }
 
@@ -328,10 +326,18 @@ export default defineComponent({
       try {
         await projectsApi.createProject(formData.value)
         .then(resp => {
-          console.log(resp)
+          updateData()
+          $q.notify({
+            color: 'positive',
+            message: 'Проект создан'
+          })
         })
       } catch (err) {
         console.log(err)
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
       }
     }
 
@@ -339,10 +345,20 @@ export default defineComponent({
       try {
         await orderersApi.createOrderers(formOrderers.value)
         .then(resp => {
-          console.log(resp)
+          formData.value.orderer = resp.data.id
+          addProject()
+          updateData()
+          $q.notify({
+            color: 'positive',
+            message: 'Заказчик создан'
+          })
         })
       } catch (err) {
         console.log(err)
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
       }
     }
 
