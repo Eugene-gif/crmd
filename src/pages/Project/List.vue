@@ -347,7 +347,6 @@ export default {
       }
     }
 
-
     async function onActionUpdate(id) {
       
     }
@@ -371,16 +370,20 @@ export default {
         .then(resp => {
           console.log(resp)
           start()
-          $q.notify({
-            color: 'positive',
-            message: 'Проект скопирован'
-          })
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              message: 'Проект скопирован'
+            })
+          }, 0)
         })
       } catch (err) {
-        $q.notify({
-          color: 'red',
-          message: 'Произошла ошибка, попробуйте позже'
-        })
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
         console.log(err)
       }
       loading.value = false
@@ -392,17 +395,21 @@ export default {
         await projectsApi.delProject(id).then(resp => {
           console.log(resp)
           start()
-          $q.notify({
-            color: 'positive',
-            message: 'Проект удален'
-          })
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              message: 'Проект удален'
+            })
+          }, 0)
         })
       } catch (err) {
         console.log(err)
-        $q.notify({
-          color: 'red',
-          message: 'Произошла ошибка, попробуйте позже'
-        })
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
       }
       loading.value = false
     }

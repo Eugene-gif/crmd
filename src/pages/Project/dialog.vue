@@ -170,19 +170,19 @@
               <q-checkbox
                 v-model="val"
                 checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat bg-grey-3"
+                class="my-checkbox flat"
                 color="black"
+                label="Планировочное решение"
               />
-              <label class="name-field">Планировочное решение</label>
             </q-item>
             <q-item>
               <q-checkbox
                 v-model="val1"
                 checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat bg-grey-3"
+                class="my-checkbox flat"
                 color="black"
+                label="Дизайн-концепция"
               />
-              <label class="name-field">Дизайн-концепция</label>
               <div class="circle-warning">
                 <q-icon name="svguse:icons/allIcons.svg#tooltip" color="white" size="7px"/>
                 <q-tooltip max-width="256px" anchor="top middle" self="bottom middle">
@@ -194,10 +194,10 @@
               <q-checkbox
                 v-model="val2"
                 checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat bg-grey-3"
+                class="my-checkbox flat"
                 color="black"
+                label="Визуальная подача"
               />
-              <label class="name-field">Визуальная подача</label>
               <div class="circle-warning">
                 <q-icon name="svguse:icons/allIcons.svg#tooltip" color="white" size="7px"/>
                 <q-tooltip max-width="256px" anchor="top middle" self="bottom middle">
@@ -209,28 +209,28 @@
               <q-checkbox
                 v-model="val3"
                 checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat bg-grey-3"
+                class="my-checkbox flat"
                 color="black"
+                label="Рабочая документация"
               />
-              <label class="name-field">Рабочая документация</label>
             </q-item>
             <q-item>
               <q-checkbox
                 v-model="val4"
                 checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat bg-grey-3"
+                class="my-checkbox flat"
                 color="black"
+                label="Авторское сопровождение"
               />
-              <label class="name-field">Авторское сопровождение</label>
             </q-item>
             <q-item>
               <q-checkbox
                 v-model="val5"
                 checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat bg-grey-3"
+                class="my-checkbox flat"
                 color="black"
+                label="Комплектация"
               />
-              <label class="name-field">Комплектация</label>
             </q-item>
           </q-list>
           <q-btn
@@ -307,10 +307,13 @@ export default defineComponent({
         if (formOrderers.value.birth_date != '') {
           createOrderer()
         } else {
-          $q.notify({
-            color: 'red',
-            message: 'Необходимо заполнить все данные'
-          })
+          setTimeout(() => {
+            $q.notify({
+              color: 'red',
+              timeout: 3000,
+              message: 'Необходимо заполнить все данные'
+            })
+          }, 0)
         }
       } else {
         addProject()
@@ -327,17 +330,23 @@ export default defineComponent({
         await projectsApi.createProject(formData.value)
         .then(resp => {
           updateData()
-          $q.notify({
-            color: 'positive',
-            message: 'Проект создан'
-          })
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              timeout: 3000,
+              message: 'Проект создан'
+            })
+          }, 0)
         })
       } catch (err) {
         console.log(err)
-        $q.notify({
-          color: 'red',
-          message: 'Произошла ошибка, попробуйте позже'
-        })
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            timeout: 3000,
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
       }
     }
 
@@ -348,17 +357,23 @@ export default defineComponent({
           formData.value.orderer = resp.data.id
           addProject()
           updateData()
-          $q.notify({
-            color: 'positive',
-            message: 'Заказчик создан'
-          })
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              timeout: 3000,
+              message: 'Заказчик создан'
+            })
+          }, 0)
         })
       } catch (err) {
         console.log(err)
-        $q.notify({
-          color: 'red',
-          message: 'Произошла ошибка, попробуйте позже'
-        })
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            timeout: 3000,
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
       }
     }
 

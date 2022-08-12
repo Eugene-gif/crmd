@@ -827,8 +827,11 @@
     height: 42px;
     align-items: flex-start;
     .q-btn {
-      border-radius: 0 8px 8px 0;
-      height: 38px;
+      border-radius: 0 7px 7px 0;
+      height: 40px;
+      position: relative;
+      top: -1px;
+      right: -1px;  
       .q-btn__content {
         align-items: center;
       }
@@ -858,21 +861,21 @@
       height: 23px;
       padding-right: 0;
       input {
-        height: 23px;
-        min-height: 23px;
+        height: 22px;
+        min-height: 22px;
         font-size: 14px;
         line-height: 14px;
       }
     }
     .q-field__append {
-      height: 23px;
+      height: 22px;
     }
     .q-field__after {
       height: 25px;
       align-items: flex-start;
       padding-left: 8px;
       .q-btn {
-        border-radius: 0 3px 3px 0 !important;
+        border-radius: 0 2px 2px 0 !important;
         height: 23px;
         min-height: 23px;
         max-width: 88px;

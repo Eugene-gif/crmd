@@ -263,7 +263,18 @@ $width-sm: 100%;
     line-height: 18px;
     color: $grey-5;
     margin-left: 8px;
-    color: rgba(0,0,0,0.3);
+  }
+  .q-field__control-container {
+    position: relative;
+    &:before {
+      content: 'Поиск';
+      display: block;
+      position: absolute;
+      top: 2.5px;
+      left: 7.5px;
+      z-index: -1;
+      font-size: 18px;
+    }
   }
   &:hover {
     .q-icon {
@@ -273,6 +284,23 @@ $width-sm: 100%;
   &.q-field--focused {
     .q-icon {
       color: black !important;
+    }
+  }
+  &.q-field--placholder {
+    .q-field__control-container {
+      &:before {
+        display: none;
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    .q-field__control-container {
+      &:before {
+        top: 5px;
+        left: 0px;
+        z-index: -1;
+        font-size: 14px;
+      }
     }
   }
 }

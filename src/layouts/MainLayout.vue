@@ -8,6 +8,7 @@
             class="header__input__search"
             v-model="text" 
             @update:model-value="filterFn(headerMenu)"
+            :class="{'q-field--placholder': text.length > 0}"
           >
             <template v-slot:prepend>
               <q-icon
@@ -103,7 +104,8 @@
           v-model="text" 
           @update:model-value="filterFn(headerMenu)"
           ref="headerInputSerach"
-          label="Поиск"
+          placholder="Поиск"
+          :class="{'q-field--placholder': text.length > 0}"
         >
           <template v-slot:prepend>
             <q-icon
@@ -118,6 +120,7 @@
           class="header__input__search mb-visible"
           ref="mobIconOpenSearch"
           placholder="Поиск"
+          :class="{'q-field--placholder': text.length > 0}"
         >
           <template v-slot:prepend>
             <q-icon
@@ -202,6 +205,7 @@
           class="header__input__search"
           v-model="text" 
           ref="InputSerachMobile"
+          :class="{'q-field--placholder': text.length > 0}"
         >
           <template v-slot:prepend>
             <q-icon

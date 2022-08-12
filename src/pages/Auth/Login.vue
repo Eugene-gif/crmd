@@ -141,10 +141,13 @@ export default {
           } catch (err) {
             console.log(err)
             loading.value = false
-             $q.notify({
-              color: 'red',
-              message: 'Произошла ошибка, повторите попытку позже'
-            })
+            setTimeout(() => {
+              $q.notify({
+                color: 'red',
+                timeout: 3000,
+                message: 'Произошла ошибка, повторите попытку позже'
+              })
+            }, 0)
           }
         }
       },

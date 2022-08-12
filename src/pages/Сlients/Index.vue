@@ -40,6 +40,7 @@
         <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
       </div>
     </div>
+
     <q-table
       flat
       :rows="sortRows"
@@ -47,10 +48,10 @@
       row-key="index"
       hide-pagination
       class="my-table clients-table"
-      :pagination="pagination"
+      v-model:pagination="pagination"
     >
       <template v-slot:header-cell-status="props">
-        <q-th :props="props" class="q-th__smaile">
+        <q-th :props="props" class="q-th__smaile" @click="updateSorted">
           <!-- Сортировать: -->
           <i
             class="notranslate material-icons q-icon q-table__sort-icon q-table__sort-icon--left"
@@ -63,7 +64,7 @@
         </q-th>
       </template>
       <template v-slot:header-cell="props">
-        <q-th :props="props">
+        <q-th :props="props" @click="updateSorted">
           <span class="q-th__title">
             {{ props.col.label }}
           </span>
@@ -85,7 +86,7 @@
         </q-th>
       </template>
       <template #top-row>
-        <div class="sort-number-container">
+        <div class="sort-number-container" v-show="!nullNumberSorted">
           <div
             class="sort-number" 
             ref="sortNumber"
@@ -106,7 +107,7 @@
       <template #body="props">
         <div
           class="number"
-          v-if="props.row.letter"
+          v-show="!nullNumberSorted && props.row.letter"
           :ref="el => numberTable[props.row.letter] = el"
         >
           {{props.row.letter}}
@@ -269,367 +270,381 @@
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref, onMounted } from 'vue'
  
-const columns = [
-  { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
-  { name: 'image', label: '', field: 'image', align: 'left', sortable: true },
-  { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
-  { name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
-  { name: 'projects', label: 'Проекты', field: 'projects', align: 'left', sortable: true },
-  { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
-]
-
-const rows = ref([
-  {
-    id: 11,
-    status: 2,
-    image: '/icons/anton.jpg',
-    name: 'Константин Лавров',
-    city: 'Краснодар',
-    tel: '+7 (918) 455-02-16',
-    whatsapp: '',
-    telegram: '',
-    instagram: '',
-    email: '',
-    show: false,
-    showProjects: false,
-    projects: [
-      {
-        icon: '',
-        name: 'Квартира на Мира',
-        progress: 20,
-        pay: 0,
-        city: 'Краснодар',
-        link: ''
-      },
-      {
-        icon: '🏰',
-        name: 'Название объекта, заданное пользователем',
-        progress: 50,
-        pay: 20,
-        city: 'Сочи',
-        link: ''
-      },
-      {
-        icon: '🏡',
-        name: 'Короткое название',
-        progress: 100,
-        pay: 100,
-        city: 'Санкт-Петербург',
-        link: ''
-      },
-    ]    
-  },
-  {
-    id: 1,
-    status: 2,
-    image: '/icons/anton.jpg',
-    name: 'Константин Константинопольский',
-    city: 'Краснодар',
-    tel: '+7 (918) 455-02-16',
-    whatsapp: '',
-    telegram: '',
-    instagram: '',
-    email: '',
-    show: false,
-    showProjects: false,
-    projects: [
-      {
-        icon: '',
-        name: 'Квартира на Мира',
-        progress: 20,
-        pay: 0,
-        city: 'Краснодар',
-        link: ''
-      },
-      {
-        icon: '🏰',
-        name: 'Название объекта, заданное пользователем',
-        progress: 50,
-        pay: 20,
-        city: 'Сочи',
-        link: ''
-      },
-      {
-        icon: '🏡',
-        name: 'Короткое название',
-        progress: 100,
-        pay: 100,
-        city: 'Санкт-Петербург',
-        link: ''
-      },
-    ]    
-  },
-  
-  {
-    id: 2,
-    status: 1,
-    image: '/icons/anton.jpg',
-    name: 'Антон Глуханько',
-    city: 'Краснодар',
-    tel: '+7 (918) 455-02-16',
-    whatsapp: '',
-    telegram: '',
-    instagram: '',
-    email: '',
-    show: false,
-    projects: [
-      {
-        icon: '🏰',
-        name: 'Квартира на Мира',
-        progress: 20,
-        pay: 0,
-        city: 'Краснодар',
-        link: ''
-      },
-    ]    
-  },
-  {
-    id: 22,
-    status: 1,
-    image: '/icons/anton.jpg',
-    name: 'Армен Бармен',
-    city: 'Краснодар',
-    tel: '+7 (918) 455-02-16',
-    whatsapp: '',
-    telegram: '',
-    instagram: '',
-    email: '',
-    show: false,
-    projects: [
-      {
-        icon: '🏰',
-        name: 'Квартира на Мира',
-        progress: 20,
-        pay: 0,
-        city: 'Краснодар',
-        link: ''
-      },
-    ]    
-  },
-  {
-    id: 3,
-    status: 1,
-    image: '/icons/anton.jpg',
-    name: 'Богдан Алиев',
-    city: 'Краснодар',
-    tel: '+7 (918) 455-02-16',
-    whatsapp: '',
-    telegram: '',
-    instagram: '',
-    email: '',
-    show: false,
-    projects: [
-      {
-        icon: '🏰',
-        name: 'Квартира на Мира',
-        progress: 20,
-        pay: 0,
-        city: 'Краснодар',
-        link: ''
-      },
-    ]    
-  },
-  {
-    id: 4,
-    status: 1,
-    image: '/icons/anton.jpg',
-    name: 'Богдан Алиев',
-    city: 'Краснодар',
-    tel: '+7 (918) 455-02-16',
-    whatsapp: '',
-    telegram: '',
-    instagram: '',
-    email: '',
-    show: false,
-    projects: [
-      {
-        icon: '🏰',
-        name: 'Квартира на Мира',
-        progress: 20,
-        pay: 0,
-        city: 'Краснодар',
-        link: ''
-      },
-    ]    
-  },
-])
-const sortRows = ref([])
-const checkArray = ref([
-  {
-    number: 'а',
-    active: false
-  },
-  {
-    number: 'б',
-    active: false
-  },
-  {
-    number: 'в',
-    active: false
-  },
-  {
-    number: 'г',
-    active: false
-  },
-  {
-    number: 'д',
-    active: false
-  },
-  {
-    number: 'е',
-    active: false
-  },
-  {
-    number: 'ж',
-    active: false
-  },
-  {
-    number: 'з',
-    active: false
-  },
-  {
-    number: 'и',
-    active: false
-  },
-  {
-    number: 'к',
-    active: false
-  },
-  {
-    number: 'л',
-    active: false
-  },
-  {
-    number: 'м',
-    active: false
-  },
-  {
-    number: 'н',
-    active: false
-  },
-  {
-    number: 'о',
-    active: false
-  },
-  {
-    number: 'п',
-    active: false
-  },
-  {
-    number: 'р',
-    active: false
-  },
-  {
-    number: 'с',
-    active: false
-  },
-  {
-    number: 'т',
-    active: false
-  },
-  {
-    number: 'у',
-    active: false
-  },
-  {
-    number: 'ф',
-    active: false
-  },
-  {
-    number: 'х',
-    active: false
-  },
-  {
-    number: 'ц',
-    active: false
-  },
-  {
-    number: 'ч',
-    active: false
-  },
-  {
-    number: 'ш',
-    active: false
-  },
-  {
-    number: 'щ',
-    active: false
-  },
-  {
-    number: 'ы',
-    active: false
-  },
-  {
-    number: 'э',
-    active: false
-  },
-  {
-    number: 'ю',
-    active: false
-  },
-  {
-    number: 'я',
-    active: false
-  }
-])
-const sort = ref([])
-const pagination = ref({
-  sortBy: '',
-  rowsPerPage: 0
-})
-const numberTable = ref([])
-const sortNumber = ref()
-const sortNumberOffset = ref()
-const sortNumberWidth = ref()
-
-function sortedTable() {
-  let arr = []
-  let index = 0
-  let oneLetter = ''
-  
-  rows.value.filter((item) => {
-    let letter = item.name.toLowerCase().substr(0, 1)
-    sort.value.push(letter)
-    if (checkArray.value.includes(letter)) {
-
-    }
-    checkArray.value.filter((el) => {    
-      if (el.number.toLowerCase().substr(0, 1) === letter) {
-        el.active = true
-      }
-    })
-    if (sort.value.includes(letter)) {
-      if (oneLetter != letter) {
-        oneLetter = letter
-        item.letter = oneLetter
-        item.index = index
-        index++
-      }
-      return arr.push(item)
-    }
-  })
-  sortRows.value = arr
-}
-function scrollMeTo(ref) {
-  window.scrollTo({
-    top: numberTable.value[ref].offsetTop,
-    behavior: 'smooth'
-  })
-}
-function sortNumberScroll() {
-  if (window.pageYOffset > sortNumberOffset.value + 300) {
-    sortNumber.value.classList.add('activate')
-  } else {
-    sortNumber.value.classList.remove('activate')
-  }
-}
-
 export default {
   name: 'PageСlients',
   components: {
     ActionBtn
   },
   setup () {
+    const columns = ref([
+      { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
+      { name: 'image', label: '', field: 'image', align: 'left', sortable: true },
+      { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
+      { name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
+      { name: 'projects', label: 'Проекты', field: 'projects', align: 'left', sortable: true },
+      { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
+    ])
+
+    const rows = ref([
+      {
+        id: 11,
+        status: 2,
+        image: '/icons/anton.jpg',
+        name: 'Константин Лавров',
+        city: 'Краснодар',
+        tel: '+7 (918) 455-02-16',
+        whatsapp: '',
+        telegram: '',
+        instagram: '',
+        email: '',
+        show: false,
+        showProjects: false,
+        projects: [
+          {
+            icon: '',
+            name: 'Квартира на Мира',
+            progress: 20,
+            pay: 0,
+            city: 'Краснодар',
+            link: ''
+          },
+          {
+            icon: '🏰',
+            name: 'Название объекта, заданное пользователем',
+            progress: 50,
+            pay: 20,
+            city: 'Сочи',
+            link: ''
+          },
+          {
+            icon: '🏡',
+            name: 'Короткое название',
+            progress: 100,
+            pay: 100,
+            city: 'Санкт-Петербург',
+            link: ''
+          },
+        ]    
+      },
+      {
+        id: 1,
+        status: 2,
+        image: '/icons/anton.jpg',
+        name: 'Константин Константинопольский',
+        city: 'Краснодар',
+        tel: '+7 (918) 455-02-16',
+        whatsapp: '',
+        telegram: '',
+        instagram: '',
+        email: '',
+        show: false,
+        showProjects: false,
+        projects: [
+          {
+            icon: '',
+            name: 'Квартира на Мира',
+            progress: 20,
+            pay: 0,
+            city: 'Краснодар',
+            link: ''
+          },
+          {
+            icon: '🏰',
+            name: 'Название объекта, заданное пользователем',
+            progress: 50,
+            pay: 20,
+            city: 'Сочи',
+            link: ''
+          },
+          {
+            icon: '🏡',
+            name: 'Короткое название',
+            progress: 100,
+            pay: 100,
+            city: 'Санкт-Петербург',
+            link: ''
+          },
+        ]    
+      },
+      
+      {
+        id: 2,
+        status: 1,
+        image: '/icons/anton.jpg',
+        name: 'Антон Глуханько',
+        city: 'Краснодар',
+        tel: '+7 (918) 455-02-16',
+        whatsapp: '',
+        telegram: '',
+        instagram: '',
+        email: '',
+        show: false,
+        projects: [
+          {
+            icon: '🏰',
+            name: 'Квартира на Мира',
+            progress: 20,
+            pay: 0,
+            city: 'Краснодар',
+            link: ''
+          },
+        ]    
+      },
+      {
+        id: 22,
+        status: 1,
+        image: '/icons/anton.jpg',
+        name: 'Армен Бармен',
+        city: 'Краснодар',
+        tel: '+7 (918) 455-02-16',
+        whatsapp: '',
+        telegram: '',
+        instagram: '',
+        email: '',
+        show: false,
+        projects: [
+          {
+            icon: '🏰',
+            name: 'Квартира на Мира',
+            progress: 20,
+            pay: 0,
+            city: 'Краснодар',
+            link: ''
+          },
+        ]    
+      },
+      {
+        id: 3,
+        status: 1,
+        image: '/icons/anton.jpg',
+        name: 'Богдан Алиев',
+        city: 'Краснодар',
+        tel: '+7 (918) 455-02-16',
+        whatsapp: '',
+        telegram: '',
+        instagram: '',
+        email: '',
+        show: false,
+        projects: [
+          {
+            icon: '🏰',
+            name: 'Квартира на Мира',
+            progress: 20,
+            pay: 0,
+            city: 'Краснодар',
+            link: ''
+          },
+        ]    
+      },
+      {
+        id: 4,
+        status: 1,
+        image: '/icons/anton.jpg',
+        name: 'Богдан Алиев',
+        city: 'Краснодар',
+        tel: '+7 (918) 455-02-16',
+        whatsapp: '',
+        telegram: '',
+        instagram: '',
+        email: '',
+        show: false,
+        projects: [
+          {
+            icon: '🏰',
+            name: 'Квартира на Мира',
+            progress: 20,
+            pay: 0,
+            city: 'Краснодар',
+            link: ''
+          },
+        ]    
+      },
+    ])
+    const sortRows = ref([])
+    const checkArray = ref([
+      {
+        number: 'а',
+        active: false
+      },
+      {
+        number: 'б',
+        active: false
+      },
+      {
+        number: 'в',
+        active: false
+      },
+      {
+        number: 'г',
+        active: false
+      },
+      {
+        number: 'д',
+        active: false
+      },
+      {
+        number: 'е',
+        active: false
+      },
+      {
+        number: 'ж',
+        active: false
+      },
+      {
+        number: 'з',
+        active: false
+      },
+      {
+        number: 'и',
+        active: false
+      },
+      {
+        number: 'к',
+        active: false
+      },
+      {
+        number: 'л',
+        active: false
+      },
+      {
+        number: 'м',
+        active: false
+      },
+      {
+        number: 'н',
+        active: false
+      },
+      {
+        number: 'о',
+        active: false
+      },
+      {
+        number: 'п',
+        active: false
+      },
+      {
+        number: 'р',
+        active: false
+      },
+      {
+        number: 'с',
+        active: false
+      },
+      {
+        number: 'т',
+        active: false
+      },
+      {
+        number: 'у',
+        active: false
+      },
+      {
+        number: 'ф',
+        active: false
+      },
+      {
+        number: 'х',
+        active: false
+      },
+      {
+        number: 'ц',
+        active: false
+      },
+      {
+        number: 'ч',
+        active: false
+      },
+      {
+        number: 'ш',
+        active: false
+      },
+      {
+        number: 'щ',
+        active: false
+      },
+      {
+        number: 'ы',
+        active: false
+      },
+      {
+        number: 'э',
+        active: false
+      },
+      {
+        number: 'ю',
+        active: false
+      },
+      {
+        number: 'я',
+        active: false
+      }
+    ])
+
+    const sort = ref([])
+    const pagination = ref({
+      sortBy: '',
+      rowsPerPage: 0,
+    })
+    const numberTable = ref([])
+    const sortNumber = ref()
+    const sortNumberOffset = ref()
+    const sortNumberWidth = ref()
+    const nullNumberSorted = ref(false)
+
+    const options2 = ref(['Имя', 'Город', 'Проекты'])
+
+    function sortedTable() {
+      let arr = []
+      let index = 0
+      let oneLetter = ''
+      
+      rows.value.filter((item) => {
+        let letter = item.name.toLowerCase().substr(0, 1)
+        sort.value.push(letter)
+        if (checkArray.value.includes(letter)) {
+
+        }
+        checkArray.value.filter((el) => {    
+          if (el.number.toLowerCase().substr(0, 1) === letter) {
+            el.active = true
+          }
+        })
+        if (sort.value.includes(letter)) {
+          if (oneLetter != letter) {
+            oneLetter = letter
+            item.letter = oneLetter
+            item.index = index
+            index++
+          }
+          return arr.push(item)
+        }
+      })
+      sortRows.value = arr
+    }
+    function updateSorted() {
+      const variable = pagination.value.sortBy
+      console.log(variable)
+      if (variable === 'name' || variable === null) {
+        nullNumberSorted.value = false
+      } else {
+        nullNumberSorted.value = true
+      }
+      console.log(nullNumberSorted.value)
+    }
+    function scrollMeTo(ref) {
+      window.scrollTo({
+        top: numberTable.value[ref].offsetTop,
+        behavior: 'smooth'
+      })
+    }
+    function sortNumberScroll() {
+      if (window.pageYOffset > sortNumberOffset.value + 300) {
+        sortNumber.value.classList.add('activate')
+      } else {
+        sortNumber.value.classList.remove('activate')
+      }
+    }
+
     onMounted(() => {
       sortedTable()
       window.addEventListener('scroll', sortNumberScroll)
@@ -639,6 +654,7 @@ export default {
       }     
     })
     return {
+      options2,
       columns,
       rows,
       sortRows,
@@ -649,8 +665,10 @@ export default {
       sortNumber,
       sortNumberOffset,
       sortNumberWidth,
+      nullNumberSorted,
       sortedTable,
-      scrollMeTo
+      scrollMeTo,
+      updateSorted
     }
   }
 }
