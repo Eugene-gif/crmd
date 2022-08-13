@@ -40,22 +40,12 @@
           <div class="block">Добавить <span class="lg-visible">проект</span></div>
         </q-btn>
       </div>
-      <div class="sorted">
-        <div class="sorted-section mb-visible">
-          <div class="title">Сортировка: </div>
-          <q-select
-            borderless
-            v-model="model"
-            :options="options2"
-            behavior="menu"
-            popup-content-class="select-menu-mobile"
-          />
-        </div>
-        <div class="sorted-btns mb-visible">
-          <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
-          <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
-        </div>
-      </div>
+
+      <SortedMobile
+        :columns="columns"
+        :pagination="pagination"
+        @updateRows="onUpdateRows"
+      />
     </div>
 
 
@@ -74,7 +64,7 @@
         hide-pagination
         class="my-table projects-table "
         :class="{'projects-table-cubes': tab === 'cubes', 'projects-table-stripes': tab === 'stripes'}"
-        :pagination="pagination"
+        v-model:pagination="pagination"
         v-show="rows2 != ''"
       >
         <template v-slot:header-cell-status="props">
@@ -269,6 +259,7 @@
 <script>
 import Dialog from 'pages/Project/dialog.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
+import SortedMobile from 'components/Table/SortedMobile.vue'
 import { ref, onMounted } from 'vue'
 import { projectsApi } from 'src/api/projects';
 import LoaderDate from 'src/components/LoaderDate.vue'
@@ -301,7 +292,8 @@ export default {
     Dialog,
     ActionBtn,
     LoaderDate,
-    NoDate
+    NoDate,
+    SortedMobile
   },
   
   setup () {
@@ -309,7 +301,8 @@ export default {
     const dialog = ref(false)
     const pagination = ref({
       sortBy: 'id',
-      rowsPerPage: 0
+      rowsPerPage: 0,
+      descending: false
     })
 
     const actionfunc = ref([
@@ -345,6 +338,11 @@ export default {
       } else {
         nodate.value = false
       }
+    }
+
+    async function onUpdateRows(name, descending) {
+      pagination.value.sortBy = name
+      pagination.value.descending = descending
     }
 
     async function onActionUpdate(id) {
@@ -388,7 +386,6 @@ export default {
       }
       loading.value = false
     }
-    
     async function onActionDel(id) {
       loading.value = true
       try {
@@ -449,7 +446,8 @@ export default {
 
       modalFalse() {
         dialog.value = false
-      }
+      },
+      onUpdateRows
     }
   }
 }

@@ -188,14 +188,20 @@
         height: 30px;
         border-radius: 100%;
         background: #F0F0F0;
+        svg {
+          opacity: 0.3;
+        }
         &:last-child {
           margin-left: 6px;
+        }
+        &.active {
           svg {
-            opacity: 0.3;
+            opacity: 1;
           }
         }
       }
     }
+
     .q-btn {
       padding: 9.5px;
       .q-icon {

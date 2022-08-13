@@ -24,7 +24,8 @@
         </q-btn>
       </div>
     </div> 
-     <div class="sorted">
+
+    <div class="sorted">
       <div class="sorted-section mb-visible">
         <div class="title">Сортировка: </div>
         <q-select
@@ -584,6 +585,7 @@ export default {
     const pagination = ref({
       sortBy: '',
       rowsPerPage: 0,
+      descending: false
     })
     const numberTable = ref([])
     const sortNumber = ref()
@@ -623,13 +625,11 @@ export default {
     }
     function updateSorted() {
       const variable = pagination.value.sortBy
-      console.log(variable)
       if (variable === 'name' || variable === null) {
         nullNumberSorted.value = false
       } else {
         nullNumberSorted.value = true
       }
-      console.log(nullNumberSorted.value)
     }
     function scrollMeTo(ref) {
       window.scrollTo({
