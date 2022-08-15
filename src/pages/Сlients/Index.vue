@@ -1,5 +1,9 @@
 <template>  
   <q-page class="page-clients">
+    <LoaderDate
+      v-show="loading"
+    />
+
     <div class="row justify-between items-center">
       <div class="text-h2">Заказчики</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -25,23 +29,16 @@
       </div>
     </div> 
 
-    <div class="sorted">
-      <div class="sorted-section mb-visible">
-        <div class="title">Сортировка: </div>
-        <q-select
-          borderless
-          v-model="model"
-          :options="options2"
-          behavior="menu"
-          popup-content-class="select-menu-mobile"
-        />
-      </div>
-      <div class="sorted-btns mb-visible" style="margin-right: 0;">
-        <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
-        <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
-      </div>
-    </div>
+    <SortedMobile
+      :columns="columns"
+      :pagination="pagination"
+      @updateRows="onUpdateRows"
+    />
 
+    <NoDate 
+      text="Список проектов пуст"
+      v-show="nodate"
+    />
     <q-table
       flat
       :rows="sortRows"
@@ -267,16 +264,25 @@
 </template>
 
 <script>
-
-import ActionBtn from 'components/Table/ActionBtn.vue'
 import { ref, onMounted } from 'vue'
+import ActionBtn from 'components/Table/ActionBtn.vue'
+import LoaderDate from 'src/components/LoaderDate.vue'
+import NoDate from 'src/components/NoDate.vue'
+import SortedMobile from 'components/Table/SortedMobile.vue'
+import { orderersApi } from 'src/api/orderers'
  
 export default {
   name: 'PageСlients',
   components: {
-    ActionBtn
+    ActionBtn,
+    LoaderDate,
+    NoDate,
+    SortedMobile
   },
   setup () {
+    const loading = ref(false)
+    const nodate = ref(true)
+
     const columns = ref([
       { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
       { name: 'image', label: '', field: 'image', align: 'left', sortable: true },
@@ -287,179 +293,46 @@ export default {
     ])
 
     const rows = ref([
-      {
-        id: 11,
-        status: 2,
-        image: '/icons/anton.jpg',
-        name: 'Константин Лавров',
-        city: 'Краснодар',
-        tel: '+7 (918) 455-02-16',
-        whatsapp: '',
-        telegram: '',
-        instagram: '',
-        email: '',
-        show: false,
-        showProjects: false,
-        projects: [
-          {
-            icon: '',
-            name: 'Квартира на Мира',
-            progress: 20,
-            pay: 0,
-            city: 'Краснодар',
-            link: ''
-          },
-          {
-            icon: '🏰',
-            name: 'Название объекта, заданное пользователем',
-            progress: 50,
-            pay: 20,
-            city: 'Сочи',
-            link: ''
-          },
-          {
-            icon: '🏡',
-            name: 'Короткое название',
-            progress: 100,
-            pay: 100,
-            city: 'Санкт-Петербург',
-            link: ''
-          },
-        ]    
-      },
-      {
-        id: 1,
-        status: 2,
-        image: '/icons/anton.jpg',
-        name: 'Константин Константинопольский',
-        city: 'Краснодар',
-        tel: '+7 (918) 455-02-16',
-        whatsapp: '',
-        telegram: '',
-        instagram: '',
-        email: '',
-        show: false,
-        showProjects: false,
-        projects: [
-          {
-            icon: '',
-            name: 'Квартира на Мира',
-            progress: 20,
-            pay: 0,
-            city: 'Краснодар',
-            link: ''
-          },
-          {
-            icon: '🏰',
-            name: 'Название объекта, заданное пользователем',
-            progress: 50,
-            pay: 20,
-            city: 'Сочи',
-            link: ''
-          },
-          {
-            icon: '🏡',
-            name: 'Короткое название',
-            progress: 100,
-            pay: 100,
-            city: 'Санкт-Петербург',
-            link: ''
-          },
-        ]    
-      },
-      
-      {
-        id: 2,
-        status: 1,
-        image: '/icons/anton.jpg',
-        name: 'Антон Глуханько',
-        city: 'Краснодар',
-        tel: '+7 (918) 455-02-16',
-        whatsapp: '',
-        telegram: '',
-        instagram: '',
-        email: '',
-        show: false,
-        projects: [
-          {
-            icon: '🏰',
-            name: 'Квартира на Мира',
-            progress: 20,
-            pay: 0,
-            city: 'Краснодар',
-            link: ''
-          },
-        ]    
-      },
-      {
-        id: 22,
-        status: 1,
-        image: '/icons/anton.jpg',
-        name: 'Армен Бармен',
-        city: 'Краснодар',
-        tel: '+7 (918) 455-02-16',
-        whatsapp: '',
-        telegram: '',
-        instagram: '',
-        email: '',
-        show: false,
-        projects: [
-          {
-            icon: '🏰',
-            name: 'Квартира на Мира',
-            progress: 20,
-            pay: 0,
-            city: 'Краснодар',
-            link: ''
-          },
-        ]    
-      },
-      {
-        id: 3,
-        status: 1,
-        image: '/icons/anton.jpg',
-        name: 'Богдан Алиев',
-        city: 'Краснодар',
-        tel: '+7 (918) 455-02-16',
-        whatsapp: '',
-        telegram: '',
-        instagram: '',
-        email: '',
-        show: false,
-        projects: [
-          {
-            icon: '🏰',
-            name: 'Квартира на Мира',
-            progress: 20,
-            pay: 0,
-            city: 'Краснодар',
-            link: ''
-          },
-        ]    
-      },
-      {
-        id: 4,
-        status: 1,
-        image: '/icons/anton.jpg',
-        name: 'Богдан Алиев',
-        city: 'Краснодар',
-        tel: '+7 (918) 455-02-16',
-        whatsapp: '',
-        telegram: '',
-        instagram: '',
-        email: '',
-        show: false,
-        projects: [
-          {
-            icon: '🏰',
-            name: 'Квартира на Мира',
-            progress: 20,
-            pay: 0,
-            city: 'Краснодар',
-            link: ''
-          },
-        ]    
-      },
+      // {
+      //   id: 11,
+      //   status: 2,
+      //   image: '/icons/anton.jpg',
+      //   name: 'Константин Лавров',
+      //   city: 'Краснодар',
+      //   tel: '+7 (918) 455-02-16',
+      //   whatsapp: '',
+      //   telegram: '',
+      //   instagram: '',
+      //   email: '',
+      //   show: false,
+      //   showProjects: false,
+      //   projects: [
+      //     {
+      //       icon: '',
+      //       name: 'Квартира на Мира',
+      //       progress: 20,
+      //       pay: 0,
+      //       city: 'Краснодар',
+      //       link: ''
+      //     },
+      //     {
+      //       icon: '🏰',
+      //       name: 'Название объекта, заданное пользователем',
+      //       progress: 50,
+      //       pay: 20,
+      //       city: 'Сочи',
+      //       link: ''
+      //     },
+      //     {
+      //       icon: '🏡',
+      //       name: 'Короткое название',
+      //       progress: 100,
+      //       pay: 100,
+      //       city: 'Санкт-Петербург',
+      //       link: ''
+      //     },
+      //   ]    
+      // },
     ])
     const sortRows = ref([])
     const checkArray = ref([
@@ -595,6 +468,25 @@ export default {
 
     const options2 = ref(['Имя', 'Город', 'Проекты'])
 
+    async function getAll() {
+      loading.value = true
+      try {
+        await orderersApi.getClients()
+        .then(resp => {
+          rows.value = resp
+          sortedTable()
+        })
+      } catch (err) {
+        console.log(err)
+      }
+      loading.value = false
+      if (rows.value == '') {
+        nodate.value = true
+      } else {
+        nodate.value = false
+      }
+    }
+
     function sortedTable() {
       let arr = []
       let index = 0
@@ -645,15 +537,24 @@ export default {
       }
     }
 
+    async function onUpdateRows(name, descending) {
+      pagination.value.sortBy = name
+      pagination.value.descending = descending
+    }
+
     onMounted(() => {
-      sortedTable()
+      getAll()
       window.addEventListener('scroll', sortNumberScroll)
       sortNumberOffset.value = sortNumber.value.offsetTop 
       if (window.innerWidth > 772) {
-        sortNumberWidth.value = sortNumber.value.offsetWidth
+        console.log(sortNumber.value.offsetWidth)
+        // sortNumberWidth.value = sortNumber.value.offsetWidth
       }     
     })
     return {
+      loading,
+      nodate,
+
       options2,
       columns,
       rows,
@@ -668,7 +569,9 @@ export default {
       nullNumberSorted,
       sortedTable,
       scrollMeTo,
-      updateSorted
+      updateSorted,
+      getAll,
+      onUpdateRows
     }
   }
 }

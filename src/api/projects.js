@@ -66,6 +66,22 @@ export const projectsApi = {
     }
   },
 
+  getTypes() {
+    try {
+      return httpClient.post(`${url}/types/get`, {})
+      .then(({ data }) => {
+        return data = data.data.map(el => {
+          return {
+            label: el.name,
+            value: el.id
+          }
+        })
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
   createProject(formData) {
     try {
       return httpClient.post(`${url}/create`, {

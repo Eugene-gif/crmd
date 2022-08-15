@@ -42,6 +42,51 @@ export const orderersApi = {
     }
   },
 
+  getClients() {
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/get`
+      }).then(response => {
+        return response = response.data.map(el => {
+          return {
+            id: el.id,
+            status: 1,
+            image: `/${el.photo}`,
+            name: `${el.first_name} ${el.last_name}`,
+            city: 'города нет в апи',
+            tel: el.phone,
+            whatsapp: el.soc_wa,
+            telegram: el.soc_tg,
+            instagram: el.soc_inst,
+            email: el.email,
+            show: false,
+            projects: [
+              {
+                icon: '🏰',
+                name: 'Квартира на Мира',
+                progress: 20,
+                pay: 0,
+                city: 'Краснодар',
+                link: ''
+              },
+              {
+                icon: '🏰',
+                name: 'Название объекта, заданное пользователем',
+                progress: 50,
+                pay: 20,
+                city: 'Сочи',
+                link: ''
+              }
+            ]    
+          }
+        })
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   createOrderers(data) {
     const formData = new FormData()
     // formData.append("orderer[data][user_id]", data.user_id)

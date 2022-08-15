@@ -136,8 +136,9 @@
         </q-btn>
         <Notifications />
         <q-btn flat class="header__btn__avatar my-effect h-img lg-visible"> 
-          <img src="~assets/anton.jpg">
+          <img :src="`${userUrl}${userInfo.image}`">
         </q-btn>
+
         <q-icon
           color="black"
           class="q-ml-md lg-visible"
@@ -181,7 +182,7 @@
       </q-list>
       <q-item class="q-item__avatar">
         <q-item-section>
-          <img src="~assets/anton.jpg">
+          <img :src="`${userUrl}${userInfo.image}`">
           <q-item-label>Антон Глуханько </q-item-label>
           <q-icon size="14px" name="svguse:icons/allIcons.svg#exit" @click="logout" />
         </q-item-section>
@@ -232,6 +233,7 @@
           @click="showingMob = false"
         />
       </q-card>
+      
       <q-list class="gorisont-nav mb-visible">
         <q-item
           v-for="link in essentialLinks"
@@ -318,6 +320,9 @@ export default ({
   },
 
   setup () {
+    const userInfo = ref({})
+    const userUrl = ref('https://crmd.crookedweb.site/')
+
     const leftDrawerOpen = ref(false)
     const text = ref('')
     const showing = ref(false)
@@ -403,6 +408,7 @@ export default ({
     onMounted(() => {
       window.addEventListener('click', dropdown)
       window.addEventListener('click', dropdownMob)
+      getUser()
     })
     
     function dropdown(e){
@@ -427,8 +433,17 @@ export default ({
       store.dispatch('auth/singOut')
       router.push({ path: '/login' })
     } 
+
+    function getUser() {
+      let user = localStorage.getItem('userInfo')
+      userInfo.value = JSON.parse(user)
+    }
     
     return {
+      userInfo, 
+      userUrl,
+      getUser,
+
       showing,
       showingMob,
       essentialLinks: linksList,

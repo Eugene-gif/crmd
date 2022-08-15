@@ -112,7 +112,7 @@
 </template>
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { orderersApi } from 'src/api/orderers';
+import { orderersApi } from 'src/api/orderers'
 
 export default defineComponent({
   name: 'DropBox',

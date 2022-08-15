@@ -37,6 +37,7 @@ $width-sm: 100%;
         padding: 0;
         img {
           max-width: 40px;
+          min-height: 40px;
           border-radius: 100%;
           image-rendering: -webkit-optimize-contrast;
         }

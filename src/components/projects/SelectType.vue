@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
+import { projectsApi } from 'src/api/projects';
 
 export default defineComponent ({
   setup(props, { emit }) {
@@ -24,37 +25,33 @@ export default defineComponent ({
       label: 'Квартира',
       value: 1
     })
-    const type = ref([
-      {
-        label: 'Квартира',
-        value: 1
-      },
-      {
-        label: "Дом",
-        value: 2
-      },
-      {
-        label: "Офис",
-        value: 3
-      },
-      {
-        label: "Коммерция",
-        value: 4
-      },
-      {
-        label: "Прочее",
-        value: 5
-      }
-    ])
+    const type = ref([])
 
     function onGetData() {
       emit('getData', select1.value)
     }
 
+    async function getType() {
+      try {
+        await projectsApi.getTypes()
+        .then(resp => {
+          type.value = resp
+          select1.value = resp[0]
+        })
+      } catch (err) {
+        console.log(err)
+      }      
+    }
+
+    onMounted(() => {
+      getType()
+    })
+
     return {
       select1,
       type,
-      onGetData
+      onGetData,
+      getType
     }
   },
 })

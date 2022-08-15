@@ -135,6 +135,8 @@ export default {
               let token = resp.data.data.token
               store.commit('auth/setToken', token)
               token = localStorage.getItem('token')
+              let userInfo = JSON.stringify(resp.data.data.user)
+              localStorage.setItem('userInfo', userInfo)
               window.location.href = '/'
             })
             loading.value = false
