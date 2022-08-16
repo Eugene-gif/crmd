@@ -459,7 +459,7 @@
       font-size: 18px;
       line-height: 18px;
       color: $grey-5;
-      display: blo;
+      display: block;
     }
     .section-btn {
       margin-top: 38px;
@@ -490,6 +490,72 @@
   .page-pass {
     .form-auth {
       margin-top: 29px;
+    }
+  }
+  .page-loading,
+  .page-role {
+    .form-text {
+      font-size: 18px;
+      line-height: 24px;
+      color: #444444;
+      margin-top: 19px;
+      margin-bottom: 40px;
+    }
+    .reset {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 18px;
+      color: $grey-5;
+      display: block;
+      padding-bottom: 23px;
+      padding-top: 27px;
+    }
+    .email {
+      width: 100%;
+      padding: 21px 0;
+      font-weight: 500;
+      font-size: 20px;
+      line-height: 20px;
+      text-align: center;
+      color: #444444;
+      border: 1px solid #E5E5E5;
+      border-radius: 10px;
+    }
+    @media (max-width: 772px) {
+      .form-text {
+        margin-top: 15px;
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+      .reset {
+        font-size: 16px;
+        line-height: 16px;
+        padding-top: 0;
+        padding-bottom: 19px;
+        text-align: center;
+      }
+      .email {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 10px 5px;
+      }
+    }
+  }
+  .page-role {
+    .form-section {
+      padding-bottom: 61px;
+      .form-text {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      .reset {
+        padding-bottom: 0;
+        padding-top: 36px;
+      }
+      .section-btn {
+        margin-top: 38px;
+      }
     }
   }
 }

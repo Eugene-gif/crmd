@@ -16,6 +16,14 @@ const routes = [
         component: () => import('pages/Auth/Register.vue')
       },
       {
+        path: '/loading',
+        component: () => import('pages/Auth/Loading.vue')
+      },
+      {
+        path: '/role',
+        component: () => import('pages/Auth/Role.vue')
+      },
+      {
         path: '/reset',
         component: () => import('pages/Auth/Reset.vue')
       },

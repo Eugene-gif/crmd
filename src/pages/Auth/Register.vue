@@ -201,6 +201,7 @@ export default {
             store.commit('auth/setToken', token)
             let userInfo = JSON.stringify(resp.data.data.user)
             localStorage.setItem('userInfo', userInfo)
+            
             window.location.href = '/';
           })
           loading.value = false

@@ -420,17 +420,6 @@ export default {
       actionfunc,
       model: ref('Имя'),
       tab: ref('tiles'),
-      options2: [
-        'Имя',
-        'Тип',
-        'Площадь',
-        'Заказчик',
-        'Изменен',
-        'Создан',
-        'Сроки',
-        'Оплата',
-        'Готовность'
-      ],
       columns,
       start,
       pagination,
