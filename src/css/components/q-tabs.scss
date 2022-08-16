@@ -266,5 +266,45 @@
         }
       }
     }
+    @media (max-width: 772px) {
+      .q-tab {
+        border-radius: 6px;
+        flex: 0 0 100%;
+        max-width: 100%;
+        opacity: 1;
+        margin-top: 10px;
+        &:first-child {
+          margin-right: 0;
+        }
+        &:last-child {
+          margin-left: 0;
+        }
+        .q-tab__content {
+          padding: 0;
+          align-self: start;
+          .title {
+            font-size: 16px;
+            min-height: 36px;
+            padding-top: 0;
+            margin-top: 13px;
+            padding-bottom: 0;
+          }
+          .text {
+            font-size: 14px;
+            line-height: 18px;
+            padding-top: 15px;
+          }
+        }
+        
+        &[aria-selected="true"] {
+          border-color: $primary;
+            .q-tab__content {
+            .title {
+              border-bottom: 1px solid $primary;
+            }
+          }
+        }
+      }
+    }
   }
 }
