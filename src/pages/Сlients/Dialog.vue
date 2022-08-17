@@ -123,6 +123,14 @@
               />
             </div>
           </q-card-section>
+          <q-btn
+            unelevated
+            no-caps
+            padding="20px 10px"
+            class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
+            label="Добавить заказчика"
+            type="submit"
+          />
         </q-card-actions>
 
       </q-form>
