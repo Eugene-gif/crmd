@@ -1,4 +1,16 @@
 <template>  
+  <q-dialog
+    v-model="dialog"
+    :maximized="maximizedToggle"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog projects-dialog clients-dialog"
+  >
+    <Dialog
+      @modalFalse="modalFalse"
+      @updateData="start"
+    />
+  </q-dialog>
   <q-page class="page-clients">
     <LoaderDate
       v-show="loading"
@@ -20,6 +32,7 @@
           unelevated
           no-caps
           class="bg-positive text-white my-btn my-effect h-dark"
+          @click="dialog = true"
         >
           <span class="block">
             <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" class="mb-visible" style="vertical-align: initial;" />
@@ -269,6 +282,7 @@ import ActionBtn from 'components/Table/ActionBtn.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
 import NoDate from 'src/components/NoDate.vue'
 import SortedMobile from 'components/Table/SortedMobile.vue'
+import Dialog from 'pages/Сlients/Dialog.vue'
 import { orderersApi } from 'src/api/orderers'
  
 export default {
@@ -277,11 +291,13 @@ export default {
     ActionBtn,
     LoaderDate,
     NoDate,
-    SortedMobile
+    SortedMobile,
+    Dialog
   },
   setup () {
     const loading = ref(false)
     const nodate = ref(true)
+    const dialog = ref(false)
 
     const columns = ref([
       { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
@@ -292,48 +308,7 @@ export default {
       { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
     ])
 
-    const rows = ref([
-      // {
-      //   id: 11,
-      //   status: 2,
-      //   image: '/icons/anton.jpg',
-      //   name: 'Константин Лавров',
-      //   city: 'Краснодар',
-      //   tel: '+7 (918) 455-02-16',
-      //   whatsapp: '',
-      //   telegram: '',
-      //   instagram: '',
-      //   email: '',
-      //   show: false,
-      //   showProjects: false,
-      //   projects: [
-      //     {
-      //       icon: '',
-      //       name: 'Квартира на Мира',
-      //       progress: 20,
-      //       pay: 0,
-      //       city: 'Краснодар',
-      //       link: ''
-      //     },
-      //     {
-      //       icon: '🏰',
-      //       name: 'Название объекта, заданное пользователем',
-      //       progress: 50,
-      //       pay: 20,
-      //       city: 'Сочи',
-      //       link: ''
-      //     },
-      //     {
-      //       icon: '🏡',
-      //       name: 'Короткое название',
-      //       progress: 100,
-      //       pay: 100,
-      //       city: 'Санкт-Петербург',
-      //       link: ''
-      //     },
-      //   ]    
-      // },
-    ])
+    const rows = ref([])
     const sortRows = ref([])
     const checkArray = ref([
       {
@@ -547,8 +522,7 @@ export default {
       window.addEventListener('scroll', sortNumberScroll)
       sortNumberOffset.value = sortNumber.value.offsetTop 
       if (window.innerWidth > 772) {
-        console.log(sortNumber.value.offsetWidth)
-        // sortNumberWidth.value = sortNumber.value.offsetWidth
+        sortNumberWidth.value = sortNumber.value.offsetWidth
       }     
     })
     return {
@@ -571,7 +545,11 @@ export default {
       scrollMeTo,
       updateSorted,
       getAll,
-      onUpdateRows
+      onUpdateRows,
+      dialog,
+      modalFalse() {
+        dialog.value = false
+      },
     }
   }
 }

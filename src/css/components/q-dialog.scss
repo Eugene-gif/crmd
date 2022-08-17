@@ -709,6 +709,20 @@
   }
 }
 
+.clients-dialog {
+  .dialog-section {
+    .q-card-actions-add-customer {
+      // padding-top: 0;
+      // @media (max-width: 772px) {
+      //   padding-top: 0;
+      // }
+    }
+  }
+  .q-card__actions {
+    border-top: none;
+  }
+}
+
 .projects-dialog-create {
   .form-section-dropdown-1 {
     margin-top: 60px;

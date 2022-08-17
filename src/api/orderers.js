@@ -48,8 +48,9 @@ export const orderersApi = {
         method: "post",
         url: `${url}/get`
       }).then(response => {
-        return response = response.data.map(el => {
-          return {
+        let arr = []
+        for (const [i, el] of response.data.entries()) {
+          arr.push({
             id: el.id,
             status: 1,
             image: `/${el.photo}`,
@@ -61,26 +62,20 @@ export const orderersApi = {
             instagram: el.soc_inst,
             email: el.email,
             show: false,
-            projects: [
-              {
-                icon: '🏰',
-                name: 'Квартира на Мира',
-                progress: 20,
-                pay: 0,
-                city: 'Краснодар',
-                link: ''
-              },
-              {
-                icon: '🏰',
-                name: 'Название объекта, заданное пользователем',
-                progress: 50,
-                pay: 20,
-                city: 'Сочи',
-                link: ''
-              }
-            ]    
+            projects: []
+          })
+          for (const project of response.data[i].projects) {
+            arr[i].projects.push({
+              icon: project.emoji,
+              name: project.name,
+              progress: 20,
+              pay: 0,
+              city: 'города нет в апи',
+              link: ''
+            })
           }
-        })
+        }
+        return arr
       })
     } catch (err) {
       console.log(err)
