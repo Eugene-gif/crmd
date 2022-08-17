@@ -143,7 +143,7 @@
 <script>
 
 
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import BtnDate from 'components/BtnDate'
 import { orderersApi } from 'src/api/orderers';
 import { useQuasar } from 'quasar'
@@ -154,21 +154,13 @@ export default defineComponent({
   components: {
     BtnDate
   }, 
+  props: {
+    formData: Object
+  },  
   setup (props, { emit }) {
     const $q = useQuasar()
     const loading = ref(false)
-    
-    const addCustomer = ref(false)
-    const selectDropbox = ref();
-    
-    const formData = ref({
-      name: '',
-      emoji: '',
-      adress: '',
-      square: '',
-      project_type_id: 1,
-      orderer: ''
-    })
+
     const formOrderers = ref({
       // user_id: '',
       first_name: 'Вася',
@@ -184,11 +176,11 @@ export default defineComponent({
       personal_info: ' ',
       second_name: 'Вася ивановов'
     })
-    
-    // addCustomer
 
     async function onSubmit() {
-      if (addCustomer.value === true) {
+      if (props.formData != null) {
+        updateOrderer()
+      } else {
         if (formOrderers.value.birth_date != '') {
           createOrderer()
         } else {
@@ -200,8 +192,6 @@ export default defineComponent({
             })
           }, 0)
         }
-      } else {
-
       }
     }
 
@@ -210,11 +200,34 @@ export default defineComponent({
       emit('modalFalse')
     }
 
+    async function updateOrderer() {
+      try {
+        await orderersApi.updateOrderers(formOrderers.value)
+        .then(resp => {
+          updateData()
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              timeout: 3000,
+              message: 'Заказчик изменен'
+            })
+          }, 0)
+        })
+      } catch (err) {
+        console.log(err)
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            timeout: 3000,
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
+      }
+    }
     async function createOrderer() {
       try {
         await orderersApi.createOrderers(formOrderers.value)
         .then(resp => {
-          formData.value.orderer = resp.data.id
           updateData()
           setTimeout(() => {
             $q.notify({
@@ -236,60 +249,32 @@ export default defineComponent({
       }
     }
 
-    function ongetEmojik(data) {
-      formData.value.name = data.text.value
-      formData.value.emoji = data.emojiIcon.value
-    }
-    function ongetOrderer(select) {
-      formData.value.orderer = select.value.user_id
-    }
     function ongetTime(time) {
       formOrderers.value.birth_date = time
     }
     function onFileChange(file) {
       formOrderers.value.photo = file[0]
     }
-    function getSelectType(data) {
-      formData.value.project_type_id = data.value
-      console.log(formData.value.project_type_id)
+
+    function updateInfo() {
+      if (props.formData != null) {
+        formOrderers.value = props.formData
+      }
     }
-
+    onMounted(() => {
+      updateInfo()
+    })
     return {
-      ongetOrderer,
-      ongetEmojik,
       updateData,
-      getSelectType,
-      formData,
+      updateInfo,
+      updateOrderer,
       formOrderers,
-
-      val: ref(false),
-      val1: ref(false),
-      val2: ref(true),
-      val3: ref(false),
-      val4: ref(false),
-      val5: ref(false),
-      addCustomer,
-      
-      selectDropbox,
-
-      show: ref(false),
-      text4: ref(15),
 
       ongetTime,
       onFileChange,
       onSubmit,
 
       file: ref(),
-      focusSelect() {
-        function func() {
-          selectDropbox.value.blur()
-        }
-        setTimeout(func, 100);
-      },
-      beforeHide() {
-        show.value = true;
-      },
-      
     }
   }
 })

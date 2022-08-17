@@ -8,7 +8,8 @@
   >
     <Dialog
       @modalFalse="modalFalse"
-      @updateData="start"
+      @updateData="getAll"
+      :formData="formOrderer"
     />
   </q-dialog>
   <q-page class="page-clients">
@@ -153,12 +154,14 @@
               <div class="city item">{{props.row.city}}</div>
 
               <div class="projects item " @click="props.row.showProjects = !props.row.showProjects">
-                Проектов: {{props.row.projects.length}}
+                Проектов: <span v-if="props.row.projects.length > 0">{{props.row.projects.length}}</span>
+                <span v-else>нет</span>
                 <q-icon
                   size="12px"
                   name="svguse:icons/allIcons.svg#select-arrow"
                   class="q-ml-xs"
                   :class="{rotate: props.row.showProjects}"
+                  v-if="props.row.projects.length > 0"
                 />
               </div>
               <div class="tel item lg-visible">{{props.row.tel}}</div>
@@ -197,6 +200,10 @@
                 <ActionBtn 
                   :propsEl="props.row.id"
                   :offsetYX="[55, -258]"
+                  :actionfunc="actionfunc"
+                  @actionUpdate="onActionUpdate"
+                  @actionCopy="onActionCopy"
+                  @actionDel="onActionDel"
                 />
               </div>
 
@@ -265,6 +272,10 @@
                 <ActionBtn 
                   :propsEl="props.row.id"
                   :offsetYX="[55, -258]"
+                  :actionfunc="actionfunc"
+                  @actionUpdate="onActionUpdate"
+                  @actionCopy="onActionCopy"
+                  @actionDel="onActionDel"
                 />
               </div>
 
@@ -284,6 +295,7 @@ import NoDate from 'src/components/NoDate.vue'
 import SortedMobile from 'components/Table/SortedMobile.vue'
 import Dialog from 'pages/Сlients/Dialog.vue'
 import { orderersApi } from 'src/api/orderers'
+import { useQuasar } from 'quasar'
  
 export default {
   name: 'PageСlients',
@@ -295,6 +307,7 @@ export default {
     Dialog
   },
   setup () {
+    const $q = useQuasar()
     const loading = ref(false)
     const nodate = ref(true)
     const dialog = ref(false)
@@ -462,6 +475,120 @@ export default {
       }
     }
 
+    const actionfunc = ref([
+      {
+        title: 'Редактировать',
+        emmit: 'actionUpdate'
+      },
+      {
+        title: 'Дублировать',
+        emmit: 'actionCopy'
+      },
+      {
+        title: 'Удалить',
+        emmit: 'actionDel'
+      },
+    ])
+    const formOrderer = ref()
+
+    async function onActionUpdate(id) {
+      loading.value = true
+      sortRows.value.map((item) => {
+        if (item.id === id) {
+          let firstname = item.name.split(' ')[0]
+          let lastName = item.name.split(' ')[1]
+
+          return formOrderer.value = {
+            id: id,
+            first_name: firstname,
+            second_name: item.name,
+            last_name: lastName,
+            birth_date: '',
+            phone: item.tel,
+            email: item.email,
+            soc_inst: item.instagram,
+            soc_wa: item.whatsapp,
+            soc_tg: item.telegram,
+            photo: item.image,
+            birth_date: item.birth_date,
+            personal_info: 'информация'
+          }
+        }
+      })
+      dialog.value = true
+      loading.value = false
+    }
+    async function onActionCopy(id) {
+      loading.value = true
+      let element 
+      sortRows.value.map((item) => {
+        if (item.id === id) {
+          let firstname = item.name.split(' ')[0]
+          let lastName = item.name.split(' ')[1]
+
+          return element = {
+            first_name: firstname,
+            second_name: item.name,
+            last_name: lastName,
+            birth_date: '',
+            phone: item.tel,
+            email: item.email,
+            soc_inst: item.instagram,
+            soc_wa: item.whatsapp,
+            soc_tg: item.telegram,
+            birth_date: item.birth_date,
+            personal_info: 'информация'
+          }
+        }
+      })
+      try {
+        await orderersApi.createOrderers(element)
+        .then(resp => {
+          getAll()
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              timeout: 3000,
+              message: 'Дублирование выполнено'
+            })
+          }, 0)
+        })
+      } catch (err) {
+        console.log(err)
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            timeout: 3000,
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
+      }
+      loading.value = false
+    }
+    async function onActionDel(id) {
+      loading.value = true
+      try {
+        await orderersApi.delOrderer(id).then(resp => {
+          getAll()
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              message: 'Заказчик удален'
+            })
+          }, 0)
+        })
+      } catch (err) {
+        console.log(err)
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
+      }
+      loading.value = false
+    }
+
     function sortedTable() {
       let arr = []
       let index = 0
@@ -550,6 +677,12 @@ export default {
       modalFalse() {
         dialog.value = false
       },
+
+      onActionUpdate,
+      onActionCopy,
+      onActionDel,
+      actionfunc,
+      formOrderer
     }
   }
 }

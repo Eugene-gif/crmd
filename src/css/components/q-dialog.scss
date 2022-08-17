@@ -717,11 +717,12 @@
       padding-top: 29px;
       .q-btn-actions {
         margin-top: 60px;
+        @media (max-width: 772px) {
+          margin-top: 40px;
+        }
       }
-    }
-    
+    } 
   }
-  
 }
 
 .projects-dialog-create {

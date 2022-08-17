@@ -286,18 +286,18 @@ export default defineComponent({
     })
     const formOrderers = ref({
       // user_id: '',
-      first_name: 'Вася',
-      second_name: 'отчество',
-      last_name: 'ивановов',
-      birth_date: '27-09-1998',
-      phone: '8999999999999',
-      email: 'email@gmil.com',
-      soc_inst: 'https://link',
-      soc_wa: 'https://link',
-      soc_tg: 'https://link',
+      first_name: '',
+      second_name: '',
+      last_name: '',
+      birth_date: '',
+      phone: '',
+      email: '',
+      soc_inst: '',
+      soc_wa: '',
+      soc_tg: '',
       photo: '',
       personal_info: ' ',
-      second_name: 'Вася ивановов'
+      second_name: ' '
     })
     
     // addCustomer
