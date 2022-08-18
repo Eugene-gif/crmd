@@ -241,11 +241,9 @@
             label="Добавить проект"
             type="submit"
           />
-          
         </q-card-actions>
       </q-form>
     </div>
-    
   </q-card>
   
 </template>

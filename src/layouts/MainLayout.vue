@@ -135,8 +135,13 @@
           <q-icon color="black" size="20px"  name="svguse:icons/allIcons.svg#mail" />
         </q-btn>
         <Notifications />
-        <q-btn flat class="header__btn__avatar my-effect h-img lg-visible"> 
-          <img :src="`${userUrl}${userInfo.image}`">
+        <q-btn
+          flat
+          class="header__btn__avatar my-effect h-img lg-visible"
+          :style="{background: userInfo.colorBkg}"
+        > 
+          <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
+          <span>{{userNikeName}}</span>
         </q-btn>
 
         <q-icon
@@ -182,8 +187,12 @@
       </q-list>
       <q-item class="q-item__avatar">
         <q-item-section>
-          <img :src="`${userUrl}${userInfo.image}`">
-          <q-item-label>Антон Глуханько </q-item-label>
+          <div class="img-section" :style="{background: userInfo.colorBkg}">
+            <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
+            <span>{{userNikeName}}</span>
+          </div>
+          
+          <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>
           <q-icon size="14px" name="svguse:icons/allIcons.svg#exit" @click="logout" />
         </q-item-section>
       </q-item>
@@ -405,6 +414,16 @@ export default ({
     const store = useStore()
     const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)
 
+    const userNikeName = computed(() => {
+      let name = userInfo.value.user_name
+      let lastName = userInfo.value.user_lastname
+      if (name) {
+        name = name.slice(0, 1)
+        lastName = lastName.slice(0, 1)
+      }
+      return name+lastName
+    })
+
     onMounted(() => {
       window.addEventListener('click', dropdown)
       window.addEventListener('click', dropdownMob)
@@ -437,12 +456,14 @@ export default ({
     function getUser() {
       let user = localStorage.getItem('userInfo')
       userInfo.value = JSON.parse(user)
+      console.log(userInfo.value)
     }
     
     return {
       userInfo, 
       userUrl,
       getUser,
+      userNikeName,
 
       showing,
       showingMob,
