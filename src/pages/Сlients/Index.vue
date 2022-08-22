@@ -98,7 +98,10 @@
         </q-th>
       </template>
       <template #top-row>
-        <div class="sort-number-container" v-show="!nullNumberSorted">
+        <div
+          class="sort-number-container"
+          v-show="!nullNumberSorted"
+        >
           <div
             class="sort-number" 
             ref="sortNumber"
@@ -626,10 +629,16 @@ export default {
       }
     }
     function scrollMeTo(ref) {
-      window.scrollTo({
-        top: numberTable.value[ref].offsetTop,
-        behavior: 'smooth'
-      })
+      if (window.innerWidth > 772) {
+        window.scrollTo({
+          top: numberTable.value[ref].offsetTop,
+          behavior: 'smooth'
+        })
+      } else {
+        window.scrollTo({
+          top: numberTable.value[ref].offsetTop
+        })
+      }
     }
     function sortNumberScroll() {
       if (window.pageYOffset > sortNumberOffset.value + 300) {
@@ -644,6 +653,20 @@ export default {
       pagination.value.descending = descending
     }
 
+    function getTouch(e) {
+      let y = Math.trunc(e.changedTouches[0].clientY)
+      document.body.style.overflow = 'hidden'
+      let letters = sortNumber.value.querySelectorAll('.activate')
+      letters.forEach(function (el) {
+        if(el.getBoundingClientRect().top === y) {
+          el.click()
+        }
+      }) 
+    }
+    function outTouchSortNumber(e) {
+      document.body.style.overflow = 'visible';
+    }
+
     onMounted(() => {
       getAll()
       window.addEventListener('scroll', sortNumberScroll)
@@ -651,7 +674,10 @@ export default {
       if (window.innerWidth > 772) {
         sortNumberWidth.value = sortNumber.value.offsetWidth
       }     
+      sortNumber.value.addEventListener('touchmove', getTouch)
+      sortNumber.value.addEventListener('touchend', outTouchSortNumber)
     })
+    
     return {
       loading,
       nodate,
@@ -673,6 +699,8 @@ export default {
       updateSorted,
       getAll,
       onUpdateRows,
+      getTouch,
+      outTouchSortNumber,
       dialog,
       modalFalse() {
         dialog.value = false

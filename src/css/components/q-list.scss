@@ -105,6 +105,16 @@
       }
     }
   }
+  @media (max-width: 350px) {
+    .q-btn {
+      flex: 0 0 18px;
+      min-width: 20px;
+      min-height: 14px;
+    }
+    &.activate {
+      top: 100px;
+    }
+  }
 }
 
 
