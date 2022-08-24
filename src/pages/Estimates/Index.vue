@@ -135,49 +135,41 @@
       </div>
     </q-item>
 
-    <div class="estimates-info row items-center">
-      <div
-        @click="toggle = !toggle"
-        class="title"
-        :class="{disable: !toggle}"
-      >
-        Прогноз цены
-      </div>
-      <q-toggle
-        v-model="toggle"
-        color="primary"
-        class="toggle-small"
-      />
-      <div class="title">Цена подрядчика:</div>
-      <q-tabs
-        v-model="tab"
-        class="q-tabs-null q-tabs-estimates"
-      >
-        <q-tab
-          v-for="tab in tabs"
-          :key="tab"
-          :name="tab.name"
-        >
-          <div class="img-null" v-show="!tab.imageUrl">
-            <div class="text">
-              {{cutTitle(tab.name)}}
-            </div>
-          </div>
-          <img v-show="tab.imageUrl" :src="tab.imageUrl" alt="">
-        </q-tab>
-      </q-tabs>
-    </div>
     <div class="estimates-table-container">
       <q-expansion-item
+        switch-toggle-side
         expand-separator
         default-opened
         label="Wifi settings"
         class="estimates-expansion"
       >
       <template v-slot:header>
-        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
-        <div class="title">
-          Дашборд
+        <div class="item">
+          <div class="title">
+            Название сметы, например, освещение
+          </div>
+          <q-checkbox
+            v-model="val"
+            checked-icon="svguse:icons/allIcons.svg#check"
+            class="my-checkbox flat"
+            color="black"
+            label="Вкл"
+          />
+          <ActionBtn
+            propsEl="1"
+            :offsetYX="[55, -258]"
+          />
+        </div>
+        <div class="item">
+          <q-btn
+            rounded
+            unelevated
+            no-caps
+            padding="7px 18px"
+            class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
+          >
+            <span class="block text-white">2 700 руб.</span>
+          </q-btn>
         </div>
       </template>
       </q-expansion-item>
@@ -287,23 +279,8 @@ import DialogPosition from 'pages/Estimates/dialog-position.vue'
 import DialogSecurity from 'pages/Estimates/dialog-security.vue'
 import DialogExport from 'pages/Estimates/dialog-export.vue'
 import DialogSettings from 'pages/Estimates/dialog-settings.vue'
+import ActionBtn from 'components/Table/ActionBtn.vue'
 
-const toggle = ref(true)
-const tabs = ref([
-  {
-    name: '1',
-    imageUrl: '/icons/stroipro.jpg' 
-  },
-  {
-    name: '2',
-    imageUrl: '/icons/anton.jpg' 
-  },
-  {
-    name: '3',
-    imageUrl: '' 
-  },
-])
-const tab = ref()
 const cutTitle = function(title) {
   return String(title.substring(0,2))
 }
@@ -393,7 +370,8 @@ export default {
     DialogPosition,
     DialogSecurity,
     DialogExport,
-    DialogSettings
+    DialogSettings,
+    ActionBtn
   },
   setup () {
     const dialogPosition = ref(false)
@@ -401,15 +379,13 @@ export default {
     const dialogExport = ref(false)
     const dialogSettings = ref(false)
     return {
-      toggle,
-      tabs,
-      tab,
       dialogPosition,
       dialogSecurity,
       dialogExport,
       columnsTable,
       dialogSettings,
       rowTable,
+      val: ref(true),
       cutTitle,
       modalFalse() {
         dialogPosition.value = false

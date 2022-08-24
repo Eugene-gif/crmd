@@ -257,7 +257,6 @@ import Emoji from 'components/Emoji'
 import { projectsApi } from 'src/api/projects';
 import { orderersApi } from 'src/api/orderers';
 import { useQuasar } from 'quasar'
-    
 
 export default defineComponent({
   name: 'FinanceDialog',

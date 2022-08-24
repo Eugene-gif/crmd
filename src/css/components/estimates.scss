@@ -1,0 +1,43 @@
+.estimates-expansion {
+  .q-expansion-item__container {
+    .q-item {
+      padding-left: 10px;
+      padding-right: 0;
+      flex-direction: column;
+      .q-focus-helper {
+        display: none;
+      }
+      .item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+      }
+      .q-item__section {
+        min-width: auto;
+        padding-right: 15px;
+        .q-icon {
+          opacity: 0.3;
+        }
+      }
+      .title {
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 25px;
+      }
+      .my-checkbox {
+        margin-left: auto;
+        margin-right: 23px;
+        .q-checkbox__inner {
+          font-size: 27px;
+          .q-icon {
+            font-size: 11px;
+          }
+        }
+        .q-checkbox__label {
+          font-size: 16px;
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+}
