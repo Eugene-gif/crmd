@@ -31,9 +31,9 @@
   >
     <DialogSettings @modalFalse="modalFalse" />
   </q-dialog>
-  <q-page class="page-estimates page-estimates-all">
+  <q-page class="page-estimates">
     <div class="row justify-between items-center">
-      <div class="text-h2">Общая смета</div>
+      <div class="text-h2">Название сметы</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
       <div class="lg-visible">
         <q-btn
@@ -57,6 +57,87 @@
     <div class="info row justify-between">
       <p class="desc"><b>Проект</b>: г. Краснодар, ул. Ленина, д. 15 тест длинного адреса</p>
       <q-item to="/" class="action q-item-none">Перенести в другой проект</q-item>
+    </div>
+    <div class="sectiobn-btns">
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
+        padding="12px 24px 12px 20px"
+        @click="dialogPosition = true"
+      >
+        <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
+        <span class="block q-ml-xs">Добавить позицию</span>
+      </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        color="grey-3"
+        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-ml-xs mb-visible"
+        label="Выбрать"
+      />
+      <q-btn
+        rounded
+        no-caps
+        outline
+        color="grey-3"
+        class="q-mr-xs my-btn my-effect my-btn--outline q-btn-info"
+        @click="dialogSecurity = true"
+      >
+        <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="16px" class="q-mr-md">
+          <sup>
+            3
+          </sup>
+        </q-icon>
+        <q-icon name="svguse:icons/btnIcons.svg#link" color="grey-8" size="18px" class="q-mr-md link-icon">
+          <div class="circle"></div>
+        </q-icon>
+        <div class="block text-grey-5">Настройки доступа</div>
+      </q-btn>
+      <q-btn
+        rounded
+        no-caps
+        outline
+        color="grey-3"
+        class="my-btn my-effect q-mr-xs my-btn--outline"
+        @click="dialogSettings = true"
+      >
+        <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="17px" class="q-mr-md" />
+        <div class="block text-grey-5">Редактировать</div>
+      </q-btn>
+      <q-btn
+        rounded
+        no-caps
+        outline
+        color="grey-3"
+        class="my-btn my-effect q-mr-xs my-btn--outline"
+      >
+        <q-icon name="svguse:icons/btnIcons.svg#copy" color="grey-8" size="15px" class="q-mr-md" />
+        <div class="block text-grey-5">Дублировать смету</div>
+      </q-btn>
+      <q-btn
+        rounded
+        no-caps
+        outline
+        color="grey-3"
+        class="my-btn my-effect q-mr-xs my-btn--outline"
+        @click="dialogExport = true"
+      >
+        <q-icon name="svguse:icons/btnIcons.svg#export" color="grey-8" size="13px" class="q-mr-md" />
+        <div class="block text-grey-5">Экспорт</div>
+      </q-btn>
+      <q-btn
+        rounded
+        no-caps
+        outline
+        color="grey-3"
+        class="my-btn my-effect q-mr-xs my-btn--outline"
+      >
+        <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-md" />
+        <div class="block text-grey-5">Удалить смету</div>
+      </q-btn>
     </div>
     <q-item class="smeta-section">
       <div class="title">Сумма: 90 000 руб.</div>
@@ -168,19 +249,6 @@
       </q-tabs>
     </div>
     <div class="estimates-table-container">
-      <q-expansion-item
-        expand-separator
-        default-opened
-        label="Wifi settings"
-        class="estimates-expansion"
-      >
-      <template v-slot:header>
-        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
-        <div class="title">
-          Дашборд
-        </div>
-      </template>
-      </q-expansion-item>
       <EstimateTable
         :columns="columnsTable"
         :rows="rowTable"
