@@ -384,7 +384,7 @@ const columnsTable = ref([
   { name: 'metrics', label: 'м2/шт', sortable: false },
   { name: 'price', label: 'Цена', sortable: false },
   { name: 'total', label: 'Итого', sortable: false },
-  { name: 'dedline', label: 'Сроки', sortable: false },
+  { name: 'deadline', label: 'Сроки', sortable: false },
   { name: 'status', label: 'Статус', sortable: false },
   { name: 'procent', label: 'Ставка', sortable: false }
 ])

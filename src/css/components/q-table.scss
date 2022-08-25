@@ -2737,20 +2737,25 @@
 }
 
 .estimates-table {
-  border-radius: 0;
-  padding-bottom: 60px;
-  &::-webkit-scrollbar {
-    height: 6px;
-    border-radius: 3px;
-    background: #F0F0F0;
+  .q-table__middle {
+    border-radius: 0;
+    padding-bottom: 60px;
+    &::-webkit-scrollbar {
+      height: 6px;
+      border-radius: 3px;
+      background: #F0F0F0;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: black;
+      border-radius: 3px;
+    }
   }
-  &::-webkit-scrollbar-thumb {
-    background: black;
-    border-radius: 3px;
-  }
+  
   .q-table {
     border: 1px solid $grey-3;
+    border-left: none;
     border-top: none;
+    border-bottom: none;
     thead,
     tbody {
       tr {
@@ -2781,23 +2786,12 @@
           border-color: $grey-3;
           border-top: 1px solid $grey-3;
           min-width: 89px;
-          .th-content {
-            display: flex;
-            align-items: center;
-            & > div {
-              display: flex;
-              align-items: center;
-            }
-          }
-          .sorted-icon {
-            opacity: 0;
-            transition: all 0.25s;
-            transform: rotate(180deg);
-            margin-left: 8px;
-          }
-          &:hover {
-            .sorted-icon {
-              opacity: 0.6;
+          text-align: left;
+          &.sortable {
+            i {
+              &:first-child {
+                display: none;
+              }
             }
           }
 
@@ -2807,6 +2801,8 @@
           &.th-name {
             min-width: 265px;
             .th-content-name {
+              display: flex;
+              align-items: center;
               width: 100%;
               .icon-photo {
                 margin-right: 18px;
@@ -2816,11 +2812,11 @@
               }
             }
           }
-          &.th-room,
-          &.th-desc {
+          .th-room,
+          .th-desc {
             min-width: max-content;
           }
-          &.th-status {
+          .th-status {
             min-width: 182px;
           }
         }
@@ -2828,12 +2824,11 @@
     }
     tbody {
       tr {
-        &:last-child {
-          td {
-            border-bottom: none !important;
-          }
-        }
+        width: 100%;
         td {
+          &:first-child {
+            border-left: 1px solid $grey-3;
+          }
           &:last-child {
             border-right: none !important;
           }
@@ -2848,10 +2843,7 @@
             flex-wrap: nowrap;
             align-items: center;
           }
-          &.td-content-imageUrl {
-            display: none;
-          }
-          &.td-content-name {
+          .td-content-name {
             min-width: 265px;
             .q-icon-tooltip {
               opacity: 0.2;
@@ -2876,7 +2868,7 @@
               margin-left: auto;
             }
           }
-          &.td-content-status {
+          .td-content-status {
             .status-img {
               width: 20px;
               height: 20px;
@@ -2885,11 +2877,60 @@
             }
           }
         }
+        &:last-child {
+          td {
+            border-bottom: none !important;
+          }
+        }
+        
+      }
+      .q-tr-smeta {
+        td {
+          border-right: none !important;
+          border-top: 1px solid #ADADAD !important;
+          
+        }
+        .td-id {
+          border-left: none !important;
+          border-bottom: none !important;
+          border-right: 1px solid #ADADAD !important;
+        }
+        &:last-child {
+          
+        }
+        .td-name {
+          .name-img {
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            margin-right: 16px;
+            overflow: hidden;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+        .td-desc {
+
+        }
+        .td-agent {
+          border-right: 1px solid #ADADAD !important;
+        }
+      }
+      .q-tr-separator {
+        width: 100%;
+        height: 1px;
+        background: #ADADAD;
+        position: relative;
+        top: -1px;
       }
     }
   }
   @media (max-width: 772px) {
-    padding-bottom: 30px;
+    .q-table__middle {
+      padding-bottom: 30px;
+    }
     thead,
     tbody {
       tr {
@@ -2927,7 +2968,7 @@
           }
         }
         td {
-          &.td-content-name {
+          .td-content-name {
             .q-icon-tooltip {
               font-size: 15px !important;
             }

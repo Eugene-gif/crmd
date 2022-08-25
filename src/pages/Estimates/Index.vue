@@ -337,17 +337,17 @@ const cutTitle = function(title) {
 }
 
 const columnsTable = ref([
-  { name: 'id', label: '№', sortable: true },
-  { name: 'name', label: 'Название', sortable: false },
-  { name: 'room', label: 'Помещение', sortable: false },
-  { name: 'desc', label: 'Описание', sortable: false },
-  { name: 'metrics', label: 'м2/шт', sortable: false },
-  { name: 'price', label: 'Цена', sortable: false },
-  { name: 'total', label: 'Итого', sortable: false },
-  { name: 'dedline', label: 'Сроки', sortable: false },
-  { name: 'status', label: 'Статус', sortable: false },
-  { name: 'procent', label: 'Ставка', sortable: false },
-  { name: 'agent', label: 'Агентские, руб.', sortable: false },
+  { name: 'id', label: '№', field: 'id', sortable: true },
+  { name: 'name', label: 'Название', field: 'name', sortable: false },
+  { name: 'room', label: 'Помещение', field: 'room', sortable: false },
+  { name: 'desc', label: 'Описание', field: 'desc', sortable: false },
+  { name: 'metrics', label: 'м2/шт', field: 'metrics', sortable: false },
+  { name: 'price', label: 'Цена', field: 'price', sortable: false },
+  { name: 'total', label: 'Итого', field: 'total', sortable: false },
+  { name: 'deadline', label: 'Сроки', field: 'dedline', sortable: false },
+  { name: 'status', label: 'Статус', field: 'status', sortable: false },
+  { name: 'procent', label: 'Ставка', field: 'procent', sortable: false },
+  { name: 'agent', label: 'Агентские, руб.', field: 'agent', sortable: false },
 ])
 const rowTable = ref([
   {
@@ -371,20 +371,36 @@ const rowTable = ref([
     },
     procent: 15,
     agent: '3 600',
-    smeta: {
-      imageUrl: '/icons/stroipro.jpg',
-      name: "ООО «СтройПро»",
-      price: "1 200",
-      metrics: 25,
-      total: "30 000",
-      deadline: 30,
-      status: {
-        id: 3,
-        name: 'Не согласовано',
+    smeta: [
+      {
+        imageUrl: '/icons/stroipro.jpg',
+        name: "ООО «СтройПро»",
+        price: "1 200",
+        metrics: 25,
+        total: "30 000",
+        deadline: 30,
+        status: {
+          id: 3,
+          name: 'Не согласовано',
+        },
+        procent: 15,
+        agent: "9 000",
       },
-      procent: 15,
-      agent: "9 000",
-    }
+      {
+        imageUrl: '',
+        name: "Не выбрано",
+        price: "—",
+        metrics: '—',
+        total: '—',
+        deadline: '—',
+        status: {
+          id: '',
+          name: '—',
+        },
+        procent: '—',
+        agent: '—',
+      }
+    ]
   },
   {
     id: 2,
@@ -405,7 +421,8 @@ const rowTable = ref([
       user: '',
       imageUrl: ''
     },
-    procent: 15
+    procent: 15,
+    agent: '3 600',
   },
   {
     id: 3,
@@ -426,7 +443,8 @@ const rowTable = ref([
       user: '',
       imageUrl: ''
     },
-    procent: 15
+    procent: 15,
+    agent: '3 600',
   },
 ])
 
