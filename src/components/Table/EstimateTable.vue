@@ -144,9 +144,11 @@
         <q-td
           key="total"
           :props="props"
+          @click="props.row.smetaVal = !props.row.smetaVal"
         >
           <div class="td-content-section">
             <div class="text">
+              {{props.row.smetaVal}}
               {{props.row.total}}
             </div>
           </div>
@@ -194,11 +196,12 @@
           </div>
         </q-td>
       </q-tr>
-        
+
       <q-tr
         v-for="smeta in props.row.smeta"
         :key="smeta"
         class="q-tr-smeta"
+        v-show="props.row.smetaVal"
       >
         <q-td key="id" class="td-id"/>
         <q-td
@@ -261,8 +264,8 @@
         >
           <div class="td-content-section td-content-status">
             <div class="status">
-              <div :class="`circle bg-${colorStatus(smeta .status.id)}`"></div>
-              <div class="desc">{{smeta .status.name}}</div>
+              <div :class="`circle bg-${colorStatus(smeta.status.id)}`"></div>
+              <div class="desc">{{smeta.status.name}}</div>
             </div>
           </div>
         </q-td>
@@ -288,8 +291,69 @@
           </div>
         </q-td>
       </q-tr>
+
+      <q-tr class="q-tr-smeta q-tr-smeta-null" v-show="props.row.smetaVal">
+        <q-td key="id" class="td-id"/>
+        <q-td class="td-name">
+          <div class="td-content-section">
+            <div class="name-img"></div>
+            <div class="text">Не выбрано</div>
+          </div>
+        </q-td>
+        <q-td key="room" class="td-room"/>
+        <q-td key="desc" class="td-desc"/>
+        <q-td>
+          <div class="td-content-section">
+            <div class="text">
+              —
+            </div>
+          </div>
+        </q-td>
+        <q-td>
+          <div class="td-content-section">
+            <div class="text">
+              —
+            </div>
+          </div>
+        </q-td>
+        <q-td>
+          <div class="td-content-section">
+            <div class="text">
+              —
+            </div>
+          </div>
+        </q-td>
+        <q-td>
+          <div class="td-content-section">
+            <div class="text">
+              —
+            </div>
+          </div>
+        </q-td>
+        <q-td>
+          <div class="td-content-section td-content-status">
+            <div class="status">
+              <div class="circle"></div>
+              <div class="desc">—</div>
+            </div>
+          </div>
+        </q-td>
+        <q-td>
+          <div class="td-content-section">
+            <div class="text">
+              —
+            </div>
+          </div>
+        </q-td>
+        <q-td class="td-agent">
+          <div class="td-content-section">
+            <div class="text">
+              —
+            </div>
+          </div>
+        </q-td>
+      </q-tr>
       <div class="q-tr-separator"></div>
-   
     </template>
   </q-table>
 </template>

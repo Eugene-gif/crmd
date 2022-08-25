@@ -371,6 +371,7 @@ const rowTable = ref([
     },
     procent: 15,
     agent: '3 600',
+    smetaVal: false,
     smeta: [
       {
         imageUrl: '/icons/stroipro.jpg',
@@ -386,20 +387,20 @@ const rowTable = ref([
         procent: 15,
         agent: "9 000",
       },
-      {
-        imageUrl: '',
-        name: "Не выбрано",
-        price: "—",
-        metrics: '—',
-        total: '—',
-        deadline: '—',
-        status: {
-          id: '',
-          name: '—',
-        },
-        procent: '—',
-        agent: '—',
-      }
+      // {
+      //   imageUrl: '',
+      //   name: "Не выбрано",
+      //   price: "—",
+      //   metrics: '—',
+      //   total: '—',
+      //   deadline: '—',
+      //   status: {
+      //     id: '',
+      //     name: '—',
+      //   },
+      //   procent: '—',
+      //   agent: '—',
+      // }
     ]
   },
   {
