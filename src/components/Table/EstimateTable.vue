@@ -107,6 +107,12 @@
           >
             <div class="text">{{item}}%</div>
           </div>
+          <div
+            class="td-content-section"
+            v-else-if="index === 'agent'"
+          >
+            <div class="text">{{item}}</div>
+          </div>
           <div class="td-content-section" v-else>
             <div class="text">{{item}}</div>
           </div>

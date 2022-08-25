@@ -143,8 +143,7 @@
         label="Wifi settings"
         class="estimates-expansion"
       >
-      <template v-slot:header>
-        <div class="item">
+        <template v-slot:header>
           <div class="title">
             Название сметы, например, освещение
           </div>
@@ -159,24 +158,76 @@
             propsEl="1"
             :offsetYX="[55, -258]"
           />
-        </div>
-        <div class="item">
-          <q-btn
-            rounded
-            unelevated
-            no-caps
-            padding="7px 18px"
-            class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
-          >
-            <span class="block text-white">2 700 руб.</span>
-          </q-btn>
-        </div>
-      </template>
+          <div class="item">
+            <q-btn
+              outline
+              rounded
+              unelevated
+              no-caps
+              padding="7.5px 18px"
+              class="btn-sum my-btn my-btn-14 no-cursor q-ml-xs"
+              color="grey-3"
+            >
+              <span class="block text-grey-5">2 290 000 руб.</span>
+            </q-btn>
+            <q-list class="list-users">
+              <q-item>
+                <img src="~assets/anton.jpg" alt="">
+              </q-item>
+              <q-item>
+                <img src="~assets/stroipro.jpg" alt="">
+              </q-item>
+            </q-list>
+            <div class="estimates-action-btns">
+              <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="q-mr-xs my-btn my-effect my-btn--outline q-btn-info"
+                padding="5.5px 0"
+              >
+                <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="11px" class="q-mr-sm">
+                  <sup>
+                    3
+                  </sup>
+                </q-icon>
+                <q-icon name="svguse:icons/btnIcons.svg#link" color="grey-8" size="14px" class="q-mr-sm link-icon">
+                  <div class="circle"></div>
+                </q-icon>
+                <div class="block text-grey-5">Настройки доступа</div>
+              </q-btn>
+              <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="my-btn my-effect my-btn--outline"
+                padding="5.5px 0"
+              >
+                <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="12px" class="q-mr-sm" />
+                <div class="block text-grey-5">Редактировать</div>
+              </q-btn>
+              <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="my-btn my-effect my-btn--outline"
+                padding="5.5px 0"
+              >
+                <q-icon name="svguse:icons/btnIcons.svg#export" color="grey-8" size="11px" class="q-mr-sm" />
+                <div class="block text-grey-5">Экспорт</div>
+              </q-btn>
+            </div>
+          </div>
+        </template>
+        <EstimateTable
+          :columns="columnsTable"
+          :rows="rowTable"
+        />
       </q-expansion-item>
-      <EstimateTable
-        :columns="columnsTable"
-        :rows="rowTable"
-      />
+      
     </div>
 
     <q-item class="smeta-section">
@@ -295,7 +346,8 @@ const columnsTable = ref([
   { name: 'total', label: 'Итого', sortable: false },
   { name: 'dedline', label: 'Сроки', sortable: false },
   { name: 'status', label: 'Статус', sortable: false },
-  { name: 'procent', label: 'Ставка', sortable: false }
+  { name: 'procent', label: 'Ставка', sortable: false },
+  { name: 'agent', label: 'Агентские, руб.', sortable: false },
 ])
 const rowTable = ref([
   {
@@ -317,7 +369,22 @@ const rowTable = ref([
       user: 'Иван',
       imageUrl: '/icons/stroipro.jpg'
     },
-    procent: 15
+    procent: 15,
+    agent: '3 600',
+    smeta: {
+      imageUrl: '/icons/stroipro.jpg',
+      name: "ООО «СтройПро»",
+      price: "1 200",
+      metrics: 25,
+      total: "30 000",
+      deadline: 30,
+      status: {
+        id: 3,
+        name: 'Не согласовано',
+      },
+      procent: 15,
+      agent: "9 000",
+    }
   },
   {
     id: 2,
