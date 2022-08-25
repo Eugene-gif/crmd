@@ -148,8 +148,8 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{props.row.smetaVal}}
               {{props.row.total}}
+              <q-icon size="12px" name="svguse:icons/financeTable.svg#miniArrowe" />
             </div>
           </div>
         </q-td>
