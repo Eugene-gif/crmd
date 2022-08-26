@@ -80,5 +80,77 @@
         }
       }
     }
+    @media (max-width: 772px) {
+      .q-item {
+        padding-left: 10px;
+        padding-right: 0;
+        padding-bottom: 40px;
+
+        .item {
+          padding-top: 10px;
+          order: 5;
+          flex-wrap: wrap;
+        }
+
+        .q-item__section {
+          padding-right: 5px;
+          margin-left: auto;
+          order: 2;
+          .q-icon {
+            opacity: 0.3;
+          }
+        }
+        .title {
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 18px;
+          order: 1;
+          flex: 1 1 calc(100% - 50px);
+        }
+
+        .my-checkbox {
+          margin-left: 0;
+          order: 3;
+          width: calc(100% - 90px);
+          margin-top: 5px;
+        }
+        .q-td__action {
+          margin-left: auto;
+          order: 4;
+          margin-top: 5px;
+        }
+        .btn-sum {
+          margin-left: 0;
+        }
+        
+        .list-users {
+          display: flex;
+          align-items: center;
+          .q-item {
+            width: 29px;
+            height: 29px;
+            padding: 0;
+            min-height: auto;
+            margin-left: 6px;
+            img {
+              border-radius: 100%;
+              width: 100%;
+            }
+          }
+        }
+        .estimates-action-btns {
+          margin-left: 0;
+          flex: 0 0 100%;
+          width: 100%;
+          justify-content: flex-start;
+          text-align: left;
+          .q-btn {
+            margin: 0;
+            margin-left: 0;
+            flex: 0 0 100%;
+          }
+        }
+      }
+    }
   }
 }

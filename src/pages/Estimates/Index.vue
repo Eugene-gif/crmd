@@ -147,6 +147,7 @@
           <div class="title">
             Название сметы, например, освещение
           </div>
+          
           <q-checkbox
             v-model="val"
             checked-icon="svguse:icons/allIcons.svg#check"
@@ -387,20 +388,6 @@ const rowTable = ref([
         procent: 15,
         agent: "9 000",
       },
-      // {
-      //   imageUrl: '',
-      //   name: "Не выбрано",
-      //   price: "—",
-      //   metrics: '—',
-      //   total: '—',
-      //   deadline: '—',
-      //   status: {
-      //     id: '',
-      //     name: '—',
-      //   },
-      //   procent: '—',
-      //   agent: '—',
-      // }
     ]
   },
   {

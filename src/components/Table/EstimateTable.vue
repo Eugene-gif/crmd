@@ -144,13 +144,18 @@
         <q-td
           key="total"
           :props="props"
+          class="td-total"
           @click="props.row.smetaVal = !props.row.smetaVal"
+          :class="{open: props.row.smetaVal}"
         >
           <div class="td-content-section">
             <div class="text">
               {{props.row.total}}
-              <q-icon size="12px" name="svguse:icons/financeTable.svg#miniArrowe" />
             </div>
+            <div class="total-img">
+              <img v-if="props.row.status.imageUrl && props.row.smeta" :src="props.row.status.imageUrl" alt="">
+            </div>
+            <q-icon v-if="props.row.smeta" size="12px" name="svguse:icons/financeTable.svg#miniArrowe" />
           </div>
         </q-td>
         <q-td
@@ -292,7 +297,7 @@
         </q-td>
       </q-tr>
 
-      <q-tr class="q-tr-smeta q-tr-smeta-null" v-show="props.row.smetaVal">
+      <q-tr class="q-tr-smeta q-tr-smeta-null" v-show="props.row.smetaVal" v-if="props.row.smeta">
         <q-td key="id" class="td-id"/>
         <q-td class="td-name">
           <div class="td-content-section">
