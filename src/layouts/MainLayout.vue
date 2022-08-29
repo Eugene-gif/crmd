@@ -271,12 +271,12 @@ import { useRouter } from 'vue-router';
 const linksList = [
   {
     title: 'Проекты',
-    link: 'projects',
+    link: '/projects',
     number: 6
   },
   {
     title: 'Сметы',
-    link: 'estimates',
+    link: '/estimates',
     number: 43
   },
   {
@@ -286,17 +286,17 @@ const linksList = [
   },
   {
     title: 'Заказчики',
-    link: 'clients',
+    link: '/clients',
     number: 2
   },
   {
     title: 'Подрядчики',
-    link: 'contractor',
+    link: '/contractor',
     number: 150
   },
   {
     title: 'Документы',
-    link: 'documents',
+    link: '/documents',
     number: null
   }
 ];

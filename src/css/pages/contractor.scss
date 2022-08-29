@@ -83,3 +83,157 @@
     }
   }
 }
+
+.page-contractor-single {
+  padding-bottom: 0 !important;
+  .section-btns {
+    padding-top: 59px;
+    padding-bottom: 41px;
+    border-bottom: 1px solid $grey-3;
+  }
+  .section {
+    flex-wrap: nowrap;
+    .sidebar {
+      max-width: 276px;
+      flex: 0 0 276px;
+      padding-top: 50px;
+      border-right: 1px solid $grey-3;
+      padding-bottom: 50px;
+      .avatar {
+        width: 100%;
+        text-align: center;
+        img {
+          width: 157px;
+          height: 157px;
+          border-radius: 10px;
+        }
+      }
+      .info {
+        background: #F7F7F7;
+        padding: 22px 21px 23px 9px;
+        border: 1px solid #F0F0F0;
+        border-radius: 10px 0 0 10px;
+        margin-top: 43px;
+        position: relative;
+        &:after {
+          content: '';
+          width: 1px;
+          height: 10px;
+          background: $grey-3;
+          display: block;
+          left: -1px;
+          bottom: -1px;
+          position: absolute;
+        }
+        .q-list-user-info {
+          .q-item {
+            margin-right: 2px;
+          }
+          .link-whatsap {
+            margin-left: auto;
+          }
+          .link-insta {
+            margin-right: 0;
+          }
+        }
+        .reviews {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          padding-right: 3px;
+          padding-top: 8px;
+          position: relative;
+          .q-tabs-reviews {
+            padding-left: 16px;
+            .q-tab {
+              .q-focus-helper {
+                display: none;
+              }
+              .q-icon {
+                svg {
+                  fill: rgba(0,0,0,0.2);
+                }
+              }
+              .q-tab__label {
+                color: black;
+              }
+              &--active {
+                .q-icon {
+                  svg {
+                    fill: $positive;
+                  }
+                }
+              }
+            }
+          }
+          .q-item__label {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 16px;
+            color: #000000;
+            position: relative;
+            top: 2px;
+          }
+        }
+      }
+      .city {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 16px;
+        color: #444444;
+        border-left: 1px solid $grey-3;
+        border-right: 1px solid $grey-3;
+        border-bottom: 1px solid $grey-3;
+        border-radius:0 0 0 10px;
+        padding: 16px 0 18px 26px;
+      }
+      .title {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 18px;
+        color: #000000;
+        .status {
+          margin-left: 12px;
+        }
+      }
+      .status {
+        width: 5px;
+        height: 5px;
+        border-radius: 100%;
+      }
+      .text {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 16px;
+        color: #444444;
+        margin-top: 9px;
+      }
+      .info- {
+        &status {
+          margin-top: 51px;
+        }
+        &mail {
+          margin-top: 39px;
+        }
+        &phone {
+          margin-top: 26px;
+        }
+        &adres {
+          margin-top: 28px;
+          max-width: 215px;
+          line-height: 20px;
+        }
+        &sait {
+          margin-top: 29px;
+        }
+      }
+    }
+    .content {
+      max-width: 100%;
+      flex: 1 1 100%;
+    }
+  }
+}
