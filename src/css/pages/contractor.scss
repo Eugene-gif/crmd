@@ -84,6 +84,7 @@
   }
 }
 
+
 .page-contractor-single {
   padding-bottom: 0 !important;
   .section-btns {
@@ -234,6 +235,34 @@
     .content {
       max-width: 100%;
       flex: 1 1 100%;
+      padding-top: 50px;
+      .sections-btns {
+        padding-left: 40px;
+        .q-btn {
+          padding: 12px 20px;
+          border-radius: 8px;
+          .q-focus-helper {
+            display: none;
+          }
+          &:before {
+            border: 2px solid currentcolor;
+          }
+          .block {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 18px;
+            color: #444444;
+          }
+        }
+      }
+      .description {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+        margin-top: 26px;
+        color: #444444;
+        padding-left: 40px;
+      }
     }
   }
 }

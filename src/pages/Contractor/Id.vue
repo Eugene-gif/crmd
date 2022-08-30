@@ -118,7 +118,39 @@
         </div>
       </div>
       <div class="content">
-        
+        <div class="sections-btns">
+          <q-btn 
+            outline
+            unelevated
+            no-caps
+            class="q-mr-xs my-btn my-effect h-dark"
+            color="grey-3"
+            style="background: #F7F7F7 !important;"
+          >
+            <span class="text-black block">Работы и услуги</span>
+          </q-btn>
+          <q-btn 
+            outline
+            unelevated
+            no-caps
+            class="q-mr-xs my-btn my-effect h-opacity"
+            color="positive"
+          >
+            <span class="text-black block">Работы и услуги</span>
+          </q-btn>
+          <q-btn 
+            outline
+            unelevated
+            no-caps
+            class="q-mr-xs my-btn my-effect h-opacity"
+            color="positive"
+          >
+            <span class="text-black block">Мебель для общественных помещений</span>
+          </q-btn>
+        </div>
+        <div class="description">
+          Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в 
+        </div>
       </div>
     </div>
   </q-page>
