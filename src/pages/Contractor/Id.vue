@@ -151,6 +151,76 @@
         <div class="description">
           Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в 
         </div>
+        <div class="info row">
+          <div class="item agency">
+            <div class="text">
+              Получено агентских 
+              <div class="circle bg-positive">
+                <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" color="white" />
+              </div>
+            </div>
+            <div class="sum">
+              500 000 руб.
+            </div>
+          </div>
+          <div class="item dolg">
+            <div class="text">
+              Долг 
+              <div class="circle bg-grey-3">
+                <q-icon size="12px" name="svguse:icons/allIcons.svg#tooltip" color="grey-4" />
+              </div>
+            </div>
+            <div class="sum">
+              250 000 руб.
+            </div>
+          </div>
+          <q-btn
+            unelevated
+            no-caps
+            class="share"
+          >
+            <span class="block">Поделиться</span>
+            <q-icon size="17px" name="svguse:icons/btnIcons.svg#copy" />
+          </q-btn>
+        </div>
+        <div class="region">
+          Область работы: Краснодарский край, ЮФО, Республики Северного Кавказа
+        </div>
+
+        <div class="row tab-section">
+          <q-tabs
+            v-model="tab2"
+            class="q-tabs-null q-tabs-contractor"
+          >
+            <q-tab name="information" label="Информация" />
+            <q-tab name="projects" label="Проекты" />
+            <q-tab name="finance" label="Финансы" />
+            <q-tab name="document" label="Документы" />
+            <q-tab name="reviews" label="Отзывы" />
+            <q-tab name="photo" label="Фото" />
+          </q-tabs>
+          <div class="circle bg-grey-3">
+            <q-icon size="12px" name="svguse:icons/allIcons.svg#tooltip" color="grey-4" />
+          </div>
+        </div>
+        <q-tab-panels
+          v-model="tab2"
+          animated
+          swipeable
+          vertical
+          transition-prev="jump-up"
+          transition-next="jump-up"
+        >
+          <q-tab-panel name="information">
+            <div class="section">
+              <Information />
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="projects">
+            
+          </q-tab-panel>
+        </q-tab-panels>
       </div>
     </div>
   </q-page>
@@ -158,16 +228,19 @@
 
 <script>
 import { ref } from 'vue'
+import Information from 'components/Contractor/Information.vue'
 
 export default {
   name: 'PageСontractorSingle',
   components: {
-    
+    Information
   },
   setup () {
     const tab = ref()
+    const tab2 = ref('information')
     return {
-      tab
+      tab,
+      tab2
     }
   }
 }
