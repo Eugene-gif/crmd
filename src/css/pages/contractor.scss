@@ -112,7 +112,9 @@
       .info {
         background: #F7F7F7;
         padding: 14px 21px 23px 9px;
-        border: 1px solid #F0F0F0;
+        border-top: 1px solid #F0F0F0;
+        border-left: 1px solid #F0F0F0;
+        border-bottom: 1px solid #F0F0F0;
         border-radius: 10px 0 0 10px;
         margin-top: 43px;
         position: relative;
@@ -183,9 +185,8 @@
         font-size: 16px;
         line-height: 16px;
         color: #444444;
-        border-left: 1px solid $grey-3;
-        border-right: 1px solid $grey-3;
-        border-bottom: 1px solid $grey-3;
+        border-left: 1px solid #F0F0F0;
+        border-bottom: 1px solid #F0F0F0;
         border-radius:0 0 0 10px;
         padding: 16px 0 18px 26px;
       }
@@ -235,12 +236,13 @@
     .content {
       max-width: 100%;
       flex: 1 1 100%;
-      padding-top: 50px;
+      padding-top: 45px;
       .sections-btns {
         padding-left: 40px;
         .q-btn {
           padding: 12px 20px;
           border-radius: 8px;
+          margin-top: 5px;
           .q-focus-helper {
             display: none;
           }
@@ -360,16 +362,6 @@
         align-items: flex-start;
         position: relative;
         padding-right: 25px;
-        &:after {
-          content: '';
-          width: 100%;
-          height: 1px;
-          background: #f0f0f0;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          z-index: -1;
-        }
         .circle {
           width: 26px;
           height: 26px;
@@ -382,20 +374,78 @@
           top: -3px;
         }
       }
+
       .q-tab-panels {
         .q-tab-panel {
           padding: 0;
           .section {
-            padding-left: 40px;
+            .q-expansion-my {
+              .q-expansion-item__container {
+                padding-left: 40px;
+              }
+            }
+            .desc-sec {
+              border: 1px solid #F0F0F0;
+              border-radius: 8px;
+              padding: 28px 0 19px 27px;
+              margin-top: 6px;
+              .title {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 18px;
+                color: #000000;
+              }
+              .text {
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 22px;
+                color: #444444;
+                margin-top: 18px;
+              }
+            }
+            .q-expansion-my-2 {
+              margin-top: 40px; 
+              .sections-btns {
+                padding-left: 0;
+              }
+            }
+            .desc-sec-design {
+              flex-direction: row;
+              display: flex;
+              padding: 0;
+              min-height: 152px;
+              .information {
+                text-align: center;
+                flex: 0 0 152px;
+                padding: 30px 0 15px 0;
+                max-width: 152px;
+                border-right: 1px solid #F0F0F0;
+                .number {
+                  font-weight: 300;
+                  font-size: 50px;
+                  line-height: 50px;
+                  color: #444444;
+                }
+                .subtext {
+                  font-weight: 400;
+                  font-size: 14px;
+                  line-height: 16px;
+                  color: #444444;
+                  margin-top: 20px;
+                  
+                }
+              }
+              .text {
+                position: relative;
+                padding: 31px 47px 0 33px;
+                margin-top: 0;
+              }
+            }
           }
-          .title {
-            font-weight: 700;
-            font-size: 24px;
-            line-height: 25px;
-            color: #000000;
-          }
+          
         }
       }
+
     }
   }
 }

@@ -1,5 +1,4 @@
 <template>
-    
   <q-page class="page-contractor-single">
     <div class="row justify-between items-center">
       <div class="text-h2">СтройПро</div>
