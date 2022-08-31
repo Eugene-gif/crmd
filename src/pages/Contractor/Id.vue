@@ -177,7 +177,7 @@
           <q-btn
             unelevated
             no-caps
-            class="share"
+            class="share my-effect h-opacity"
           >
             <span class="block">Поделиться</span>
             <q-icon size="17px" name="svguse:icons/btnIcons.svg#copy" />
