@@ -325,4 +325,12 @@
       border-bottom: 1px solid $primary;
     }
   }
+  @media (max-width: 772px) {
+    .q-tabs__content {
+      flex-wrap: wrap;
+      .q-tab {
+      
+      }
+    }
+  }
 }

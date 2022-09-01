@@ -2,13 +2,18 @@
   <q-page class="page-contractor-single">
     <div class="row justify-between items-center">
       <div class="text-h2">СтройПро</div>
-      <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
+      <q-icon
+        size="18px"
+        class="mb-visible"
+        name="svguse:icons/allIcons.svg#back"
+        style="margin-left: auto;"
+      />
       <div class="sectiobn-btns">
         <q-btn
           rounded
           unelevated
           no-caps
-          class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-mr-xs"
+          class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-mr-xs lg-visible"
           label="Назад"
         />
       </div>

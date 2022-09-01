@@ -377,7 +377,173 @@
         </q-item-section>
       </q-item>
     </q-list>
+  </q-expansion-item>
 
+  <q-expansion-item
+    expand-separator
+    default-opened
+    class="visual q-expansion-my"
+  >
+    <template v-slot:header>
+      <div class="title">
+        Реквизиты для документов
+      </div>
+    </template>
+    <div class="requisites">
+      <div class="item">
+        <div class="subtitle">
+          Данные об организации
+        </div>
+        <div class="cell">
+          <div class="title">
+            Общество с ограниченной ответственностью
+          </div>
+          <div class="text">
+            Тип
+          </div>
+        </div>
+
+        <div class="cell">
+          <div class="title">
+            Название компании
+          </div>
+          <div class="text">
+            Название
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            350000 г. Краснодар, ул. Красная 17, кв. 9
+          </div>
+          <div class="text">
+            Юридический адрес
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            350000 г. Краснодар, ул. Красная 17, кв. 9
+          </div>
+          <div class="text">
+            Фактический адрес
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            245754645733
+          </div>
+          <div class="text">
+            ИНН
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            318237500481684
+          </div>
+          <div class="text">
+            ОГРН
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            245754645733
+          </div>
+          <div class="text">
+            КПП (для ООО)
+          </div>
+        </div>
+      </div>
+      
+      <div class="item">
+        <div class="subtitle">
+          Подписант
+        </div>
+        <div class="cell">
+          <div class="title">
+            Глуханько Антон Александрович
+          </div>
+          <div class="text">
+            ФИО подписанта документов
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            Директор
+          </div>
+          <div class="text">
+            Должность
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            Устав
+          </div>
+          <div class="text">
+            Основание
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="subtitle">
+          Банковские реквизиты
+        </div>
+        <div class="cell">
+          <div class="title">
+            40802810630000052573
+          </div>
+          <div class="text">
+            Расчетный счет
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            40802810630000052573
+          </div>
+          <div class="text">
+            Корреспондентский счет
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            КРАСНОДАРСКОЕ ОТДЕЛЕНИЕ №8619 ПАО СБЕРБАНК
+          </div>
+          <div class="text">
+            Отделение банка
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            318237500481684
+          </div>
+          <div class="text">
+            БИК банка
+          </div>
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="subtitle">
+          Контактные данные
+        </div>
+        <div class="cell">
+          <div class="title">
+            +7 (918) 455-02-16
+          </div>
+          <div class="text">
+            Телефон
+          </div>
+        </div>
+        <div class="cell">
+          <div class="title">
+            antonglukhanko@gmail.com
+          </div>
+          <div class="text">
+            E-mail
+          </div>
+        </div>
+      </div>
+
+    </div>
   </q-expansion-item>
 
 </template>
