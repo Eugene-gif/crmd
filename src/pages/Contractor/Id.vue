@@ -49,8 +49,8 @@
       />
     </div>
     <div class="row section">
-      <div class="sidebar">
-        <div class="avatar">
+      <div class="sidebar lg-visible">
+        <div class="avatar ">
           <img src="~assets/stroipro.jpg" alt="">
         </div>
         <div class="info">
@@ -122,6 +122,12 @@
         </div>
       </div>
       <div class="content">
+        <div class="foto-collage mb-visible">
+          <img src="~assets/stroipro.jpg" alt="">
+          <img src="~assets/anton.jpg" alt="">
+          <img src="~assets/stroipro.jpg" alt="">
+          <img src="~assets/anton.jpg" alt="">
+        </div>
         <div class="sections-btns">
           <q-btn 
             outline
@@ -131,7 +137,7 @@
             color="grey-3"
             style="background: #F7F7F7 !important;"
           >
-            <span class="text-black block">Работы и услуги</span>
+            <span class="text-black block">Ставка: 15%</span>
           </q-btn>
           <q-btn 
             outline
@@ -154,6 +160,55 @@
         </div>
         <div class="description">
           Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в 
+        </div>
+        <div class="region region-mobile">
+          <div class="city" style="margin-right: 4px;">
+            г. Краснодар 
+          </div>
+          <div class="text">
+            Область работы: Краснодарский край, ЮФО, Республики Северного Кавказа
+          </div>
+        </div>
+        <div class="info-1 mb-visible">
+          <q-list class="q-list-user-info">
+            <q-item
+              link
+              href="`mailto:${scope.opt.email}`"
+            >
+              <q-icon color="black" size="20px" name="svguse:icons/allIcons.svg#mail" />
+            </q-item>
+            <q-item
+              class="link-whatsap"
+              link
+              href="`${scope.opt.whatsapp}`"
+            >
+              <img src="~assets/whatsapp.svg" alt="">
+            </q-item>
+            <q-item
+              class="link-telegram"
+              link
+              href="`${scope.opt.telegram}`"
+            >
+              <img src="~assets/telegram.svg" alt="">
+            </q-item>
+            <q-item
+              class="link-insta"
+              link
+              href="`${scope.opt.instagram}`"
+            >
+              <img src="~assets/instagram.svg" alt="">
+            </q-item>
+          </q-list>
+          <q-item-section class="reviews">
+            <q-tabs
+              v-model="tab"
+              class="q-tabs-reviews"
+            >
+              <q-tab name="1" icon="svguse:icons/allIcons.svg#like" label="25" />
+              <q-tab name="2" icon="svguse:icons/allIcons.svg#dislike" label="2" />
+            </q-tabs>
+            <q-item-label>12 отзывов</q-item-label>
+          </q-item-section>
         </div>
         <div class="info row">
           <div class="item agency">
@@ -186,8 +241,34 @@
             <span class="block">Поделиться</span>
             <q-icon size="17px" name="svguse:icons/btnIcons.svg#copy" />
           </q-btn>
+
+          <div class="desc mb-visible">
+            <div class="title info-status">
+              Работаем <span class="status bg-positive"></span>
+            </div>
+            <div class="text">Изменить статус</div>
+
+            <div class="title info-mail">
+              info@stroypro.com
+            </div>
+            <div class="text">Общий e-mail</div>
+
+            <div class="title info-phone">
+              +7 (918) 455-02-16
+            </div>
+            <div class="text">Общий телефон</div>
+
+            <div class="text info-adres">
+              г. Краснодар, ул. Красных Партизан, д. 232, офис 307
+            </div>
+
+            <div class="text info-sait">
+              www.stroypro.com
+            </div>
+          </div>
+          
         </div>
-        <div class="region">
+        <div class="region region-nomobile">
           Область работы: Краснодарский край, ЮФО, Республики Северного Кавказа
         </div>
 
