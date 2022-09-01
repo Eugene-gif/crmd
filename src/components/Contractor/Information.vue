@@ -349,7 +349,7 @@
   <q-expansion-item
     expand-separator
     default-opened
-    class="visual q-expansion-my"
+    class="visual q-expansion-my q-expansion-design"
   >
     <template v-slot:header>
       <div class="title">
@@ -363,38 +363,17 @@
           <div class="subtitle">
             Архив с 3д-моделями столов
           </div>
-          <ActionBtn
-            :propsEl="1"
-            :offsetYX="[55, -258]"
-          />
+          <div class="size">ZIP, 1 мб</div>
+          <q-icon name="svguse:icons/allIcons.svg#download" size="17px" />
         </q-item-section>
       </q-item>
       <q-item>
         <q-item-section>
-          <div class="avatar">
-            <img src="~assets/stroipro.jpg" alt="">
-          </div>
           <div class="subtitle">
             СтройПро
           </div>
-          <ActionBtn
-            :propsEl="1"
-            :offsetYX="[55, -258]"
-          />
-        </q-item-section>
-      </q-item>
-      <q-item>
-        <q-item-section>
-          <div class="avatar">
-            <img src="~assets/anton.jpg" alt="">
-          </div>
-          <div class="subtitle">
-            Антон Глуханько
-          </div>
-          <ActionBtn
-            :propsEl="1"
-            :offsetYX="[55, -258]"
-          />
+          <div class="size">Ссылка</div>
+          <q-icon name="svguse:icons/allIcons.svg#download" size="17px" />
         </q-item-section>
       </q-item>
     </q-list>

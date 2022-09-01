@@ -277,7 +277,7 @@
       }
       .info {
         background: #F7F7F7;
-        padding: 22px 31px 23px 9px;
+        padding: 22px 31px 22.5px 9px;
         border-top: 1px solid #F0F0F0;
         border-right: 1px solid #F0F0F0;
         border-bottom: 1px solid #F0F0F0;
@@ -439,6 +439,17 @@
                 position: relative;
                 padding: 31px 47px 0 33px;
                 margin-top: 0;
+              }
+            }
+            .q-expansion-design {
+              .contractor-list {
+                .q-item {
+                  padding-left: 26px;
+                  padding-right: 25px;
+                  .subtitle {
+                    margin-left: 0;
+                  }
+                }
               }
             }
           }
