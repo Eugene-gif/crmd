@@ -303,7 +303,9 @@
           </q-tab-panel>
 
           <q-tab-panel name="projects">
-            
+            <div class="section">
+              <Projects />
+            </div>
           </q-tab-panel>
         </q-tab-panels>
       </div>
@@ -314,11 +316,13 @@
 <script>
 import { ref } from 'vue'
 import Information from 'components/Contractor/Information.vue'
+import Projects from 'components/Contractor/Projects.vue'
 
 export default {
   name: 'PageСontractorSingle',
   components: {
-    Information
+    Information,
+    Projects
   },
   setup () {
     const tab = ref()

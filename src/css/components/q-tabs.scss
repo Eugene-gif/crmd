@@ -314,6 +314,7 @@
     margin-right: 30px;
     padding-bottom: 26px;
     border-bottom: 1px solid rgba(0,0,0,0);
+    position: relative;
     .q-tab__label {
       font-weight: 500;
       font-size: 18px;
@@ -326,10 +327,32 @@
     }
   }
   @media (max-width: 772px) {
+    width: 100%;
     .q-tabs__content {
-      flex-wrap: wrap;
+      flex-direction: column;
+      width: 100%;
       .q-tab {
-      
+        padding: 15px 20px 0 20px;
+        position: relative;
+        width: 100%;
+        border-bottom: 1px solid $grey-3;
+        justify-content: flex-start;
+        &:last-child {
+          border-bottom: none;
+        }
+        .q-tab__label {
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 18px;
+          color: #000000;
+          padding-bottom: 17px;
+          border-bottom: 1px solid rgba(0,0,0,0);
+        }
+        &--active {
+          .q-tab__label {
+            border-bottom: 1px solid $primary;
+          }
+        }
       }
     }
   }

@@ -56,7 +56,7 @@
   <q-expansion-item
     expand-separator
     default-opened
-    class="visual q-expansion-my"
+    class="visual q-expansion-my q-expansion-my-activity-category"
   >
     <template v-slot:header>
       <div class="title">
@@ -340,8 +340,11 @@
           дизайнера
         </div>
       </div>
-      <div class="text">
+      <div class="text lg-visible">
         Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а 
+      </div>
+      <div class="text mb-visible">
+        Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. 
       </div>
     </div>
   </q-expansion-item>
@@ -363,7 +366,8 @@
           <div class="subtitle">
             Архив с 3д-моделями столов
           </div>
-          <div class="size">ZIP, 1 мб</div>
+          <div class="size"><span class="lg-visible">ZIP,</span> 1 мб</div>
+          <span class="mb-visible format">ZIP</span>
           <q-icon name="svguse:icons/allIcons.svg#download" size="17px" />
         </q-item-section>
       </q-item>
@@ -372,7 +376,8 @@
           <div class="subtitle">
             СтройПро
           </div>
-          <div class="size">Ссылка</div>
+          <div class="size"><span class="lg-visible"></span></div>
+          <span class="mb-visible format">Ссылка</span>
           <q-icon name="svguse:icons/allIcons.svg#download" size="17px" />
         </q-item-section>
       </q-item>
@@ -545,7 +550,17 @@
 
     </div>
   </q-expansion-item>
-
+  <q-btn
+    unelevated
+    no-caps
+    outline
+    class="bg-white text-grey-3 my-btn my-effect mb-visible"
+    style="border-radius: 6px;width: 100%;margin-bottom: 20px;"
+    padding="7px 16px 7px 20px"
+  >
+    <div class="block text-grey-5" style="line-height: 29px;">Назад к списку подрядчиков</div>
+    <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
+  </q-btn>
 </template>
 
 <script>

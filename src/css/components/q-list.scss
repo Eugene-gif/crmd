@@ -334,6 +334,50 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    .q-item {
+      margin-top: 5px;
+      .q-item__section {
+        flex-wrap: nowrap;
+        position: relative;
+        .avatar {
+          min-width: 30px;
+        }
+        .subtitle {
+          margin-left: 9px;
+          white-space: nowrap;
+        }
+        .size {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 16px;
+          color: #444444;
+          margin-left: auto;
+          margin-right: 86px;
+        }
+        .q-td__action {
+          margin-left: auto;
+          position: absolute;
+          right: 0;
+          z-index: 1;
+          background: white;
+          &:before {
+            content: '';
+            width: 30px;
+            height: 20px;
+            left: -20px;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 87.5%);
+            position: absolute;
+            z-index: 1;
+            transform: rotate(-90deg);
+          }
+        }
+      }
+    }
+  }
 }
 
 // .q-card-section-avatar {
