@@ -291,8 +291,6 @@
         <q-tab-panels
           v-model="tab2"
           animated
-          swipeable
-          vertical
           transition-prev="jump-up"
           transition-next="jump-up"
         >

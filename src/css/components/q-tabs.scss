@@ -310,6 +310,9 @@
 }
 
 .q-tabs-contractor {
+  .q-tabs__arrow--right {
+    display: none !important;
+  }
   .q-tab {
     margin-right: 30px;
     padding-bottom: 26px;

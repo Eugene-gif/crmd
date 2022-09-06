@@ -100,6 +100,17 @@
         </q-tr>
       </template>
     </q-table>
+    <q-btn
+      unelevated
+      no-caps
+      outline
+      class="bg-white text-grey-3 my-btn my-effect mb-visible"
+      style="border-radius: 6px;width: 100%;margin-bottom: 20px;"
+      padding="7px 16px 7px 20px"
+    >
+      <div class="block text-grey-5" style="line-height: 29px;">Назад к списку подрядчиков</div>
+      <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
+    </q-btn>
   </div>
 </template>
 
