@@ -279,6 +279,7 @@
           >
             <q-tab name="information" label="Информация" />
             <q-tab name="projects" label="Проекты" />
+            <q-tab name="projects2" label="Проекты2" />
             <q-tab name="finance" label="Финансы" />
             <q-tab name="document" label="Документы" />
             <q-tab name="reviews" label="Отзывы" />
@@ -305,6 +306,12 @@
               <Projects />
             </div>
           </q-tab-panel>
+
+          <q-tab-panel name="projects2">
+            <div class="section">
+              <ProjectInfo />
+            </div>
+          </q-tab-panel>
         </q-tab-panels>
       </div>
     </div>
@@ -315,12 +322,14 @@
 import { ref } from 'vue'
 import Information from 'components/Contractor/Information.vue'
 import Projects from 'components/Contractor/Projects.vue'
+import ProjectInfo from 'components/Contractor/ProjectInfo.vue'
 
 export default {
   name: 'PageСontractorSingle',
   components: {
     Information,
-    Projects
+    Projects,
+    ProjectInfo
   },
   setup () {
     const tab = ref()

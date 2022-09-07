@@ -376,7 +376,7 @@
           <div class="subtitle">
             СтройПро
           </div>
-          <div class="size"><span class="lg-visible"></span></div>
+          <div class="size"><span class="lg-visible">Ссылка</span></div>
           <span class="mb-visible format">Ссылка</span>
           <q-icon name="svguse:icons/allIcons.svg#download" size="17px" />
         </q-item-section>

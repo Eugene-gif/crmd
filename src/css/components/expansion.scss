@@ -164,6 +164,10 @@
 .q-expansion-my {
   padding-bottom: 50px;
   overflow: hidden;
+  border-top: 1px solid $grey-3;
+  &:first-child {
+    border-top: none;
+  }
   .q-expansion-item__border--bottom {
     display: none !important;
   }
@@ -188,6 +192,14 @@
         line-height: 25px;
         letter-spacing: -0.02em;
         color: #000000;          
+      }
+      .custom {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 16px;
+        color: #444444;
+        margin-left: auto;
+        margin-right: 63px;
       }
       .settings-icon {
         opacity: 0.3;
@@ -250,7 +262,15 @@
     }
   }
 }
-
+.title-custom {
+  .q-expansion-item__container {
+    & > .q-item {
+      .q-item__section--side {
+        margin-left: 0;
+      }
+    }
+  }
+}
 .q-expansion-my-2 {
   border-top: 1px solid $grey-3;
   .q-expansion-item__border--bottom {

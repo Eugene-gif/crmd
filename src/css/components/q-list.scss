@@ -290,7 +290,8 @@
   }
 }
 
-.contractor-list {
+.contractor-list,
+.contractor-list-project {
   .q-item {
     background: #FFFFFF;
     border: 1px solid #F0F0F0;
@@ -375,6 +376,36 @@
             transform: rotate(-90deg);
           }
         }
+      }
+    }
+  }
+}
+
+.contractor-list-project {
+  .q-item {
+    border: none;
+    border-top: 1px solid $grey-3;
+    margin-top: 0;
+    padding-left: 0;
+    &:last-child {
+      border-bottom: 1px solid $grey-3;
+    }
+    .q-item__section {
+      .subtitle {
+        margin-left: 0;
+      }
+      .metrs {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 18px;
+        color: #444444;
+        margin-left: auto;
+        margin-right: 100px;
+        text-align: left;
+        min-width: 75px;
+      }
+      .q-td__action {
+        margin-left: auto;
       }
     }
   }
