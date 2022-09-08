@@ -313,6 +313,17 @@
             </div>
           </q-tab-panel>
         </q-tab-panels>
+        <q-btn
+          unelevated
+          no-caps
+          outline
+          class="bg-white text-grey-3 my-btn my-effect mb-visible btn-back"
+          style="border-radius: 10px;width: 100%;"
+          padding="12px 17px 12px 20px"
+        >
+          <div class="block text-grey-5">Назад к списку подрядчиков</div>
+          <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
+        </q-btn>
       </div>
     </div>
   </q-page>

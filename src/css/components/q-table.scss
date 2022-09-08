@@ -1289,6 +1289,7 @@
           margin-bottom: 34px;
           padding-top: 26px;
           align-items: flex-start;
+          overflow: hidden;
           .text-h3 {
             font-weight: 500;
             font-size: 18px;
@@ -1318,8 +1319,8 @@
         }
       }
     }
-    
   }
+
   @media (max-width: 772px) {
     padding-top: 13px;
     .q-table {
@@ -1491,6 +1492,40 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    &.projects-table-cubes-contractor {
+      tbody {
+        .q-tr-tiles {
+          padding-bottom: 13px;
+          .q-td-name {
+            height: auto;
+            overflow: visible;
+            padding-top: 19px;
+            .text-h3 {
+              font-size: 16px;
+              line-height: 20px;
+            }
+          }
+          .q-td-access {
+            margin-top: 16px;
+            min-height: 32px;
+          }
+          .q-td-share {
+            margin-top: 10px;
+            .q-list {
+              padding-top: 0;
+            }
+          }
+          .q-td-action {
+            .q-td__action {
+              margin-top: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .project-table {

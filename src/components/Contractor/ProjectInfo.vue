@@ -51,10 +51,11 @@
         </div>
       </div>
     </div>
+
     <q-expansion-item
       expand-separator
       default-opened
-      class="visual q-expansion-my title-custom"
+      class="visual q-expansion-my title-custom q-expansion-my-contactor-explication"
     >
       <template v-slot:header>
         <div class="title">Экспликация помещений</div>
@@ -81,6 +82,13 @@
           </q-item-section>
         </q-item>
       </q-list>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-grey-3 text-grey-5 q-mr-xs my-btn my-effect h-dark q-ml-xs mb-visible btn-custom"
+        label="Изменить"
+      />
     </q-expansion-item>
 
     <q-expansion-item
@@ -92,6 +100,12 @@
         <div class="title">Общие сметы</div>
         <div class="custom" @click.stop="true">Изменить</div>
       </template>
+
+      <SortedMobile
+        :columns="columns"
+        :pagination="pagination"
+        @updateRows="onUpdateRows"
+      />
 
       <q-table
         flat
@@ -191,6 +205,14 @@
           <!-- q-th__share -->
         </template>
       </q-table>
+
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-grey-3 text-grey-5 q-mr-xs my-btn my-effect h-dark q-ml-xs mb-visible btn-custom"
+        label="Изменить"
+      />
     </q-expansion-item>
 
     <q-expansion-item
@@ -204,7 +226,7 @@
       "
     >
       <template v-slot:header>
-        <div class="title">Приложенные файлы</div>
+        <div class="title">2D/3D файлы</div>
         <div class="custom" @click.stop="true">Изменить</div>
       </template>
 
@@ -231,7 +253,7 @@
     <q-expansion-item
       expand-separator
       default-opened
-      class="visual q-expansion-my title-custom"
+      class="visual q-expansion-my title-custom q-expansion-my-contractor-more-data"
     >
       <template v-slot:header>
         <div class="title">Прочие данные</div>
@@ -287,36 +309,87 @@
           </div>
         </div>
       </div>
+
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-grey-3 text-grey-5 q-mr-xs my-btn my-effect h-dark q-ml-xs mb-visible btn-custom"
+        label="Изменить"
+      />
     </q-expansion-item>
 
-    <!--     
-    <q-btn
-      unelevated
-      no-caps
-      outline
-      class="bg-white text-grey-3 my-btn my-effect"
-      style="border-radius: 6px; width: 100%; margin-bottom: 20px"
-      padding="7px 16px 7px 20px"
+    <q-expansion-item
+      expand-separator
+      default-opened
+      class="visual q-expansion-my title-custom q-expansion-my-contractor-visual"
     >
-      <div class="block text-grey-5" style="line-height: 29px">
-        Назад к списку подрядчиков
-      </div>
-      <q-icon
-        size="18px"
-        name="svguse:icons/allIcons.svg#back"
-        style="margin-left: auto"
+      <template v-slot:header>
+        <div class="title">Визуал</div>
+        <div class="custom" @click.stop="true">Изменить</div>
+      </template>
+      <q-card class="q-card-visual-slider">
+        <q-card-section
+          v-for="item in visual"
+          :key="item.id"
+        >
+          <VisualSlider
+            :images="item.images"
+          />
+          <div class="row desc">
+            <div class="title">{{item.name}}</div>
+          </div>
+          <div class="row security">
+            <q-btn
+              unelevated
+              no-caps
+              class="bg-grey-3 text-grey-5 my-btn my-effect"
+              padding="7.5px 12px"
+            >
+              {{item.rights}}
+            </q-btn>
+          </div>
+          <!-- action -->
+        </q-card-section>
+        
+      </q-card>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-grey-3 text-grey-5 q-mr-xs my-btn my-effect h-dark q-ml-xs mb-visible btn-custom"
+        label="Изменить"
       />
-    </q-btn> -->
+    </q-expansion-item>
+    <div class="contractor-project-info-q-card-prev q-card-prev mb-visible">
+      <q-btn
+        unelevated
+        no-caps
+        outline
+        class="bg-white text-grey-3 my-btn my-effect"
+        style="border-radius: 10px;width: 100%;"
+        padding="24px 24px 24px 19px"
+      >
+        <div class="block text-grey-5">Назад к списку проектов</div>
+        <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
+      </q-btn>
+    </div>
+
   </div>
+  
 </template>
 
 <script>
 import { ref } from "vue";
 import ActionBtn from "components/Table/ActionBtn.vue";
+import VisualSlider from 'components/projects/VisualSlider.vue'
+import SortedMobile from 'components/Table/SortedMobile.vue'
 
 export default {
   components: {
     ActionBtn,
+    VisualSlider,
+    SortedMobile
   },
   setup() {
     const rows2 = [
@@ -403,11 +476,49 @@ export default {
       descending: false,
     })
     const activatedText = ref(false)
+    const visual = ref([
+      {
+        id: 1,
+        images: [
+          '/project-1.jpg',
+          '/project-2.jpg',
+          '/project-3.jpg',
+        ],
+        name: 'Фото помещения',
+        rights: 'Просмотр'
+      },
+      {
+        id: 2,
+        images: [
+          '/project-1.jpg',
+          '/project-2.jpg',
+          '/project-3.jpg',
+        ],
+        name: 'Визуализации',
+        rights: 'Редактирование'
+      },
+      {
+        id: 3,
+        images: [
+          '/project-1.jpg',
+          '/project-2.jpg',
+          '/project-3.jpg',
+        ],
+        name: 'Визуализации',
+        rights: 'Просмотр'
+      }
+    ])
+    async function onUpdateRows(name, descending) {
+      pagination.value.sortBy = name
+      pagination.value.descending = descending
+    }
     return {
       rows2,
       columns,
       pagination,
-      activatedText
+      activatedText,
+      visual,
+      onUpdateRows
     };
   },
 };
