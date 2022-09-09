@@ -1051,6 +1051,18 @@
         margin-bottom: 19px;
       }
     }
+    .q-field.my-input-btn .q-field__after .q-btn {
+      height: 26px;
+    }
+    .q-field.my-input-btn {
+      height: 28px;
+    }
+    .q-field.my-input-btn .q-field__control input {
+      height: 24px;
+    }
+    .q-field.my-input-btn .q-field__append {
+      height: 24px;
+    }
   }
 }
 

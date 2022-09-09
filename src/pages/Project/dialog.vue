@@ -17,13 +17,13 @@
 
         <q-card-section class="form-section">
           <label class="lable-title">Адрес</label>
-          <q-input v-model="formData.adress" class="my-input bg-grey-3" placeholder="Введите адрес" />
+          <q-input v-model="formData.adress" class="my-input bg-grey-3" placeholder="Введите адрес" :rules="[ val => val && val.length > 0 || '']" />
         </q-card-section>
 
         <q-card-section class="form-section form-section-row">
           <div class="form-col">
             <label class="lable-title">Площадь, м<sup style="font-size: 10px;font-weight: bold;">2</sup></label>
-            <q-input v-model="formData.square" class="my-input bg-grey-3" placeholder="115" />
+            <q-input v-model="formData.square" class="my-input bg-grey-3" placeholder="115" :rules="[ val => val && val.length > 0 || '']" />
           </div>
           <div class="form-col">
             <label class="lable-title">Тип</label>
@@ -48,7 +48,7 @@
           </div>
         </q-card-section>
 
-        <q-card-actions class="q-card-actions-add-customer" v-show="addCustomer === true">
+        <q-card-actions class="q-card-actions-add-customer" v-if="addCustomer === true">
           <q-card-section class="form-section">
             <label class="lable-title">Фамилия</label>
             <q-input
@@ -301,7 +301,7 @@ export default defineComponent({
 
     async function onSubmit() {
       if (addCustomer.value === true) {
-        if (formOrderers.value.birth_date != '') {
+        if (formOrderers.value.birth_date != '' ) {
           createOrderer()
         } else {
           setTimeout(() => {
