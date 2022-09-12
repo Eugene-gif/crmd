@@ -312,6 +312,18 @@
               <ProjectInfo />
             </div>
           </q-tab-panel>
+          
+          <q-tab-panel name="finance">
+            <div class="section">
+              <Finance />
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="document">
+            <div class="section">
+              <Documents />
+            </div>
+          </q-tab-panel>
         </q-tab-panels>
         <q-btn
           unelevated
@@ -334,13 +346,17 @@ import { ref } from 'vue'
 import Information from 'components/Contractor/Information.vue'
 import Projects from 'components/Contractor/Projects.vue'
 import ProjectInfo from 'components/Contractor/ProjectInfo.vue'
+import Finance from 'components/Contractor/Finance.vue'
+import Documents from 'components/Contractor/Documents.vue'
 
 export default {
   name: 'PageСontractorSingle',
   components: {
     Information,
     Projects,
-    ProjectInfo
+    ProjectInfo,
+    Finance,
+    Documents
   },
   setup () {
     const tab = ref()

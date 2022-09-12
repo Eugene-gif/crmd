@@ -140,6 +140,16 @@
   }
 }
 
+.btn-big {
+  width: 100%;
+  padding: 0 32px 0 26px;
+  min-height: 67px;
+  border-radius: 10px;
+  .q-icon {
+    margin-left: auto;
+  }
+}
+
 .no-cursor {
   cursor: default;
   .q-focus-helper {

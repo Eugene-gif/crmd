@@ -743,6 +743,55 @@
                 padding-bottom: 50px;
               }
             }
+
+            .contractor-single-finance {
+              padding-bottom: 50px;
+              .q-table__container {
+                .q-table__middle {
+                  padding: 40px;
+                  padding-right: 5px;
+                  
+                } 
+                .q-tr__transfer {
+                  
+                  .q-td-checkStatus {
+                    .q-td__check {
+                      font-weight: 400;
+                      font-size: 16px;
+                      line-height: 16px;
+                      color: #444444;
+                      display: flex;
+                      align-items: center;
+                      .q-icon {
+                        margin-left: 12px;
+                      }
+                    }  
+                  } 
+                }
+              }
+              .sec-btn {
+                padding-left: 40px;
+                padding-top: 10px;
+              }
+            }
+
+            .contractor-single-documents {
+              .q-table__container {
+                tbody {
+                  tr {
+                    td {
+                      padding: 0px 16px;
+                      .content {
+                        padding-top: 0;
+                      }
+                      &.q-td-status {
+                        
+                      }
+                    }
+                  }
+                }
+              }
+            }
             
           }
           
@@ -751,8 +800,6 @@
 
     }
   }
-
-
 
 
 
@@ -1189,6 +1236,7 @@
                           }
                           .content {
                             padding-top: 0;
+                            padding-bottom: 0;
                           }
                           &.q-td-{
                             &emoji {
@@ -1536,7 +1584,71 @@
                 }
               }
               
-
+              .contractor-single-finance {
+                padding-bottom: 30px;
+                .sorted {
+                  margin-top: 0;
+                  margin-bottom: 26px;
+                }
+                .q-table__container {
+                  .q-table__middle {
+                    padding: 0;
+                    padding-right: 0;
+                  } 
+                  tbody {
+                    tr {
+                      td {
+                        &.q-td-project {
+                          flex: 0 0 calc(100% - 75px);
+                          max-width: calc(100% - 75px);
+                        }
+                        &.q-td-date {
+                          margin-top: 14px;
+                        }
+                      }
+                    }
+                  }
+                  .q-tr__transfer {
+                    position: relative;
+                    top: -10px;
+                    background: white;
+                    display: flex;
+                    align-items: center;
+                    .q-td-sum {
+                      .q-td__sum {
+                        opacity: 1;
+                        font-size: 14px;
+                        line-height: 14px;
+                        color: #444444;
+                      }
+                    }
+                    .q-td-checkStatus {
+                      margin-left: auto;
+                      .q-td__check {
+                        font-size: 14px;
+                        line-height: 14px;
+                        color: $positive;
+                        .q-icon {
+                          display: none;
+                        }
+                      }  
+                    } 
+                  }
+                }
+                .sec-btn {
+                  padding-left: 0;
+                  padding-top: 15px;
+                  text-align: center;
+                  .btn-big {
+                    max-width: 250px;
+                    border-radius: 26px;
+                    min-height: 33px;
+                    .q-icon {
+                      display: none;
+                    }
+                  }
+                }
+              }
 
             }
             

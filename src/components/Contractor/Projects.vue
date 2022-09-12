@@ -13,6 +13,7 @@
       row-key="id"
       hide-pagination
       class="my-table project-table contractor-single-project-table"
+      v-model:pagination="pagination"
     >
       <template v-slot:header-cell-status="props">
         <q-th :props="props" class="q-th__smaile">
@@ -139,7 +140,7 @@ export default {
         ]
       },
       {
-        id: 1,
+        id: 2,
         status: 1,
         adress: 'г. Краснодар, ул. Ленина, д. 10',
         emoji: '🏰',
