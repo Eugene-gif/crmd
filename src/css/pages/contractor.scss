@@ -89,9 +89,12 @@
 .page-contractor-single {
   padding-bottom: 0 !important;
   .section-btns {
-    padding-top: 59px;
+    padding-top: 54px;
     padding-bottom: 41px;
     border-bottom: 1px solid $grey-3;
+    .q-btn {
+      margin-top: 5px;
+    }
   }
   .section {
     flex-wrap: nowrap;
@@ -776,16 +779,108 @@
             }
 
             .contractor-single-documents {
+              padding-bottom: 50px;
               .q-table__container {
+                .q-table__middle {
+                  padding-left: 40px;
+                  padding-top: 30px;
+                  padding-bottom: 40px;
+                  padding-right: 5px;
+                }
+                thead {
+                  transform: translateY(-50px);
+                }
                 tbody {
                   tr {
                     td {
-                      padding: 0px 16px;
+                      padding: 10.5px 16px;
                       .content {
                         padding-top: 0;
                       }
+                      &.q-td-name {
+                        padding-left: 26px;
+                      }
                       &.q-td-status {
-                        
+                        .row {
+                          flex-wrap: nowrap;
+                          .circle {
+                            display: none;
+                          }
+                        }
+                      }
+                      &.q-td-action {
+                        padding-right: 15px;
+                        .row {
+                          display: flex;
+                          justify-content: flex-end;
+                          .q-td__action {
+                            .q-btn__content {
+                              justify-content: center;
+                            }
+                          }
+                        } 
+                      }
+                    }
+                  }
+                }
+                .q-table__bottom {
+                  @media (min-width: 772px) {
+                    min-height: 0;
+                  }
+                }
+              }
+              .sec-btn {
+                padding-left: 40px;
+              }
+            }
+
+            .contractor-single-reviews {
+              padding: 50px 0 50px 40px;
+              .sec-btn {
+                padding-top: 22px;
+              }
+            }
+
+            .contractor-photos {
+              padding: 50px 0 10px 40px;
+              .q-card-visual-slider {
+                padding-bottom: 0;
+                box-shadow: none;
+                .q-card__section {
+                  
+                  border: 1px solid #F0F0F0;
+                  border-radius: 10px;
+                  flex: 0 0 calc(50% - 20px);
+                  max-width: calc(50% - 20px);
+                  margin-bottom: 40px;
+                  transition: all 0.25s;
+                  &:nth-child(1n) {
+                    margin-right: 20px;
+                  } 
+                  &:nth-child(2n) {
+                    margin-left: 20px;
+                    margin-right: 0;
+                  } 
+                  .security {
+                    .q-btn {
+                      .q-btn__content {
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 16px;
+                      }
+                    }
+                  }
+                  .visual-slider {
+                    .q-list {
+                      .content {
+                        padding-top: 0;
+                        .q-item__section  {
+                          .q-tab-panels {
+                            .q-tab-panel {
+                              height: 230px;
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -793,6 +888,7 @@
               }
             }
             
+
           }
           
         }
@@ -1645,6 +1741,167 @@
                     min-height: 33px;
                     .q-icon {
                       display: none;
+                    }
+                  }
+                }
+              }
+
+              .contractor-single-documents {
+                padding-bottom: 30px;
+                .sorted {
+                  margin-top: 0;
+                }
+                .q-table__container {
+                  .q-table__middle {
+                    padding-left: 0;
+                    padding-top: 0;
+                    padding-bottom: 0;
+                    padding-right: 0;
+                  }
+                  thead {
+                    transform: translateY(0);
+                  }
+                  tbody {
+                    tr {
+                      display: flex;
+                      flex-wrap: wrap;
+                      border: 1px solid #F0F0F0;
+                      border-radius: 10px;
+                      margin-bottom: 5px;
+                      padding: 18px 20px 15px 20px;
+                      position: relative;
+                      td {
+                        padding: 0;
+                        border: none;
+                        flex: 0 0 100%;
+                        height: auto;
+                        margin-bottom: 4px;
+                        .content {
+                          padding-top: 0;
+                          padding-bottom: 0;
+                        }
+                        &.q-td-name {
+                          padding-left: 0;
+                          order: 1;
+                          flex: 0 0 calc(100% - 69px);
+                          max-width: calc(100% - 69px);
+                          margin-bottom: 14px;
+                        }
+                        &.q-td-changed {
+                          order: 4;
+                        }
+                        &.q-td-created {
+                          order: 3;
+                        }
+                        &.q-td-status {
+                          order: 5;
+                          .row {
+                            flex-wrap: nowrap;
+                            .circle {
+                              display: none;
+                            }
+                          }
+                        }
+                        &.q-td-action {
+                          order: 2;
+                          position: absolute;
+                          top: 5px;
+                          right: 0;
+                        }
+                      }
+                    }
+                  }
+                  .q-table__bottom {
+                    min-height: auto;
+                    .q-btn {
+                      padding: 8.5px 5px;
+                      border-radius: 26px;
+                      min-height: auto;
+                      .q-btn__content {
+                        justify-content: center;
+                      }
+                      .q-icon {
+                        display: none;
+                      }
+                    }
+                  }
+                }
+                .sec-btn {
+                  padding-left: 40px;
+                }
+              }
+
+              .contractor-single-reviews {
+                padding: 0 0 30px 0;
+                .sec-btn {
+                  padding-top: 0;
+                  text-align: center;
+                  .q-btn {
+                    padding: 8.5px 0;
+                    min-height: auto;
+                    border-radius: 26px;
+                    max-width: 250px;
+                    .q-icon {
+                      display: none;
+                    }
+                  }
+                }
+              }
+
+              .contractor-photos {
+                padding: 0;
+                padding-bottom: 25px;
+                .q-card-visual-slider {
+                  padding-bottom: 0;
+                  padding: 0;
+                  .q-card__section {
+                    border: 1px solid #F0F0F0;
+                    border-radius: 10px;
+                    flex: 0 0 100%;
+                    max-width: 100%;
+                    margin-bottom: 7px;
+                    transition: all 0.25s;
+                    padding-bottom: 22px;
+                    &:nth-child(1n) {
+                      margin-right: 0;
+                      margin-left: 0;
+                    } 
+                    &:nth-child(2n) {
+                      margin-left: 0;
+                      margin-right: 0;
+                    } 
+                    .visual-slider {
+                      .q-list {
+                        .content {
+                          padding-top: 0;
+                          padding-bottom: 0;
+                          .q-item__section  {
+                            .q-tab-panels {
+                              .q-tab-panel {
+                                height: 169px;
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                    .desc {
+                      padding-top: 19px;
+                      padding-left: 20px;
+                      .title {
+                        font-size: 18px;
+                        line-height: 18px;
+                        color: #000000;
+                        min-height: 24px;
+                      }
+                    }
+                    .security {
+                      padding-top: 3px;
+                      padding-left: 20px;
+                      .q-btn {
+                        background: white !important;
+                        padding: 0 !important;
+                      }
                     }
                   }
                 }

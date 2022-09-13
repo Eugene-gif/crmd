@@ -324,6 +324,19 @@
               <Documents />
             </div>
           </q-tab-panel>
+
+          <q-tab-panel name="reviews">
+            <div class="section">
+              <Reviews />
+            </div>
+          </q-tab-panel>
+
+          <q-tab-panel name="photo">
+            <div class="section">
+              <Photos />
+            </div>
+          </q-tab-panel>
+
         </q-tab-panels>
         <q-btn
           unelevated
@@ -348,6 +361,8 @@ import Projects from 'components/Contractor/Projects.vue'
 import ProjectInfo from 'components/Contractor/ProjectInfo.vue'
 import Finance from 'components/Contractor/Finance.vue'
 import Documents from 'components/Contractor/Documents.vue'
+import Reviews from 'components/Contractor/Reviews.vue'
+import Photos from 'components/Contractor/Photos.vue'
 
 export default {
   name: 'PageСontractorSingle',
@@ -356,7 +371,9 @@ export default {
     Projects,
     ProjectInfo,
     Finance,
-    Documents
+    Documents,
+    Reviews,
+    Photos
   },
   setup () {
     const tab = ref()

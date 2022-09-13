@@ -18,7 +18,7 @@
         </q-th>
       </template>
       <template v-slot:header-cell-action="props">
-        <q-th :props="props" class="q-th__action">
+        <q-th :props="props">
         </q-th>
       </template>
       <template v-slot:header-cell="props">
@@ -35,6 +35,7 @@
           </i>
         </q-th>
       </template>
+      
 
       <template #body="props">
         <q-tr
@@ -46,13 +47,6 @@
             class="q-td-name"
           >
             <div class="content">{{props.row.name}}</div>
-          </q-td>
-          <q-td
-            key="sum"
-            :props="props"
-            class="q-td-sum"
-          >
-            <div class="content">{{props.row.sum}} руб.</div>
           </q-td>
           <q-td
             key="changed"
@@ -76,6 +70,14 @@
             <div class="row items-center">
               <div class="circle" :class="{active: props.row.status > 1}"></div>
               <div class="content">{{props.row.statusName}}</div>
+            </div>
+          </q-td>
+          <q-td
+            key="action"
+            :props="props"
+            class="q-td-action"
+          >
+            <div class="row">
               <ActionBtn 
                 :propsEl="props.key"
                 :offsetYX="[55, -258]"
@@ -91,24 +93,14 @@
           <q-btn
             unelevated
             no-caps
-            class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+            class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite mb-visible"
           >
-            <div class="block">Создать новый документ</div>
+            <div class="block">Новый документ из шаблонов</div>
             <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
           </q-btn>
         </q-tr>
       </template>
     </q-table>
-    <div class="sec-btn">
-      <q-btn
-        unelevated
-        no-caps
-        class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite btn-big"
-      >
-        <div class="block">Новый документ из шаблонов</div>
-        <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
-      </q-btn>
-    </div>
     
   </div>
 </template>
@@ -137,16 +129,15 @@ export default {
     const columns = ref([
       { name: 'id', label: '', field: 'id', align: 'left' },
       { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
-      { name: 'sum', label: 'Сумма', field: 'sum', align: 'left', sortable: true },
-      { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
       { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
-      { name: 'status', label: 'Статус', field: 'status', align: 'left', sortable: true }
+      { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
+      { name: 'status', label: 'Статус', field: 'status', align: 'left', sortable: true },
+      { name: 'action', label: '', field: 'action', align: 'left', sortable: true },
     ])
     const rows = ref([
       {
         id: 1,
         name: 'Договор №150',
-        sum: '900 000',
         changed: '10:35',
         created: 'Вчера',
         status: 1,
@@ -155,7 +146,6 @@ export default {
       {
         id: 2,
         name: 'Счет №25',
-        sum: '80 000',
         changed: '10:35',
         created: 'Позавчера',
         status: 2,
@@ -164,7 +154,6 @@ export default {
       {
         id: 3,
         name: 'Счет №25',
-        sum: '80 000',
         changed: '10:35',
         created: 'Позавчера',
         status: 3,
