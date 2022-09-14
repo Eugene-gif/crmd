@@ -284,6 +284,7 @@
             <q-tab name="document" label="Документы" />
             <q-tab name="reviews" label="Отзывы" />
             <q-tab name="photo" label="Фото" />
+            <q-tab name="photo2" label="Фото2" />
           </q-tabs>
           <div class="circle bg-grey-3">
             <q-icon size="12px" name="svguse:icons/allIcons.svg#tooltip" color="grey-4" />
@@ -336,6 +337,12 @@
               <Photos />
             </div>
           </q-tab-panel>
+          
+          <q-tab-panel name="photo2">
+            <div class="section">
+              <PhotosInfo />
+            </div>
+          </q-tab-panel>
 
         </q-tab-panels>
         <q-btn
@@ -363,6 +370,7 @@ import Finance from 'components/Contractor/Finance.vue'
 import Documents from 'components/Contractor/Documents.vue'
 import Reviews from 'components/Contractor/Reviews.vue'
 import Photos from 'components/Contractor/Photos.vue'
+import PhotosInfo from 'components/Contractor/PhotosInfo.vue'
 
 export default {
   name: 'PageСontractorSingle',
@@ -373,7 +381,8 @@ export default {
     Finance,
     Documents,
     Reviews,
-    Photos
+    Photos,
+    PhotosInfo
   },
   setup () {
     const tab = ref()
