@@ -50,7 +50,7 @@
     </div>
     <div class="row section">
       <div class="sidebar lg-visible">
-        <div class="avatar ">
+        <div class="avatar" :style="`height: ${contentHeadHeight}px;`">
           <img src="~assets/stroipro.jpg" alt="">
         </div>
         <div class="info">
@@ -98,28 +98,77 @@
           г. Краснодар
         </div>
 
-        <div class="title info-status">
-          Работаем <span class="status bg-positive"></span>
-        </div>
-        <div class="text">Изменить статус</div>
+        <div class="relative-content" ref="stiky">
+          <div class="company">
+            <img src="~assets/stroipro.jpg" alt="">
+            <div class="name">СтройПро</div>
+          </div>
+          <div class="info">
+            <q-list class="q-list-user-info">
+              <q-item
+                link
+                href="`mailto:${scope.opt.email}`"
+              >
+                <q-icon color="black" size="20px" name="svguse:icons/allIcons.svg#mail" />
+              </q-item>
+              <q-item
+                class="link-whatsap"
+                link
+                href="`${scope.opt.whatsapp}`"
+              >
+                <img src="~assets/whatsapp.svg" alt="">
+              </q-item>
+              <q-item
+                class="link-telegram"
+                link
+                href="`${scope.opt.telegram}`"
+              >
+                <img src="~assets/telegram.svg" alt="">
+              </q-item>
+              <q-item
+                class="link-insta"
+                link
+                href="`${scope.opt.instagram}`"
+              >
+                <img src="~assets/instagram.svg" alt="">
+              </q-item>
+            </q-list>
+            <q-item-section class="reviews">
+              <q-tabs
+                v-model="tab"
+                class="q-tabs-reviews"
+              >
+                <q-tab name="1" icon="svguse:icons/allIcons.svg#like" label="25" />
+                <q-tab name="2" icon="svguse:icons/allIcons.svg#dislike" label="2" />
+              </q-tabs>
+              <q-item-label>12 отзывов</q-item-label>
+            </q-item-section>
+          </div>
+          <div class="title info-status">
+            Работаем <span class="status bg-positive"></span>
+          </div>
+          <div class="text info-status-text">Изменить статус</div>
 
-        <div class="title info-mail">
-          info@stroypro.com
-        </div>
-        <div class="text">Общий e-mail</div>
+          <div class="title info-mail">
+            info@stroypro.com
+          </div>
+          <div class="text">Общий e-mail</div>
 
-        <div class="title info-phone">
-          +7 (918) 455-02-16
-        </div>
-        <div class="text">Общий телефон</div>
+          <div class="title info-phone">
+            +7 (918) 455-02-16
+          </div>
+          <div class="text">Общий телефон</div>
 
-        <div class="text info-adres">
-          г. Краснодар, ул. Красных Партизан, д. 232, офис 307
-        </div>
+          <div class="text info-adres">
+            г. Краснодар, ул. Красных Партизан, д. 232, офис 307
+          </div>
 
-        <div class="text info-sait">
-          www.stroypro.com
+          <div class="text info-sait">
+            www.stroypro.com
+          </div>
         </div>
+        
+        
       </div>
       <div class="content">
         <div class="foto-collage mb-visible">
@@ -128,38 +177,40 @@
           <img src="~assets/stroipro.jpg" alt="">
           <img src="~assets/anton.jpg" alt="">
         </div>
-        <div class="sections-btns">
-          <q-btn 
-            outline
-            unelevated
-            no-caps
-            class="q-mr-xs my-btn my-effect h-dark"
-            color="grey-3"
-            style="background: #F7F7F7 !important;"
-          >
-            <span class="text-black block">Ставка: 15%</span>
-          </q-btn>
-          <q-btn 
-            outline
-            unelevated
-            no-caps
-            class="q-mr-xs my-btn my-effect h-opacity"
-            color="positive"
-          >
-            <span class="text-black block">Работы и услуги</span>
-          </q-btn>
-          <q-btn 
-            outline
-            unelevated
-            no-caps
-            class="q-mr-xs my-btn my-effect h-opacity"
-            color="positive"
-          >
-            <span class="text-black block">Мебель для общественных помещений</span>
-          </q-btn>
-        </div>
-        <div class="description">
-          Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в 
+        <div class="content-head" ref="contentHead">
+          <div class="sections-btns">
+            <q-btn 
+              outline
+              unelevated
+              no-caps
+              class="q-mr-xs my-btn my-effect h-dark"
+              color="grey-3"
+              style="background: #F7F7F7 !important;"
+            >
+              <span class="text-black block">Ставка: 15%</span>
+            </q-btn>
+            <q-btn 
+              outline
+              unelevated
+              no-caps
+              class="q-mr-xs my-btn my-effect h-opacity"
+              color="positive"
+            >
+              <span class="text-black block">Работы и услуги</span>
+            </q-btn>
+            <q-btn 
+              outline
+              unelevated
+              no-caps
+              class="q-mr-xs my-btn my-effect h-opacity"
+              color="positive"
+            >
+              <span class="text-black block">Мебель для общественных помещений</span>
+            </q-btn>
+          </div>
+          <div class="description">
+            Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в 
+          </div>
         </div>
         <div class="region region-mobile">
           <div class="city" style="margin-right: 4px;">
@@ -362,7 +413,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import Information from 'components/Contractor/Information.vue'
 import Projects from 'components/Contractor/Projects.vue'
 import ProjectInfo from 'components/Contractor/ProjectInfo.vue'
@@ -384,12 +435,35 @@ export default {
     Photos,
     PhotosInfo
   },
+  
   setup () {
     const tab = ref()
+    const contentHead = ref()
+    const stiky = ref()
+
+    const contentHeadHeight = ref()
     const tab2 = ref('information')
+
+    function stickySidebar() {
+      if (window.pageYOffset > stiky.value.offsetTop) {
+        stiky.value.classList.add('stiky')
+      } 
+      if (window.pageYOffset < stiky.value.offsetTop) {
+        stiky.value.classList.remove('stiky')
+      } 
+    }
+    onMounted(() => {
+      contentHeadHeight.value = contentHead.value.clientHeight
+      stickySidebar()
+      window.addEventListener('scroll', stickySidebar)
+    })
     return {
       tab,
-      tab2
+      tab2,
+      stiky,
+      contentHead,
+      contentHeadHeight,
+      stickySidebar
     }
   }
 }
