@@ -638,7 +638,8 @@
             .content {
               .q-item__section {
                 .q-tab-panels {
-                  .q-tab-panel {
+                  .q-tab-panel,
+                  .q-panel {
                     height: 329px;
                     img {
                       transition: all 0.25s;
@@ -771,7 +772,8 @@
             .content {
               .q-item__section {
                 .q-tab-panels {
-                  .q-tab-panel {
+                  .q-tab-panel,
+                  .q-panel {
                     height: 210px;
                   }
                 }
@@ -1283,7 +1285,8 @@
               .content {
                 .q-item__section {
                   .q-tab-panels {
-                    .q-tab-panel {
+                    .q-tab-panel,
+                    .q-panel {
                       height: 196px;
                     }
                   }

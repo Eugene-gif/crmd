@@ -42,7 +42,7 @@ export default {
       {
         id: 1,
         images: [
-          '/project-1.jpg',
+          ' ',
           '/project-2.jpg',
           '/project-3.jpg',
         ],

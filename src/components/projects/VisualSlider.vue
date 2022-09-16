@@ -29,9 +29,11 @@
               v-for="item in tabList"
               :key="item"
               :name="item"
-            >
-              <img :src="item" alt="">
-            </q-tab-panel>
+              v-touch-swipe.mouse.right="handleSwipePrev"
+              v-touch-swipe.mouse.left="handleSwipeNext"
+              :style="`background: url(${item})`"
+              :class="{'image-chek': item == ' '}"
+            />
           </q-tab-panels>
           
         </q-item-section>
@@ -54,33 +56,39 @@ export default {
     const openTabs = ref(false)
     const openModal = ref(false)
     const tabList = props.images
+    function nextTab(val) {
+      const lengthTabs = tabList.length - 1
+      const currentTab = tab.value
+      const indexCurrent = tabList.indexOf(currentTab)
+      let nextSlideIndex = 0
+
+      if (val === 'prev') {
+        nextSlideIndex = indexCurrent - 1
+        if (nextSlideIndex < 0) {
+          nextSlideIndex = lengthTabs
+        }
+      }
+      if (val === 'next') {
+        nextSlideIndex = indexCurrent + 1
+        if (nextSlideIndex > lengthTabs) {
+          nextSlideIndex = 0
+        }
+      }
+      tab.value = tabList[nextSlideIndex]
+    }
     return {
       openModal,
       openTabs,
       text: ref(),
       tab,
       tabList,
-
-      nextTab(val) {
-        const lengthTabs = tabList.length - 1
-        const currentTab = tab.value
-        const indexCurrent = tabList.indexOf(currentTab)
-        let nextSlideIndex = 0
-  
-        if (val === 'prev') {
-          nextSlideIndex = indexCurrent - 1
-          if (nextSlideIndex < 0) {
-            nextSlideIndex = lengthTabs
-          }
-        }
-        if (val === 'next') {
-          nextSlideIndex = indexCurrent + 1
-          if (nextSlideIndex > lengthTabs) {
-            nextSlideIndex = 0
-          }
-        }
-        tab.value = tabList[nextSlideIndex]
-      }
+      nextTab,
+      handleSwipeNext ({ evt, ...newInfo }) {
+        nextTab('next')
+      },
+      handleSwipePrev ({ evt, ...newInfo }) {
+        nextTab('prev')
+      },
     }
   }
 }
