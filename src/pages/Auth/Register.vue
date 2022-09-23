@@ -19,7 +19,7 @@
           </q-item>
           <q-item></q-item>
         </div>
-
+        <!-- <canvas ref="figure"></canvas> -->
         <!-- <q-input
           filled
           type="text"
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex';
 import { authApi } from 'src/api/auth';
 import { useQuasar } from 'quasar'
@@ -229,10 +229,316 @@ export default {
     }
 
     function onFileChange(file) {
+      console.log(file)
       let uploadFile = file[0]
       form.value.image = uploadFile
     }
 
+    // генерация картинки
+    const figure = ref()
+    const link = ref()
+
+    function addColor(letter) {
+      let palette = [
+        {color: '#6C5DD3'},
+        {color: '#58A334'},
+        {color: '#EC6944'},
+        {color: '#CD3F5C'},
+        {color: '#EB872B'},
+        {color: '#2CA7CA'},
+        {color: '#03AA82'}
+      ]
+      let i = 0
+      let letters = [
+        {
+          number: 'а',
+          colorNumber: ''
+        },
+        {
+          number: 'б',
+          colorNumber: ''
+        },
+        {
+          number: 'в',
+          colorNumber: ''
+        },
+        {
+          number: 'г',
+          colorNumber: ''
+        },
+        {
+          number: 'д',
+          colorNumber: ''
+        },
+        {
+          number: 'е',
+          colorNumber: ''
+        },
+        {
+          number: 'ж',
+          colorNumber: ''
+        },
+        {
+          number: 'з',
+          colorNumber: ''
+        },
+        {
+          number: 'и',
+          colorNumber: ''
+        },
+        {
+          number: 'к',
+          colorNumber: ''
+        },
+        {
+          number: 'л',
+          colorNumber: ''
+        },
+        {
+          number: 'м',
+          colorNumber: ''
+        },
+        {
+          number: 'н',
+          colorNumber: ''
+        },
+        {
+          number: 'о',
+          colorNumber: ''
+        },
+        {
+          number: 'п',
+          colorNumber: ''
+        },
+        {
+          number: 'р',
+          colorNumber: ''
+        },
+        {
+          number: 'с',
+          colorNumber: ''
+        },
+        {
+          number: 'т',
+          colorNumber: ''
+        },
+        {
+          number: 'у',
+          colorNumber: ''
+        },
+        {
+          number: 'ф',
+          colorNumber: ''
+        },
+        {
+          number: 'х',
+          colorNumber: ''
+        },
+        {
+          number: 'ц',
+          colorNumber: ''
+        },
+        {
+          number: 'ч',
+          colorNumber: ''
+        },
+        {
+          number: 'ш',
+          colorNumber: ''
+        },
+        {
+          number: 'щ',
+          colorNumber: ''
+        },
+        {
+          number: 'ы',
+          colorNumber: ''
+        },
+        {
+          number: 'э',
+          colorNumber: ''
+        },
+        {
+          number: 'ю',
+          colorNumber: ''
+        },
+        {
+          number: 'я',
+          colorNumber: ''
+        },
+        {
+          number: 'a',
+          colorNumber: ''
+        },
+        {
+          number: 'b',
+          colorNumber: ''
+        },
+        {
+          number: 'c',
+          colorNumber: ''
+        },
+        {
+          number: 'd',
+          colorNumber: ''
+        },
+        {
+          number: 'e',
+          colorNumber: ''
+        },
+        {
+          number: 'f',
+          colorNumber: ''
+        },
+        {
+          number: 'g',
+          colorNumber: ''
+        },
+        {
+          number: 'h',
+          colorNumber: ''
+        },
+        {
+          number: 'i',
+          colorNumber: ''
+        },
+        {
+          number: 'j',
+          colorNumber: ''
+        },
+        {
+          number: 'k',
+          colorNumber: ''
+        },
+        {
+          number: 'l',
+          colorNumber: ''
+        },
+        {
+          number: 'm',
+          colorNumber: ''
+        },
+        {
+          number: 'n',
+          colorNumber: ''
+        },
+        {
+          number: 'o',
+          colorNumber: ''
+        },
+        {
+          number: 'p',
+          colorNumber: ''
+        },
+        {
+          number: 'q',
+          colorNumber: ''
+        },
+        {
+          number: 'r',
+          colorNumber: ''
+        },
+        {
+          number: 's',
+          colorNumber: ''
+        },
+        {
+          number: 't',
+          colorNumber: ''
+        },
+        {
+          number: 'u',
+          colorNumber: ''
+        },
+        {
+          number: 'v',
+          colorNumber: ''
+        },
+        {
+          number: 'w',
+          colorNumber: ''
+        },
+        {
+          number: 'x',
+          colorNumber: ''
+        },
+        {
+          number: 'y',
+          colorNumber: ''
+        },
+        {
+          number: 'z',
+          colorNumber: ''
+        }
+      ]
+      letters.map((el) => {
+        if (i === 6) {
+          i = 0
+        } else {
+          i++
+        }
+        el.colorNumber = palette[i].color
+      })
+      let color
+      letters.filter(el => {
+        if (el.number === letter) {
+          return color = el.colorNumber
+        }
+      })
+      return color
+    }
+    function random() {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+      for (var i = 0; i < 5; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+      }
+      let data = `${new Date()}`
+      let dataSplit = data.split(' ')
+      let dataSplit4 = dataSplit[4].split(':')
+      let arrData = `${dataSplit[0]}${dataSplit[1]}${dataSplit[2]}${dataSplit[3]}${dataSplit4[0]}${dataSplit4[1]}${dataSplit4[2]}`
+      return `${text}${arrData}`;
+    }
+    function generateImage(canvas, colorBkg) {
+      const ctx = canvas.getContext('2d')
+      const ctxText = canvas.getContext('2d')
+      let image = new Image()
+
+      canvas.width = 314
+      canvas.height = 314
+
+      ctx.beginPath()
+
+      ctxText.font = 'normal 157px graphik, sans-serif'
+      ctxText.fillStyle = 'white'
+      ctxText.globalCompositeOperation='destination-over'
+      ctxText.fillText('АВ', 55, 210)
+
+      ctx.rect(0, 0, 314, 314)
+      ctx.fillStyle = colorBkg
+      
+      ctx.fill()
+      ctx.stroke()
+
+      image.src = canvas.toDataURL("image/png")
+      // image.crossOrigin = "anonymous"
+      
+      // const fileImage = new File([image], random()+'.png', {
+      //   type: "image/png"
+      // })
+      // form.value.image = image
+      form.value.user_name = image.src
+      console.log(form.value.user_name)
+    }
+
+    // let userInfo = resp.data.data.user
+    // let forstLetter = userInfo.name.slice(0, 1).toString()
+    // userInfo["colorBkg"] = addColor(forstLetter)
+
+    onMounted(() => {
+      // generateImage(figure.value, addColor('а'))
+    })
     return {
       accept,
       form,
@@ -245,7 +551,13 @@ export default {
       passEye2,
 
       onSubmit,
-      onFileChange
+      onFileChange,
+
+      figure,
+      link,
+      addColor,
+      // generateImage,
+      random
     }
   }
 }
