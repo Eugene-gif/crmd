@@ -50,8 +50,16 @@
     </div>
     <div class="row section">
       <div class="sidebar lg-visible">
-        <div class="avatar" :style="`height: ${contentHeadHeight}px;`">
-          <img src="~assets/stroipro.jpg" alt="">
+        <div
+          class="avatar"
+          :style="`height: ${contentHeadHeight}px;`"
+        >
+          <img
+            src="~assets/stroipro.jpg"
+            alt=""
+            @mouseover="hideSlider(true)"
+            @mouseleave="hideSlider(false)"
+          >
         </div>
         <div class="info">
           <q-list class="q-list-user-info">
@@ -167,15 +175,24 @@
             www.stroypro.com
           </div>
         </div>
-        
-        
       </div>
+
+      
       <div class="content">
-        <div class="foto-collage mb-visible">
-          <img src="~assets/stroipro.jpg" alt="">
-          <img src="~assets/anton.jpg" alt="">
-          <img src="~assets/stroipro.jpg" alt="">
-          <img src="~assets/anton.jpg" alt="">
+        <div
+          class="foto-collage mb-visible"
+          :style="`height: ${contentHeadHeight}px;`"
+          ref="SecHoverSlider"
+        >
+          <div class="scroll-sec" ref="HoverSlider">
+            <img src="~assets/stroipro.jpg" alt="">
+            <img src="~assets/anton.jpg" alt="">
+            <img src="~assets/stroipro.jpg" alt="">
+            <img src="~assets/anton.jpg" alt="">
+            <img src="~assets/anton.jpg" alt="">
+            <img src="~assets/stroipro.jpg" alt="">
+            <img src="~assets/anton.jpg" alt="">
+          </div>
         </div>
         <div class="content-head" ref="contentHead">
           <div class="sections-btns">
@@ -442,6 +459,9 @@ export default {
     const stiky = ref()
 
     const contentHeadHeight = ref()
+    const HoverSlider = ref()
+    const SecHoverSlider = ref()
+    const hoverVal = false
     const tab2 = ref('information')
 
     function stickySidebar() {
@@ -452,9 +472,57 @@ export default {
         stiky.value.classList.remove('stiky')
       } 
     }
+
+    function hoverSlider(val) {
+      let i = 5
+      let iArr = 0
+      let ArrElements = HoverSlider.value.querySelectorAll('img')
+
+      const inetval1 = setInterval(() => {
+        HoverSlider.value.scrollTo({
+          top: 0,
+          left: i,
+          behavior: 'smooth'
+        })
+        i += 5
+      }, 70)
+      
+      const inetval2 = setInterval(() => {
+        if (iArr > ArrElements.length) {
+          iArr = 0
+        } else {
+          iArr += 1
+        }
+
+        if (val) {
+          let newEl = document.createElement("img")
+          let imgSrc = ArrElements[iArr].getAttribute('src')
+          newEl.setAttribute('src', imgSrc)
+          HoverSlider.value.appendChild(newEl)
+        }
+
+        // let firstEl = HoverSlider.value.querySelector('img')
+        // HoverSlider.value.removeChild(firstEl)
+      }, 1500)
+        // if (val === false) {
+        //   clearInterval(inetval1)
+        //   clearInterval(inetval2)
+        // }
+    }
+    function hideSlider(val) {
+      if (val === true) {
+        SecHoverSlider.value.style.opacity = '1';
+      } 
+      if (val === false) {
+        SecHoverSlider.value.style.opacity = '0';
+      }
+    }
     onMounted(() => {
       contentHeadHeight.value = contentHead.value.clientHeight
       stickySidebar()
+      if (window.innerWidth > 772) {
+        hoverSlider(true)
+      }
       window.addEventListener('scroll', stickySidebar)
     })
     return {
@@ -463,7 +531,12 @@ export default {
       stiky,
       contentHead,
       contentHeadHeight,
-      stickySidebar
+      HoverSlider,
+      SecHoverSlider,
+      hoverVal,
+      stickySidebar,
+      hoverSlider,
+      hideSlider
     }
   }
 }

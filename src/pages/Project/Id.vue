@@ -247,7 +247,7 @@
             </div>
           </q-card-section>
           <q-card-section class="canvas">
-            <grafic/>
+            <GraficGant />
           </q-card-section>
         </q-card>
       </q-expansion-item>
@@ -872,7 +872,7 @@
 import Dialog from 'pages/Project/dialog-create.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
-import grafic from 'components/GraficGant.vue'
+import GraficGant from 'components/GraficGant.vue'
 import BtnDate from 'components/BtnDate.vue'
 
 import { ref } from 'vue'
@@ -948,7 +948,7 @@ export default {
     Dialog,
     ActionBtn,
     VisualSlider,
-    grafic,
+    GraficGant,
     BtnDate
   },
   setup () {
