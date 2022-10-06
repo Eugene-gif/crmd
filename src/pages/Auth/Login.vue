@@ -151,7 +151,7 @@ export default {
             setTimeout(() => {
               $q.notify({
                 color: 'red',
-                timeout: 200000,
+                timeout: 2000,
                 message: 'Произошла ошибка, повторите попытку позже'
               })
             }, 0)

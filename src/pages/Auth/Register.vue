@@ -510,7 +510,7 @@ export default {
 
       ctx.beginPath()
 
-      ctxText.font = 'normal 157px graphik, sans-serif'
+      ctxText.font = 'normal 110px graphik, sans-serif'
       ctxText.fillStyle = 'white'
       ctxText.globalCompositeOperation='destination-over'
       ctxText.fillText('АВ', 55, 210)

@@ -12,7 +12,7 @@ export default ({
   setup () {
     const chartCanvas = ref()
     const STEP_HEIGHT = 7
-    const PADDING = 20
+    const PADDING = 10
     const WIDTH = 659
     const HEIGHT = 32 * STEP_HEIGHT + (PADDING * 2) + 84
     const DPI_WIDTH = WIDTH * 2
@@ -28,7 +28,7 @@ export default ({
       canvas.height = VIEW_HEIGHT
       
       const [xMin, xMax] = computeBoundaries(data)
-      console.log(xMax)
+
       const stepX = VIEW_WIDTH / xMax
       const step = DPI_WIDTH / xMax 
       const xRatio = VIEW_WIDTH / stepX / (xMax - xMin)
@@ -36,7 +36,14 @@ export default ({
       ctx.beginPath()
       ctx.strokeStyle = '#bbb'
       ctx.font = 'normal 20px sans-serif'
-      for (let i = 1; i <= xMax; i++) {
+      
+      for (let i = 0; i <= xMax; i++) {
+        const x = step * i
+        ctx.fillText(i, x - 28, 25)
+        ctx.moveTo(x, 0)
+        ctx.lineTo(x, VIEW_HEIGHT)
+      }
+      for (let i = 0; i <= xMax; i++) {
         const x = step * i
         ctx.fillText(i, x - 28, 25)
         ctx.moveTo(x, 0)
@@ -52,18 +59,20 @@ export default ({
       ctx.lineWidth = 18
       ctx.lineCap = 'round'
       
-      console.log(stepX)
+      // console.log('ratio ' + xMin)
+      
       for (const [x1, x2] of data) {
         let result = x1 + x2
         let y = i * 84
         
-        ctx.moveTo(x1 * stepX * xRatio + PADDING + PADDING + 10, y);
+        ctx.moveTo(x1 * stepX * xRatio + PADDING + PADDING + 0, y);
         ctx.lineTo(result * stepX * xRatio - PADDING, y)
         i++
       }
       ctx.stroke()
       ctx.closePath()
     }
+
     function computeBoundaries(data) {
       let min
       let max
@@ -72,9 +81,7 @@ export default ({
       let maxX1
       let minX2
       let maxX2
-      // 15520032
-      
-      // 15424128
+
       for (const [x1, x2] of data) {  
         if (typeof minX1 !== 'number') minX1 = x1
         if (typeof maxX1 !== 'number') maxX1 = x1
@@ -99,13 +106,13 @@ export default ({
 
     onMounted(() => {
       chart(chartCanvas.value, [
-        [0,15],
-        [10,8],
-        [5,6],
-        [15,18],
-        [10,4],
-        [2,16],
-        [3,4],
+        [1,4],
+        [0,8],
+        [0,6],
+        [2,30],
+        [0,4],
+        [0,12],
+        [0,4],
       ])
     })
 
