@@ -1065,6 +1065,70 @@
     }
   }
 }
+.contractor-dialog-images {
+  .q-card {
+    padding-top: 0;
+    padding-bottom: 0;
+    .head {
+      position: relative;
+      .close {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        z-index: 10;
+        @media (max-width: 772px) {
+          top: 75px;
+        }
+      }
+    }
+  }
+  .q-card-visual-slider {
+    .dialog-section {
+      max-width: 100vw;
+      padding: 0;
+      border-radius: 0;
+      .visual-slider {
+        padding: 49px 62px 60px 62px;
+        height: 100vh;
+        width: 100%;
+        @media (max-width: 772px) {
+          padding: 49px 25px 49px 25px;
+        }
+        .q-list {
+          .content {
+            .q-item__section {
+              .left {
+                left: -45px;
+              }
+              .right {
+                right: -45px;
+              }
+              .q-tab-panels {
+                border-radius: 0;
+                position: relative;
+                .q-panel,
+                .q-tab-panel {
+                  height: calc(100vh - 142px);
+                  background-position: center !important;
+                  background-size: 100% !important;
+                  background-repeat: no-repeat !important;
+                }
+              }
+              .title-slider {
+                font-size: 24px;
+                text-align: center;
+                bottom: -45px;
+                width: 100%;
+                position: absolute;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 
 .active {
   background: green;

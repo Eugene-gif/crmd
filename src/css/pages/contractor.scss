@@ -1073,6 +1073,9 @@
                       img {
                         width: 100%;
                       }
+                      @media (min-width: 1060px) and (max-width: 1440px) {
+                        height: 9.5vw;
+                      }
                     }
                     .subtitle {
                       font-weight: 500;
@@ -1083,12 +1086,26 @@
                     }
                   }
                 }
+                .visuaisation-4in4 {
+                  .item {
+                    .image {
+                      position: relative;
+                      cursor: pointer;
+                      img {
+                        position: absolute;
+                        height: 100%;
+                        object-fit: cover;
+                      }
+                    }
+                  }
+                }
                 .visuaisation-3in3 {
                   .item {
                     flex: 0 0 calc(33.333333333% - 35px);
                     max-width: calc(33.333333333% - 35px);
                     margin: 0 20px;
                     margin-top: 50px;
+                    position: relative;
                     &:nth-child(4n) {
                       margin-right: 20px;
                     }
@@ -1099,6 +1116,9 @@
 
                     .image {
                       height: 15.9vw;
+                      img {
+                        position: absolute;
+                      }
                     }
                     .subtitle {
                       margin-top: 20px;

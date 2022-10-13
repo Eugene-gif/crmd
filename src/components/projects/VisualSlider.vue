@@ -1,8 +1,6 @@
 <template>
   <div class="visual-slider">
-    
     <q-list :class="{active: openModal}">
-
       <q-item class="content" v-show="!openTabs">
         <q-item-section>
           <q-icon
@@ -56,6 +54,7 @@ export default {
     const openTabs = ref(false)
     const openModal = ref(false)
     const tabList = props.images
+    
     function nextTab(val) {
       const lengthTabs = tabList.length - 1
       const currentTab = tab.value

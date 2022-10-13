@@ -536,7 +536,8 @@ export default {
       hoverVal,
       stickySidebar,
       hoverSlider,
-      hideSlider
+      hideSlider,
+      
     }
   }
 }
