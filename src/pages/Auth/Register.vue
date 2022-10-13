@@ -513,7 +513,7 @@ export default {
       ctxText.font = 'normal 110px graphik, sans-serif'
       ctxText.fillStyle = 'white'
       ctxText.globalCompositeOperation='destination-over'
-      ctxText.fillText('АВ', 55, 210)
+      ctxText.fillText('АВ', 80, 195)
 
       ctx.rect(0, 0, 314, 314)
       ctx.fillStyle = colorBkg

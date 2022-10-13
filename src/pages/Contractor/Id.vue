@@ -474,7 +474,7 @@ export default {
     }
 
     function hoverSlider(val) {
-      let i = 5
+      let i = 0
       let iArr = 0
       let ArrElements = HoverSlider.value.querySelectorAll('img')
 
@@ -484,7 +484,7 @@ export default {
           left: i,
           behavior: 'smooth'
         })
-        i += 5
+        i += 3
       }, 70)
       
       const inetval2 = setInterval(() => {
@@ -503,7 +503,7 @@ export default {
 
         // let firstEl = HoverSlider.value.querySelector('img')
         // HoverSlider.value.removeChild(firstEl)
-      }, 1500)
+      }, 1700)
         // if (val === false) {
         //   clearInterval(inetval1)
         //   clearInterval(inetval2)
