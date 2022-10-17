@@ -5,7 +5,10 @@
     transition-hide="fade" 
     class="my-dialog estimates-dialog"
   >
-    <DialogPosition @modalFalse="modalFalse" />
+    <DialogEdit
+      @modalFalse="modalFalse"
+      :editValue="dataEdit"
+    />
   </q-dialog>
   <q-dialog
     v-model="dialogSecurity"
@@ -29,7 +32,10 @@
     transition-hide="fade" 
     class="my-dialog estimates-dialog-export estimates-dialog-settings"
   >
-    <DialogSettings @modalFalse="modalFalse" />
+    <DialogSettings
+      @modalFalse="modalFalse"
+      :editData="dataEdit"
+    />
   </q-dialog>
   <q-page class="page-estimates page-estimates-all">
     <div class="row justify-between items-center">
@@ -226,6 +232,7 @@
         <EstimateTable
           :columns="columnsTable"
           :rows="rowTable"
+          @editModal="startEditModal"
         />
       </q-expansion-item>
       
@@ -327,7 +334,7 @@
 <script>
 import { ref } from 'vue'
 import EstimateTable from 'components/Table/EstimateTable.vue'
-import DialogPosition from 'pages/Estimates/dialog-position.vue'
+import DialogEdit from 'pages/Estimates/dialog-edit.vue'
 import DialogSecurity from 'pages/Estimates/dialog-security.vue'
 import DialogExport from 'pages/Estimates/dialog-export.vue'
 import DialogSettings from 'pages/Estimates/dialog-settings.vue'
@@ -440,7 +447,7 @@ export default {
   name: 'PageEstimates',
   components: {
     EstimateTable,
-    DialogPosition,
+    DialogEdit,
     DialogSecurity,
     DialogExport,
     DialogSettings,
@@ -451,6 +458,11 @@ export default {
     const dialogSecurity = ref(false)
     const dialogExport = ref(false)
     const dialogSettings = ref(false)
+    const dataEdit = ref([])
+    function startEditModal(val) {
+      dialogPosition.value = true
+      dataEdit.value = val
+    }
     return {
       dialogPosition,
       dialogSecurity,
@@ -458,8 +470,10 @@ export default {
       columnsTable,
       dialogSettings,
       rowTable,
+      dataEdit,
       val: ref(true),
       cutTitle,
+      startEditModal,
       modalFalse() {
         dialogPosition.value = false
         dialogSecurity.value = false

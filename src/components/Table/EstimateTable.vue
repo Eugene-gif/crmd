@@ -59,6 +59,7 @@
     <template #body="props">
       <q-tr
         :props="props"
+        @dblclick="editModal(props.row)"
       >
         <q-td
           key="id"
@@ -364,15 +365,15 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'EstimateTable',
   props: {
     columns: Array,
     rows: Array
   },
-  setup (props) {
+  setup (props, { emit }) {
     function colorStatus(statusId) {
       if (statusId === 1) {
         return 'positive'
@@ -384,9 +385,13 @@ export default {
         return 'grey-7'
       }
     }
+    function editModal(val) {
+      emit('editModal', val)
+    }
     return {
-      colorStatus
+      colorStatus,
+      editModal,
     }
   }
-}
+})
 </script>

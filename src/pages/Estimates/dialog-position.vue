@@ -120,7 +120,7 @@ export default ({
   components: {
     BtnDate
   }, 
-  setup () {
+  setup (props) {
     const selectDropbox = ref();
     return {
       select1: ref(
