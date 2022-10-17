@@ -212,7 +212,7 @@ export default {
             $q.notify({
               color: 'red',
               timeout: 3000,
-              message: 'Произошла ошибка, повторите попытку позже'
+              message: 'Такой e-mail уже зарегистрирован'
             })
           }, 0)
         }

@@ -146,7 +146,7 @@
           key="total"
           :props="props"
           class="td-total"
-          @click="props.row.smetaVal = !props.row.smetaVal"
+          @click.stop="openSmeta(props.row.id) "
           :class="{open: props.row.smetaVal}"
         >
           <div class="td-content-section">
@@ -208,6 +208,7 @@
         :key="smeta"
         class="q-tr-smeta"
         v-show="props.row.smetaVal"
+        @click="chooseSmeta(smeta)"
       >
         <q-td key="id" class="td-id"/>
         <q-td
@@ -374,6 +375,7 @@ export default defineComponent({
     rows: Array
   },
   setup (props, { emit }) {
+    const activeSmeta = ref()
     function colorStatus(statusId) {
       if (statusId === 1) {
         return 'positive'
@@ -385,12 +387,22 @@ export default defineComponent({
         return 'grey-7'
       }
     }
+    function openSmeta(val) {
+      activeSmeta.value = val
+      emit('openSmeta', val)
+    }
     function editModal(val) {
       emit('editModal', val)
     }
+    function chooseSmeta(value) {
+      emit('chooseSmeta', activeSmeta.value, value)
+    }
     return {
+      activeSmeta,
       colorStatus,
       editModal,
+      openSmeta,
+      chooseSmeta
     }
   }
 })

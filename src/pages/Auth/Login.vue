@@ -152,7 +152,7 @@ export default {
               $q.notify({
                 color: 'red',
                 timeout: 2000,
-                message: 'Произошла ошибка, повторите попытку позже'
+                message: 'Неправильный логин или пароль'
               })
             }, 0)
           }

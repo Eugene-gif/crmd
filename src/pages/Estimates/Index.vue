@@ -233,6 +233,8 @@
           :columns="columnsTable"
           :rows="rowTable"
           @editModal="startEditModal"
+          @openSmeta="onOpenSmeta"
+          @chooseSmeta="onChooseSmeta"
         />
       </q-expansion-item>
       
@@ -382,6 +384,7 @@ const rowTable = ref([
     smetaVal: false,
     smeta: [
       {
+        id: 5,
         imageUrl: '/icons/stroipro.jpg',
         name: "ООО «СтройПро»",
         price: "1 200",
@@ -463,6 +466,33 @@ export default {
       dialogPosition.value = true
       dataEdit.value = val
     }
+    function onOpenSmeta(val) {
+      rowTable.value.filter((item) => {
+        if (item.id === val) {
+          item.smetaVal = !item.smetaVal
+        }
+      })
+    }
+    function onChooseSmeta(smeta, val) {
+      rowTable.value.filter((item) => {
+        if (item.id === smeta) {
+          item.price = val.price
+          item.metrics = val.metrics
+          item.total = val.total
+          item.deadline = val.deadline
+
+          item.status.id = val.status.id
+          item.status.name = val.status.name
+
+          item.status.user = val.name
+          // item.status.imageUrl = val.imageUrl
+          item.status.imageUrl = '/icons/anton.jpg'
+
+          item.procent = val.procent
+          item.agent = val.agent
+        }
+      })
+    }
     return {
       dialogPosition,
       dialogSecurity,
@@ -474,6 +504,8 @@ export default {
       val: ref(true),
       cutTitle,
       startEditModal,
+      onOpenSmeta,
+      onChooseSmeta,
       modalFalse() {
         dialogPosition.value = false
         dialogSecurity.value = false
