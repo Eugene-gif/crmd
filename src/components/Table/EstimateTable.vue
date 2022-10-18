@@ -59,7 +59,6 @@
     <template #body="props">
       <q-tr
         :props="props"
-        @dblclick="editModal(props.row)"
       >
         <q-td
           key="id"
@@ -74,6 +73,7 @@
         <q-td
           key="name"
           :props="props"
+          @dblclick="editModal(props.row, 'title')"
         >
           <div class="td-content-section td-content-name">
             <q-icon
@@ -105,6 +105,7 @@
         <q-td
           key="room"
           :props="props"
+          @dblclick="editModal(props.row, 'room')"
         >
           <div class="td-content-section">
             <div class="text">
@@ -115,6 +116,7 @@
         <q-td
           key="desc"
           :props="props"
+          @dblclick="editModal(props.row, 'desc')"
         >
           <div class="td-content-section">
             <div class="text">
@@ -125,6 +127,7 @@
         <q-td
           key="metrics"
           :props="props"
+          @dblclick="editModal(props.row, 'metrics')"
         >
           <div class="td-content-section">
             <div class="text">
@@ -135,6 +138,7 @@
         <q-td
           key="price"
           :props="props"
+          @dblclick="editModal(props.row, 'price')"
         >
           <div class="td-content-section">
             <div class="text">
@@ -146,7 +150,7 @@
           key="total"
           :props="props"
           class="td-total"
-          @click.stop="openSmeta(props.row.id) "
+          @click.stop="openSmeta(props.row.id)"
           :class="{open: props.row.smetaVal}"
         >
           <div class="td-content-section">
@@ -162,6 +166,7 @@
         <q-td
           key="deadline"
           :props="props"
+          @dblclick="editModal(props.row, 'deadline')"
         >
           <div class="td-content-section">
             <div class="text">
@@ -172,6 +177,7 @@
         <q-td
           key="status"
           :props="props"
+          @dblclick="editModal(props.row, 'status')"
         >
           <div class="td-content-section td-content-status">
             <div class="status">
@@ -184,6 +190,7 @@
         <q-td
           key="procent"
           :props="props"
+          @dblclick="editModal(props.row, 'procent')"
         >
           <div class="td-content-section">
             <div class="text">
@@ -391,8 +398,8 @@ export default defineComponent({
       activeSmeta.value = val
       emit('openSmeta', val)
     }
-    function editModal(val) {
-      emit('editModal', val)
+    function editModal(val, field) {
+      emit('editModal', val, field)
     }
     function chooseSmeta(value) {
       emit('chooseSmeta', activeSmeta.value, value)

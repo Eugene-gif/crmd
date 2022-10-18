@@ -8,6 +8,7 @@
     <DialogEdit
       @modalFalse="modalFalse"
       :editValue="dataEdit"
+      :activeField="onActiveField"
     />
   </q-dialog>
   <q-dialog
@@ -462,7 +463,10 @@ export default {
     const dialogExport = ref(false)
     const dialogSettings = ref(false)
     const dataEdit = ref([])
-    function startEditModal(val) {
+    const onActiveField = ref()
+
+    function startEditModal(val, field) {
+      onActiveField.value = field
       dialogPosition.value = true
       dataEdit.value = val
     }
@@ -490,6 +494,7 @@ export default {
 
           item.procent = val.procent
           item.agent = val.agent
+          item.smetaVal = !item.smetaVal
         }
       })
     }
@@ -501,6 +506,7 @@ export default {
       dialogSettings,
       rowTable,
       dataEdit,
+      onActiveField,
       val: ref(true),
       cutTitle,
       startEditModal,
