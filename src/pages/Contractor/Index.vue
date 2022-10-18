@@ -136,6 +136,7 @@
         <q-tr
           :props="props"
           :class="{visibility: props.row.show}"
+          @dblclick="openContactor(props.row.id)"
         >
           <q-td
             key="content"
@@ -190,6 +191,7 @@
             <ActionBtn 
               :propsEl="props.id"
               :offsetYX="[55, -258]"
+              :actionfunc="actionfunc"
               class="item"
             />
             <div class="projects-section item">
@@ -500,6 +502,34 @@ export default {
       sortBy: 'id',
       rowsPerPage: 0
     })
+    function openContactor(id) {
+      window.location.href = `${window.location.href}/${id}`
+    }
+
+    const actionfunc = ref([
+      {
+        title: 'Поделиться сметой',
+        emmit: 'actionShare'
+      },
+      {
+        title: 'Написать сообщение',
+        emmit: 'actionWrite'
+      },
+      {
+        title: 'Добавить отзыв',
+        emmit: 'actionAddRew'
+      },
+      {
+        title: 'Изменить статус',
+        emmit: 'actionChangeStatus'
+      },
+      {
+        title: 'Добавить в чёрный список',
+        emmit: 'actionAddBlack'
+      },
+    ])
+
+
     return {
       model: ref('Любой'),
       model2: ref('Любой'),
@@ -517,13 +547,15 @@ export default {
       dialog2,
       maximizedToggle: ref(true),
       maximizedToggle2: ref(true),
+      openContactor,
  
       modalFalse() {
         dialog.value = false
       },
       modalFalse2() {
         dialog2.value = false
-      }
+      },
+      actionfunc
     }
   }
 }
