@@ -1865,7 +1865,7 @@
         padding-top: 20px;
         padding-bottom: 11px;
         margin-bottom: 10px;
-        transition: all 0.25s;
+
         &:hover {
           background: #F7F7F7;
           .projects-section {
@@ -2008,7 +2008,6 @@
               align-items: center;
               margin-top: 17px;
               margin-bottom: 10px;
-              transition: all 0.25s;
               position: relative;
               background: #F7F7F7;
               overflow: hidden;
@@ -2043,7 +2042,6 @@
                 margin-right: 24px;
                 position: absolute;
                 right: 0;
-                transition: all 0.25s;
                 &:before {
                   content: '';
                   width: calc(100% + 80px);

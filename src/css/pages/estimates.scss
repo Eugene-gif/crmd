@@ -153,6 +153,15 @@
   }
 }
 
-.page-estimates-all {
-  
+.page-estimates-single {
+  .toggle-small {
+    transform: rotate(180deg);
+  }
+  .toggle-small .q-toggle__inner--falsy .q-toggle__track {
+    opacity: 1 !important;
+  }
+  .toggle-small .q-toggle__inner--falsy .q-toggle__thumb:after {
+    opacity: 1;
+    background: $primary;
+  }
 }

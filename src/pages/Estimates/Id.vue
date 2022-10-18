@@ -31,7 +31,7 @@
   >
     <DialogSettings @modalFalse="modalFalse" />
   </q-dialog>
-  <q-page class="page-estimates">
+  <q-page class="page-estimates page-estimates-single">
     <div class="row justify-between items-center">
       <div class="text-h2">Название сметы</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -220,14 +220,15 @@
       <div
         @click="toggle = !toggle"
         class="title"
-        :class="{disable: !toggle}"
       >
+      <!-- :class="{disable: !toggle}" -->
         Прогноз цены
       </div>
       <q-toggle
         v-model="toggle"
         color="primary"
         class="toggle-small"
+        @click="priceForecast('toggle')"
       />
       <div class="title">Цена подрядчика:</div>
       <q-tabs
@@ -238,6 +239,7 @@
           v-for="tab in tabs"
           :key="tab"
           :name="tab.name"
+          @click="priceForecast('tab')"
         >
           <div class="img-null" v-show="!tab.imageUrl">
             <div class="text">
@@ -356,22 +358,6 @@ import DialogSecurity from 'pages/Estimates/dialog-security.vue'
 import DialogExport from 'pages/Estimates/dialog-export.vue'
 import DialogSettings from 'pages/Estimates/dialog-settings.vue'
 
-const toggle = ref(true)
-const tabs = ref([
-  {
-    name: '1',
-    imageUrl: '/icons/stroipro.jpg' 
-  },
-  {
-    name: '2',
-    imageUrl: '/icons/anton.jpg' 
-  },
-  {
-    name: '3',
-    imageUrl: '' 
-  },
-])
-const tab = ref()
 const cutTitle = function(title) {
   return String(title.substring(0,2))
 }
@@ -468,6 +454,36 @@ export default {
     const dialogSecurity = ref(false)
     const dialogExport = ref(false)
     const dialogSettings = ref(false)
+    const toggle = ref(true)
+    const tab = ref()
+    const tabs = ref([
+      {
+        name: '1',
+        imageUrl: '/icons/stroipro.jpg' 
+      },
+      {
+        name: '2',
+        imageUrl: '/icons/anton.jpg' 
+      },
+      {
+        name: '3',
+        imageUrl: '' 
+      },
+    ])
+
+    function priceForecast(val) {
+      if (val === 'tab') {
+        toggle.value = false
+      } else {
+        if (toggle.value === true) {
+          tab.value = ''
+        } else {
+          tab.value = tabs.value[0].name
+        }
+      }
+      // console.log(toggle.value)
+      
+    }
     return {
       toggle,
       tabs,
@@ -484,7 +500,8 @@ export default {
         dialogSecurity.value = false
         dialogExport.value = false
         dialogSettings.value = false
-      }
+      },
+      priceForecast
     }
   }
 }

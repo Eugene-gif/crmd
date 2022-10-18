@@ -1,4 +1,7 @@
 <template>
+  <LoaderDate
+    v-show="loading"
+  />
   <q-dialog
     v-model="dialog"
     :maximized="maximizedToggle"
@@ -254,10 +257,11 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 import DialogShare from 'pages/Contractor/DialogShare.vue'
 import DialogStatus from 'pages/Contractor/DialogStatus.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
-import { ref } from 'vue'
+import LoaderDate from 'src/components/LoaderDate.vue'
 
 const columns = [
   { name: 'name', label: 'Имя', field: 'statnameus', align: 'left', sortable: true },
@@ -493,9 +497,11 @@ export default {
   components: {
     DialogShare,
     DialogStatus,
-    ActionBtn
+    ActionBtn,
+    LoaderDate
   },
   setup () {
+    const loading = ref(false)
     const dialog = ref(false)
     const dialog2 = ref(false)
     const pagination = ref({
@@ -503,7 +509,10 @@ export default {
       rowsPerPage: 0
     })
     function openContactor(id) {
-      window.location.href = `${window.location.href}/${id}`
+      loading.value = true
+      setTimeout(() => {
+        window.location.href = `${window.location.href}/${id}`
+      }, 100)      
     }
 
     const actionfunc = ref([
@@ -555,7 +564,8 @@ export default {
       modalFalse2() {
         dialog2.value = false
       },
-      actionfunc
+      actionfunc,
+      loading
     }
   }
 }
