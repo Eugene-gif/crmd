@@ -1167,6 +1167,9 @@
           display: flex;
           align-items: flex-start;
           overflow-y: scroll;
+          &::-webkit-scrollbar {
+            height: 0;
+          }
         }
         img {
           width: auto;

@@ -399,7 +399,8 @@ const rowTable = ref([
         procent: 15,
         agent: "9 000",
       },
-    ]
+    ],
+    link: 'google.com'
   },
   {
     id: 2,
@@ -422,6 +423,7 @@ const rowTable = ref([
     },
     procent: 15,
     agent: '3 600',
+    link: ''
   },
   {
     id: 3,
@@ -444,6 +446,7 @@ const rowTable = ref([
     },
     procent: 15,
     agent: '3 600',
+    link: 'https://quasar.dev/vue-components/tooltip#introduction'
   },
 ])
 

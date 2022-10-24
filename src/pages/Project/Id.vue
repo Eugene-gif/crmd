@@ -20,6 +20,7 @@
           no-caps
           class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite lg-visible"
           label="Назад"
+          to="/projects"
         />
       </div>
     </div>

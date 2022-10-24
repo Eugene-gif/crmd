@@ -2996,6 +2996,11 @@
             }
             .td-content-name__copy {
               margin-left: auto;
+              transition: all 0.25s;
+              &:hover {
+                opacity: 1 !important;
+                color: $primary !important;
+              }
             }
           }
           .td-content-status {

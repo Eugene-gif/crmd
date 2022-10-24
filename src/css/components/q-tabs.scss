@@ -329,6 +329,11 @@
       border-bottom: 1px solid $primary;
     }
   }
+  @media (min-width: 772px) and (max-width: 1440px) {
+    .q-tab {
+      margin-right: 20px;
+    }
+  }
   @media (max-width: 772px) {
     width: 100%;
     .q-tabs__content {

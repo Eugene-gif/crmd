@@ -28,6 +28,15 @@
   }
 }
 
+a.q-btn {
+  display: flex;
+}
+a.q-btn.lg-visible {
+  @media (max-width: 772px) {
+    display: none;
+  }
+}
+
 .status {
   display: flex;
   align-items: center;
@@ -128,6 +137,34 @@
     height: 100%;
     img {
       width: 100%;
+    }
+  }
+}
+.q-tooltip-estimates-text {
+  background: #333333;
+  border-radius: 10px;
+  padding: 9.5px 13px;
+  height: auto;
+  width: 265px;
+  overflow: hidden;
+  padding-right: 0;
+  
+  .text {
+    flex-wrap: nowrap;
+    .desc {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 15px;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+      
+      white-space: nowrap; /* Текст не переносится */
+      overflow: hidden; /* Обрезаем всё за пределами блока */
+      text-overflow: ellipsis;
+      padding-right: 13px;
+    }
+    .q-icon {
+      margin-right: 9px;
     }
   }
 }
@@ -312,6 +349,11 @@
   }
 }
 
+
+
 .disable {
   opacity: 0.3;
+}
+.hide {
+  visibility: hidden;
 }

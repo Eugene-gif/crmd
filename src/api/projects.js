@@ -16,6 +16,7 @@ export const projectsApi = {
       return httpClient.post(`${url}/getall`, {})
       .then(({ data }) => {
         return data = data.data.map(el => {
+          console.log(data.data)
           return {
             id: el.id,
             status: 1,
@@ -25,7 +26,7 @@ export const projectsApi = {
             typeName: el.project_type.name,
             address: el.address,
             square: el.square,
-            customer: `${el.orderer.last_name} ${el.orderer.first_name}`,
+            customer: `${el.orderersecond_namee}`,
             changed: getMyDate(el.created_at),
             created: getMyDate(el.updated_at),
             timing: 50,

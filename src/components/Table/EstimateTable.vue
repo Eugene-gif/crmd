@@ -80,6 +80,7 @@
               name="svguse:icons/financeTable.svg#image"
               size="20px"
               class="q-icon-tooltip"
+              :class="{'hide': !props.row.name.imageUrl}"
             >
               <q-tooltip
                 anchor="center left"
@@ -99,7 +100,20 @@
               name="svguse:icons/financeTable.svg#copy2"
               size="17px"
               class="td-content-name__copy"
-            />
+              :class="{'hide': !props.row.link}"
+              @click="goToLink(props.row.link)"
+            >
+              <q-tooltip
+                anchor="bottom middle"
+                self="top middle"
+                class="q-tooltip-estimates-text"
+              >
+                <div class="text flex items-center">
+                  <q-icon size="10px" name="svguse:icons/allIcons.svg#copyico" />
+                  <span class="desc">{{props.row.link}}</span>
+                </div>
+              </q-tooltip>
+            </q-icon>
           </div>
         </q-td>
         <q-td
@@ -404,12 +418,17 @@ export default defineComponent({
     function chooseSmeta(value) {
       emit('chooseSmeta', activeSmeta.value, value)
     }
+
+    function goToLink(link) {
+      window.location.href = link
+    }
     return {
       activeSmeta,
       colorStatus,
       editModal,
       openSmeta,
-      chooseSmeta
+      chooseSmeta,
+      goToLink
     }
   }
 })

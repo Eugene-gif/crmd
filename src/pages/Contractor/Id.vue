@@ -15,6 +15,7 @@
           no-caps
           class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-mr-xs lg-visible"
           label="Назад"
+          to="/contractor"
         />
       </div>
     </div>
