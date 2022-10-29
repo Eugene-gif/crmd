@@ -65,6 +65,10 @@ const routes = [
         component: () => import('src/pages/Contractor/Id.vue') 
       },
       { 
+        path: '/contractor/profile/:id',
+        component: () => import('src/pages/Contractor/Profile.vue') 
+      },
+      { 
         path: '/clients',
         component: () => import('src/pages/Сlients/Index.vue') 
       },

@@ -13,7 +13,7 @@ function getMyDate(time) {
 export const projectsApi = {
   getAll() {
     try {
-      return httpClient.post(`${url}/getall`, {})
+      return httpClient.post(`${url}/getAll`, {})
       .then(({ data }) => {
         return data = data.data.map(el => {
           console.log(data.data)

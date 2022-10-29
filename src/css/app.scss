@@ -28,6 +28,20 @@
   }
 }
 
+.my-scrollbar {
+  &::-webkit-scrollbar {
+    height: 6px;
+    border-radius: 3px;
+    background: #F0F0F0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: black;
+    border-radius: 3px;
+  }
+}
+
+
+
 a.q-btn {
   display: flex;
 }
