@@ -131,14 +131,25 @@
                 </div>
                 <img src="~assets/stroipro.jpg" alt="">
               </div>
-              <q-btn
-                unelevated 
-                no-caps
-                class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom"
-                padding="0"
-              >
-                <span class="block text-grey-5">Заменить фото</span>
-              </q-btn>
+              <div class="sec-btn">
+                <q-btn
+                  unelevated 
+                  no-caps
+                  class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom"
+                  padding="0"
+                >
+                  <span class="block text-grey-5">Заменить фото</span>
+                </q-btn>
+                <q-btn
+                  unelevated 
+                  no-caps
+                  class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom btn-custom-del mb-visible"
+                  padding="0"
+                >
+                  <span class="block text-grey-5">Удалить аватар</span>
+                </q-btn>
+              </div>
+                
             </div>
             <div class="item scrollbar">
               <div class="title">
@@ -188,7 +199,7 @@
             </div>
           </div>
 
-          <div class="details">
+          <div class="details" v-show="!isActive.details">
             <div
               class="item"
               v-for="item in details"
@@ -202,11 +213,121 @@
               no-caps
               class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
               padding="0"
+              @click="isActive.details = !isActive.details"
             >
               <span class="block text-grey-5">Изменить</span>
             </q-btn>
           </div>
           
+          <div class="form-chapter" v-show="isActive.details">
+            <div class="chapter">
+              <q-list>
+                <q-item>
+                  <div class="title">Название</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Город</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Область работы</div>
+                  <q-input
+                    type="textarea"
+                    v-model="inp"
+                    class="my-input bg-grey-3 my-textarea"
+                    placeholder="Введите название"
+                    style="min-height: 140px;"
+                  />
+                </q-item>
+              </q-list>
+              <q-list>
+                <q-item class="q-item-textarea">
+                  <div class="title">Описание</div>
+                  <q-input type="textarea" v-model="inp" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+            </div>
+
+            <div class="chapter">
+              <q-list>
+                <q-item>
+                  <div class="title">Телефон</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Общий адрес</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">E-mail</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Сайт</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+              <q-list>
+                <q-item>
+                  <div class="title">
+                    Ссылка на WhatsApp
+                  </div>
+                  <q-input
+                    v-model="inp"
+                    class="my-input bg-grey-3"
+                    placeholder="Ссылка на WhatsApp"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || '']"
+                  >
+                    <template v-slot:after>
+                      <img src="~assets/whatsapp.svg" alt="" class="q-mr-md">
+                    </template>
+                  </q-input>
+                </q-item>
+                <q-item>
+                  <div class="title">
+                    Ссылка на Telegram
+                  </div>
+                  <q-input
+                    v-model="inp"
+                    class="my-input bg-grey-3"
+                    placeholder="Ссылка на Telegram"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || '']"
+                  >
+                    <template v-slot:after>
+                      <img src="~assets/telegram.svg" alt="" class="q-mr-md">
+                    </template>
+                  </q-input>
+                </q-item>
+                <q-item>
+                  <div class="title">
+                    Ссылка на Instagram
+                  </div>
+                  <q-input
+                    v-model="inp"
+                    class="my-input bg-grey-3"
+                    placeholder="Ссылка на Instagram"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || '']"
+                  >
+                    <template v-slot:after>
+                      <img src="~assets/instagram.svg" alt="" class="q-mr-md">
+                    </template>
+                  </q-input>
+                </q-item>
+              </q-list>
+            </div>
+            <q-btn
+              no-caps
+              padding="20px 10px"
+              class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
+              label="Сохранить изменения"
+              @click="isActive.details = !isActive.details"
+            />
+
+          </div>
         </q-expansion-item>
 
         <div class="branch-managers">
@@ -460,34 +581,82 @@
               color="grey-5"
               padding="0"
               label="Изменить"
+              @click.stop="isActive.designer = !isActive.designer"
+            />
+            <q-icon
+              name="svguse:icons/allIcons.svg#settings"
+              size="13px"
+              class="settings-icon mb-visible"
+              @click.stop="isActive.designer = !isActive.designer"
             />
           </template>
 
-          <div class="desc-sec desc-sec-design bg-grey-9">
-            <div class="information">
-              <div class="number">
-                10%
+          <div v-show="!isActive.designer">
+            <div class="desc-sec desc-sec-design bg-grey-9">
+              <div class="information">
+                <div class="number">
+                  10%
+                </div>
+                <div class="subtext">
+                  Вознаграждение<br>
+                  дизайнера
+                </div>
               </div>
-              <div class="subtext">
-                Вознаграждение<br>
-                дизайнера
+              <div class="text lg-visible">
+                Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а 
+              </div>
+              <div class="text mb-visible">
+                Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. 
               </div>
             </div>
-            <div class="text lg-visible">
-              Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а 
-            </div>
-            <div class="text mb-visible">
-              Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. 
-            </div>
+            <q-btn
+              unelevated 
+              no-caps
+              class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10 lg-visible"
+              padding="0"
+              @click="isActive.designer = !isActive.designer"
+            >
+              <span class="block text-grey-5">Изменить</span>
+            </q-btn>
           </div>
-          <q-btn
-            unelevated 
-            no-caps
-            class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
-            padding="0"
-          >
-            <span class="block text-grey-5">Изменить</span>
-          </q-btn>
+
+          <div class="form-chapter" v-show="isActive.designer">
+            <div class="chapter">
+              <q-list>
+                <q-item class="q-item-textarea">
+                  <div class="title">Условия выплаты</div>
+                  <q-input type="textarea" v-model="inp" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+              <q-list>
+                <q-item class="q-item-reward">
+                  <div class="title">Вознаграждение</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название">
+                    <span class="procent">%</span>
+                  </q-input>
+                </q-item>
+                <div class="q-item-reward-text">
+                  Укажите стандартное для вас значение агентского вознаграждения дизайнеров и условия его получения в свободной форме. В реальных сметах вы сможете пересмотреть это значение по каждой позиции и договориться индивидуально.
+                </div>
+                <q-btn
+                  unelevated 
+                  no-caps
+                  flat
+                  class="my-btn my-effect h-opacity btn-add q-item-reward-btn"
+                  padding="0"
+                >
+                  <span class="block text-grey-5">Показать примеры <br> заполнения описания</span>
+                </q-btn>
+              </q-list>
+            </div>
+            <q-btn
+              no-caps
+              padding="20px 10px"
+              class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
+              label="Сохранить изменения"
+              @click="isActive.designer = !isActive.designer"
+            />
+          </div>
         </q-expansion-item>
 
         <q-expansion-item
@@ -508,10 +677,17 @@
               color="grey-5"
               padding="0"
               label="Изменить"
+              @click.stop="isActive.documents = !isActive.documents"
+            />
+            <q-icon
+              name="svguse:icons/allIcons.svg#settings"
+              size="13px"
+              class="settings-icon mb-visible"
+              @click.stop="isActive.documents = !isActive.documents"
             />
           </template>
 
-          <div class="details">
+          <div class="details" v-show="!isActive.documents">
             <div class="sec">
               <div
                 class="item"
@@ -527,10 +703,101 @@
               no-caps
               class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
               padding="0"
+              @click="isActive.documents = !isActive.documents"
             >
               <span class="block text-grey-5">Изменить</span>
             </q-btn>
           </div>
+
+          <div class="form-chapter" v-show="isActive.documents">
+            <div class="chapter">
+              <q-list>
+                <q-item>
+                  <div class="title">Тип</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Юридический адрес</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">ИНН</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">КПП (для ООО)</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+
+              <q-list>
+                <q-item>
+                  <div class="title">Название компании</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Фактический адрес</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">ОГРН (для ООО и ИП)</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+            </div>
+
+            <div class="chapter">
+              <q-list>
+                <q-item>
+                  <div class="title">ФИО подписанта </div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Основание (для ООО)</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+
+              <q-list>
+                <q-item>
+                  <div class="title">Должность (для ООО)</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+            </div>
+
+            <div class="chapter">
+              <q-list>
+                <q-item>
+                  <div class="title">Расчётный счёт</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">Отделение банка</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+
+              <q-list>
+                <q-item>
+                  <div class="title">Корреспондетский счёт</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+                <q-item>
+                  <div class="title">БИК банка</div>
+                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
+                </q-item>
+              </q-list>
+            </div>
+            <q-btn
+              no-caps
+              padding="20px 10px"
+              class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
+              label="Сохранить изменения"
+              @click="isActive.documents = !isActive.documents"
+            />
+          </div>
+          
         </q-expansion-item>
 
         <q-expansion-item
@@ -954,6 +1221,12 @@ export default {
         rights: '5 фото'
       }
     ])
+    const inp = ref()
+    const isActive = ref({
+      details: false,
+      designer: false,
+      documents: false,
+    })
 
     onMounted(() => {
       
@@ -965,7 +1238,9 @@ export default {
       fillials,
       managers,
       documents,
-      visual
+      visual,
+      inp,
+      isActive
     }
   }
 }

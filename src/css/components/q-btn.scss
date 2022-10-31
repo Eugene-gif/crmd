@@ -3,7 +3,16 @@
 }
 .my-btn {
   padding: 12px 27.5px;
-  
+  &-shadow {
+    &:before {
+      box-shadow: 0px 7px 20px rgba(115, 201, 73, 0.3);
+    }
+    &:active {
+      &:before {
+        box-shadow: none !important;
+      }
+    }
+  }
   .block {
     font-weight: 400;
     font-size: 18px;
