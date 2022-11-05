@@ -420,7 +420,7 @@ export default defineComponent({
     }
 
     function goToLink(link) {
-      window.location.href = link
+      window.open(link, '_blank');
     }
     return {
       activeSmeta,

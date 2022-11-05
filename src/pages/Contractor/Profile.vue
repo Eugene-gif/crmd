@@ -631,7 +631,7 @@
               <q-list>
                 <q-item class="q-item-reward">
                   <div class="title">Вознаграждение</div>
-                  <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название">
+                  <q-input v-model="inp" type="number" class="my-input bg-grey-3" placeholder="Введите название">
                     <span class="procent">%</span>
                   </q-input>
                 </q-item>

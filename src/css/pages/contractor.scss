@@ -345,6 +345,11 @@
             align-items: center;
             scroll-behavior: smooth;
             &::-webkit-scrollbar {
+              height: 0;
+              -webkit-appearance: none;
+              width: 0;
+              height: 0;
+              background: rgba(0,0,0,0);
               display: none;
             }
           }
@@ -1169,6 +1174,10 @@
           overflow-y: scroll;
           &::-webkit-scrollbar {
             height: 0;
+            -webkit-appearance: none;
+            width: 0;
+            height: 0;
+            background: rgba(0,0,0,0);
           }
         }
         img {
@@ -1262,6 +1271,7 @@
             .q-tabs-reviews {
               padding-left: 16px;
               .q-tab {
+                
                 .q-focus-helper {
                   display: none;
                 }
@@ -2451,6 +2461,13 @@
                 margin-right: 0;
                 .q-tabs-reviews {
                   margin-top: 7px;
+                  .q-tabs__content {
+                    display: block;
+                    overflow: hidden;
+                    .q-tab {
+                      display: inline-block;
+                    }
+                  }
                 }
                 .title {
                   display: none;

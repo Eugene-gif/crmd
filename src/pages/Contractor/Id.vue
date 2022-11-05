@@ -348,12 +348,12 @@
           >
             <q-tab name="information" label="Информация" />
             <q-tab name="projects" label="Проекты" />
-            <q-tab name="projects2" label="Проекты2" />
+            <!-- <q-tab name="projects2" label="Проекты2" /> -->
             <q-tab name="finance" label="Финансы" />
             <q-tab name="document" label="Документы" />
             <q-tab name="reviews" label="Отзывы" />
             <q-tab name="photo" label="Фото" />
-            <q-tab name="photo2" label="Фото2" />
+            <!-- <q-tab name="photo2" label="Фото2" /> -->
           </q-tabs>
           <div class="circle bg-grey-3">
             <q-icon size="12px" name="svguse:icons/allIcons.svg#tooltip" color="grey-4" />

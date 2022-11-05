@@ -218,7 +218,7 @@
 
     <div class="estimates-info row items-center">
       <div
-        @click="toggle = !toggle"
+        @click="priceForecast('div')"
         class="title"
       >
       <!-- :class="{disable: !toggle}" -->
@@ -479,6 +479,15 @@ export default {
           tab.value = ''
         } else {
           tab.value = tabs.value[0].name
+        }
+      }
+      if (val === 'div') {
+        if (toggle.value === true) {
+          tab.value = tabs.value[0].name
+          toggle.value = false
+        } else {
+          tab.value = ''
+          toggle.value = true
         }
       }
       // console.log(toggle.value)
