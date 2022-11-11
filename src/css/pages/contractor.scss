@@ -3074,6 +3074,10 @@
             }
             .q-btn {
               margin-bottom: 10px;
+              .block {
+                font-size: 18px;
+                line-height: 18px;
+              }
               &:last-child {
                 margin-bottom: 0;
               }

@@ -33,3 +33,25 @@
   }
 }
 
+.q-checkbox-choice {
+  padding: 12.5px 20px;
+  &[aria-checked="false"] {
+    background: #F7F7F7;
+    border: 2px solid #ECECEC;
+    border-radius: 8px;
+  }
+  &[aria-checked="true"] {
+    background: #FFFFFF;
+    border: 2px solid #73C949;
+    border-radius: 8px;
+  }
+  .q-checkbox__inner {
+    display: none;
+  }
+  .q-checkbox__label {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 18px;
+    color: #444444;
+  }
+}

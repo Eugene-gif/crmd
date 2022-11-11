@@ -7,6 +7,7 @@
         class="mb-visible"
         name="svguse:icons/allIcons.svg#back"
         style="margin-left: auto;"
+        @click="goToLink('/#/contractor')"
       />
       <div class="sectiobn-btns">
         <q-btn
@@ -518,6 +519,9 @@ export default {
         SecHoverSlider.value.style.opacity = '0';
       }
     }
+    function goToLink(link) {
+      window.location.href = link
+    }
     onMounted(() => {
       contentHeadHeight.value = contentHead.value.clientHeight
       stickySidebar()
@@ -538,7 +542,7 @@ export default {
       stickySidebar,
       hoverSlider,
       hideSlider,
-      
+      goToLink
     }
   }
 }

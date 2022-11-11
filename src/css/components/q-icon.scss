@@ -62,3 +62,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.no-shadow {
+  .q-checkbox__inner {
+    &:before {
+      display: none;
+    }
+  }
+}

@@ -451,117 +451,108 @@
         </div>
 
         <q-expansion-item
-            expand-separator
-            default-opened
-            class="q-expansion-my activity-categories"
-          >
-            <template v-slot:header>
-              <div class="title">
-                Категории деятельности
-              </div>
-            </template>
+          expand-separator
+          default-opened
+          class="q-expansion-my activity-categories"
+        >
+          <template v-slot:header>
+            <div class="title">
+              Категории деятельности
+            </div>
+          </template>
 
-            <div class="sec">
-              <div class="item">
+          <div class="sec">
+            <div class="item">
+            <ChoiseCategory />
+
+              <q-expansion-item
+                expand-separator
+                default-opened
+                class="q-expansion-my-2"
+              >
+                <template v-slot:header>
+                  <div class="title">
+                    Работы и услуги
+                  </div>
+                </template>
+
                 <q-btn
                   unelevated 
+                  outline
                   no-caps
-                  class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
+                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
                   padding="5px 25.5px"
+                  color="grey-7"
                 >
-                  <span class="block text-grey-5">Добавить</span>
-                  <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" color="black" style="margin-left: auto;" />
+                  <span class="block text-grey-5">Освещение</span>
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
                 </q-btn>
-
-                <q-expansion-item
-                  expand-separator
-                  default-opened
-                  class="q-expansion-my-2"
+                <q-btn
+                  unelevated 
+                  outline
+                  no-caps
+                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
+                  padding="5px 25.5px"
+                  color="grey-7"
                 >
-                  <template v-slot:header>
-                    <div class="title">
-                      Работы и услуги
-                    </div>
-                  </template>
-
-                  <q-btn
-                    unelevated 
-                    outline
-                    no-caps
-                    class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                    padding="5px 25.5px"
-                    color="grey-7"
-                  >
-                    <span class="block text-grey-5">Освещение</span>
-                    <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                  </q-btn>
-                  <q-btn
-                    unelevated 
-                    outline
-                    no-caps
-                    class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                    padding="5px 25.5px"
-                    color="grey-7"
-                  >
-                    <span class="block text-grey-5">Натяжные потолки</span>
-                    <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                  </q-btn>
-                  <q-btn
-                    unelevated 
-                    outline
-                    no-caps
-                    class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                    padding="5px 25.5px"
-                    color="grey-7"
-                  >
-                    <span class="block text-grey-5">Ремонт под ключ</span>
-                    <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                  </q-btn>
-                </q-expansion-item>
-
-                <q-expansion-item
-                  expand-separator
-                  default-opened
-                  class="q-expansion-my-2"
+                  <span class="block text-grey-5">Натяжные потолки</span>
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
+                </q-btn>
+                <q-btn
+                  unelevated 
+                  outline
+                  no-caps
+                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
+                  padding="5px 25.5px"
+                  color="grey-7"
                 >
-                  <template v-slot:header>
-                    <div class="title">
-                      Мебель для общественных помещений
-                    </div>
-                  </template>
+                  <span class="block text-grey-5">Ремонт под ключ</span>
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
+                </q-btn>
+              </q-expansion-item>
 
-                  <q-btn
-                    unelevated 
-                    outline
-                    no-caps
-                    class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                    padding="5px 25.5px"
-                    color="grey-7"
-                  >
-                    <span class="block text-grey-5">Офисная мебель</span>
-                    <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                  </q-btn>
-                  <q-btn
-                    unelevated 
-                    outline
-                    no-caps
-                    class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                    padding="5px 25.5px"
-                    color="grey-7"
-                  >
-                    <span class="block text-grey-5">Уличная мебель</span>
-                    <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                  </q-btn>
-                  
-                </q-expansion-item>
-              </div>
-              <div class="item">
-                <div class="text">
-                  Выберите один или несколько видов деятельности, чтобы дизайнеры могли найти вас через поиск. Помните, что при ранжировании в результатах поиска по виду деятельности приоритет получают компании с более узким профилем, поэтому лучше не указывать слишком много категорий.
-                </div>
+              <q-expansion-item
+                expand-separator
+                default-opened
+                class="q-expansion-my-2"
+              >
+                <template v-slot:header>
+                  <div class="title">
+                    Мебель для общественных помещений
+                  </div>
+                </template>
+
+                <q-btn
+                  unelevated 
+                  outline
+                  no-caps
+                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
+                  padding="5px 25.5px"
+                  color="grey-7"
+                >
+                  <span class="block text-grey-5">Офисная мебель</span>
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
+                </q-btn>
+                <q-btn
+                  unelevated 
+                  outline
+                  no-caps
+                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
+                  padding="5px 25.5px"
+                  color="grey-7"
+                >
+                  <span class="block text-grey-5">Уличная мебель</span>
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
+                </q-btn>
+                
+              </q-expansion-item>
+            </div>
+            <div class="item">
+              <div class="text">
+                Выберите один или несколько видов деятельности, чтобы дизайнеры могли найти вас через поиск. Помните, что при ранжировании в результатах поиска по виду деятельности приоритет получают компании с более узким профилем, поэтому лучше не указывать слишком много категорий.
               </div>
             </div>
-            
+          </div>
         </q-expansion-item>
 
         <q-expansion-item
@@ -1029,11 +1020,13 @@
 <script>
 import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
+import ChoiseCategory from 'components/Contractor/ChoiseCategory.vue'
 
 export default {
   name: 'ProfileСontractor',
   components: {
-    VisualSlider
+    VisualSlider,
+    ChoiseCategory
   },
 
   setup () {
