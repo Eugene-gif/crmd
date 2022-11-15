@@ -178,8 +178,12 @@
 .my-btn-custom-big {
   width: 100%;
   .block {
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 18px;
+    line-height: 18px;
     padding: 17px 0;
+    @media (max-width: 772px) {
+      font-size: 16px;
+      line-height: 16px;
+    }
   }
 }

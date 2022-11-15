@@ -179,7 +179,6 @@
         </div>
       </div>
       
-      
       <div class="content">
         <div
           class="foto-collage mb-visible"
@@ -465,12 +464,14 @@ export default {
     const SecHoverSlider = ref()
     const hoverVal = false
     const tab2 = ref('information')
+    const topStiky = ref()
 
     function stickySidebar() {
-      if (window.pageYOffset > stiky.value.offsetTop) {
+      // let trueStiky = stiky.value.className === 'relative-content stiky'
+      if (window.pageYOffset > topStiky.value) {
         stiky.value.classList.add('stiky')
       } 
-      if (window.pageYOffset < stiky.value.offsetTop) {
+      if (window.pageYOffset < topStiky.value) {
         stiky.value.classList.remove('stiky')
       } 
     }
@@ -528,6 +529,7 @@ export default {
       if (window.innerWidth > 772) {
         hoverSlider(true)
       }
+      topStiky.value = stiky.value.offsetTop + 100
       window.addEventListener('scroll', stickySidebar)
     })
     return {
@@ -539,6 +541,7 @@ export default {
       HoverSlider,
       SecHoverSlider,
       hoverVal,
+      topStiky,
       stickySidebar,
       hoverSlider,
       hideSlider,

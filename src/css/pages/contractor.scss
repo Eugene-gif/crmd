@@ -541,6 +541,7 @@
           padding: 0;
           .section {
             .q-expansion-my {
+              border-top: none;
               .q-expansion-item__container {
                 padding-left: 40px;
               }
@@ -1023,7 +1024,7 @@
                       .q-btn__content {
                         font-weight: 400;
                         font-size: 16px;
-                        line-height: 16px;
+                        line-height: 16px;  
                       }
                     }
                   }
@@ -2247,7 +2248,6 @@
   }
 }
 
-
 .page-contractor-profile {
   
   .section {
@@ -2491,7 +2491,7 @@
           }
         }
       }
-
+      
       .q-expansion-my {
         .q-expansion-item__container {
           & > .q-item {
@@ -3065,6 +3065,7 @@
           &:last-child {
             margin-left: 30px;
           }
+          
           .q-expansion-my-2 {
             margin-top: 41px;
             .q-expansion-item__container {
@@ -3575,12 +3576,16 @@
                 line-height: 12px;
                 padding: 9px 14px !important;
                 font-weight: 400;
+                // .q-item__section {
+                  text-transform: uppercase;
+                // }
               }
               .btn-sec {
                 display: flex;
                 align-items: center;
                 margin-left: auto;
                 .q-btn {
+
                   &:first-child {
                     margin-right: 20px;
                   }
