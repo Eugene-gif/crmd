@@ -516,10 +516,19 @@
         border-bottom: 1px solid $grey-3;
         
         .q-tabs {
-          @media (min-width: 772px) and (max-width: 1650px) {
+          @media (min-width: 1440px) and (max-width: 1650px) {
             .q-tabs__content {
               width: 37vw;
               overflow-x: scroll;
+            }
+          }
+          @media (min-width: 772px) and (max-width: 1440px) {
+            .q-tabs__content {
+              width: 100%;
+              overflow-x: visible;
+              .q-tab {
+                margin-right: 16px;
+              }
             }
           }
         }
@@ -1179,6 +1188,7 @@
             width: 0;
             height: 0;
             background: rgba(0,0,0,0);
+            display: none;
           }
         }
         img {
@@ -1271,6 +1281,9 @@
             position: relative;
             .q-tabs-reviews {
               padding-left: 16px;
+              .q-tabs__content {
+                overflow: hidden;
+              }
               .q-tab {
                 
                 .q-focus-helper {
