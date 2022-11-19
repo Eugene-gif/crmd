@@ -3059,7 +3059,8 @@
         }
       }
 
-      .activity-categories {        
+      .activity-categories {      
+        overflow: visible;  
         .q-expansion-item__container {
           .sec {
             display: flex;

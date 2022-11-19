@@ -463,89 +463,10 @@
 
           <div class="sec">
             <div class="item">
-            <ChoiseCategory />
-
-              <q-expansion-item
-                expand-separator
-                default-opened
-                class="q-expansion-my-2"
-              >
-                <template v-slot:header>
-                  <div class="title">
-                    Работы и услуги
-                  </div>
-                </template>
-
-                <q-btn
-                  unelevated 
-                  outline
-                  no-caps
-                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                  padding="5px 25.5px"
-                  color="grey-7"
-                >
-                  <span class="block text-grey-5">Освещение</span>
-                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                </q-btn>
-                <q-btn
-                  unelevated 
-                  outline
-                  no-caps
-                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                  padding="5px 25.5px"
-                  color="grey-7"
-                >
-                  <span class="block text-grey-5">Натяжные потолки</span>
-                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                </q-btn>
-                <q-btn
-                  unelevated 
-                  outline
-                  no-caps
-                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                  padding="5px 25.5px"
-                  color="grey-7"
-                >
-                  <span class="block text-grey-5">Ремонт под ключ</span>
-                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                </q-btn>
-              </q-expansion-item>
-
-              <q-expansion-item
-                expand-separator
-                default-opened
-                class="q-expansion-my-2"
-              >
-                <template v-slot:header>
-                  <div class="title">
-                    Мебель для общественных помещений
-                  </div>
-                </template>
-
-                <q-btn
-                  unelevated 
-                  outline
-                  no-caps
-                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                  padding="5px 25.5px"
-                  color="grey-7"
-                >
-                  <span class="block text-grey-5">Офисная мебель</span>
-                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                </q-btn>
-                <q-btn
-                  unelevated 
-                  outline
-                  no-caps
-                  class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
-                  padding="5px 25.5px"
-                  color="grey-7"
-                >
-                  <span class="block text-grey-5">Уличная мебель</span>
-                  <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" style="margin-left: auto;" />
-                </q-btn>
-                
-              </q-expansion-item>
+              <ChoiseCategory
+                @getList="ongetList"
+              />
+              
             </div>
             <div class="item">
               <div class="text">
@@ -1220,6 +1141,7 @@ export default {
       designer: false,
       documents: false,
     })
+
 
     onMounted(() => {
       

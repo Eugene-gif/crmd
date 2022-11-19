@@ -27,7 +27,7 @@
     <div class="choice-place choice-place-2" v-show="btnActive && checkActive">
       <div class="head">
         <div class="title">
-          Декоративные отделочные элементы
+          {{activeList.text}}
         </div>
         <q-btn
           class="btn-close"
@@ -68,17 +68,58 @@
       
     </div>
   </div>
+
+  <div
+    v-for="item in checklist"
+    :key="item"
+  >
+    <q-expansion-item
+      expand-separator
+      default-opened
+      class="q-expansion-my-2"
+      v-if="item.value"
+    >
+      <template v-slot:header>
+        <div class="title">
+          {{item.text}}
+        </div>
+      </template>
+
+      <q-btn
+        unelevated 
+        outline
+        no-caps
+        class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
+        padding="5px 25.5px"
+        color="grey-7"
+        v-for="el in item.checklist"
+        :key="el"
+        v-show="el.value"
+      >
+        <span class="block text-grey-5">{{el.text}}</span>
+        <q-icon 
+          name="svguse:icons/btnIcons.svg#delete" 
+          size="16px" 
+          style="margin-left: auto;" 
+          @click="el.value = false"
+        />
+      </q-btn>
+    
+      
+    </q-expansion-item>
+  </div>
+  
   
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, defineComponent } from 'vue'
 
-export default {
-  setup() {
+export default defineComponent({
+  setup(props, { emit }) {
     const checklist = ref([
       {
-        value: false,
+        value: true,
         text: 'Работы и услуги',
         checklist: [
           {
@@ -87,11 +128,11 @@ export default {
           },
           {
             text: 'Кухонные гарнитуры',
-            value: false
+            value: true
           },
           {
             text: 'Молдинги',
-            value: false
+            value: true
           },
           {
             text: 'Стеновые панели',
@@ -99,7 +140,7 @@ export default {
           },
           {
             text: 'Декоративные элементы',
-            value: false
+            value: true
           },
         ]
       },
@@ -171,7 +212,10 @@ export default {
     const checkActive = ref(false)
     const btnActive = ref(false)
     const activeList = ref({})
-
+    
+    function getList() {
+      emit('getList', activeList.value)
+    }
     function checkFuncOpen(val) {
       val.value  = true
       activeList.value = val
@@ -197,8 +241,9 @@ export default {
       btnActive,
       activeList,
       checkFuncOpen,
-      customCheckList
+      customCheckList,
+      getList
     }
   },
-}
+})
 </script>
