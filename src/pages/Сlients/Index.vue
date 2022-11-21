@@ -61,6 +61,7 @@
       hide-pagination
       class="my-table clients-table"
       v-model:pagination="pagination"
+      v-show="!nodate"
     >
       <template v-slot:header-cell-status="props">
         <q-th :props="props" class="q-th__smaile" @click="updateSorted">

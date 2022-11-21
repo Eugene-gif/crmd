@@ -3,6 +3,10 @@
     min-height: 67px;
     position: relative;
   }
+  .sectiobn-btns {
+    position: relative;
+    z-index: 2;
+  }
   @media (max-width: 772px) {
     .sectiobn-btns {
       flex: 0 0 100%;

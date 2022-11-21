@@ -141,7 +141,8 @@
           :style="{background: userInfo.colorBkg}"
         > 
           <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
-          <span>{{userNikeName}}</span>
+          <img :src="`${userInfo.system_image}`">
+          <span>{{userInfo.userNikeName}}</span>
         </q-btn>
 
         <q-icon
