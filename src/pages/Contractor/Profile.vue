@@ -34,12 +34,54 @@
             <div class="item">
               <div class="title">Дизайнеры на связи</div>
               <div class="designers">
-                <img src="~assets/anton.jpg" alt="">
-                <img src="~assets/stroipro.jpg" alt="">
-                <img src="~assets/anton.jpg" alt="">
-                <img src="~assets/stroipro.jpg" alt="">
-                <img src="~assets/anton.jpg" alt="">
-                <img src="~assets/stroipro.jpg" alt="">
+                <q-item class="q-item-null">
+                  <img src="~assets/anton.jpg" alt="">
+                  <CardInfo 
+                    :anchor="['bottom', 'middle']" 
+                    :self="['top', 'right']" 
+                    :translateY="`-25px`"
+                  />
+                </q-item>
+                <q-item class="q-item-null">
+                  <img src="~assets/stroipro.jpg" alt="">
+                  <CardInfo 
+                    :anchor="['bottom', 'middle']" 
+                    :self="['top', 'right']" 
+                    :translateY="`-25px`"
+                  />
+                </q-item>
+                <q-item class="q-item-null">
+                  <img src="~assets/anton.jpg" alt="">
+                  <CardInfo 
+                    :anchor="['bottom', 'middle']" 
+                    :self="['top', 'right']" 
+                    :translateY="`-25px`"
+                  />
+                </q-item>
+                <q-item class="q-item-null">
+                  <img src="~assets/stroipro.jpg" alt="">
+                  <CardInfo 
+                    :anchor="['bottom', 'middle']" 
+                    :self="['top', 'right']" 
+                    :translateY="`-25px`"
+                  />
+                </q-item>
+                <q-item class="q-item-null">
+                  <img src="~assets/anton.jpg" alt="">
+                  <CardInfo 
+                    :anchor="['bottom', 'middle']" 
+                    :self="['top', 'right']" 
+                    :translateY="`-25px`"
+                  />
+                </q-item>
+                <q-item class="q-item-null">
+                  <img src="~assets/stroipro.jpg" alt="">
+                  <CardInfo 
+                    :anchor="['bottom', 'middle']" 
+                    :self="['top', 'right']" 
+                    :translateY="`-25px`"
+                  />
+                </q-item>
               </div>
             </div>
 
@@ -86,8 +128,8 @@
                 v-model="tab"
                 class="q-tabs-reviews q-tabs-null"
               >
-                <q-tab name="1" icon="svguse:icons/allIcons.svg#like" label="25" />
-                <q-tab name="2" icon="svguse:icons/allIcons.svg#dislike" label="2" />
+                <q-tab name="0" icon="svguse:icons/allIcons.svg#like" label="25" />
+                <q-tab name="0" icon="svguse:icons/allIcons.svg#dislike" label="2" />
               </q-tabs>
             </div>
 
@@ -463,10 +505,7 @@
 
           <div class="sec">
             <div class="item">
-              <ChoiseCategory
-                @getList="ongetList"
-              />
-              
+              <ChoiseCategory />
             </div>
             <div class="item">
               <div class="text">
@@ -940,6 +979,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import CardInfo from 'components/CardInfo.vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
 import ChoiseCategory from 'components/Contractor/ChoiseCategory.vue'
 
@@ -947,7 +987,8 @@ export default {
   name: 'ProfileСontractor',
   components: {
     VisualSlider,
-    ChoiseCategory
+    ChoiseCategory,
+    CardInfo
   },
 
   setup () {
@@ -1141,7 +1182,6 @@ export default {
       designer: false,
       documents: false,
     })
-
 
     onMounted(() => {
       

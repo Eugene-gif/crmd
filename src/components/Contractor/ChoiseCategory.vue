@@ -14,14 +14,14 @@
       </span>
       <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" color="black" style="margin-left: auto;" />
     </q-btn>
-    <div class="choice-place" v-show="btnActive && !checkActive">
+    <div class="choice-place choice-place-no-active-check" v-show="btnActive && !checkActive">
       <q-checkbox
         v-for="check in checklist"
         :key="check"
         v-model="check.value"
         :label="check.text"
         class="q-checkbox-choice no-shadow"
-        @click="checkFuncOpen(check)"
+        @click.stop="checkFuncOpen(check)"
       />
     </div>
     <div class="choice-place choice-place-2" v-show="btnActive && checkActive">
@@ -46,14 +46,14 @@
           no-caps 
           label="Включить все" 
           class="my-effect h-opacity" 
-          @click="customCheckList('add')"
+          @click="customCheckList('add', activeList)"
         />
         <q-btn
           flat 
           no-caps 
           label="Убрать все" 
           class="my-effect h-opacity" 
-          @click="customCheckList('clear')"
+          @click="customCheckList('clear', activeList)"
         />
       </div>
       <div class="sec-check">
@@ -63,6 +63,7 @@
           v-model="check.value"
           :label="check.text"
           class="q-checkbox-choice no-shadow"
+          @click="useCheckList(activeList)"
         />
       </div>
       
@@ -101,15 +102,12 @@
           name="svguse:icons/btnIcons.svg#delete" 
           size="16px" 
           style="margin-left: auto;" 
-          @click="el.value = false"
+          @click="delEl(el, item)"
         />
+        <!-- useCheckList(item.checklist) -->
       </q-btn>
-    
-      
     </q-expansion-item>
-  </div>
-  
-  
+  </div>  
 </template>
 
 <script>
@@ -147,66 +145,82 @@ export default defineComponent({
       {
         value: false,
         text: 'Напольные покрытия',
+        checklist: [],
       },
       {
         value: false,
         text: 'Стеновые покрытия',
+        checklist: [],
       },
       {
         value: false,
         text: 'Потолок',
+        checklist: [],
       },
       {
         value: false,
         text: 'Декоративные отделочные элементы',
+        checklist: [],
       },
       {
         value: false,
         text: 'Перегородки',
+        checklist: [],
       },
       {
         value: false,
         text: 'Двери',
+        checklist: [],
       },
       {
         value: false,
         text: 'Окна',
+        checklist: [],
       },
       {
         value: false,
         text: 'Отопление',
+        checklist: [],
       },
       {
         value: false,
         text: 'Электрофурнитура',
+        checklist: [],
       },
       {
         value: false,
         text: 'Освещение',
+        checklist: [],
       },
       {
         value: false,
         text: 'Мебель',
+        checklist: [],
       },
       {
         value: false,
         text: 'Ванная и сауна',
+        checklist: [],
       },
       {
         value: false,
         text: 'Заказные изделия',
+        checklist: [],
       },
       {
         value: false,
         text: 'Оборудование',
+        checklist: [],
       },
       {
         value: false,
         text: 'Декор',
+        checklist: [],
       },
       {
         value: false,
         text: 'Благоустройство территории',
+        checklist: [],
       },
     ])
     const checkActive = ref(false)
@@ -217,11 +231,13 @@ export default defineComponent({
       emit('getList', activeList.value)
     }
     function checkFuncOpen(val) {
-      val.value  = true
+      val.value = false
+      
       activeList.value = val
       checkActive.value = true
+      useCheckList(val)
     }
-    function customCheckList(val) {
+    function customCheckList(val, list) {
       if (val === 'add') {
         activeList.value.value = true
         activeList.value.checklist.filter((item) => {
@@ -234,6 +250,33 @@ export default defineComponent({
           item.value = false
         })
       }
+      useCheckList(list)
+    }
+    function delEl(el, list) {
+      el.value = false
+      useCheckList(list)
+      // let bool = list.checklist.find(item => item.value === true)
+      // if (bool === undefined) {
+      //   list.value = false
+      // } else {
+      //   useCheckList(list)
+      // }
+    }
+    function useCheckList(parentList) {
+      if (parentList.checklist.length > 0) {
+        let bool = parentList.checklist.find(item => item.value === true)
+        if (bool != undefined) {
+          if (bool.value === true) {
+            parentList.value = true 
+          } else {
+            parentList.value = false
+          }
+        } else {
+          parentList.value = false
+        }
+      } else {
+        parentList.value = false
+      }
     }
     return {
       checklist,
@@ -242,7 +285,9 @@ export default defineComponent({
       activeList,
       checkFuncOpen,
       customCheckList,
-      getList
+      getList,
+      useCheckList,
+      delEl
     }
   },
 })

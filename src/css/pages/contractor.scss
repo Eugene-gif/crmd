@@ -2377,19 +2377,20 @@
             .q-tabs-reviews {
               margin-top: 12px;
               .q-tab {
+                &[aria-selected="true"] .q-tab__content,
                 .q-tab__content {
-                  color: black;
+                  color: black !important;
                   .q-icon {
-                    color: rgba(0,0,0,0.3);
+                    color: rgba(0,0,0,0.3) !important;
                   }
                 }
-                &[aria-selected="true"] {
-                  .q-tab__content {
-                    .q-icon {
-                      color: $positive;
-                    }
-                  }
-                }
+                // &[aria-selected="true"] {
+                //   .q-tab__content {
+                //     .q-icon {
+                //       color: $positive;
+                //     }
+                //   }
+                // }
               }
             }
           }
