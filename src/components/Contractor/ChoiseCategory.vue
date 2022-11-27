@@ -1,4 +1,5 @@
 <template>
+  <div class="choise-category-bcg" :class="{'choise-category-bcg-active': btnActive}"></div>
   <div class="choise-category">
     <q-btn
       unelevated 
