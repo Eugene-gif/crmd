@@ -29,13 +29,75 @@
 
     <div class="details" v-show="!isActive.documents">
       <div class="sec">
-        <div
-          class="item"
-          v-for="item in documents"
-          :key="item"
-        >
-          <div class="cell">{{item.title}}</div>
-          <div class="cell">{{item.value}}</div>
+        <div class="item">
+          <div class="cell">Тип</div>
+          <div class="cell" v-if="formData.company_type != null">{{formData.company_type}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Название компании</div>
+          <div class="cell" v-if="formData.company_name != null">{{formData.company_name}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Юридический адрес</div>
+          <div class="cell" v-if="formData.legal_address != null">{{formData.legal_address}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Фактический адрес</div>
+          <div class="cell" v-if="formData.actual_address != null">{{formData.actual_address}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">ИНН</div>
+          <div class="cell" v-if="formData.inn != null">{{formData.inn}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">ОГРН (для ООО и ИП)</div>
+          <div class="cell" v-if="formData.ogrn != null">{{formData.ogrn}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">КПП (для ООО)</div>
+          <div class="cell" v-if="formData.kpp != null">{{formData.kpp}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">ФИО подписанта </div>
+          <div class="cell" v-if="formData.person_name != null">{{formData.person_name}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Должность (для ООО)</div>
+          <div class="cell" v-if="formData.person_position != null">{{formData.person_position}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Основание (для ООО)</div>
+          <div class="cell" v-if="formData.person_based_on != null">{{formData.person_based_on}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Расчётный счёт</div>
+          <div class="cell" v-if="formData.settlement_account != null">{{formData.settlement_account}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Корреспондетский счёт</div>
+          <div class="cell" v-if="formData.correspondent_account != null">{{formData.correspondent_account}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">Отделение банка</div>
+          <div class="cell" v-if="formData.bank_branch != null">{{formData.bank_branch}}</div>
+          <div v-else>—</div>
+        </div>
+        <div class="item">
+          <div class="cell">БИК банка</div>
+          <div class="cell" v-if="formData.bank_bik != null">{{formData.bank_bik}}</div>
+          <div v-else>—</div>
         </div>
       </div>
       <q-btn
@@ -134,7 +196,7 @@
         padding="20px 10px"
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
-        @click="isActive.documents = !isActive.documents"
+        @click="getInfoDocs('open', formData)"
       />
     </div>
     
@@ -142,7 +204,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { contractorApi } from 'src/api/contractor';
 
 export default {
@@ -168,77 +230,22 @@ export default {
       person_position: '',
       person_based_on: '',
     })
-    const documents = ref([
-      {
-        title: 'Тип',
-        value: formData.value.company_type
-      },
-      {
-        title: 'Название компании',
-        value: formData.value.company_name
-      },
-      {
-        title: 'Юридический адрес',
-        value: formData.value.legal_address
-      },
-      {
-        title: 'Фактический адрес',
-        value: formData.value.actual_address
-      },
-      {
-        title: 'ИНН',
-        value: formData.value.inn
-      },
-      {
-        title: 'ОГРН (для ООО и ИП)',
-        value: formData.value.ogrn
-      },
-      {
-        title: 'КПП (для ООО)',
-        value: formData.value.kpp
-      },
-      {
-        title: 'ФИО подписанта ',
-        value: formData.value.person_name
-      },
-      {
-        title: 'Должность (для ООО)',
-        value: formData.value.person_position
-      },
-      {
-        title: 'Основание (для ООО)',
-        value: formData.value.person_based_on
-      },
-      {
-        title: 'Расчётный счёт',
-        value: formData.value.settlement_account
-      },
-      {
-        title: 'Корреспондетский счёт',
-        value: formData.value.correspondent_account
-      },
-      {
-        title: 'Отделение банка',
-        value: formData.value.bank_branch
-      },
-      {
-        title: 'БИК банка',
-        value: formData.value.bank_bik
-      },
-    ])
-
-    async function getInfoDocs() {
+    
+    async function getInfoDocs(val, data) {
       try {
-        await contractorApi.getBankingInfo(formData.value).then(resp => {
+        await contractorApi.getBankingInfo(data).then(resp => {
           formData.value = resp
         })
+        if (val === 'open') {
+          isActive.value.documents = !isActive.value.documents
+        }
       } catch (err) {
         console.log(err)
       }
     }
 
     async function start() {
-      await getInfoDocs()
+      await getInfoDocs('', {})
       let arr = Object.values(formData.value)
       let bool = null
       arr.find(item => {
@@ -258,7 +265,6 @@ export default {
     return {
       isActive,
       formData,
-      documents,
       getInfoDocs,
       start
     }
