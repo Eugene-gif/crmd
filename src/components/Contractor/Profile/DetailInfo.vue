@@ -32,19 +32,28 @@
               name="svguse:icons/allIcons.svg#close-modal"
               color="black"
               style="opacity: 0.3;"
+              @click="onFileChange([null])"
             />
           </div>
           <img :src="`https://crmd.crookedweb.site/${userImage}`" alt="">
         </div>
         <div class="sec-btn">
-          <q-btn
+          <div class="btn-upload">
+            <q-uploader
+              @added="onFileChange"
+              accept=".jpg, image/*"
+              @rejected="onRejected"
+            />
+            <label class="text">Заменить фото</label>
+          </div>
+          <!-- <q-btn
             unelevated 
             no-caps
             class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom"
             padding="0"
           >
             <span class="block text-grey-5">Заменить фото</span>
-          </q-btn>
+          </q-btn> -->
           <q-btn
             unelevated 
             no-caps
@@ -111,6 +120,7 @@
 <script>
 import { ref, onMounted, computed } from 'vue'
 import { contractorApi } from 'src/api/contractor';
+import { userApi } from 'src/api/user';
 import { useQuasar } from 'quasar'
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 
@@ -151,23 +161,53 @@ export default {
         img: '/project-3.jpg'
       },
     ])
-
-    const userImage = computed(() => {
+    const userImage = ref()
+    function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
       if (storageUser.image === '') {
-        return storageUser.system_image
+        userImage.value = storageUser.system_image
       } else {
-        return storageUser.image
+        userImage.value = storageUser.image
       } 
-    })
+    }
+
+    function checkFileSize (files) {
+      return files.filter(file => file.size < 2048)
+    }
+
+    // function checkFileType (files) {
+    //   return files.filter(file => file.type === 'image/*')
+    // }
+    async function onFileChange(file) {
+      try {
+        await userApi.updateUser(file[0]).then(resp => {
+          userImage.value = resp.image
+          let userInfo = JSON.stringify(resp)
+          localStorage.setItem('userInfo', userInfo)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    function onRejected (rejectedEntries) {
+      $q.notify({
+        type: 'negative',
+        message: 'Файл не соответствуeт расширению'
+      })
+    }
     
     onMounted(() => {
-      
+      getUserImage()
     }) 
 
     return {
       userImage,
       images,
+      getUserImage,
+      checkFileSize,
+      onFileChange,
+      onRejected,
     }
   },
 }

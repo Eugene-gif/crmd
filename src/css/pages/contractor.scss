@@ -2695,11 +2695,15 @@
                   width: 157px;
                   height: 157px;
                   border-radius: 10px;
+                  object-fit: cover;
                 }
               }
               .btn-custom {
                 margin-top: 20.4px;
                 border-radius: 6px;
+              }
+              .btn-upload {
+                margin-top: 20px;
               }
             }
             &.scrollbar {
@@ -2811,6 +2815,7 @@
                     bottom: 0;
                     margin: auto;
                   }
+                  // .
                   .btn-custom {
                     margin-top: 0;
                     border-radius: 6px;

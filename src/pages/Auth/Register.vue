@@ -532,12 +532,10 @@ export default {
       console.log(form.value.user_name)
     }
 
-    // let userInfo = resp.data.data.user
-    // let forstLetter = userInfo.name.slice(0, 1).toString()
-    // userInfo["colorBkg"] = addColor(forstLetter)
+
 
     onMounted(() => {
-      // generateImage(figure.value, addColor('а'))
+      
     })
     return {
       accept,
