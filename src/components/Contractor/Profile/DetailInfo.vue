@@ -181,7 +181,12 @@ export default {
     async function onFileChange(file) {
       try {
         await userApi.updateUser(file[0]).then(resp => {
-          userImage.value = resp.image
+          if (resp.image === '') {
+            userImage.value = resp.image
+          } else {
+            userImage.value = resp.system_image
+          }
+          
           let userInfo = JSON.stringify(resp)
           localStorage.setItem('userInfo', userInfo)
         })
