@@ -20,7 +20,7 @@
         v-for="check in checklist"
         :key="check"
         v-model="check.value"
-        :label="check.text"
+        :label="check.name"
         class="q-checkbox-choice no-shadow"
         @click.stop="checkFuncOpen(check)"
       />
@@ -28,7 +28,7 @@
     <div class="choice-place choice-place-2" v-show="btnActive && checkActive">
       <div class="head">
         <div class="title">
-          {{activeList.text}}
+          {{activeList.name}}
         </div>
         <q-btn
           class="btn-close"
@@ -59,10 +59,10 @@
       </div>
       <div class="sec-check">
         <q-checkbox
-          v-for="check in activeList.checklist"
+          v-for="check in activeList.tags"
           :key="check"
           v-model="check.value"
-          :label="check.text"
+          :label="check.name"
           class="q-checkbox-choice no-shadow"
           @click="useCheckList(activeList)"
         />
@@ -83,7 +83,7 @@
     >
       <template v-slot:header>
         <div class="title">
-          {{item.text}}
+          {{item.name}}
         </div>
       </template>
 
@@ -94,11 +94,11 @@
         class="my-btn-custom-big my-btn my-effect  btn-custom br-10"
         padding="5px 25.5px"
         color="grey-7"
-        v-for="el in item.checklist"
+        v-for="el in item.tags"
         :key="el"
         v-show="el.value"
       >
-        <span class="block text-grey-5">{{el.text}}</span>
+        <span class="block text-grey-5">{{el.name}}</span>
         <q-icon 
           name="svguse:icons/btnIcons.svg#delete" 
           size="16px" 
@@ -112,118 +112,15 @@
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
+import { contractorApi } from 'src/api/contractor'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   setup(props, { emit }) {
-    const checklist = ref([
-      {
-        value: true,
-        text: 'Работы и услуги',
-        checklist: [
-          {
-            text: 'Плинтусы',
-            value: false
-          },
-          {
-            text: 'Кухонные гарнитуры',
-            value: true
-          },
-          {
-            text: 'Молдинги',
-            value: true
-          },
-          {
-            text: 'Стеновые панели',
-            value: false
-          },
-          {
-            text: 'Декоративные элементы',
-            value: true
-          },
-        ]
-      },
-      {
-        value: false,
-        text: 'Напольные покрытия',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Стеновые покрытия',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Потолок',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Декоративные отделочные элементы',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Перегородки',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Двери',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Окна',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Отопление',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Электрофурнитура',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Освещение',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Мебель',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Ванная и сауна',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Заказные изделия',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Оборудование',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Декор',
-        checklist: [],
-      },
-      {
-        value: false,
-        text: 'Благоустройство территории',
-        checklist: [],
-      },
-    ])
+    const $q = useQuasar()
+
+    const checklist = ref([])
     const checkActive = ref(false)
     const btnActive = ref(false)
     const activeList = ref({})
@@ -241,13 +138,13 @@ export default defineComponent({
     function customCheckList(val, list) {
       if (val === 'add') {
         activeList.value.value = true
-        activeList.value.checklist.filter((item) => {
+        activeList.value.tags.filter((item) => {
           item.value = true
         })
       }
       if (val === 'clear') {
         activeList.value.value = false
-        activeList.value.checklist.filter((item) => {
+        activeList.value.tags.filter((item) => {
           item.value = false
         })
       }
@@ -263,9 +160,16 @@ export default defineComponent({
       //   useCheckList(list)
       // }
     }
-    function useCheckList(parentList) {
-      if (parentList.checklist.length > 0) {
-        let bool = parentList.checklist.find(item => item.value === true)
+
+    async function useCheckList(parentList) {
+      console.log(parentList)
+      let formData = {
+        category_id: parentList.id,
+        name: 'nananna',
+        description: 'no desc',
+      }
+      if (parentList.tags.length > 0) {
+        let bool = parentList.tags.find(item => item.value === true)
         if (bool != undefined) {
           if (bool.value === true) {
             parentList.value = true 
@@ -279,6 +183,54 @@ export default defineComponent({
         parentList.value = false
       }
     }
+
+    // api
+    async function getListTags() {
+      try {
+        await contractorApi.getListTags().then(resp => {
+          checklist.value = resp
+          console.log(resp)
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+    async function getActiveListTags() {
+      try {
+        await contractorApi.getActiveListTags().then(resp => {
+          console.log(resp)
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+    // async function addTagInCategory(object) {
+    //   try {
+    //     await contractorApi.addTagInCategory().then(resp => {
+    //       console.log(resp)
+    //     })
+    //   } catch (err) {
+    //     $q.notify({
+    //       color: 'negative',
+    //       message: 'произошла ошибка'
+    //     })
+    //     console.log(err)
+    //   }
+    // }
+    
+    onMounted(() => {
+      getListTags()
+      getActiveListTags()
+    })
+
     return {
       checklist,
       checkActive,
@@ -288,7 +240,9 @@ export default defineComponent({
       customCheckList,
       getList,
       useCheckList,
-      delEl
+      delEl,
+      getListTags,
+      getActiveListTags
     }
   },
 })

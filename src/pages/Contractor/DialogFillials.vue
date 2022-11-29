@@ -12,20 +12,18 @@
       </q-card-section>     
 
       <q-card-section class="form-section">
-        <label class="lable-title">ФИО</label>
-        <q-input v-model="formData.name" class="my-input bg-grey-3" placeholder="Введите ФИО" />
+        <label class="lable-title">Адрес</label>
+        <q-input v-model="formData.address" class="my-input bg-grey-3" placeholder="Введите адрес" />
       </q-card-section>
       <q-card-section class="form-section">
-        <label class="lable-title">Должность</label>
-        <q-input v-model="formData.info" class="my-input bg-grey-3" placeholder="Введите должность" />
-      </q-card-section>
-      <q-card-section class="form-section">
-        <label class="lable-title">E-mail:</label>
-        <q-input v-model="formData.email" class="my-input bg-grey-3" placeholder="Введите e-mail" />
-      </q-card-section>
-      <q-card-section class="form-section">
-        <label class="lable-title">Телефон:</label>
-        <q-input v-model="formData.phone" class="my-input bg-grey-3" placeholder="Введите телефон" />
+        <label class="lable-title">Описание</label>
+        <q-input
+          type="textarea"
+          v-model="formData.info"
+          class="my-input bg-grey-3 my-textarea"
+          placeholder="Например, режим работы"
+          style="min-height: 140px;"
+        />
       </q-card-section>
       
       <q-card-actions>
@@ -60,11 +58,12 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const formData = ref({
+      id: '',
       type: 'a',
-      name: '',
-      email: '',
-      phone: '',
-      address: 'null',
+      name: 'null',
+      email: 'null',
+      phone: 'null',
+      address: '',
       info: ''
     })
 
@@ -72,7 +71,7 @@ export default defineComponent({
       if (props.modalCustom === true) {
         try {
           await contractorApi.updateManager(formData.value).then(resp => {
-            modalFalse('Менеджер обновлен')
+            modalFalse('Филиал обновлен')
           })
         } catch (err) {
           $q.notify({
@@ -84,7 +83,7 @@ export default defineComponent({
       } else {
         try {
           await contractorApi.AddManager(formData.value).then(resp => {
-            modalFalse('Менеджер создан')
+            modalFalse('Филиал создан')
           })
         } catch (err) {
           $q.notify({
@@ -97,21 +96,21 @@ export default defineComponent({
     }
     function modalFalse(val) {
       emit('modalFalse', val)
-      formData.value.name = ''
-      formData.value.email = ''
-      formData.value.phone = ''
+      formData.value.type = 'a'
+      formData.value.name = 'null'
+      formData.value.email = 'null'
+      formData.value.phone = 'null'
+      formData.value.address = ''
       formData.value.info = ''
-      formData.value.id = null
+      formData.value.id = ''
     }
   
     onMounted(() => {
       if (props.modalCustom === true) {
         console.log(props.data)
         formData.value.id = props.data.id
-        formData.value.name = props.data.title
-        formData.value.email = props.data.email
-        formData.value.phone = props.data.phone
-        formData.value.info = props.data.jobtitle
+        formData.value.info = props.data.timework
+        formData.value.address = props.data.title
       }
     })
 

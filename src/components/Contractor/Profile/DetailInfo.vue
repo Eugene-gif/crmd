@@ -34,7 +34,7 @@
               style="opacity: 0.3;"
             />
           </div>
-          <img src="~assets/stroipro.jpg" alt="">
+          <img :src="`https://crmd.crookedweb.site/${userImage}`" alt="">
         </div>
         <div class="sec-btn">
           <q-btn
@@ -54,8 +54,8 @@
             <span class="block text-grey-5">Удалить аватар</span>
           </q-btn>
         </div>
-          
       </div>
+
       <div class="item scrollbar">
         <div class="title">
           Фото на главной
@@ -104,145 +104,24 @@
       </div>
     </div>
 
-    <div class="details" v-show="!isActive.details">
-      <div
-        class="item"
-        v-for="item in details"
-        :key="item"
-      >
-        <div class="cell">{{item.title}}</div>
-        <div class="cell">{{item.value}}</div>
-      </div>
-      <q-btn
-        unelevated 
-        no-caps
-        class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
-        padding="0"
-        @click="isActive.details = !isActive.details"
-      >
-        <span class="block text-grey-5">Изменить</span>
-      </q-btn>
-    </div>
-    
-    <div class="form-chapter" v-show="isActive.details">
-      <div class="chapter">
-        <q-list>
-          <q-item>
-            <div class="title">Название</div>
-            <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
-          </q-item>
-          <q-item>
-            <div class="title">Город</div>
-            <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
-          </q-item>
-          <q-item>
-            <div class="title">Область работы</div>
-            <q-input
-              type="textarea"
-              v-model="inp"
-              class="my-input bg-grey-3 my-textarea"
-              placeholder="Введите название"
-              style="min-height: 140px;"
-            />
-          </q-item>
-        </q-list>
-        <q-list>
-          <q-item class="q-item-textarea">
-            <div class="title">Описание</div>
-            <q-input type="textarea" v-model="inp" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
-          </q-item>
-        </q-list>
-      </div>
-
-      <div class="chapter">
-        <q-list>
-          <q-item>
-            <div class="title">Телефон</div>
-            <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
-          </q-item>
-          <q-item>
-            <div class="title">Общий адрес</div>
-            <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
-          </q-item>
-          <q-item>
-            <div class="title">E-mail</div>
-            <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
-          </q-item>
-          <q-item>
-            <div class="title">Сайт</div>
-            <q-input v-model="inp" class="my-input bg-grey-3" placeholder="Введите название" />
-          </q-item>
-        </q-list>
-        <q-list>
-          <q-item>
-            <div class="title">
-              Ссылка на WhatsApp
-            </div>
-            <q-input
-              v-model="inp"
-              class="my-input bg-grey-3"
-              placeholder="Ссылка на WhatsApp"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
-            >
-              <template v-slot:after>
-                <img src="~assets/whatsapp.svg" alt="" class="q-mr-md">
-              </template>
-            </q-input>
-          </q-item>
-          <q-item>
-            <div class="title">
-              Ссылка на Telegram
-            </div>
-            <q-input
-              v-model="inp"
-              class="my-input bg-grey-3"
-              placeholder="Ссылка на Telegram"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
-            >
-              <template v-slot:after>
-                <img src="~assets/telegram.svg" alt="" class="q-mr-md">
-              </template>
-            </q-input>
-          </q-item>
-          <q-item>
-            <div class="title">
-              Ссылка на Instagram
-            </div>
-            <q-input
-              v-model="inp"
-              class="my-input bg-grey-3"
-              placeholder="Ссылка на Instagram"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
-            >
-              <template v-slot:after>
-                <img src="~assets/instagram.svg" alt="" class="q-mr-md">
-              </template>
-            </q-input>
-          </q-item>
-        </q-list>
-      </div>
-      <q-btn
-        no-caps
-        padding="20px 10px"
-        class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
-        label="Сохранить изменения"
-        @click="isActive.details = !isActive.details"
-      />
-
-    </div>
+    <PhotoGallery />
   </q-expansion-item>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { contractorApi } from 'src/api/contractor';
+import { useQuasar } from 'quasar'
+import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 
 export default {
   name: 'ProfileDetilInfo',
+  components: {
+    PhotoGallery
+  },
   setup() {
+    const $q = useQuasar()
+// system_image
     const images = ref([
       {
         img: '/project-1.jpg'
@@ -272,62 +151,23 @@ export default {
         img: '/project-3.jpg'
       },
     ])
-    const details = ref([
-      {
-        title: 'Название',
-        value: 'СтройПро'
-      },
-      {
-        title: 'Город',
-        value: 'Краснодар'
-      },
-      {
-        title: 'Область работы',
-        value: 'Краснодарский край, ЮФО, Республики Северного Кавказа'
-      },
-      {
-        title: 'Адрес',
-        value: 'г. Краснодар, ул. Красных Партизан, д. 232, офис 307'
-      },
-      {
-        title: 'Телефон',
-        value: '+7 (918) 455-02-16'
-      },
-      {
-        title: 'E-mail',
-        value: 'antonglukhanko@gmail.com'
-      },
-      {
-        title: 'Сайт',
-        value: 'https://www.glukhanko.ru'
-      },
-      {
-        title: 'WhatsApp',
-        value: '—'
-      },
-      {
-        title: 'Telegram',
-        value: '—'
-      },
-      {
-        title: 'Instagram',
-        value: '@glukhanko'
-      },
-      {
-        title: 'Описание',
-        value: 'Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Добрый день! Приглашаю вас в CRMD — здесь подрядчичи и дизайнеры находят друг друга и продуктивно работают. Вам понравится! Добрый день! Приглашаю вас в '
-      },      
-    ])
-    const isActive = ref({
-      details: false,
-      designer: false,
-      documents: false,
-    })  
+
+    const userImage = computed(() => {
+      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+      if (storageUser.image === '') {
+        return storageUser.system_image
+      } else {
+        return storageUser.image
+      } 
+    })
     
+    onMounted(() => {
+      
+    }) 
+
     return {
+      userImage,
       images,
-      details,
-      isActive
     }
   },
 }

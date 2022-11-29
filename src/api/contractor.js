@@ -3,6 +3,8 @@ import httpClient from "./httpClient.js";
 const url = 'contractors'
 
 export const contractorApi = {
+
+  // info
   getBankingInfo(formData) {
     try {
       return httpClient.post(`${url}/info/updateBankingInfo`, formData)
@@ -20,20 +22,54 @@ export const contractorApi = {
       console.log(err)
     }
   },
-
+  getInfoContractor() {
+    try {
+      return httpClient.post(`${url}/getFullInfo`)
+      .then(( {data} ) => {
+        let formData = {}
+        Object.keys(data.data).forEach(key => {
+          if (
+            key === 'name' ||
+            key === 'city' ||
+            key === 'region' ||
+            key === 'public_email' ||
+            key === 'public_phone' ||
+            key === 'public_address' ||
+            key === 'url' ||
+            key === 'soc_wa' ||
+            key === 'soc_tg' ||
+            key === 'soc_inst' 
+          ) {
+            formData[key] = data.data[key]
+          }
+        });
+        return formData
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+  updateContractor(formData) {
+    try {
+      return httpClient.post(`${url}/update`, formData)
+      .then(( {data} ) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
 
   // Affiliate
   getAllAffiliate() {
     try {
       return httpClient.post(`${url}/info/getAllManagers`)
       .then(( response ) => {
-        return response = response.data.data.managers.map(el => {
+        return response = response.data.data.affiliates.map(el => {
           return {
             id: el.id,
-            title: el.name,
-            jobtitle: el.info,
-            email: el.email,
-            phone: el.phone,
+            title: el.address,
+            timework: el.info
           }
         })
       })
@@ -61,11 +97,11 @@ export const contractorApi = {
       console.log(err)
     }
   },
-  delAffiliate(man_id, val) {
+  delAffiliate(man_id) {
     try {
       return httpClient.post(`${url}/info/deleteManager`, {
         id: man_id,
-        type: val
+        type: 'a'
       })
       .then(( {response} ) => {
         return response
@@ -74,7 +110,6 @@ export const contractorApi = {
       console.log(err)
     }
   },
-
 
   // manager
   getAllManagers() {
@@ -124,6 +159,45 @@ export const contractorApi = {
       })
       .then(( {response} ) => {
         return response
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
+  // tags gategories
+  getListTags() {
+    try {
+      return httpClient.post(`${url}/info/categories/getList`)
+      .then(( {data} ) => {
+        return data = data.data.map(el => {
+          return {
+            id: el.id,
+            name: el.name,
+            description: el.description,
+            tags: el.tags
+          }
+        })
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+  getActiveListTags() {
+    try {
+      return httpClient.post(`${url}/info/categories/getAll`)
+      .then(( {data} ) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+  addTagInCategory(formData) {
+    try {
+      return httpClient.post(`${url}/info/categories/tag/create`, formData)
+      .then(( {data} ) => {
+        return data.data
       })
     } catch(err) {
       console.log(err)

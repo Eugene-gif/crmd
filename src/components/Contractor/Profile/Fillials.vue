@@ -19,7 +19,7 @@
     transition-hide="fade" 
     class="my-dialog contractor-dialog-share"
   >
-    <DialogManager 
+    <DialogFillials 
       @modalFalse="modalFalseAffiliate" 
       :modalCustom="modalCustom" 
       :data="editDataAffiliate" 
@@ -57,6 +57,7 @@
           flat
           class="my-btn my-effect h-opacity btn-add"
           padding="0"
+          @click="editAffiliate(item)"
         >
           <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="16px" class="q-mr-sm" />
           <span class="block text-grey-5">Редактировать</span>
@@ -67,6 +68,7 @@
           flat
           class="my-btn my-effect h-opacity btn-add"
           padding="0"
+          @click="delAffiliate(item.id)"
         >
           <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
           <span class="block text-grey-5">Удалить</span>
@@ -78,6 +80,7 @@
       no-caps
       class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="8.5px 25.5px"
+      @click="dialogAffiliate = true"
     >
       <span class="block text-grey-5">Добавить филиал</span>
       <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" color="black" style="margin-left: auto;" />
@@ -150,14 +153,16 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import DialogManager from 'pages/Contractor/DialogManager.vue'
+import DialogManager from 'pages/Contractor/DialogManager'
+import DialogFillials from 'pages/Contractor/DialogFillials'
 import { contractorApi } from 'src/api/contractor'
 import { useQuasar } from 'quasar'
 
 export default {
   name: 'ProfileFillials',
   components: {
-    DialogManager
+    DialogManager,
+    DialogFillials
   },
   setup() {
     const $q = useQuasar()
@@ -165,21 +170,12 @@ export default {
 
     // fillals
     const dialogAffiliate = ref(false)
-    const fillials = ref([
-      {
-        title: 'г. Краснодар, ул. Красных Партизан, д. 232, оф 307',
-        timework: 'ПН — ПТ: с 9:00 до 20:00, <br>СБ: с 10:00 до 17:00, ВС: Выходной'
-      },
-      {
-        title: 'г. Краснодар, ул. Красных Партизан, д. 232, оф 307',
-        timework: 'ПН — ПТ: с 9:00 до 20:00, <br>СБ: с 10:00 до 17:00, ВС: Выходной'
-      },
-    ])
+    const fillials = ref([])
     const editDataAffiliate = ref({})
     async function getAllAffiliate() {
       try {
         await contractorApi.getAllAffiliate().then(resp => {
-          managers.value = resp
+          fillials.value = resp
         })
       } catch (err) {
         $q.notify({
@@ -190,17 +186,18 @@ export default {
       }
     }
     function editAffiliate(object) {
+      console.log(object)
       editDataAffiliate.value = object
       modalCustom.value = true
       dialogAffiliate.value = true
     }
-    async function delManager(id) {
+    async function delAffiliate(id) {
       try {
-        await contractorApi.delAffiliate(id, 'm').then(resp => {
+        await contractorApi.delAffiliate(id).then(resp => {
           getAllAffiliate()
           $q.notify({
             color: 'positive',
-            message: 'Менеджер удален'
+            message: 'Филиал удален'
           })
         })
       } catch (err) {
@@ -258,12 +255,16 @@ export default {
 
     onMounted(() => {
       getAllManagers()
+      getAllAffiliate()
     })
 
     return {
       fillials,
       dialogAffiliate,
       editDataAffiliate,
+      getAllAffiliate,
+      editAffiliate,
+      delAffiliate,
 
       managers,
       editDataManager,
@@ -295,7 +296,7 @@ export default {
             message: val
           })
         }
-        getAllManagers()
+        getAllAffiliate()
       },
     }
   },
