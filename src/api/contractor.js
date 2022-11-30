@@ -193,13 +193,23 @@ export const contractorApi = {
       console.log(err)
     }
   },
-  addTagInCategory(formData) {
+  addTagInCategory(arr) {
+    const formData = new FormData();
+    for( var i = 0; i < arr.length; i++ ){
+      let tag = arr[i];
+      formData.append(`tags[]`, tag);
+    }
+
     try {
-      return httpClient.post(`${url}/info/categories/tag/create`, formData)
-      .then(( {data} ) => {
+      return httpClient({
+        method: "post",
+        url: `${url}/info/setTags`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
         return data.data
       })
-    } catch(err) {
+    } catch (err) {
       console.log(err)
     }
   },

@@ -9,6 +9,12 @@
     border-radius: 10px;
     z-index: 2001;
     position: relative;
+
+    &[aria-checked="true"] {
+      background: #FFFFFF;
+      border: 2px solid #73C949;
+      border-radius: 8px;
+    }
     .q-btn__content {
       .q-icon {
         transform: rotate(45deg);
@@ -52,6 +58,14 @@
     .q-checkbox {
       margin: 0 2.5px;
       margin-bottom: 5px;
+      background: #F7F7F7;
+      border: 2px solid #ECECEC;
+      border-radius: 8px;
+      &[aria-checked="true"] {
+        background: #FFFFFF;
+        border: 2px solid #73C949;
+        border-radius: 8px;
+      }
     }
     .head {
       display: flex;

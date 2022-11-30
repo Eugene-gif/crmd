@@ -64,7 +64,7 @@
           v-model="check.value"
           :label="check.name"
           class="q-checkbox-choice no-shadow"
-          @click="useCheckList(activeList)"
+          @click="addTagInCategory()"
         />
       </div>
       
@@ -184,7 +184,7 @@ export default defineComponent({
       }
     }
 
-    // api
+    // api tags
     async function getListTags() {
       try {
         await contractorApi.getListTags().then(resp => {
@@ -212,19 +212,29 @@ export default defineComponent({
         console.log(err)
       }
     }
-    // async function addTagInCategory(object) {
-    //   try {
-    //     await contractorApi.addTagInCategory().then(resp => {
-    //       console.log(resp)
-    //     })
-    //   } catch (err) {
-    //     $q.notify({
-    //       color: 'negative',
-    //       message: 'произошла ошибка'
-    //     })
-    //     console.log(err)
-    //   }
-    // }
+    async function addTagInCategory() {
+      let arr = []
+      activeList.value.tags.filter((el) => {
+        if(el.value === true) {
+          return arr.push(el.id)
+        }
+      })
+      try {
+        await contractorApi.addTagInCategory(arr).then(resp => {
+          $q.notify({
+            color: 'positive',
+            message: `Тег добавлен`
+          })
+          // getActiveListTags()
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
     
     onMounted(() => {
       getListTags()
@@ -242,7 +252,8 @@ export default defineComponent({
       useCheckList,
       delEl,
       getListTags,
-      getActiveListTags
+      getActiveListTags,
+      addTagInCategory
     }
   },
 })
