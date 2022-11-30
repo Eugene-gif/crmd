@@ -26,7 +26,19 @@
       />
     </template>
 
-    <div v-show="!isActive.designer">
+    <div class="no-data">
+      <div class="text">Условия пока не указаны вами</div>
+    </div>
+    <q-btn
+      unelevated 
+      no-caps
+      class="my-btn-custom-big my-btn-custom-big-noactive bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
+      padding="0"
+      @click="isActive.designer = !isActive.designer"
+    >
+      <span class="block text-grey-5">Изменить</span>
+    </q-btn>
+    <!-- <div v-show="!isActive.designer">
       <div class="desc-sec desc-sec-design bg-grey-9">
         <div class="information">
           <div class="number">
@@ -53,9 +65,9 @@
       >
         <span class="block text-grey-5">Изменить</span>
       </q-btn>
-    </div>
+    </div> -->
 
-    <div class="form-chapter" v-show="isActive.designer">
+    <!-- <div class="form-chapter" v-show="isActive.designer">
       <div class="chapter">
         <q-list>
           <q-item class="q-item-textarea">
@@ -91,7 +103,8 @@
         label="Сохранить изменения"
         @click="isActive.designer = !isActive.designer"
       />
-    </div>
+    </div> -->
+
   </q-expansion-item>
 </template>
 

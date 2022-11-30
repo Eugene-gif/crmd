@@ -141,7 +141,7 @@
           :style="{background: userInfo.colorBkg}"
         > 
           <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
-          <img :src="userInfo.image || `https://crmd.crookedweb.site/${userInfo.system_image}`">
+          <img :src="`https://crmd.crookedweb.site/${userInfo.image}` || `https://crmd.crookedweb.site/${userInfo.system_image}`">
           <span>{{userInfo.userNikeName}}</span>
         </q-btn>
 
@@ -189,8 +189,7 @@
       <q-item class="q-item__avatar">
         <q-item-section>
           <div class="img-section" :style="{background: userInfo.colorBkg}">
-            <img :src="userInfo.image || `https://crmd.crookedweb.site/${userInfo.system_image}`">
-            <span>{{userNikeName}}</span>
+            <img :src="`https://crmd.crookedweb.site/${userInfo.image}` || `https://crmd.crookedweb.site/${userInfo.system_image}`">
           </div>
           
           <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>

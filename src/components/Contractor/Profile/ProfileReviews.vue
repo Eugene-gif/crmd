@@ -11,7 +11,10 @@
     </template>
 
     <div class="contractor-single-reviews">
-      <q-list class="q-list-reviews">
+      <div class="no-data">
+        <div class="text">Отзывов пока нет</div>
+      </div>
+      <!-- <q-list class="q-list-reviews">
 
         <q-item>
           <q-item-section class="review">
@@ -56,7 +59,7 @@
           </q-item-section>
         </q-item>
 
-      </q-list>
+      </q-list> -->
     </div>
   </q-expansion-item>
 </template>
@@ -67,7 +70,7 @@ import { ref, onMounted } from 'vue'
 export default {
   name: 'ProfileReviews',
   setup() {
-
+    
     return {
       
     }

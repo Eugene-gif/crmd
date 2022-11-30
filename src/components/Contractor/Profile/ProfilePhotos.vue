@@ -1,4 +1,14 @@
 <template>
+  <q-dialog
+    v-model="dialog"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogUploadImg 
+      @modalFalse="modalFalse"
+    />
+  </q-dialog>
   <q-expansion-item
     expand-separator
     default-opened
@@ -61,6 +71,7 @@
       no-caps
       class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="5px 25px"
+      @click="dialog = true"
     >
       <span class="block text-grey-5">Добавить альбом</span>
       <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" style="margin-left: auto;" />
@@ -71,13 +82,17 @@
 <script>
 import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider'
+import DialogUploadImg from 'components/dialog/DialogUploadImg'
 
 export default {
   name: 'ProfilePhotos',
   components: {
-    VisualSlider
+    VisualSlider,
+    DialogUploadImg
   },
   setup() {
+    const dialog = ref(false)
+
     const visual = ref([
       {
         id: 1,
@@ -112,7 +127,11 @@ export default {
     ])
 
     return {
-      visual
+      visual,
+      dialog,
+      modalFalse() {
+        dialog.value = false
+      },
     }
   },
 }

@@ -6,7 +6,7 @@
           Сделок
         </div>
         <div class="number">
-          24
+          0
         </div>
       </div>
       <div class="item">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="number">
-          15 500 000 руб.
+          0 руб.
         </div>
       </div>
       <div class="item">
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="number">
-          250 000 руб.
+          0 руб.
         </div>
       </div>
       <div class="item">
@@ -39,8 +39,8 @@
           v-model="tab"
           class="q-tabs-reviews q-tabs-null"
         >
-          <q-tab name="0" icon="svguse:icons/allIcons.svg#like" label="25" />
-          <q-tab name="0" icon="svguse:icons/allIcons.svg#dislike" label="2" />
+          <q-tab name="0" icon="svguse:icons/allIcons.svg#like" label="0" />
+          <q-tab name="0" icon="svguse:icons/allIcons.svg#dislike" label="0" />
         </q-tabs>
       </div>
 

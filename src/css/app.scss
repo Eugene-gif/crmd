@@ -365,7 +365,23 @@ a.q-btn.lg-visible {
   }
 }
 
-
+.no-data {
+  width: 100%;
+  min-height: 152px;
+  background: #F5F5F5;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .text {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #444444;
+    opacity: 0.4;
+  }
+}
 
 .disable {
   opacity: 0.3;

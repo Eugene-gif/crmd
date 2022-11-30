@@ -4,23 +4,23 @@
       <div class="item">
         <div class="title">Проектов доступно</div>
         <div class="number">
-          <span>6</span>
-          <div class="new">
-            2 новых
-          </div>
+          <span>0</span>
+          <!-- <div class="new">
+            0 новых
+          </div> -->
         </div>
       </div>
       <div class="item">
         <div class="title">Смет доступно</div>
         <div class="number">
-          <span>87</span>
-          <div class="new">
-            24 новых
-          </div>
+          <span>0</span>
+          <!-- <div class="new">
+            0 новых
+          </div> -->
         </div>
       </div>
       <div class="item">
-        <div class="title">Дизайнеры на связи</div>
+        <!-- <div class="title">Дизайнеры на связи</div>
         <div class="designers">
           <q-item class="q-item-null">
             <img src="~assets/anton.jpg" alt="">
@@ -70,7 +70,7 @@
               :translateY="`-25px`"
             />
           </q-item>
-        </div>
+        </div> -->
       </div>
 
     </div>

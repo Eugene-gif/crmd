@@ -131,7 +131,8 @@ export default {
   },
   setup() {
     const $q = useQuasar()
-// system_image
+
+    // загрузка аватарки
     const images = ref([
       {
         img: '/project-1.jpg'
@@ -170,14 +171,9 @@ export default {
         userImage.value = storageUser.image
       } 
     }
-
     function checkFileSize (files) {
       return files.filter(file => file.size < 2048)
     }
-
-    // function checkFileType (files) {
-    //   return files.filter(file => file.type === 'image/*')
-    // }
     async function onFileChange(file) {
       try {
         await userApi.updateUser(file[0]).then(resp => {
@@ -194,7 +190,6 @@ export default {
         console.log(err)
       }
     }
-
     function onRejected (rejectedEntries) {
       $q.notify({
         type: 'negative',
@@ -202,6 +197,9 @@ export default {
       })
     }
     
+    // загрузка множества 
+
+
     onMounted(() => {
       getUserImage()
     }) 
