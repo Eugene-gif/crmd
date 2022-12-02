@@ -9,13 +9,13 @@ export const contractorApi = {
     try {
       return httpClient.post(`${url}/info/updateBankingInfo`, formData)
       .then(( response ) => {
-        
         let myObject = {}
-        Object.keys(response.data.data).forEach(key => {
-          if (key != 'id' && key != 'contractor_id' && key != 'created_at' && key != 'updated_at') {
-            myObject[key] = response.data.data[key]
-          }
-        });
+          Object.keys(response.data.data).forEach(key => {
+            if (key != 'id' && key != 'contractor_id' && key != 'created_at' && key != 'updated_at') {
+              myObject[key] = response.data.data[key]
+            }
+          });
+        
         return myObject
       })
     } catch(err) {
@@ -185,9 +185,13 @@ export const contractorApi = {
   },
   getActiveListTags() {
     try {
-      return httpClient.post(`${url}/info/categories/getAll`)
+      return httpClient.post(`${url}/info/getTags`)
       .then(( {data} ) => {
-        return data.data
+        let arr = []
+        Object.keys(data.data).forEach(key => {
+          arr.push({name: key, tags: data.data[key], value: true})
+        })
+        return arr
       })
     } catch(err) {
       console.log(err)
@@ -207,7 +211,15 @@ export const contractorApi = {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       }).then(({data}) => {
-        return data.data
+        let arr = []
+        let arr2 = []
+        Object.keys(data.data).forEach(key => {
+          arr2.push({name: key, tags: data.data[key], value: true})
+          data.data[key].forEach(el => {
+            arr.push(el.id)
+          })
+        })
+        return {arr, arr2}
       })
     } catch (err) {
       console.log(err)

@@ -2804,6 +2804,7 @@
                 .sec-btn {
                   padding-left: 20px;
                   position: relative;
+                  width: 100%;
                   &::before {
                     content: '';
                     width: calc(100% - 20px);
@@ -2814,6 +2815,15 @@
                     top: 0;
                     bottom: 0;
                     margin: auto;
+                  }
+                  .btn-upload {
+                    margin-top: 0;
+                    width: 100%;
+                    .q-uploader .q-uploader__header {
+                      background: #ffffff;
+                      border-radius: 0;
+                      height: 21px;
+                    }
                   }
                   // .
                   .btn-custom {
@@ -2829,7 +2839,7 @@
                       margin-bottom: 15px;
                     }
                     &:last-child {
-                      margin-top: 11px;
+                      margin-top: 24px;
                     }
                   }
                 }

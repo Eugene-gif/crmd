@@ -46,6 +46,7 @@ export const authApi = {
     formData.append("password_confirmation", data.confirmPassword)
     formData.append("user_name", data.user_name)
     formData.append("user_lastname", data.lastName)
+    formData.append("role", data.role)
     formData.append("image", data.image)
     console.log(data.image)
     try {

@@ -181,7 +181,8 @@ export default {
       email: '',
       password: '',
       confirmPassword: '',
-      image: ''
+      image: '',
+      role: '3'
     })   
     const isValidPass = computed(() => {
       return form.value.password == form.value.confirmPassword

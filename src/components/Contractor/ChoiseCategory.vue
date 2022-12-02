@@ -22,7 +22,7 @@
         v-model="check.value"
         :label="check.name"
         class="q-checkbox-choice no-shadow"
-        @click.stop="checkFuncOpen(check)"
+        @click.stop="openListTags(check)"
       />
     </div>
     <div class="choice-place choice-place-2" v-show="btnActive && checkActive">
@@ -64,7 +64,7 @@
           v-model="check.value"
           :label="check.name"
           class="q-checkbox-choice no-shadow"
-          @click="addTagInCategory()"
+          @click="addTagInCategory(check.id, check.value)"
         />
       </div>
       
@@ -72,14 +72,13 @@
   </div>
 
   <div
-    v-for="item in checklist"
+    v-for="item in gotActiveListTags"
     :key="item"
   >
     <q-expansion-item
       expand-separator
       default-opened
       class="q-expansion-my-2"
-      v-if="item.value"
     >
       <template v-slot:header>
         <div class="title">
@@ -96,16 +95,14 @@
         color="grey-7"
         v-for="el in item.tags"
         :key="el"
-        v-show="el.value"
       >
         <span class="block text-grey-5">{{el.name}}</span>
         <q-icon 
           name="svguse:icons/btnIcons.svg#delete" 
           size="16px" 
           style="margin-left: auto;" 
-          @click="delEl(el, item)"
+          @click="addTagInCategory(el.id, false)"
         />
-        <!-- useCheckList(item.checklist) -->
       </q-btn>
     </q-expansion-item>
   </div>  
@@ -123,73 +120,17 @@ export default defineComponent({
     const checklist = ref([])
     const checkActive = ref(false)
     const btnActive = ref(false)
-    const activeList = ref({})
-    
-    function getList() {
-      emit('getList', activeList.value)
-    }
-    function checkFuncOpen(val) {
-      val.value = false
-      
-      activeList.value = val
-      checkActive.value = true
-      useCheckList(val)
-    }
-    function customCheckList(val, list) {
-      if (val === 'add') {
-        activeList.value.value = true
-        activeList.value.tags.filter((item) => {
-          item.value = true
-        })
-      }
-      if (val === 'clear') {
-        activeList.value.value = false
-        activeList.value.tags.filter((item) => {
-          item.value = false
-        })
-      }
-      useCheckList(list)
-    }
-    function delEl(el, list) {
-      el.value = false
-      useCheckList(list)
-      // let bool = list.checklist.find(item => item.value === true)
-      // if (bool === undefined) {
-      //   list.value = false
-      // } else {
-      //   useCheckList(list)
-      // }
-    }
 
-    async function useCheckList(parentList) {
-      console.log(parentList)
-      let formData = {
-        category_id: parentList.id,
-        name: 'nananna',
-        description: 'no desc',
-      }
-      if (parentList.tags.length > 0) {
-        let bool = parentList.tags.find(item => item.value === true)
-        if (bool != undefined) {
-          if (bool.value === true) {
-            parentList.value = true 
-          } else {
-            parentList.value = false
-          }
-        } else {
-          parentList.value = false
-        }
-      } else {
-        parentList.value = false
-      }
-    }
+    const activeList = ref({})
+    const activeTagsList = ref([])
+    const gotActiveListTags = ref([])
 
     // api tags
     async function getListTags() {
       try {
         await contractorApi.getListTags().then(resp => {
           checklist.value = resp
-          console.log(resp)
+          // console.log(resp)
         })
       } catch (err) {
         $q.notify({
@@ -202,7 +143,8 @@ export default defineComponent({
     async function getActiveListTags() {
       try {
         await contractorApi.getActiveListTags().then(resp => {
-          console.log(resp)
+          gotActiveListTags.value = resp
+          // console.log(activeTagsList.value)
         })
       } catch (err) {
         $q.notify({
@@ -212,20 +154,61 @@ export default defineComponent({
         console.log(err)
       }
     }
-    async function addTagInCategory() {
-      let arr = []
-      activeList.value.tags.filter((el) => {
-        if(el.value === true) {
-          return arr.push(el.id)
-        }
+
+    // custom tags
+    async function openListTags(check) {
+      check.value = false
+      checkActive.value = true
+      activeList.value = check
+
+      activeList.value.tags.map((element) => {
+        activeTagsList.value.forEach((el) => {
+          if(element.id === el) {
+            return element.value = true
+          }
+        })
       })
+    }
+
+    async function customCheckList(val, list) {
+      let arr = []
+      if (val === 'add') {
+        activeList.value.tags.filter((item) => {
+          activeTagsList.value.push(item.id)
+          item.value = true
+        })
+        console.log(activeTagsList.value)
+      }
+      if (val === 'clear') {
+        activeList.value.tags.filter((item) => {
+          item.value = false
+          activeTagsList.value = activeTagsList.value.filter((name) => name !== item.id)
+        })
+      }
+      await addTagInCategory(null,null)
+    }
+
+    async function addTagInCategory(checkId, val) {
+      if (checkId !== null && val !== null) {
+        if (val === true) {
+          activeTagsList.value.push(checkId)
+        } else {
+          activeTagsList.value = activeTagsList.value.filter((name) => name !== checkId);
+        }
+      }
+
+      if (activeTagsList.value.length === 0) {
+        activeTagsList.value = [0]
+      }
       try {
-        await contractorApi.addTagInCategory(arr).then(resp => {
+        await contractorApi.addTagInCategory(activeTagsList.value).then(resp => {
+          activeTagsList.value = resp.arr
+          gotActiveListTags.value = resp.arr2
+          console.log(activeTagsList.value)
           $q.notify({
             color: 'positive',
-            message: `Тег добавлен`
+            message: `Тег обновлен`
           })
-          // getActiveListTags()
         })
       } catch (err) {
         $q.notify({
@@ -236,9 +219,18 @@ export default defineComponent({
       }
     }
     
+    // start
+    async function start() {
+      await getListTags()
+      await getActiveListTags()
+      gotActiveListTags.value.forEach(element => {
+        element.tags.forEach(el => {
+          activeTagsList.value.push(el.id)
+        })
+      });
+    }
     onMounted(() => {
-      getListTags()
-      getActiveListTags()
+      start()
     })
 
     return {
@@ -246,14 +238,16 @@ export default defineComponent({
       checkActive,
       btnActive,
       activeList,
-      checkFuncOpen,
+      activeTagsList,
+      gotActiveListTags,
+
+      openListTags,
       customCheckList,
-      getList,
-      useCheckList,
-      delEl,
+
       getListTags,
       getActiveListTags,
-      addTagInCategory
+      addTagInCategory,
+      start
     }
   },
 })

@@ -141,7 +141,7 @@
           :style="{background: userInfo.colorBkg}"
         > 
           <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
-          <img :src="`https://crmd.crookedweb.site/${userInfo.image}` || `https://crmd.crookedweb.site/${userInfo.system_image}`">
+          <img :src="`https://crmd.crookedweb.site/${userImage}`">
           <span>{{userInfo.userNikeName}}</span>
         </q-btn>
 
@@ -189,7 +189,7 @@
       <q-item class="q-item__avatar">
         <q-item-section>
           <div class="img-section" :style="{background: userInfo.colorBkg}">
-            <img :src="`https://crmd.crookedweb.site/${userInfo.image}` || `https://crmd.crookedweb.site/${userInfo.system_image}`">
+            <img :src="`https://crmd.crookedweb.site/${userImage}`">
           </div>
           
           <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>
@@ -329,7 +329,7 @@ export default ({
   },
 
   setup () {
-    const userInfo = ref({})
+    // const userInfo = ref({})
     const userUrl = ref('https://crmd.crookedweb.site/')
 
     const leftDrawerOpen = ref(false)
@@ -427,7 +427,7 @@ export default ({
     onMounted(() => {
       window.addEventListener('click', dropdown)
       window.addEventListener('click', dropdownMob)
-      getUser()
+      // getUser()
     })
     
     function dropdown(e){
@@ -453,17 +453,32 @@ export default ({
       router.push({ path: '/login' })
     } 
 
-    function getUser() {
-      let user = localStorage.getItem('userInfo')
-      userInfo.value = JSON.parse(user)
-      console.log(userInfo.value)
+    const userInfo = computed(() => {
+      let user = JSON.parse(localStorage.getItem('userInfo'))
+      console.log(user)
+      return user
+    }) 
+
+    function getUserImage() {
+      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+      if (storageUser.image === '') {
+        userImage.value = storageUser.system_image
+      } else {
+        userImage.value = storageUser.image
+      } 
     }
+    const userImage = ref()
     
+    onMounted(() => {
+      getUserImage()
+    })
     return {
       userInfo, 
       userUrl,
-      getUser,
+      // getUser,
       userNikeName,
+      getUserImage,
+      userImage,
 
       showing,
       showingMob,

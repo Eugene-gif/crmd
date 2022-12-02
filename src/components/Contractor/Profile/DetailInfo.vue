@@ -32,7 +32,7 @@
               name="svguse:icons/allIcons.svg#close-modal"
               color="black"
               style="opacity: 0.3;"
-              @click="onFileChange([null])"
+              @click="onFileChange()"
             />
           </div>
           <img :src="`https://crmd.crookedweb.site/${userImage}`" alt="">
@@ -177,12 +177,8 @@ export default {
     async function onFileChange(file) {
       try {
         await userApi.updateUser(file[0]).then(resp => {
-          if (resp.image === '') {
-            userImage.value = resp.image
-          } else {
-            userImage.value = resp.system_image
-          }
-          
+          console.log(resp)
+          userImage.value = resp.image
           let userInfo = JSON.stringify(resp)
           localStorage.setItem('userInfo', userInfo)
         })
