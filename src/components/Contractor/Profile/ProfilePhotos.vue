@@ -82,7 +82,7 @@
 <script>
 import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider'
-import DialogUploadImg from 'components/dialog/DialogUploadImg'
+import DialogUploadImg from 'src/pages/Contractor/DialogUploadImg.vue'
 
 export default {
   name: 'ProfilePhotos',

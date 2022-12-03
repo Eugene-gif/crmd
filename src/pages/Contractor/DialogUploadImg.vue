@@ -1,10 +1,10 @@
 <template>
   <q-card>
     <div class="q-card-background" @click="modalFalse()"></div>
-    <q-form
-      @submit="createAlbum"
-    >
-      <div class="dialog-section">
+    <div class="dialog-section">
+      <q-form
+        @submit="createAlbum"
+      >
         <q-card-section class="row items-center justify-between head">
           <div class="title">
             Добавление альбома
@@ -36,14 +36,14 @@
           <label class="lable-title">Загрузка фото</label>
           <div class="multiple-upload">
             <q-uploader
-              label="Перетащите или выберите файлы"
+              label="Выберите файл"
               multiple
               @added="onFileChange"
               accept=".jpg, image/*"
               @rejected="onRejected"
               :rules="[ val => val && val.length > 0 || '']"
             />
-            <div class="text">Поле для размещения</div>
+            <!-- <div class="text">Поле для размещения</div> -->
           </div>
         </q-card-section>
         
@@ -60,8 +60,9 @@
             </span>
           </q-btn>
         </q-card-actions>
-      </div>
-    </q-form>
+      </q-form>
+    </div>
+    
   </q-card>
   
 </template>

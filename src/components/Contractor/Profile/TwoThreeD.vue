@@ -1,4 +1,14 @@
 <template>
+  <q-dialog
+    v-model="dialog"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogUploadFiles 
+      @modalFalse="modalFalse"
+    />
+  </q-dialog>
   <q-expansion-item
     expand-separator
     default-opened
@@ -85,6 +95,7 @@
       no-caps
       class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="5px 25px"
+      @click="dialog = true"
     >
       <span class="block text-grey-5">Загрузить файл</span>
       <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" style="margin-left: auto;" />
@@ -94,13 +105,20 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import DialogUploadFiles from 'src/pages/Contractor/DialogUploadFiles'
 
 export default {
   name: 'ProfileTwoThreeD',
+  components: {
+    DialogUploadFiles
+  },
   setup() {
-
+    const dialog = ref(false)
     return {
-      
+      dialog,
+      modalFalse() {
+        dialog.value = false
+      },
     }
   },
 }
