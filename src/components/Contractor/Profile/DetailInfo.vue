@@ -35,7 +35,7 @@
               @click="onFileChange()"
             />
           </div>
-          <img :src="`https://crmd.crookedweb.site/${userImage}`" alt="">
+          <img :src="`http://crmd.crookedweb.ru/${userImage}`" alt="">
         </div>
         <div class="sec-btn">
           <div class="btn-upload">
@@ -70,6 +70,7 @@
           Фото на главной
         </div>
         <div class="sec">
+          <div class="no-photo" v-if="!images.length">Фото для главной пока не загружены</div>
           <div class="scroll-x my-scrollbar">
             <div
               class="sec-imgage"
@@ -134,33 +135,33 @@ export default {
 
     // загрузка аватарки
     const images = ref([
-      {
-        img: '/project-1.jpg'
-      },
-      {
-        img: '/project-2.jpg'
-      },
-      {
-        img: '/project-3.jpg'
-      },
-      {
-        img: '/project-1.jpg'
-      },
-      {
-        img: '/project-2.jpg'
-      },
-      {
-        img: '/project-3.jpg'
-      },
-      {
-        img: '/project-1.jpg'
-      },
-      {
-        img: '/project-2.jpg'
-      },
-      {
-        img: '/project-3.jpg'
-      },
+      // {
+      //   img: '/project-1.jpg'
+      // },
+      // {
+      //   img: '/project-2.jpg'
+      // },
+      // {
+      //   img: '/project-3.jpg'
+      // },
+      // {
+      //   img: '/project-1.jpg'
+      // },
+      // {
+      //   img: '/project-2.jpg'
+      // },
+      // {
+      //   img: '/project-3.jpg'
+      // },
+      // {
+      //   img: '/project-1.jpg'
+      // },
+      // {
+      //   img: '/project-2.jpg'
+      // },
+      // {
+      //   img: '/project-3.jpg'
+      // },
     ])
     const userImage = ref()
     function getUserImage() {

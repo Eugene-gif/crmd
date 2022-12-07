@@ -23,7 +23,7 @@ export const orderersApi = {
           return {
             label: `${el.first_name} ${el.last_name}`,
             value: `${el.first_name} ${el.last_name}`,
-            icon: `https://crmd.crookedweb.site/${el.photo}`,
+            icon: `http://crmd.crookedweb.ru/${el.photo}`,
             email: el.email,
             like: 25,
             dislike: 2,

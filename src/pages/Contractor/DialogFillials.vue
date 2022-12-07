@@ -9,38 +9,46 @@
           филиал
         </div>
         <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
-      </q-card-section>     
+      </q-card-section> 
 
-      <q-card-section class="form-section">
-        <label class="lable-title">Адрес</label>
-        <q-input v-model="formData.address" class="my-input bg-grey-3" placeholder="Введите адрес" />
-      </q-card-section>
-      <q-card-section class="form-section">
-        <label class="lable-title">Описание</label>
-        <q-input
-          type="textarea"
-          v-model="formData.info"
-          class="my-input bg-grey-3 my-textarea"
-          placeholder="Например, режим работы"
-          style="min-height: 140px;"
-        />
-      </q-card-section>
-      
-      <q-card-actions>
-        <q-btn
-          unelevated
-          no-caps
-          padding="20px 10px"
-          class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
-          @click="addAffiliate"
-        >
-          <span class="block">
-            <span v-show="modalCustom === false">Добавить</span>
-            <span v-show="modalCustom === true">Редактировать</span>
-            филиал
-          </span>
-        </q-btn>
-      </q-card-actions>
+      <q-form @submit="addAffiliate">
+        <q-card-section class="form-section">
+          <label class="lable-title">Адрес</label>
+          <q-input 
+            v-model="formData.address" 
+            class="my-input bg-grey-3" 
+            placeholder="Введите адрес" 
+            :rules="[ val => val && val.length > 0 || '']"
+          />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Описание</label>
+          <q-input
+            type="textarea"
+            v-model="formData.info"
+            class="my-input bg-grey-3 my-textarea"
+            placeholder="Например, режим работы"
+            style="min-height: 140px;"
+            :rules="[ val => val && val.length > 0 || '']"
+          />
+        </q-card-section>
+        
+        <q-card-actions>
+          <q-btn
+            unelevated
+            no-caps
+            padding="20px 10px"
+            class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
+            type="submit"
+          >
+            <span class="block">
+              <span v-show="modalCustom === false">Добавить</span>
+              <span v-show="modalCustom === true">Редактировать</span>
+              филиал
+            </span>
+          </q-btn>
+        </q-card-actions>
+      </q-form>
     </div>
   </q-card>
   

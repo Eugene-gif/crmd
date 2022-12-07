@@ -2379,10 +2379,12 @@
             }
             .q-tabs-reviews {
               margin-top: 12px;
+              
               .q-tab {
                 &[aria-selected="true"] .q-tab__content,
                 .q-tab__content {
                   color: black !important;
+                  cursor: auto !important;
                   .q-icon {
                     color: rgba(0,0,0,0.3) !important;
                   }
@@ -2722,6 +2724,22 @@
                 border-radius: 10px 10px 0 0;
                 padding: 0 31px;
                 padding-bottom: 24px;
+                .no-photo {
+                  font-weight: 400;
+                  font-size: 18px;
+                  line-height: 24px;
+                  color: #444444;
+                  opacity: 0.4;
+                  text-align: center;
+                  padding-top: 70px;
+                  @media (max-width: 772px) {
+                    padding-right: 20px;
+                    padding-top: 20px;
+                  }
+                }
+                @media (min-width: 772px) {
+                  min-height: 186px;
+                }
                 .scroll-x {
                   display: flex;
                   flex-wrap: nowrap;
@@ -3111,6 +3129,10 @@
               .block {
                 font-size: 18px;
                 line-height: 18px;
+                @media (max-width: 772px) {
+                  font-size: 16px;
+                  line-height: 16px;
+                }
               }
               &:last-child {
                 margin-bottom: 0;

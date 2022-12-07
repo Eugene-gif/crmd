@@ -6,8 +6,9 @@ function logOut() {
   store.dispatch('auth/singOut')
   window.location.href = '/'
 }
+
 const config = {
-  baseURL: "https://crmd.crookedweb.site/api/"
+  baseURL: "http://crmd.crookedweb.ru/api/"
 };
 
 const httpClient = axios.create(config);

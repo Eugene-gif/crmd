@@ -20,7 +20,7 @@
       </div>
     </template>
 
-    <q-list class="contractor-list">
+    <!-- <q-list class="contractor-list">
       <q-item>
         <q-item-section>
           <div class="subtitle">
@@ -88,7 +88,7 @@
         </q-item-section>
       </q-item>
       
-    </q-list>
+    </q-list> -->
 
     <q-btn
       unelevated 

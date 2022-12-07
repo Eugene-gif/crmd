@@ -7,13 +7,13 @@
       >
         <q-card-section class="row items-center justify-between head">
           <div class="title">
-            Добавление альбома
+            Загрузить файл
           </div>
           <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
         </q-card-section>     
 
         <q-card-section class="form-section">
-          <label class="lable-title">Название альбома</label>
+          <label class="lable-title">Название файла</label>
           <q-input 
             v-model="formData.name" 
             class="my-input bg-grey-3" 
@@ -31,12 +31,12 @@
           />
         </q-card-section>
         <q-card-section class="form-section">
-          <label class="lable-title">Загрузка фото</label>
+          <label class="lable-title">Загрузка файл</label>
           <div class="multiple-upload-files">
             <q-uploader
               label="Выберите файл"
-              multiple
               :filter="checkFileSize"
+              :max-files="1"
               @added="onFileChange"
               accept=".doc, .pdf, .docx"
               @rejected="onRejected"

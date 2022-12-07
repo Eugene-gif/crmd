@@ -49,10 +49,16 @@ export const contractorApi = {
       console.log(err)
     }
   },
-  updateContractor(formData) {
+  updateContractor(data) {
+    const formData = new FormData()
+    formData.append("name", data.name)
     try {
-      return httpClient.post(`${url}/update`, formData)
-      .then(( {data} ) => {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
         return data.data
       })
     } catch(err) {

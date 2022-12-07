@@ -141,7 +141,7 @@
           :style="{background: userInfo.colorBkg}"
         > 
           <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
-          <img :src="`https://crmd.crookedweb.site/${userImage}`">
+          <img :src="`http://crmd.crookedweb.ru/${userImage}`">
           <span>{{userInfo.userNikeName}}</span>
         </q-btn>
 
@@ -189,7 +189,7 @@
       <q-item class="q-item__avatar">
         <q-item-section>
           <div class="img-section" :style="{background: userInfo.colorBkg}">
-            <img :src="`https://crmd.crookedweb.site/${userImage}`">
+            <img :src="`http://crmd.crookedweb.ru/${userImage}`">
           </div>
           
           <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>
@@ -330,7 +330,7 @@ export default ({
 
   setup () {
     // const userInfo = ref({})
-    const userUrl = ref('https://crmd.crookedweb.site/')
+    const userUrl = ref('http://crmd.crookedweb.ru/')
 
     const leftDrawerOpen = ref(false)
     const text = ref('')
