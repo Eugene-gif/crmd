@@ -26,7 +26,7 @@
       />
     </template>
 
-    <div class="no-data">
+    <div class="no-data" v-show="!isActive.designer && dataNull">
       <div class="text">Условия пока не указаны вами</div>
     </div>
     <q-btn
@@ -34,6 +34,7 @@
       no-caps
       class="my-btn-custom-big my-btn-custom-big-noactive bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="0"
+      v-show="!isActive.designer && dataNull"
       @click="isActive.designer = !isActive.designer"
     >
       <span class="block text-grey-5">Изменить</span>
@@ -67,18 +68,22 @@
       </q-btn>
     </div> -->
 
-    <!-- <div class="form-chapter" v-show="isActive.designer">
+    <div class="form-chapter" v-show="isActive.designer">
       <div class="chapter">
         <q-list>
           <q-item class="q-item-textarea">
             <div class="title">Условия выплаты</div>
-            <q-input type="textarea" v-model="inp" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+            <q-input type="textarea" v-model="term_bid" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
           </q-item>
         </q-list>
         <q-list>
           <q-item class="q-item-reward">
             <div class="title">Вознаграждение</div>
-            <q-input v-model="inp" type="number" class="my-input bg-grey-3" placeholder="Введите название">
+            <q-input
+              v-model="term_text" type="number"
+              class="my-input bg-grey-3"
+              placeholder="Введите название"
+            >
               <span class="procent">%</span>
             </q-input>
           </q-item>
@@ -101,19 +106,24 @@
         padding="20px 10px"
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
-        @click="isActive.designer = !isActive.designer"
+        @click="updateData"
       />
-    </div> -->
+    </div>
 
   </q-expansion-item>
 </template>
 
 <script>
+import { start } from 'repl'
 import { ref, onMounted } from 'vue'
+import { useQuasar } from 'quasar'
+import { contractorApi } from 'src/api/contractor'
 
 export default {
   name: 'ProfileTermsDesigners',
   setup() {
+    const $q = useQuasar()
+    const dataNull = ref(true)
     
     const isActive = ref({
       details: false,
@@ -121,8 +131,54 @@ export default {
       documents: false,
     })  
 
+    const term_bid = ref('')
+    const term_text = ref('')
+
+    async function getData() {
+      try {
+        await contractorApi.getSetTerms().then(resp => {
+          console.log('Условия ' + resp)
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка получения данных об условиях сотрудничества'
+        })
+        console.log(err)
+      }
+    }
+
+    async function updateData() {
+      isActive.value.designer = !isActive.value.designer
+      let obj = {
+        term_bid: term_bid.value,
+        term_text: term_text.value
+      }
+      try {
+        await contractorApi.updateSetTerms(obj).then(resp => {
+          console.log('Условия ' + resp)
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+
+    onMounted(() => {
+      getData()
+    })
+
     return {
-      isActive
+      isActive,
+      dataNull,
+      term_bid,
+      term_text,
+      start,
+      updateData,
+      getData
     }
   },
 }

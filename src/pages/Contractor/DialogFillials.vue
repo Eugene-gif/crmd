@@ -67,18 +67,16 @@ export default defineComponent({
   setup (props, { emit }) {
     const formData = ref({
       id: '',
-      type: 'a',
-      name: 'null',
-      email: 'null',
-      phone: 'null',
       address: '',
-      info: ''
+      info: '',
+      name: ''
     })
 
     async function addAffiliate() {
+      formData.value.name = formData.value.address
       if (props.modalCustom === true) {
         try {
-          await contractorApi.updateManager(formData.value).then(resp => {
+          await contractorApi.updateAffiliate(formData.value).then(resp => {
             modalFalse('Филиал обновлен')
           })
         } catch (err) {
@@ -90,7 +88,7 @@ export default defineComponent({
         }
       } else {
         try {
-          await contractorApi.AddManager(formData.value).then(resp => {
+          await contractorApi.AddAffiliate(formData.value).then(resp => {
             modalFalse('Филиал создан')
           })
         } catch (err) {
@@ -104,7 +102,6 @@ export default defineComponent({
     }
     function modalFalse(val) {
       emit('modalFalse', val)
-      formData.value.type = 'a'
       formData.value.name = 'null'
       formData.value.email = 'null'
       formData.value.phone = 'null'
@@ -119,6 +116,7 @@ export default defineComponent({
         formData.value.id = props.data.id
         formData.value.info = props.data.timework
         formData.value.address = props.data.title
+        formData.value.name = props.data.title
       }
     })
 

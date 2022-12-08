@@ -172,10 +172,12 @@ export default {
     const dialogAffiliate = ref(false)
     const fillials = ref([])
     const editDataAffiliate = ref({})
+
     async function getAllAffiliate() {
       try {
         await contractorApi.getAllAffiliate().then(resp => {
           fillials.value = resp
+          console.log(resp)
         })
       } catch (err) {
         $q.notify({
@@ -186,7 +188,6 @@ export default {
       }
     }
     function editAffiliate(object) {
-      console.log(object)
       editDataAffiliate.value = object
       modalCustom.value = true
       dialogAffiliate.value = true
@@ -211,7 +212,7 @@ export default {
 
 
     
-    // manager
+    
     const managers = ref([])
     const editDataManager = ref({})
   
@@ -228,6 +229,7 @@ export default {
         console.log(err)
       }
     }
+    
     function editManager(object) {
       editDataManager.value = object
       modalCustom.value = true

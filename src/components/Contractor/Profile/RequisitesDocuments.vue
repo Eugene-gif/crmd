@@ -116,7 +116,17 @@
         <q-list>
           <q-item>
             <div class="title">Тип</div>
-            <q-input v-model="formData.company_type" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-select
+              filled
+              v-model="formData.company_type"
+              :options="optionsCompany_type"
+              stack-label
+              dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
+              class="my-select"
+              behavior="menu"
+              popup-content-class="my-select-menu"
+              :label="formData.company_type ? undefined : 'Выберите тип компании'"
+            />
           </q-item>
           <q-item>
             <div class="title">Юридический адрес</div>
@@ -230,6 +240,8 @@ export default {
       person_position: '',
       person_based_on: '',
     })
+
+    const optionsCompany_type = ref([])
     
     async function getInfoDocs(val, data) {
       try {
@@ -244,8 +256,19 @@ export default {
       }
     }
 
+    async function getDocCompanyTypes() {
+      try {
+        await contractorApi.getCompanyTypes().then(resp => {
+          optionsCompany_type.value = resp
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
     async function start() {
       await getInfoDocs('', {})
+      await getDocCompanyTypes()
       let arr = Object.values(formData.value)
       let bool = null
       arr.find(item => {
@@ -265,8 +288,10 @@ export default {
     return {
       isActive,
       formData,
+      getDocCompanyTypes,
       getInfoDocs,
-      start
+      start,
+      optionsCompany_type
     }
   },
 }

@@ -81,7 +81,6 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const formData = ref({
-      type: 'm',
       name: '',
       email: '',
       phone: '',

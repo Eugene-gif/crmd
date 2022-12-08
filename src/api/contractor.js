@@ -12,7 +12,11 @@ export const contractorApi = {
         let myObject = {}
           Object.keys(response.data.data).forEach(key => {
             if (key != 'id' && key != 'contractor_id' && key != 'created_at' && key != 'updated_at') {
-              myObject[key] = response.data.data[key]
+              if(response.data.data[key] === '' || response.data.data[key] === null) {
+                myObject[key] = null
+              } else {
+                myObject[key] = response.data.data[key]
+              }
             }
           });
         
@@ -28,18 +32,9 @@ export const contractorApi = {
       .then(( {data} ) => {
         let formData = {}
         Object.keys(data.data).forEach(key => {
-          if (
-            key === 'name' ||
-            key === 'city' ||
-            key === 'region' ||
-            key === 'public_email' ||
-            key === 'public_phone' ||
-            key === 'public_address' ||
-            key === 'url' ||
-            key === 'soc_wa' ||
-            key === 'soc_tg' ||
-            key === 'soc_inst' 
-          ) {
+          if(data.data[key] === 'null' || data.data[key] === null) {
+            formData[key] = null
+          } else {
             formData[key] = data.data[key]
           }
         });
@@ -52,6 +47,17 @@ export const contractorApi = {
   updateContractor(data) {
     const formData = new FormData()
     formData.append("name", data.name)
+    formData.append("city", data.city)
+    formData.append("region", data.region)
+    formData.append("public_email", data.public_email)
+    formData.append("public_phone", data.public_phone)
+    formData.append("public_address", data.public_address)
+    formData.append("url", data.url)
+    formData.append("soc_wa", data.soc_wa)
+    formData.append("soc_tg", data.soc_tg)
+    formData.append("soc_inst", data.soc_inst)
+    formData.append("description", data.description)
+
     try {
       return httpClient({
         method: "post",
@@ -69,12 +75,13 @@ export const contractorApi = {
   // Affiliate
   getAllAffiliate() {
     try {
-      return httpClient.post(`${url}/info/getAllManagers`)
+      return httpClient.post(`${url}/info/getAffiliate`)
       .then(( response ) => {
-        return response = response.data.data.affiliates.map(el => {
+        console.log(response.data.data)
+        return response = response.data.data.map(el => {
           return {
             id: el.id,
-            title: el.address,
+            title: el.name,
             timework: el.info
           }
         })
@@ -85,7 +92,7 @@ export const contractorApi = {
   },
   AddAffiliate(formData) {
     try {
-      return httpClient.post(`${url}/info/createManager`, formData)
+      return httpClient.post(`${url}/info/createAffiliate`, formData)
       .then(( {response} ) => {
         return response
       })
@@ -95,7 +102,7 @@ export const contractorApi = {
   },
   updateAffiliate(formData) {
     try {
-      return httpClient.post(`${url}/info/updateManager`, formData)
+      return httpClient.post(`${url}/info/updateAffiliate`, formData)
       .then(( {response} ) => {
         return response
       })
@@ -105,9 +112,8 @@ export const contractorApi = {
   },
   delAffiliate(man_id) {
     try {
-      return httpClient.post(`${url}/info/deleteManager`, {
-        id: man_id,
-        type: 'a'
+      return httpClient.post(`${url}/info/deleteAffiliate`, {
+        id: man_id
       })
       .then(( {response} ) => {
         return response
@@ -117,13 +123,15 @@ export const contractorApi = {
     }
   },
 
+
+
   // manager
   getAllManagers() {
     try {
-      return httpClient.post(`${url}/info/getAllManagers`)
+      return httpClient.post(`${url}/info/getManager`)
       .then(( response ) => {
         // return response.data.data.managers
-        return response = response.data.data.managers.map(el => {
+        return response = response.data.data.map(el => {
           return {
             id: el.id,
             title: el.name,
@@ -160,8 +168,7 @@ export const contractorApi = {
   delManager(man_id, val) {
     try {
       return httpClient.post(`${url}/info/deleteManager`, {
-        id: man_id,
-        type: val
+        id: man_id
       })
       .then(( {response} ) => {
         return response
@@ -228,6 +235,41 @@ export const contractorApi = {
         return {arr, arr2}
       })
     } catch (err) {
+      console.log(err)
+    }
+  },
+
+
+  // условия работ с дизайнерами
+  getSetTerms() {
+    try {
+      return httpClient.post(`${url}/info/getTerms`)
+      .then(( {data} ) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+  updateSetTerms(data) {
+    try {
+      return httpClient.post(`${url}/info/setTerms`, data)
+      .then(( {data} ) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
+  // получение типов компаний
+  getCompanyTypes() {
+    try {
+      return httpClient.post(`${url}/info/getCompanyTypes`)
+      .then(( {data} ) => {
+        return data.data
+      })
+    } catch(err) {
       console.log(err)
     }
   },

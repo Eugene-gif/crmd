@@ -26,7 +26,7 @@
           Аватар
         </div>
         <div class="sec-imgage">
-          <div class="circle-close rotate">
+          <div class="circle-close rotate" v-if="!systemImage">
             <q-icon
               size="12px"
               name="svguse:icons/allIcons.svg#close-modal"
@@ -164,12 +164,14 @@ export default {
       // },
     ])
     const userImage = ref()
+    const systemImage = ref(true)
     function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
       if (storageUser.image === '') {
         userImage.value = storageUser.system_image
       } else {
         userImage.value = storageUser.image
+        systemImage.value = false
       } 
     }
     function checkFileSize (files) {
@@ -204,6 +206,7 @@ export default {
     return {
       userImage,
       images,
+      systemImage,
       getUserImage,
       checkFileSize,
       onFileChange,

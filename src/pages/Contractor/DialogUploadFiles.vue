@@ -27,7 +27,6 @@
             v-model="formData.link" 
             class="my-input bg-grey-3" 
             placeholder="Вставьте ссылку" 
-            :rules="[ val => val && val.length > 0 || '']"
           />
         </q-card-section>
         <q-card-section class="form-section">
@@ -40,12 +39,12 @@
               @added="onFileChange"
               accept=".doc, .pdf, .docx"
               @rejected="onRejected"
-              :rules="[ val => val && val.length > 0 || '']"
+              :disable="(formData.link.length > 0)"
             />
             <!-- <div class="text">Поле для размещения</div> -->
           </div>
         </q-card-section>
-        
+        {{uploadActive}}
         <q-card-actions>
           <q-btn
             unelevated
@@ -67,7 +66,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from 'vue'
+import { defineComponent, ref, onMounted , computed} from 'vue'
 import { albumsApi } from 'src/api/albums';
 import { useQuasar } from 'quasar'
 

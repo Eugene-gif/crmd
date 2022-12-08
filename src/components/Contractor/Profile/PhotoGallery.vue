@@ -53,7 +53,7 @@
     </div>
     <div class="item">
       <div class="cell">Описание</div>
-      <div class="cell" v-if="formData.desc != null">{{formData.desc}}</div>
+      <div class="cell" v-if="formData.description != null">{{formData.description}}</div>
       <div v-else>—</div>
     </div>
     <q-btn
@@ -92,13 +92,15 @@
               class="my-input bg-grey-3 my-textarea"
               placeholder="Введите название"
               style="min-height: 140px;"
+              :rules="[ val => val.length < 60 ]"
             />
+            
           </q-item>
         </q-list>
         <q-list>
           <q-item class="q-item-textarea">
             <div class="title">Описание</div>
-            <q-input type="textarea" v-model="formData.desc" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+            <q-input type="textarea" v-model="formData.description" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
           </q-item>
         </q-list>
       </div>
@@ -107,19 +109,37 @@
         <q-list>
           <q-item>
             <div class="title">Телефон</div>
-            <q-input v-model="formData.public_phone" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input 
+              v-model="formData.public_phone" 
+              class="my-input bg-grey-3" 
+              placeholder="Введите название"
+              type="Number" 
+            />
           </q-item>
           <q-item>
             <div class="title">Общий адрес</div>
-            <q-input v-model="formData.public_address" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input 
+              v-model="formData.public_address" 
+              class="my-input bg-grey-3" 
+              placeholder="Введите название" 
+            />
           </q-item>
           <q-item>
             <div class="title">E-mail</div>
-            <q-input v-model="formData.public_email" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input 
+              v-model="formData.public_email" 
+              class="my-input bg-grey-3" 
+              placeholder="Введите название" 
+              :rules="[ val => val.length && val.includes('@')]"
+            />
           </q-item>
           <q-item>
             <div class="title">Сайт</div>
-            <q-input v-model="formData.url" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input 
+              v-model="formData.url" 
+              class="my-input bg-grey-3" 
+              placeholder="Введите название" 
+            />
           </q-item>
         </q-list>
         <q-list>
@@ -147,6 +167,7 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Telegram"
               lazy-rules
+              :rules="[ val => val.length && val.includes('@')]"
             >
               <template v-slot:after>
                 <img src="~assets/telegram.svg" alt="" class="q-mr-md">
@@ -162,6 +183,7 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Instagram"
               lazy-rules
+              :rules="[ val => val.length && val.includes('@')]"
             >
               <template v-slot:after>
                 <img src="~assets/instagram.svg" alt="" class="q-mr-md">
@@ -194,17 +216,16 @@ export default {
 
     const formData = ref({
       name: '',
-      // city: '',
-      // region: '',
-      // public_email: '',
-      // public_phone: '',
-      // public_address: '',
-      // url: '',
-      // soc_wa: '',
-      // soc_tg: '',
-      // soc_inst: '',
-      // desc: '',
-      // image: null
+      city: '',
+      region: '',
+      public_email: '',
+      public_phone: '',
+      public_address: '',
+      url: '',
+      soc_wa: '',
+      soc_tg: '',
+      soc_inst: '',
+      description: '',
     })
     const isActive = ref({
       details: false,
@@ -235,7 +256,6 @@ export default {
       try {
         await contractorApi.getInfoContractor().then(resp => {
           formData.value = resp
-          formData.value.data.desc = null
         })
       } catch (err) {
         $q.notify({
