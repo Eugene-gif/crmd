@@ -142,7 +142,6 @@ export default {
               
               let userInfo = JSON.stringify(resp.data.data.user)
               localStorage.setItem('userInfo', userInfo)
-              // console.log(userInfo)
               window.location.href = '/'
             })
             loading.value = false

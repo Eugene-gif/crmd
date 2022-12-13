@@ -46,14 +46,6 @@
             />
             <label class="text">Заменить фото</label>
           </div>
-          <!-- <q-btn
-            unelevated 
-            no-caps
-            class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom"
-            padding="0"
-          >
-            <span class="block text-grey-5">Заменить фото</span>
-          </q-btn> -->
           <q-btn
             unelevated 
             no-caps
@@ -83,23 +75,26 @@
                   name="svguse:icons/allIcons.svg#close-modal"
                   color="black"
                   style="opacity: 0.3;"
+                  @click="delImage(item.id)"
                 />
               </div>
-              <img :src="item.img" alt="">
+              <img :src="`http://crmd.crookedweb.ru/${item.file}`" alt="">
             </div>
           </div>
         </div>
         <div class="custom-sec">
-          <q-btn
-            unelevated 
-            no-caps
-            flat
-            class="my-btn my-effect h-opacity btn-add"
-            padding="0"
-          >
-            <span class="block text-grey-5">Добавить фото</span>
-            <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" color="black" />
-          </q-btn>
+          <div class="btn-upload-2">
+            <q-uploader
+              @added="uploadProfilePhoto"
+              multiple
+              accept=".jpg, image/*"
+              @rejected="onRejected"
+            />
+            <div class="upload-content">
+              <label class="text">Добавить фото</label>
+              <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" color="black" />
+            </div>
+          </div>
           <q-btn
             unelevated 
             no-caps
@@ -121,7 +116,8 @@
 <script>
 import { ref, onMounted, computed } from 'vue'
 import { contractorApi } from 'src/api/contractor';
-import { userApi } from 'src/api/user';
+import { albumsApi } from 'src/api/albums';
+import { imagesApi } from 'src/api/images';
 import { useQuasar } from 'quasar'
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 
@@ -134,37 +130,11 @@ export default {
     const $q = useQuasar()
 
     // загрузка аватарки
-    const images = ref([
-      // {
-      //   img: '/project-1.jpg'
-      // },
-      // {
-      //   img: '/project-2.jpg'
-      // },
-      // {
-      //   img: '/project-3.jpg'
-      // },
-      // {
-      //   img: '/project-1.jpg'
-      // },
-      // {
-      //   img: '/project-2.jpg'
-      // },
-      // {
-      //   img: '/project-3.jpg'
-      // },
-      // {
-      //   img: '/project-1.jpg'
-      // },
-      // {
-      //   img: '/project-2.jpg'
-      // },
-      // {
-      //   img: '/project-3.jpg'
-      // },
-    ])
+    const images = ref([])
+
     const userImage = ref()
     const systemImage = ref(true)
+
     function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
       if (storageUser.image === '') {
@@ -174,20 +144,10 @@ export default {
         systemImage.value = false
       } 
     }
+
+
     function checkFileSize (files) {
       return files.filter(file => file.size < 2048)
-    }
-    async function onFileChange(file) {
-      try {
-        await userApi.updateUser(file[0]).then(resp => {
-          console.log(resp)
-          userImage.value = resp.image
-          let userInfo = JSON.stringify(resp)
-          localStorage.setItem('userInfo', userInfo)
-        })
-      } catch (err) {
-        console.log(err)
-      }
     }
     function onRejected (rejectedEntries) {
       $q.notify({
@@ -195,12 +155,74 @@ export default {
         message: 'Файл не соответствуeт расширению'
       })
     }
+    async function onFileChange(file) {
+      if (file === undefined) {
+        file = [null]
+      }
+      try {
+        await contractorApi.updateContractorAvatar(file[0]).then(resp => {
+          let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+          if (resp.image == '') {
+            userImage.value = storageUser.system_image
+            systemImage.value = true
+          } else {
+            userImage.value = resp.image
+            systemImage.value = false
+          }
+          storageUser.image = resp.image
+          let userInfo = JSON.stringify(storageUser)
+          localStorage.setItem('userInfo', userInfo)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    async function uploadProfilePhoto(file) {
+      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+      let id = storageUser.profile_album_id
+      try {
+        await albumsApi.addImagesInAlbum(file, id).then(resp => {
+          console.log(resp)
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    async function getAlbum() {
+      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+      let id = storageUser.profile_album_id
+      try {
+        await albumsApi.getAlbum(id).then(resp => {
+          images.value = resp
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    async function delImage(id) {
+      try {
+        await imagesApi.delImage(id).then(resp => {
+          images.value = images.value.filter((item) => item.id !== id)
+          $q.notify({
+            type: 'positive',
+            message: 'Картинка удалена'
+          })
+        })
+      } catch (err) {
+        console.log(err)
+        $q.notify({
+          type: 'negative',
+          message: 'Произошла ошибка'
+        })
+      }
+    }
     
     // загрузка множества 
 
 
     onMounted(() => {
       getUserImage()
+      getAlbum()
     }) 
 
     return {
@@ -211,6 +233,9 @@ export default {
       checkFileSize,
       onFileChange,
       onRejected,
+      uploadProfilePhoto,
+      getAlbum,
+      delImage,
     }
   },
 }

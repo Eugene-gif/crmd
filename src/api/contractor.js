@@ -71,6 +71,29 @@ export const contractorApi = {
       console.log(err)
     }
   },
+  updateContractorAvatar(file) {
+    const formData = new FormData()
+    formData.append("name", 'yurecblinovgelarm@gmail.com')
+    if (file === null) {
+      formData.append(`photo`, file);
+    } else {
+      formData.append(`image`, file);
+    }
+    
+
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
 
   // Affiliate
   getAllAffiliate() {

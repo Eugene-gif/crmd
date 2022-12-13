@@ -22,6 +22,7 @@
             vertical
             transition-prev="slide-right"
             transition-next="slide-left"
+            :class="{'image-chek': !tabList.length}"
           >
             <q-tab-panel
               v-for="item in tabList"
@@ -29,7 +30,7 @@
               :name="item"
               v-touch-swipe.mouse.right="handleSwipePrev"
               v-touch-swipe.mouse.left="handleSwipeNext"
-              :style="`background: url(${item})`"
+              :style="`background: url(http://crmd.crookedweb.ru/${item})`"
               :class="{'image-chek': item == ' '}"
             />
           </q-tab-panels>

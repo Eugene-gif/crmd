@@ -46,7 +46,7 @@ $width-sm: 100%;
           object-fit: cover;
           max-height: 40px;
           border-radius: 100%;
-          image-rendering: -webkit-optimize-contrast;
+          // image-rendering: -webkit-optimize-contrast;
           position: relative;
           z-index: 2;
         }

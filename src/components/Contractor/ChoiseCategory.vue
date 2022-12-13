@@ -231,6 +231,15 @@ export default defineComponent({
     }
     onMounted(() => {
       start()
+
+      const btn = document.querySelector( '.choise-category');
+      document.addEventListener( 'click', (e) => {
+        const withinBoundaries = e.composedPath().includes(btn);
+        if ( ! withinBoundaries ) {
+          btnActive.value = false
+        }
+      })
+
     })
 
     return {

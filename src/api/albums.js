@@ -13,7 +13,7 @@ export const albumsApi = {
     formData.append("description", data.description)
     for( var i = 0; i < data.images.length; i++ ){
       let file = data.images[i];
-      formData.append(`files[]`, file);
+      formData.append(`images[]`, file);
     }
 
     try {
@@ -23,7 +23,83 @@ export const albumsApi = {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       }).then(({data}) => {
+        let imgs = []
+        data.data.images.forEach(img => {
+          imgs.push(img.file)
+        })
+        return {
+          id: data.data.id,
+          description: data.data.description,
+          name: data.data.name,
+          images: imgs
+        }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  addImagesInAlbum(data, id) {
+    const formData = new FormData();
+    formData.append("album_id", id)
+    for( var i = 0; i < data.length; i++ ){
+      let file = data[i];
+      formData.append(`images[]`, file);
+    }
+
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/addImages`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
         return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  getAllAlbums() {
+    try {
+      return httpClient.post(`${url}/getAll`)
+      .then(({ data }) => {
+        return data = data.data.map(el => {
+          let imgs = []
+          el.images.forEach(img => {
+            imgs.push(img.file)
+          })
+          return {
+            id: el.id,
+            description: el.description,
+            name: el.name,
+            images: imgs
+          }
+        })
+      });
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
+  getAlbum(alb_id) {
+    try {
+      return httpClient.post(`${url}/get`, {album_id: Number(alb_id)})
+      .then(({ data }) => {
+        return data.data.images
+      });
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
+  delAlbum(id) {
+    try {
+      return httpClient.post(`${url}/delete`, {
+        id: id 
+      }).then(({ data }) => {
+        return data
       })
     } catch (err) {
       console.log(err)

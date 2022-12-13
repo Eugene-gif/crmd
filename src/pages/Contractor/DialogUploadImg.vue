@@ -100,7 +100,7 @@ export default defineComponent({
       if (formData.value.images.length > 0) {
         try {
           await albumsApi.createAlbum(formData.value).then(resp => {
-            console.log(resp)
+            modalFalse(resp)
             $q.notify({
               color: 'positive',
               message: 'Альбом создан'

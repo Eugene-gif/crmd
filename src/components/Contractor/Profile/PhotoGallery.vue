@@ -92,9 +92,9 @@
               class="my-input bg-grey-3 my-textarea"
               placeholder="Введите название"
               style="min-height: 140px;"
-              :rules="[ val => val.length < 60 ]"
+              
             />
-            
+            <!-- :rules="[ val => !val || val.length < 60 ]" -->
           </q-item>
         </q-list>
         <q-list>
@@ -130,8 +130,9 @@
               v-model="formData.public_email" 
               class="my-input bg-grey-3" 
               placeholder="Введите название" 
-              :rules="[ val => val.length && val.includes('@')]"
+              :rules="[ val => val && val.length > 0 || '']"
             />
+            <!-- :rules="[ val => val.length && val.includes('@')]" -->
           </q-item>
           <q-item>
             <div class="title">Сайт</div>
@@ -167,8 +168,9 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Telegram"
               lazy-rules
-              :rules="[ val => val.length && val.includes('@')]"
+              
             >
+            <!-- :rules="[ val => val.length && val.includes('@')]" -->
               <template v-slot:after>
                 <img src="~assets/telegram.svg" alt="" class="q-mr-md">
               </template>
@@ -183,8 +185,9 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Instagram"
               lazy-rules
-              :rules="[ val => val.length && val.includes('@')]"
+              
             >
+            <!-- :rules="[ val => val.length && val.includes('@')]" -->
               <template v-slot:after>
                 <img src="~assets/instagram.svg" alt="" class="q-mr-md">
               </template>

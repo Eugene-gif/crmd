@@ -38,7 +38,7 @@
               class="bg-grey-3 text-grey-5 my-btn my-effect btn-kolvo"
               padding="7.5px 12px"
             >
-              {{item.rights}}
+              {{item.images.length}} фото
             </q-btn>
             <div class="btn-sec">
               <q-btn
@@ -57,6 +57,7 @@
                 flat
                 class="my-btn my-effect h-opacity btn-add"
                 padding="0"
+                @click="delAlbum(item.id)"
               >
                 <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
                 <span class="block text-grey-5">Удалить</span>
@@ -83,6 +84,8 @@
 import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider'
 import DialogUploadImg from 'src/pages/Contractor/DialogUploadImg.vue'
+import { useQuasar } from 'quasar'
+import { albumsApi } from 'src/api/albums'
 
 export default {
   name: 'ProfilePhotos',
@@ -91,46 +94,60 @@ export default {
     DialogUploadImg
   },
   setup() {
+    const $q = useQuasar()
     const dialog = ref(false)
 
-    const visual = ref([
-      {
-        id: 1,
-        images: [
-          ' ',
-          '/project-2.jpg',
-          '/project-3.jpg',
-        ],
-        name: 'Фото помещения',
-        rights: '5 фото'
-      },
-      {
-        id: 2,
-        images: [
-          '/project-1.jpg',
-          '/project-2.jpg',
-          '/project-3.jpg',
-        ],
-        name: 'Визуализации',
-        rights: '5 фото'
-      },
-      {
-        id: 3,
-        images: [
-          '/project-1.jpg',
-          '/project-2.jpg',
-          '/project-3.jpg',
-        ],
-        name: 'Визуализации',
-        rights: '5 фото'
+    const visual = ref([])
+    
+    async function getAllDataAlbums() {
+      try {
+        await albumsApi.getAllAlbums().then(resp => {
+          visual.value = resp
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'Произошла ошибка получения данных'
+        })
+        console.log(err)
       }
-    ])
+    }
 
+    async function delAlbum(id) {
+      try {
+        await albumsApi.delAlbum(id).then(resp => {
+          console.log(resp)
+          visual.value = visual.value.filter((item) => item.id !== id)
+          setTimeout(() => {
+            $q.notify({
+              color: 'positive',
+              message: 'Альбом удален'
+            })
+          }, 0)
+        })
+      } catch (err) {
+        console.log(err)
+        setTimeout(() => {
+          $q.notify({
+            color: 'red',
+            message: 'Произошла ошибка, попробуйте позже'
+          })
+        }, 0)
+      }
+    }
+    
+
+    onMounted(() => {
+      getAllDataAlbums()
+    })
+        
     return {
       visual,
       dialog,
-      modalFalse() {
+      delAlbum,
+      modalFalse(val) {
         dialog.value = false
+        visual.value.push(val)
       },
     }
   },

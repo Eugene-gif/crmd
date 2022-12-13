@@ -26,7 +26,7 @@
       />
     </template>
 
-    <div class="no-data" v-show="!isActive.designer && dataNull">
+    <div class="no-data" v-show="!isActive.designer && dataNull && term_bid === 0">
       <div class="text">Условия пока не указаны вами</div>
     </div>
     <q-btn
@@ -34,16 +34,17 @@
       no-caps
       class="my-btn-custom-big my-btn-custom-big-noactive bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="0"
-      v-show="!isActive.designer && dataNull"
+      v-show="!isActive.designer && dataNull && term_bid !== 0"
       @click="isActive.designer = !isActive.designer"
     >
       <span class="block text-grey-5">Изменить</span>
     </q-btn>
-    <!-- <div v-show="!isActive.designer">
+
+    <div v-show="!isActive.designer">
       <div class="desc-sec desc-sec-design bg-grey-9">
         <div class="information">
           <div class="number">
-            10%
+            {{term_bid}}%
           </div>
           <div class="subtext">
             Вознаграждение<br>
@@ -51,10 +52,10 @@
           </div>
         </div>
         <div class="text lg-visible">
-          Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а 
+          {{term_text}}
         </div>
         <div class="text mb-visible">
-          Условия выплаты: Сразу после поступления оплаты от заказчика. Предлагаю не усложнять это поле вариантами, между которыми нужно выбирать, а оставить просто как поле для ввода. Сразу после поступления оплаты от заказчика. 
+          {{term_text}}
         </div>
       </div>
       <q-btn
@@ -66,21 +67,21 @@
       >
         <span class="block text-grey-5">Изменить</span>
       </q-btn>
-    </div> -->
+    </div>
 
     <div class="form-chapter" v-show="isActive.designer">
       <div class="chapter">
         <q-list>
           <q-item class="q-item-textarea">
             <div class="title">Условия выплаты</div>
-            <q-input type="textarea" v-model="term_bid" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+            <q-input type="textarea" v-model="term_text" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
           </q-item>
         </q-list>
         <q-list>
           <q-item class="q-item-reward">
             <div class="title">Вознаграждение</div>
             <q-input
-              v-model="term_text" type="number"
+              v-model="term_bid" type="number"
               class="my-input bg-grey-3"
               placeholder="Введите название"
             >
@@ -131,13 +132,19 @@ export default {
       documents: false,
     })  
 
-    const term_bid = ref('')
+    const term_bid = ref()
     const term_text = ref('')
 
     async function getData() {
       try {
         await contractorApi.getSetTerms().then(resp => {
-          console.log('Условия ' + resp)
+          if (resp.term_bid === 0) {
+            dataNull.value = true
+          } else {
+            dataNull.value = false
+          }
+          term_bid.value = resp.term_bid
+          term_text.value = resp.term_text
         })
       } catch (err) {
         $q.notify({
@@ -156,7 +163,8 @@ export default {
       }
       try {
         await contractorApi.updateSetTerms(obj).then(resp => {
-          console.log('Условия ' + resp)
+          term_bid.value = resp.term_bid
+          term_text.value = resp.term_text
         })
       } catch (err) {
         $q.notify({
