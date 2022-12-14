@@ -1,0 +1,140 @@
+<template>
+  <q-card>
+    <div class="q-card-background" @click="modalFalse()"></div>
+    <div class="dialog-section">
+      <q-form
+        @submit="updateAlbum"
+      >
+        <q-card-section class="row items-center justify-between head">
+          <div class="title">
+            Редактировать альбом
+          </div>
+          <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
+        </q-card-section>     
+
+        <q-card-section class="form-section">
+          <label class="lable-title">Название альбома</label>
+          <q-input 
+            v-model="formData.name" 
+            class="my-input bg-grey-3" 
+            placeholder="Введите название" 
+            :rules="[ val => val && val.length > 0 || '']"
+          />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Описание альбома</label>
+          <q-input
+            type="textarea"
+            v-model="formData.description"
+            class="my-input bg-grey-3 my-textarea"
+            placeholder="Введите описание"
+            style="min-height: 140px;"
+            :rules="[ val => val && val.length > 0 || '']"
+          />
+        </q-card-section>
+        <q-card-section class="form-section">
+          <label class="lable-title">Добавить фото</label>
+          <div class="multiple-upload">
+            <q-uploader
+              label="Выберите файл"
+              multiple
+              @added="onFileChange"
+              accept=".jpg, image/*"
+              @rejected="onRejected"
+              :rules="[ val => val && val.length > 0 || '']"
+            />
+            <!-- <div class="text">Поле для размещения</div> -->
+          </div>
+        </q-card-section>
+        
+        <q-card-actions>
+          <q-btn
+            unelevated
+            no-caps
+            padding="20px 10px"
+            class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
+            type="submit"
+            :class="{'btn-load': lodingBtn}"
+          >
+            <span class="block">
+              Обновить альбом
+            </span>
+          </q-btn>
+        </q-card-actions>
+      </q-form>
+    </div>
+    
+  </q-card>
+  
+</template>
+
+<script>
+import { defineComponent, ref, onMounted } from 'vue'
+import { albumsApi } from 'src/api/albums';
+import { useQuasar } from 'quasar'
+
+export default defineComponent({
+  name: 'DialogUpdateAlbum',
+  props: {
+    data: Object
+  },
+  setup (props, { emit }) {
+    const $q = useQuasar()
+    const lodingBtn = ref(false)
+    const formData = ref({
+      id: null,
+      name: '',
+      description: ''
+    })
+
+    async function onFileChange(file) {
+      formData.value.images = file
+    }
+    function onRejected () {
+      $q.notify({
+        type: 'negative',
+        message: 'Файл не соответствуeт расширению'
+      })
+    }
+
+    async function updateAlbum() {
+      lodingBtn.value = true
+      try {
+        await albumsApi.updateAlbum(formData.value).then(resp => {
+          console.log(resp)
+          $q.notify({
+            color: 'positive',
+            message: 'Альбом обновлен'
+          })
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+      lodingBtn.value = false
+    }
+
+    function modalFalse(val) {
+      emit('modalFalse', val)
+    }
+  
+    onMounted(() => {
+      formData.value.id = props.data.id
+      formData.value.name = props.data.name
+      formData.value.description = props.data.description
+    })
+
+    return {     
+      formData,
+      lodingBtn,
+      modalFalse,
+      onFileChange,
+      onRejected,
+      updateAlbum
+    }
+  }
+})
+</script>
