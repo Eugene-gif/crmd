@@ -32,6 +32,29 @@
             :rules="[ val => val && val.length > 0 || '']"
           />
         </q-card-section>
+
+        <q-card-section class="form-section">
+          <label class="lable-title">Фото альбома</label>
+          <div class="section-images">
+            <div 
+              class="sec-img"
+              v-for="img in formData.images"
+              :key="img"
+            >
+              <div class="circle-close rotate">
+                <q-icon
+                  size="12px"
+                  name="svguse:icons/allIcons.svg#close-modal"
+                  color="black"
+                  style="opacity: 0.3;"
+                  @click="delImage(img.id)"
+                />
+              </div>
+              <img :src="`http://crmd.crookedweb.ru/${img.file}`" alt="">
+            </div>
+          </div>
+        </q-card-section>
+
         <q-card-section class="form-section">
           <label class="lable-title">Добавить фото</label>
           <div class="multiple-upload">
@@ -71,6 +94,7 @@
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
 import { albumsApi } from 'src/api/albums';
+import { imagesApi } from 'src/api/images';
 import { useQuasar } from 'quasar'
 
 export default defineComponent({
@@ -84,7 +108,8 @@ export default defineComponent({
     const formData = ref({
       id: null,
       name: '',
-      description: ''
+      description: '',
+      images: []
     })
 
     async function onFileChange(file) {
@@ -95,6 +120,26 @@ export default defineComponent({
         type: 'negative',
         message: 'Файл не соответствуeт расширению'
       })
+    }
+
+    async function delImage(id) {
+      lodingBtn.value = true
+      try {
+        await imagesApi.delImage(id).then(resp => {
+          formData.value.images = formData.value.images.filter((item) => item.id !== id)
+          $q.notify({
+            type: 'positive',
+            message: 'Картинка удалена'
+          })
+        })
+      } catch (err) {
+        console.log(err)
+        $q.notify({
+          type: 'negative',
+          message: 'Произошла ошибка'
+        })
+      }
+      lodingBtn.value = false
     }
 
     async function updateAlbum() {
@@ -125,11 +170,13 @@ export default defineComponent({
       formData.value.id = props.data.id
       formData.value.name = props.data.name
       formData.value.description = props.data.description
+      formData.value.images = props.data.images
     })
 
     return {     
       formData,
       lodingBtn,
+      delImage,
       modalFalse,
       onFileChange,
       onRejected,
