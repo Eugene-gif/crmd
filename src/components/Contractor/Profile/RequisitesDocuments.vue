@@ -206,6 +206,7 @@
         padding="20px 10px"
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
+        :class="{'btn-load': lodingBtn}"
         @click="getInfoDocs('open', formData)"
       />
     </div>
@@ -216,11 +217,13 @@
 <script>
 import { ref, onMounted, reactive } from 'vue'
 import { contractorApi } from 'src/api/contractor';
+import { useQuasar } from 'quasar'
 
 export default {
   name: 'ProfileRequisitesDocuments',
   setup() {
-    
+    const $q = useQuasar()
+    const lodingBtn = ref(false)
     const isActive = ref({
       documents: false,
     })  
@@ -244,16 +247,26 @@ export default {
     const optionsCompany_type = ref([])
     
     async function getInfoDocs(val, data) {
+      lodingBtn.value = true
       try {
         await contractorApi.getBankingInfo(data).then(resp => {
           formData.value = resp
+          $q.notify({
+            color: 'positive',
+            message: 'Данные обновлены'
+          })
         })
         if (val === 'open') {
           isActive.value.documents = !isActive.value.documents
         }
       } catch (err) {
         console.log(err)
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
       }
+      lodingBtn.value = false
     }
 
     async function getDocCompanyTypes() {
@@ -288,6 +301,7 @@ export default {
     return {
       isActive,
       formData,
+      lodingBtn,
       getDocCompanyTypes,
       getInfoDocs,
       start,

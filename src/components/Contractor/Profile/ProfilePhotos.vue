@@ -9,6 +9,17 @@
       @modalFalse="modalFalse"
     />
   </q-dialog>
+  <q-dialog
+    v-model="dialogUpdate"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogUpdateAlbum 
+      @modalFalse="modalFalseUpdate"
+      :data="modalUpdateData"
+    />
+  </q-dialog>
   <q-expansion-item
     expand-separator
     default-opened
@@ -47,6 +58,7 @@
                 flat
                 class="my-btn my-effect h-opacity btn-add"
                 padding="0"
+                @click="updateAlubum(item)"
               >
                 <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="16px" class="q-mr-sm" />
                 <span class="block text-grey-5">Редактировать</span>
@@ -84,6 +96,7 @@
 import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider'
 import DialogUploadImg from 'src/pages/Contractor/DialogUploadImg.vue'
+import DialogUpdateAlbum from 'src/pages/Contractor/DialogUpdateAlbum.vue'
 import { useQuasar } from 'quasar'
 import { albumsApi } from 'src/api/albums'
 
@@ -91,13 +104,15 @@ export default {
   name: 'ProfilePhotos',
   components: {
     VisualSlider,
-    DialogUploadImg
+    DialogUploadImg,
+    DialogUpdateAlbum
   },
   setup() {
     const $q = useQuasar()
     const dialog = ref(false)
-
+    const dialogUpdate = ref(false)
     const visual = ref([])
+    const modalUpdateData = ref()
     
     async function getAllDataAlbums() {
       try {
@@ -135,17 +150,29 @@ export default {
         }, 0)
       }
     }
+
+    async function updateAlubum(album) {
+      dialogUpdate.value = true
+      modalUpdateData.value = album
+    }
     
 
-    onMounted(() => {
-      getAllDataAlbums()
+    onMounted( async () => {
+      await getAllDataAlbums()
     })
         
     return {
       visual,
       dialog,
+      dialogUpdate,
+      modalUpdateData,
       delAlbum,
+      updateAlubum,
       modalFalse(val) {
+        dialog.value = false
+        visual.value.push(val)
+      },
+      modalFalseUpdate(val) {
         dialog.value = false
         visual.value.push(val)
       },

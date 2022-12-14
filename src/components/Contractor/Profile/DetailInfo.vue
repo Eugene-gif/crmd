@@ -43,6 +43,7 @@
               @added="onFileChange"
               accept=".jpg, image/*"
               @rejected="onRejected"
+              :class="{'btn-load': lodingBtn}"
             />
             <label class="text">Заменить фото</label>
           </div>
@@ -51,6 +52,8 @@
             no-caps
             class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom btn-custom-del mb-visible"
             padding="0"
+            :class="{'btn-load': lodingBtn}"
+            @click="onFileChange()"
           >
             <span class="block text-grey-5">Удалить аватар</span>
           </q-btn>
@@ -89,6 +92,7 @@
               multiple
               accept=".jpg, image/*"
               @rejected="onRejected"
+              :class="{'btn-load': lodingBtn2}"
             />
             <div class="upload-content">
               <label class="text">Добавить фото</label>
@@ -104,6 +108,8 @@
             color="grey-5"
             padding="0"
             label="Удалить все"
+            :class="{'btn-load': lodingBtn2}"
+            @click="delUserAlbum"
           />
         </div>
       </div>
@@ -128,6 +134,8 @@ export default {
   },
   setup() {
     const $q = useQuasar()
+    const lodingBtn = ref(false)
+    const lodingBtn2 = ref(false)
 
     // загрузка аватарки
     const images = ref([])
@@ -156,6 +164,7 @@ export default {
       })
     }
     async function onFileChange(file) {
+      lodingBtn.value = true
       if (file === undefined) {
         file = [null]
       }
@@ -176,17 +185,28 @@ export default {
       } catch (err) {
         console.log(err)
       }
+      lodingBtn.value = false
     }
     async function uploadProfilePhoto(file) {
+      lodingBtn2.value = true
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
       let id = storageUser.profile_album_id
       try {
         await albumsApi.addImagesInAlbum(file, id).then(resp => {
-          console.log(resp)
+          images.value = resp.images
+          $q.notify({
+            type: 'positive',
+            message: 'Фото загружены'
+          })
         })
       } catch (err) {
         console.log(err)
+        $q.notify({
+          type: 'negative',
+          message: 'Происошла ошибка'
+        })
       }
+      lodingBtn2.value = false
     }
     async function getAlbum() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
@@ -200,12 +220,33 @@ export default {
       }
     }
     async function delImage(id) {
+      lodingBtn2.value = true
       try {
         await imagesApi.delImage(id).then(resp => {
           images.value = images.value.filter((item) => item.id !== id)
           $q.notify({
             type: 'positive',
             message: 'Картинка удалена'
+          })
+        })
+      } catch (err) {
+        console.log(err)
+        $q.notify({
+          type: 'negative',
+          message: 'Произошла ошибка'
+        })
+      }
+      lodingBtn2.value = false
+    }
+    async function delUserAlbum() {
+      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+      let id = storageUser.profile_album_id
+      try {
+        await albumsApi.delUserAlbum(id).then(resp => {
+          images.value = []
+          $q.notify({
+            type: 'positive',
+            message: 'Удалено'
           })
         })
       } catch (err) {
@@ -229,6 +270,8 @@ export default {
       userImage,
       images,
       systemImage,
+      lodingBtn,
+      lodingBtn2,
       getUserImage,
       checkFileSize,
       onFileChange,
@@ -236,6 +279,7 @@ export default {
       uploadProfilePhoto,
       getAlbum,
       delImage,
+      delUserAlbum,
     }
   },
 }

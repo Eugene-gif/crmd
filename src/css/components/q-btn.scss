@@ -187,3 +187,34 @@
     }
   }
 }
+
+// animation btn
+.btn-load {
+  position: relative;
+  overflow: hidden;
+  &:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    animation: animate_grow 2s infinite;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #68B937;
+    z-index: 1;
+    display: block;
+  }
+  .q-btn__content {
+    z-index: 2;
+  }
+}
+
+
+@keyframes animate_grow {
+	0% {		
+    transform: translateX(-100%);
+	}
+	100% {
+		transform: translateX(0);
+	}
+}

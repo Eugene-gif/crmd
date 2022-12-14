@@ -44,22 +44,22 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 export default {
   props: {
     images: Array
   },
   setup(props) {
-    const tab = ref(props.images[0])
+    const tab = ref(props.images[0].file)
     const openTabs = ref(false)
     const openModal = ref(false)
-    const tabList = props.images
+    const tabList = ref([])
     
     function nextTab(val) {
-      const lengthTabs = tabList.length - 1
+      const lengthTabs = tabList.value.length - 1
       const currentTab = tab.value
-      const indexCurrent = tabList.indexOf(currentTab)
+      const indexCurrent = tabList.value.indexOf(currentTab)
       let nextSlideIndex = 0
 
       if (val === 'prev') {
@@ -74,8 +74,20 @@ export default {
           nextSlideIndex = 0
         }
       }
-      tab.value = tabList[nextSlideIndex]
+      tab.value = tabList.value[nextSlideIndex]
     }
+
+    function start() {
+      tabList.value = props.images.map(el => {
+        return el.file
+      })
+      
+    }
+
+    onMounted( async () => {
+      await start()
+    })
+
     return {
       openModal,
       openTabs,
@@ -83,6 +95,7 @@ export default {
       tab,
       tabList,
       nextTab,
+      start,
       handleSwipeNext ({ evt, ...newInfo }) {
         nextTab('next')
       },

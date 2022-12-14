@@ -23,15 +23,11 @@ export const albumsApi = {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       }).then(({data}) => {
-        let imgs = []
-        data.data.images.forEach(img => {
-          imgs.push(img.file)
-        })
         return {
           id: data.data.id,
           description: data.data.description,
           name: data.data.name,
-          images: imgs
+          images: data.data.images
         }
       })
     } catch (err) {
@@ -61,20 +57,40 @@ export const albumsApi = {
     }
   },
 
+  updateAlbum(datas) {
+    const formData = {
+      album_id: datas.id,
+      name: datas.name,
+      description: datas.description 
+    }
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   getAllAlbums() {
     try {
       return httpClient.post(`${url}/getAll`)
       .then(({ data }) => {
         return data = data.data.map(el => {
-          let imgs = []
-          el.images.forEach(img => {
-            imgs.push(img.file)
-          })
+          // let imgs = []
+          // el.images.forEach(img => {
+          //   imgs.push(img.file)
+          // })
           return {
             id: el.id,
             description: el.description,
             name: el.name,
-            images: imgs
+            images: el.images
           }
         })
       });
@@ -98,6 +114,18 @@ export const albumsApi = {
     try {
       return httpClient.post(`${url}/delete`, {
         id: id 
+      }).then(({ data }) => {
+        return data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  delUserAlbum(album_id) {
+    try {
+      return httpClient.post(`${url}/clear`, {
+        id: album_id 
       }).then(({ data }) => {
         return data
       })

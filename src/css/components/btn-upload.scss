@@ -34,6 +34,7 @@
     }
   }
   .text {
+    z-index: 2;
     font-size: 18px;
     line-height: 18px;
     width: max-content;
@@ -107,6 +108,7 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    z-index: 2;
     .text {
       position: relative;
       font-size: 16px;
@@ -115,7 +117,6 @@
       margin-right: 8px;
     }
     .q-icon {
-
     }
   }
   &:hover .text {

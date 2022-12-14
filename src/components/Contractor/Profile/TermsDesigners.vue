@@ -107,6 +107,7 @@
         padding="20px 10px"
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
+        :class="{'btn-load': lodingBtn}"
         @click="updateData"
       />
     </div>
@@ -124,6 +125,7 @@ export default {
   name: 'ProfileTermsDesigners',
   setup() {
     const $q = useQuasar()
+    const lodingBtn = ref(false)
     const dataNull = ref(true)
     
     const isActive = ref({
@@ -156,6 +158,7 @@ export default {
     }
 
     async function updateData() {
+      lodingBtn.value = true
       isActive.value.designer = !isActive.value.designer
       let obj = {
         term_bid: term_bid.value,
@@ -165,6 +168,10 @@ export default {
         await contractorApi.updateSetTerms(obj).then(resp => {
           term_bid.value = resp.term_bid
           term_text.value = resp.term_text
+          $q.notify({
+            color: 'positive',
+            message: 'Данные обновлены'
+          })
         })
       } catch (err) {
         $q.notify({
@@ -173,6 +180,7 @@ export default {
         })
         console.log(err)
       }
+      lodingBtn.value = false
     }
 
     onMounted(() => {
@@ -184,6 +192,7 @@ export default {
       dataNull,
       term_bid,
       term_text,
+      lodingBtn,
       start,
       updateData,
       getData

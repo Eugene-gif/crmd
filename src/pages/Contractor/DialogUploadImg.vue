@@ -54,9 +54,10 @@
             padding="20px 10px"
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
             type="submit"
+            :class="{'btn-load': lodingBtn}"
           >
             <span class="block">
-              Создать альбом
+              Создать альбом 
             </span>
           </q-btn>
         </q-card-actions>
@@ -79,6 +80,7 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const $q = useQuasar()
+    const lodingBtn = ref(false)
 
     const formData = ref({
       name: '',
@@ -97,6 +99,7 @@ export default defineComponent({
     }
 
     async function createAlbum() {
+      lodingBtn.value = true
       if (formData.value.images.length > 0) {
         try {
           await albumsApi.createAlbum(formData.value).then(resp => {
@@ -119,7 +122,7 @@ export default defineComponent({
           message: 'Загрузите пожалуйста фото'
         })
       }
-      
+      lodingBtn.value = false
     }
 
     function modalFalse(val) {
@@ -132,6 +135,7 @@ export default defineComponent({
 
     return {     
       formData,
+      lodingBtn,
       modalFalse,
       onFileChange,
       onRejected,

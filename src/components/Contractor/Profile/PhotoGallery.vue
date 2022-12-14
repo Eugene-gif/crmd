@@ -201,6 +201,7 @@
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
         type="submit"
+        :class="{'btn-load': lodingBtn}"
       />
     </q-form>
   </div>
@@ -216,6 +217,7 @@ export default {
   name: 'PhotoGallery',
   setup() {
     const $q = useQuasar()
+    const lodingBtn = ref(false)
 
     const formData = ref({
       name: '',
@@ -237,6 +239,7 @@ export default {
     })  
 
     async function updateContractor() {
+      lodingBtn.value = true
       try {
         await contractorApi.updateContractor(formData.value).then(resp => {
           formData.value = resp
@@ -253,6 +256,7 @@ export default {
         })
         console.log(err)
       }
+      lodingBtn.value = false
     }
 
     async function getInfoContractor() {
@@ -276,6 +280,7 @@ export default {
     return {
       formData,
       isActive,
+      lodingBtn,
       updateContractor,
       getInfoContractor
     }
