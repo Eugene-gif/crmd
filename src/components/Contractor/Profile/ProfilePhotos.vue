@@ -20,6 +20,17 @@
       :data="modalUpdateData"
     />
   </q-dialog>
+  <q-dialog
+    v-model="dialogDelModal"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogDelite 
+      @modalFalse="modalOpenDel"
+    />
+  </q-dialog>
+
   <q-expansion-item
     expand-separator
     default-opened
@@ -69,7 +80,7 @@
                 flat
                 class="my-btn my-effect h-opacity btn-add"
                 padding="0"
-                @click="delAlbum(item.id)"
+                @click="callDelDialog('delAvatar', item.id)"
               >
                 <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
                 <span class="block text-grey-5">Удалить</span>
@@ -97,6 +108,7 @@ import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider'
 import DialogUploadImg from 'src/pages/Contractor/DialogUploadImg.vue'
 import DialogUpdateAlbum from 'src/pages/Contractor/DialogUpdateAlbum.vue'
+import DialogDelite from 'components/dialog/DialogDelite'
 import { useQuasar } from 'quasar'
 import { albumsApi } from 'src/api/albums'
 
@@ -105,12 +117,16 @@ export default {
   components: {
     VisualSlider,
     DialogUploadImg,
-    DialogUpdateAlbum
+    DialogUpdateAlbum,
+    DialogDelite
   },
   setup() {
     const $q = useQuasar()
     const dialog = ref(false)
     const dialogUpdate = ref(false)
+    const dialogDelModal = ref(false)
+    const dialogName = ref()
+    const delAlbumId = ref()
     const visual = ref([])
     const modalUpdateData = ref()
     
@@ -155,6 +171,18 @@ export default {
       dialogUpdate.value = true
       modalUpdateData.value = album
     }
+
+    function callDelDialog(modal, id) {
+      dialogName.value = modal
+      dialogDelModal.value = true
+      delAlbumId.value = id
+    }
+
+    function modalOpenDel(val) {
+      dialogDelModal.value = false
+      if (dialogName.value === 'delAvatar' && val) delAlbum(delAlbumId.value)
+      delAlbumId.value = null
+    }
     
 
     onMounted( async () => {
@@ -166,8 +194,13 @@ export default {
       dialog,
       dialogUpdate,
       modalUpdateData,
+      dialogDelModal,
+      dialogName,
+      delAlbumId,
       delAlbum,
       updateAlubum,
+      callDelDialog,
+      modalOpenDel,
       modalFalse(val) {
         dialog.value = false
         visual.value.push(val)

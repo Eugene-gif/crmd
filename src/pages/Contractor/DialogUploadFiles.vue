@@ -21,6 +21,14 @@
             :rules="[ val => val && val.length > 0 || '']"
           />
         </q-card-section>
+        
+        <q-card-section class="form-section form-section-desc">
+          <div class="form-section__text">
+            Загрузите файл одним из двух способов: напрямую через загрузчик внизу, либо вставив ссылку на файл, если он уже хранится в вашем облачном хранилище. Рекомендуем второй вариант, так как место для ваших файлов на нашем сервисе ограничено. 
+          </div>
+          <a href="" target="_blank" class="form-section__link">Подробнее об условиях</a>
+        </q-card-section>
+
         <q-card-section class="form-section">
           <label class="lable-title">Ссылка на файлообменник</label>
           <q-input 

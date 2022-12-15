@@ -1,4 +1,15 @@
 <template>
+  
+  <q-dialog
+    v-model="dialog"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogDelite 
+      @modalFalse="modalFalse"
+    />
+  </q-dialog>
   <q-expansion-item
     expand-separator
     default-opened
@@ -32,7 +43,7 @@
               name="svguse:icons/allIcons.svg#close-modal"
               color="black"
               style="opacity: 0.3;"
-              @click="onFileChange()"
+              @click="callDelDialog('delAvatar')"
             />
           </div>
           <img :src="`http://crmd.crookedweb.ru/${userImage}`" alt="">
@@ -53,7 +64,7 @@
             class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom btn-custom-del mb-visible"
             padding="0"
             :class="{'btn-load': lodingBtn}"
-            @click="onFileChange()"
+            @click="callDelDialog('delAvatar')"
           >
             <span class="block text-grey-5">Удалить аватар</span>
           </q-btn>
@@ -109,7 +120,7 @@
             padding="0"
             label="Удалить все"
             :class="{'btn-load': lodingBtn2}"
-            @click="delUserAlbum"
+            @click="callDelDialog('delAllPhotosUser')"
           />
         </div>
       </div>
@@ -126,16 +137,20 @@ import { albumsApi } from 'src/api/albums';
 import { imagesApi } from 'src/api/images';
 import { useQuasar } from 'quasar'
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
+import DialogDelite from 'components/dialog/DialogDelite'
 
 export default {
   name: 'ProfileDetilInfo',
   components: {
-    PhotoGallery
+    PhotoGallery,
+    DialogDelite
   },
   setup() {
     const $q = useQuasar()
+    const dialog = ref(false)
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
+    const dialogName = ref()
 
     // загрузка аватарки
     const images = ref([])
@@ -257,6 +272,17 @@ export default {
         })
       }
     }
+
+    function callDelDialog(modal) {
+      dialogName.value = modal
+      dialog.value = true
+    }
+
+    function modalFalse(val) {
+      dialog.value = false
+      if (dialogName.value === 'delAllPhotosUser' && val) delUserAlbum()
+      if (dialogName.value === 'delAvatar' && val) onFileChange()
+    }
     
     // загрузка множества 
 
@@ -267,11 +293,14 @@ export default {
     }) 
 
     return {
+      dialog,
       userImage,
       images,
       systemImage,
       lodingBtn,
       lodingBtn2,
+      dialogName,
+      callDelDialog,
       getUserImage,
       checkFileSize,
       onFileChange,
@@ -280,6 +309,7 @@ export default {
       getAlbum,
       delImage,
       delUserAlbum,
+      modalFalse,
     }
   },
 }
