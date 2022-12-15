@@ -280,6 +280,30 @@
           }
         }
       }
+      @media (max-width: 772px) {
+        max-width: 254px;
+        padding: 24px 20px 20px 20px !important;
+        .title {
+          font-size: 18px;
+          line-height: 18px;
+        }
+        .btns-section {
+          margin-top: 26px;
+          .q-btn {
+            margin-top: 0;
+            flex: 0 0 calc(50% - 5px);
+            max-width: calc(50% - 5px);
+            height: 43px;
+            padding: 0 !important;
+            &:first-child {
+              margin-right: 5px !important;
+            }
+            &:last-child {
+              margin-left: 5px !important;
+            }
+          }
+        }
+      }
     }
   }
   .section-btn {

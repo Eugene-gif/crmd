@@ -24,7 +24,7 @@
     v-model="dialogDelModal"
     transition-show="fade"
     transition-hide="fade" 
-    class="my-dialog contractor-dialog-share"
+    class="my-dialog"
   >
     <DialogDelite 
       @modalFalse="modalOpenDel"
