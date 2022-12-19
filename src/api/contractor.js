@@ -65,7 +65,16 @@ export const contractorApi = {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       }).then(({data}) => {
-        return data.data
+        // return data.data
+        let formData = {}
+        Object.keys(data.data).forEach(key => {
+          if(data.data[key] === 'null' || data.data[key] === null) {
+            formData[key] = null
+          } else {
+            formData[key] = data.data[key]
+          }
+        });
+        return formData
       })
     } catch(err) {
       console.log(err)

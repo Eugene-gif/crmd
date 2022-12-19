@@ -6,9 +6,15 @@
     padding: 6px 25px;
     border-radius: 6px;
     min-height: auto;
+    .q-icon {
+      display: none;
+    }
     .q-notification__message {
 
     }
+  }
+  .q-notification__badge {
+    display: none;
   }
   @media (max-width: 772px) {
     .q-notification {

@@ -255,6 +255,9 @@
         padding-left: 0;
         padding-right: 0;
       }
+      .q-uploader__file--img .q-uploader__file-header {
+        background: none;
+      }
       .q-uploader__file {
         height: 60px;
         min-width: 60px;
@@ -269,6 +272,7 @@
         & + .q-uploader__file {
           margin: 10px;
         } 
+        
         .q-uploader__file-header {
           top: -1px;
           .q-btn--dense {

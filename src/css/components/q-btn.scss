@@ -189,7 +189,8 @@
 }
 
 // animation btn
-.btn-load {
+.btn-load,
+.btn-load-grey {
   position: relative;
   overflow: hidden;
   &:after {
@@ -206,6 +207,11 @@
   }
   .q-btn__content {
     z-index: 2;
+  }
+  &-grey {
+    &:after {
+      background: #E2E2E2;
+    }
   }
 }
 

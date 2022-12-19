@@ -26,22 +26,13 @@
       />
     </template>
 
-    <div class="no-data" v-show="!isActive.designer && dataNull && term_bid === 0">
+    <div class="no-data" v-show="!isActive.designer &&  term_bid === 0">
       <div class="text">Условия пока не указаны вами</div>
     </div>
-    <q-btn
-      unelevated 
-      no-caps
-      class="my-btn-custom-big my-btn-custom-big-noactive bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
-      padding="0"
-      v-show="!isActive.designer && dataNull && term_bid !== 0"
-      @click="isActive.designer = !isActive.designer"
-    >
-      <span class="block text-grey-5">Изменить</span>
-    </q-btn>
+    
 
     <div v-show="!isActive.designer">
-      <div class="desc-sec desc-sec-design bg-grey-9">
+      <div class="desc-sec desc-sec-design bg-grey-9" v-show="term_bid !== 0">
         <div class="information">
           <div class="number">
             {{term_bid}}%
@@ -126,7 +117,6 @@ export default {
   setup() {
     const $q = useQuasar()
     const lodingBtn = ref(false)
-    const dataNull = ref(true)
     
     const isActive = ref({
       details: false,
@@ -140,11 +130,6 @@ export default {
     async function getData() {
       try {
         await contractorApi.getSetTerms().then(resp => {
-          if (resp.term_bid === 0) {
-            dataNull.value = true
-          } else {
-            dataNull.value = false
-          }
           term_bid.value = resp.term_bid
           term_text.value = resp.term_text
         })
@@ -189,7 +174,6 @@ export default {
 
     return {
       isActive,
-      dataNull,
       term_bid,
       term_text,
       lodingBtn,

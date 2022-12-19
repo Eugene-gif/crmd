@@ -54,7 +54,7 @@
               @added="onFileChange"
               accept=".jpg, image/*"
               @rejected="onRejected"
-              :class="{'btn-load': lodingBtn}"
+              :class="{'btn-load-grey': lodingBtn}"
             />
             <label class="text">Заменить фото</label>
           </div>
@@ -103,7 +103,7 @@
               multiple
               accept=".jpg, image/*"
               @rejected="onRejected"
-              :class="{'btn-load': lodingBtn2}"
+              :class="{'btn-load-grey': lodingBtn2}"
             />
             <div class="upload-content">
               <label class="text">Добавить фото</label>
@@ -119,7 +119,7 @@
             color="grey-5"
             padding="0"
             label="Удалить все"
-            :class="{'btn-load': lodingBtn2}"
+            :class="{'btn-load-grey': lodingBtn2}"
             @click="callDelDialog('delAllPhotosUser')"
           />
         </div>
