@@ -21,34 +21,23 @@ export const authApi = {
     }
   },
 
-  // doRegister(formData) {
-  //   try {
-  //     return httpClient.post(`${url}/register`, {
-  //       name: formData.email,
-  //       email: formData.email,
-  //       password: formData.password,
-  //       password_confirmation: formData.confirmPassword,
-  //       user_name: formData.name,
-  //       user_lastname: formData.lastName,
-  //       // image: formData.image
-  //     }).then(response => {
-  //       return response
-  //     })
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-  // }
+  
+  
+
+
   doRegister(data) {
     const formData = new FormData();
     formData.append("email", data.email)
     formData.append("name", data.email)
     formData.append("password", data.password)
     formData.append("password_confirmation", data.confirmPassword)
-    formData.append("user_name", data.name)
-    formData.append("user_lastname", data.lastName)
-    formData.append("role", data.role)
-    formData.append("image", data.image)
-    console.log(data.image)
+    formData.append("first_name", data.name)
+    formData.append("last_name", data.lastName)
+    formData.append("role_id", data.role)
+    if (data.image !== null && data.image !== '') {
+      formData.append("image", data.image)
+    }
+    
     try {
       return httpClient({
         method: "post",

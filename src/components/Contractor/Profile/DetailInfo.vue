@@ -46,7 +46,7 @@
               @click="callDelDialog('delAvatar')"
             />
           </div>
-          <img :src="`http://crmd.crookedweb.ru/${userImage}`" alt="">
+          <img :src="`${userImage}`" alt="">
         </div>
         <div class="sec-btn">
           <div class="btn-upload">
@@ -135,6 +135,7 @@ import { ref, onMounted, computed } from 'vue'
 import { contractorApi } from 'src/api/contractor';
 import { albumsApi } from 'src/api/albums';
 import { imagesApi } from 'src/api/images';
+import { userApi } from 'src/api/user';
 import { useQuasar } from 'quasar'
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 import DialogDelite from 'components/dialog/DialogDelite'
@@ -160,14 +161,14 @@ export default {
 
     function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      if (storageUser.image === '') {
-        userImage.value = storageUser.system_image
-      } else {
-        userImage.value = storageUser.image
+      if (storageUser.image.url === '') {
+        userImage.value = storageUser.image.placeholder
+      } else { 
+        userImage.value = storageUser.image.url
         systemImage.value = false
       } 
     }
-
+// storageUser.image.url
 
     function checkFileSize (files) {
       return files.filter(file => file.size < 2048)
@@ -178,21 +179,21 @@ export default {
         message: 'Файл не соответствуeт расширению'
       })
     }
+    
     async function onFileChange(file) {
       lodingBtn.value = true
       if (file === undefined) {
         file = [null]
       }
       try {
-        await contractorApi.updateContractorAvatar(file[0]).then(resp => {
+        await userApi.updateUserAvatar(file[0]).then(resp => {
           let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-          if (resp.image == '') {
-            userImage.value = storageUser.system_image
-            systemImage.value = true
-          } else {
-            userImage.value = resp.image
+          if (resp.image.url === '') {
+            userImage.value = resp.image.placeholder
+          } else { 
+            userImage.value = resp.image.url
             systemImage.value = false
-          }
+          } 
           storageUser.image = resp.image
           let userInfo = JSON.stringify(storageUser)
           localStorage.setItem('userInfo', userInfo)
@@ -202,6 +203,7 @@ export default {
       }
       lodingBtn.value = false
     }
+
     async function uploadProfilePhoto(file) {
       lodingBtn2.value = true
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))

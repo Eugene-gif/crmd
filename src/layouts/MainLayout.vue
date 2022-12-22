@@ -141,7 +141,7 @@
           :style="{background: userInfo.colorBkg}"
         > 
           <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
-          <img :src="`http://crmd.crookedweb.ru/${userImage}`">
+          <img :src="`${userImage}`">
           <span>{{userInfo.userNikeName}}</span>
         </q-btn>
 
@@ -189,7 +189,7 @@
       <q-item class="q-item__avatar">
         <q-item-section>
           <div class="img-section" :style="{background: userInfo.colorBkg}">
-            <img :src="`http://crmd.crookedweb.ru/${userImage}`">
+            <img :src="`${userImage}`">
           </div>
           
           <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>
@@ -330,8 +330,6 @@ export default ({
 
   setup () {
     // const userInfo = ref({})
-    const userUrl = ref('http://crmd.crookedweb.ru/')
-
     const leftDrawerOpen = ref(false)
     const text = ref('')
     const showing = ref(false)
@@ -461,11 +459,12 @@ export default ({
 
     function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      if (storageUser.image === '') {
-        userImage.value = storageUser.system_image
-      } else {
-        userImage.value = storageUser.image
-      } 
+      if (storageUser.image.url === '') {
+        userImage.value = storageUser.image.placeholder
+      } else { 
+        userImage.value = storageUser.image.url
+      }  
+      // userImage
     }
     const userImage = ref()
     
@@ -474,7 +473,6 @@ export default ({
     })
     return {
       userInfo, 
-      userUrl,
       // getUser,
       userNikeName,
       getUserImage,

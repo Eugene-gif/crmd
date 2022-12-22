@@ -3,57 +3,57 @@
   <div class="details" v-show="!isActive.details">
     <div class="item">
       <div class="cell">Название</div>
-      <div class="cell" v-if="formData.name != null">{{formData.name}}</div>
+      <div class="cell" v-if="formData.name != ''">{{formData.name}}</div>
       <div v-else>—</div> 
     </div>
     <div class="item">
       <div class="cell">Город</div>
-      <div class="cell" v-if="formData.city != null">{{formData.city}}</div>
+      <div class="cell" v-if="formData.city != ''">{{formData.city}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Область работы</div>
-      <div class="cell" v-if="formData.region != null">{{formData.region}}</div>
+      <div class="cell" v-if="formData.region != ''">{{formData.region}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Адрес</div>
-      <div class="cell" v-if="formData.public_address != null">{{formData.public_address}}</div>
+      <div class="cell" v-if="formData.public_address != ''">{{formData.public_address}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Телефон</div>
-      <div class="cell" v-if="formData.public_phone != null">{{formData.public_phone}}</div>
+      <div class="cell" v-if="formData.public_phone != ''">{{formData.public_phone}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">E-mail</div>
-      <div class="cell" v-if="formData.public_email != null">{{formData.public_email}}</div>
+      <div class="cell" v-if="formData.public_email != ''">{{formData.public_email}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Сайт</div>
-      <div class="cell" v-if="formData.url != null">{{formData.url}}</div>
+      <div class="cell" v-if="formData.url != ''">{{formData.url}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">WhatsApp</div>
-      <div class="cell" v-if="formData.soc_wa != null">{{formData.soc_wa}}</div>
+      <div class="cell" v-if="formData.soc_wa != ''">{{formData.soc_wa}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Telegram</div>
-      <div class="cell" v-if="formData.soc_tg != null">{{formData.soc_tg}}</div>
+      <div class="cell" v-if="formData.soc_tg != ''">{{formData.soc_tg}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Instagram</div>
-      <div class="cell" v-if="formData.soc_inst != null">{{formData.soc_inst}}</div>
+      <div class="cell" v-if="formData.soc_inst != ''">{{formData.soc_inst}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Описание</div>
-      <div class="cell" v-if="formData.description != null">{{formData.description}}</div>
+      <div class="cell" v-if="formData.description != ''">{{formData.description}}</div>
       <div v-else>—</div>
     </div>
     <q-btn

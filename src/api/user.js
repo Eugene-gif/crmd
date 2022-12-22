@@ -7,6 +7,24 @@ const url = 'users'
 
 export const userApi = {
 
+  updateUserAvatar(file) {
+    const formData = new FormData()
+    // formData.append("name", 'yurecblinovgelarm@gmail.com')
+    formData.append(`image`, file);
+    
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
   
 
 }

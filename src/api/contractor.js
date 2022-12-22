@@ -89,7 +89,6 @@ export const contractorApi = {
       formData.append(`image`, file);
     }
     
-
     try {
       return httpClient({
         method: "post",

@@ -120,6 +120,8 @@
               filled
               v-model="formData.company_type"
               :options="optionsCompany_type"
+              option-value="id"
+              option-label="name"
               stack-label
               dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
               class="my-select"
@@ -273,6 +275,7 @@ export default {
       try {
         await contractorApi.getCompanyTypes().then(resp => {
           optionsCompany_type.value = resp
+          console.log(resp)
         })
       } catch (err) {
         console.log(err)
