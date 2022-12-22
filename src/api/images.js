@@ -10,7 +10,7 @@ export const imagesApi = {
   delImage(id) {
     try {
       return httpClient.post(`${url}/delete`, {
-        id: Number(id) 
+        image_id: Number(id) 
       }).then(({ data }) => {
         return data
       })

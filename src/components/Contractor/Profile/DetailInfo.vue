@@ -92,7 +92,7 @@
                   @click="delImage(item.id)"
                 />
               </div>
-              <img :src="`http://crmd.crookedweb.ru/${item.file}`" alt="">
+              <img :src="`${item.url}`" alt="">
             </div>
           </div>
         </div>
@@ -167,6 +167,7 @@ export default {
         userImage.value = storageUser.image.url
         systemImage.value = false
       } 
+      console.log(storageUser.image)
     }
 // storageUser.image.url
 
@@ -183,7 +184,7 @@ export default {
     async function onFileChange(file) {
       lodingBtn.value = true
       if (file === undefined) {
-        file = [null]
+        file = []
       }
       try {
         await userApi.updateUserAvatar(file[0]).then(resp => {
