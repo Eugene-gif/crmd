@@ -82,7 +82,13 @@
           </q-item>
           <q-item>
             <div class="title">Город</div>
-            <q-input v-model="formData.city" class="my-input bg-grey-3" placeholder="Введите название" />
+            <!-- <q-input v-model="formData.city" class="my-input bg-grey-3" placeholder="Введите название" /> -->
+            <vue-dadata
+              v-model="query"
+              :fromBound="`city`"
+              :toBound="`city`"
+              :token="token"
+            />
           </q-item>
           <q-item>
             <div class="title">Область работы</div>
@@ -200,9 +206,11 @@
         padding="20px 10px"
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
+        @click="checkAdress"
         type="submit"
         :class="{'btn-load': lodingBtn}"
       />
+      <!--  -->
     </q-form>
   </div>
 
@@ -211,13 +219,20 @@
 <script>
 import { ref, onMounted, computed } from 'vue'
 import { contractorApi } from 'src/api/contractor';
+import { VueDadata } from 'vue-dadata';
 import { useQuasar } from 'quasar'
+import axios from "axios";
 
 export default {
   name: 'PhotoGallery',
+  components: {
+    VueDadata
+  },
   setup() {
     const $q = useQuasar()
     const lodingBtn = ref(false)
+    const query = ref(null)
+    const suggestion = ref(undefined);
 
     const formData = ref({
       name: '',
@@ -272,6 +287,33 @@ export default {
         console.log(err)
       }
     }
+
+    async function checkAdress() {
+      let url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
+      let token = "4e03d732e3760f1aaf0f990ea5f6bedf457ee979";
+
+      let options = {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Token " + token
+        },
+        body: JSON.stringify({query: query.value})
+      }
+
+      fetch(url, options)
+        .then(response => response.text())
+        .then(result => {
+          console.log(JSON.parse(result))
+          // if (JSON.parse(result).length) {
+            updateContractor()
+          // }
+        })
+        .catch(error => console.log("error", error));
+
+    }
     
     onMounted(() => {
       getInfoContractor()
@@ -282,7 +324,11 @@ export default {
       isActive,
       lodingBtn,
       updateContractor,
-      getInfoContractor
+      getInfoContractor,
+      checkAdress,
+      token: '4e03d732e3760f1aaf0f990ea5f6bedf457ee979',
+      query,
+      suggestion,
     }
   },
 }

@@ -31,7 +31,7 @@
       <div class="sec">
         <div class="item">
           <div class="cell">Тип</div>
-          <div class="cell" v-if="formData.company_type != null">{{formData.company_type}}</div>
+          <div class="cell" v-if="formData.company_type_id != null">{{formData.company_type}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
@@ -118,7 +118,7 @@
             <div class="title">Тип</div>
             <q-select
               filled
-              v-model="formData.company_type"
+              v-model="formData.company_type_id"
               :options="optionsCompany_type"
               option-value="id"
               option-label="name"
@@ -127,7 +127,7 @@
               class="my-select"
               behavior="menu"
               popup-content-class="my-select-menu"
-              :label="formData.company_type ? undefined : 'Выберите тип компании'"
+              :label="formData.company_type_id ? undefined : 'Выберите тип компании'"
             />
           </q-item>
           <q-item>
@@ -230,7 +230,7 @@ export default {
       documents: false,
     })  
     const formData = ref({
-      company_type: '',
+      company_type_id: '',
       company_name: '',
       legal_address: '',
       actual_address: '',
@@ -250,6 +250,10 @@ export default {
     
     async function getInfoDocs(val, data) {
       lodingBtn.value = true
+      // if (formData.value.company_type) {
+      //   formData.value.company_type = formData.value.company_type.id
+      // }
+      
       try {
         await contractorApi.getBankingInfo(data).then(resp => {
           formData.value = resp

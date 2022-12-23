@@ -122,10 +122,10 @@ export const albumsApi = {
     }
   },
 
-  delUserAlbum(album_id) {
+  delUserAlbum(id) {
     try {
       return httpClient.post(`${url}/clear`, {
-        id: album_id 
+        album_id: id 
       }).then(({ data }) => {
         return data
       })

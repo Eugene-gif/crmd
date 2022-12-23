@@ -161,15 +161,14 @@ export default {
 
     function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      if (storageUser.image.url === '') {
+      if (storageUser.image.url === null) {
         userImage.value = storageUser.image.placeholder
       } else { 
         userImage.value = storageUser.image.url
         systemImage.value = false
       } 
-      console.log(storageUser.image)
+      console.log(userImage.value)
     }
-// storageUser.image.url
 
     function checkFileSize (files) {
       return files.filter(file => file.size < 2048)
@@ -184,12 +183,12 @@ export default {
     async function onFileChange(file) {
       lodingBtn.value = true
       if (file === undefined) {
-        file = []
+        file = ['']
       }
       try {
         await userApi.updateUserAvatar(file[0]).then(resp => {
           let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-          if (resp.image.url === '') {
+          if (resp.image.url == null) {
             userImage.value = resp.image.placeholder
           } else { 
             userImage.value = resp.image.url

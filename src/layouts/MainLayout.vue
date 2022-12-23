@@ -459,7 +459,7 @@ export default ({
 
     function getUserImage() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      if (storageUser.image.url === '') {
+      if (storageUser.image.url == null) {
         userImage.value = storageUser.image.placeholder
       } else { 
         userImage.value = storageUser.image.url

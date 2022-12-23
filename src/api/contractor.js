@@ -6,6 +6,9 @@ export const contractorApi = {
 
   // info
   getBankingInfo(formData) {
+    if (typeof formData.company_type_id === 'object') {
+      formData.company_type_id = formData.company_type_id.id
+    }
     try {
       return httpClient.post(`${url}/info/updateBankingInfo`, formData)
       .then(( response ) => {
