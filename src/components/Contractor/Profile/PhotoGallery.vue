@@ -68,7 +68,7 @@
   </div>
   
   <div class="form-chapter" v-show="isActive.details">
-    <q-form @submit="updateContractor">
+    <q-form @submit="checkAdress">
       <div class="chapter">
         <q-list>
           <q-item>
@@ -206,7 +206,6 @@
         padding="20px 10px"
         class="full-width bg-positive text-white my-btn my-btn-shadow my-effect h-dark q-btn-actions br-10 btn-50"
         label="Сохранить изменения"
-        @click="checkAdress"
         type="submit"
         :class="{'btn-load': lodingBtn}"
       />
@@ -306,13 +305,25 @@ export default {
       fetch(url, options)
         .then(response => response.text())
         .then(result => {
-          console.log(JSON.parse(result))
-          // if (JSON.parse(result).length) {
+          let arr = JSON.parse(result)
+          let arrActive = false
+
+          arr.suggestions.forEach(element => {
+            if (element.value === query.value) {
+              arrActive = true
+            }
+          });
+          if (arrActive) {
+            formData.value.city = query.value
             updateContractor()
-          // }
+          } else {
+            $q.notify({
+              color: 'negative',
+              message: 'Поле "город" не выбрано'
+            })
+          }
         })
         .catch(error => console.log("error", error));
-
     }
     
     onMounted(() => {
