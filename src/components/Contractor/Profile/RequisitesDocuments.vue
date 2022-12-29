@@ -31,72 +31,72 @@
       <div class="sec">
         <div class="item">
           <div class="cell">Тип</div>
-          <div class="cell" v-if="formData.company_type_id != null">{{formData.company_type}}</div>
+          <div class="cell" v-if="formData.company_type_id != ''">{{formData.company_type}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Название компании</div>
-          <div class="cell" v-if="formData.company_name != null">{{formData.company_name}}</div>
+          <div class="cell" v-if="formData.company_name != ''">{{formData.company_name}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Юридический адрес</div>
-          <div class="cell" v-if="formData.legal_address != null">{{formData.legal_address}}</div>
+          <div class="cell" v-if="formData.legal_address != ''">{{formData.legal_address}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Фактический адрес</div>
-          <div class="cell" v-if="formData.actual_address != null">{{formData.actual_address}}</div>
+          <div class="cell" v-if="formData.actual_address != ''">{{formData.actual_address}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">ИНН</div>
-          <div class="cell" v-if="formData.inn != null">{{formData.inn}}</div>
+          <div class="cell" v-if="formData.inn != ''">{{formData.inn}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">ОГРН (для ООО и ИП)</div>
-          <div class="cell" v-if="formData.ogrn != null">{{formData.ogrn}}</div>
+          <div class="cell" v-if="formData.ogrn != ''">{{formData.ogrn}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">КПП (для ООО)</div>
-          <div class="cell" v-if="formData.kpp != null">{{formData.kpp}}</div>
+          <div class="cell" v-if="formData.kpp != ''">{{formData.kpp}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">ФИО подписанта </div>
-          <div class="cell" v-if="formData.person_name != null">{{formData.person_name}}</div>
+          <div class="cell" v-if="formData.person_name != ''">{{formData.person_name}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Должность (для ООО)</div>
-          <div class="cell" v-if="formData.person_position != null">{{formData.person_position}}</div>
+          <div class="cell" v-if="formData.person_position != ''">{{formData.person_position}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Основание (для ООО)</div>
-          <div class="cell" v-if="formData.person_based_on != null">{{formData.person_based_on}}</div>
+          <div class="cell" v-if="formData.person_based_on != ''">{{formData.person_based_on}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Расчётный счёт</div>
-          <div class="cell" v-if="formData.settlement_account != null">{{formData.settlement_account}}</div>
+          <div class="cell" v-if="formData.settlement_account != ''">{{formData.settlement_account}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Корреспондетский счёт</div>
-          <div class="cell" v-if="formData.correspondent_account != null">{{formData.correspondent_account}}</div>
+          <div class="cell" v-if="formData.correspondent_account != ''">{{formData.correspondent_account}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">Отделение банка</div>
-          <div class="cell" v-if="formData.bank_branch != null">{{formData.bank_branch}}</div>
+          <div class="cell" v-if="formData.bank_branch != ''">{{formData.bank_branch}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
           <div class="cell">БИК банка</div>
-          <div class="cell" v-if="formData.bank_bik != null">{{formData.bank_bik}}</div>
+          <div class="cell" v-if="formData.bank_bik != ''">{{formData.bank_bik}}</div>
           <div v-else>—</div>
         </div>
       </div>
@@ -250,9 +250,10 @@ export default {
     
     async function getInfoDocs(val, data) {
       lodingBtn.value = true
-      // if (formData.value.company_type) {
-      //   formData.value.company_type = formData.value.company_type.id
-      // }
+      console.log(formData.value.company_type_id)
+      if (formData.value.company_type) {
+        formData.value.company_type_id = formData.value.company_type_id.id
+      }
       
       try {
         await contractorApi.getBankingInfo(data).then(resp => {

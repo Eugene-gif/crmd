@@ -80,7 +80,7 @@
           class="input-auth pass-input"
           lazy-rules
           :rules="[
-            val => val !== null && val !== '' || ''
+            val => val.length > 6, val !== null, val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye1">
@@ -105,7 +105,7 @@
           class="input-auth pass-input"
           lazy-rules
           :rules="[
-            val => val !== null && val !== '' || ''
+            val => val.length > 6, val !== null, val !== '' || ''
           ]"
         >
           <template v-slot:after @click="passEye1">

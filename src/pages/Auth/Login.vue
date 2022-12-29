@@ -112,7 +112,7 @@ export default {
       email: 'admin@mail.com',
       password: '123123'
     })
-    const stateToken = computed(() => store.state['auth'].token)    
+    const stateToken = computed(() => store.state['auth'])    
 
     const passEye1 = ref(true)
 
@@ -137,7 +137,9 @@ export default {
           try {
             await authApi.doLogin(form.value).then(resp => {
               let token = resp.data.data.token
+
               store.commit('auth/setToken', token)
+
               token = localStorage.getItem('token')
               
               let userInfo = JSON.stringify(resp.data.data.user)

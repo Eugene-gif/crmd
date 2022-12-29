@@ -29,6 +29,7 @@ export const contractorApi = {
       console.log(err)
     }
   },
+  
   getInfoContractor() {
     try {
       return httpClient.post(`${url}/getFullInfo`)

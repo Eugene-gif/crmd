@@ -141,7 +141,7 @@
           :style="{background: userInfo.colorBkg}"
         > 
           <!-- <img :src="`${userUrl}${userInfo.image}`"> -->
-          <img :src="`${userImage}`">
+          <img :src="me.image.url || me.image.placeholder">
           <span>{{userInfo.userNikeName}}</span>
         </q-btn>
 
@@ -189,7 +189,7 @@
       <q-item class="q-item__avatar">
         <q-item-section>
           <div class="img-section" :style="{background: userInfo.colorBkg}">
-            <img :src="`${userImage}`">
+            <img :src="me.image.url || me.image.placeholder">
           </div>
           
           <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>
@@ -255,7 +255,6 @@
           </q-item-label>
         </q-item>
       </q-list>
-      
       <router-view />
     </q-page-container>
   </q-layout>
@@ -410,7 +409,9 @@ export default ({
 
     const router = useRouter();
     const store = useStore()
+    
     const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)
+    const me = computed(() => store.state['auth'].me)
 
     const userNikeName = computed(() => {
       let name = userInfo.value.user_name
@@ -455,28 +456,16 @@ export default ({
       let user = JSON.parse(localStorage.getItem('userInfo'))
       console.log(user)
       return user
-    }) 
-
-    function getUserImage() {
-      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      if (storageUser.image.url == null) {
-        userImage.value = storageUser.image.placeholder
-      } else { 
-        userImage.value = storageUser.image.url
-      }  
-      // userImage
-    }
-    const userImage = ref()
+    })   
     
     onMounted(() => {
-      getUserImage()
+
     })
     return {
       userInfo, 
+      me,
       // getUser,
       userNikeName,
-      getUserImage,
-      userImage,
 
       showing,
       showingMob,

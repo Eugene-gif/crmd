@@ -137,6 +137,8 @@ import { albumsApi } from 'src/api/albums';
 import { imagesApi } from 'src/api/images';
 import { userApi } from 'src/api/user';
 import { useQuasar } from 'quasar'
+import { useStore } from 'vuex';
+
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 import DialogDelite from 'components/dialog/DialogDelite'
 
@@ -148,10 +150,14 @@ export default {
   },
   setup() {
     const $q = useQuasar()
+    const store = useStore()
+
     const dialog = ref(false)
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
     const dialogName = ref()
+    
+    const me = computed(() => store.state['auth'].me)
 
     // загрузка аватарки
     const images = ref([])
@@ -160,13 +166,12 @@ export default {
     const systemImage = ref(true)
 
     function getUserImage() {
-      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      if (storageUser.image.url === null) {
-        userImage.value = storageUser.image.placeholder
+      if (me.value.image.url == null) {
+        userImage.value = me.value.image.placeholder
       } else { 
-        userImage.value = storageUser.image.url
+        userImage.value = me.value.image.url
         systemImage.value = false
-      } 
+      }  
       console.log(userImage.value)
     }
 
@@ -188,15 +193,19 @@ export default {
       try {
         await userApi.updateUserAvatar(file[0]).then(resp => {
           let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+
           if (resp.image.url == null) {
             userImage.value = resp.image.placeholder
           } else { 
             userImage.value = resp.image.url
             systemImage.value = false
           } 
+
           storageUser.image = resp.image
           let userInfo = JSON.stringify(storageUser)
           localStorage.setItem('userInfo', userInfo)
+          
+          store.commit('auth/setMe', resp)
         })
       } catch (err) {
         console.log(err)

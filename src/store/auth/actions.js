@@ -8,9 +8,15 @@ export const singOut = ({commit}) => {
 export const getMe = async ({commit, dispatch}, token) => {
   // await api
 }
+export const addMe = async ({commit}, data) => {
+  commit('setMe', data)
+}
 
 export const init = async ({commit}) => {
   const token = localStorage.getItem('token')
-  if (token) await commit('setToken', JSON.parse(token))
-  else commit('removeToken')
+  const user = localStorage.getItem('userInfo')
+  if (token) {
+    await commit('setToken', JSON.parse(token))
+    await commit('setMe', JSON.parse(user))
+  } else commit('removeToken')
 }
