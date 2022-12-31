@@ -34,6 +34,7 @@
             padding="20px 10px"
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
             label="Выбрать роль на проекте"
+            to="/role"
           />
         </div>
       </div>

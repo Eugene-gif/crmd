@@ -118,7 +118,6 @@ export default {
 
     const loading = ref(false)
 
-
     onMounted(() => {
 
     })  
@@ -146,10 +145,17 @@ export default {
               localStorage.setItem('userInfo', userInfo)
 
               if (resp.data.data.user.email_verified_at === null) {
-                window.location.href = '/#/setemail'
+                setTimeout(() => {
+                  window.location.href = '/#/setemail'
+                }, 500)
+              } else if (resp.data.data.user.role === '') {
+                setTimeout(() => {
+                  window.location.href = '/#/role'
+                }, 500)
               } else {
                 window.location.href = '/'
               }
+              
             })
             loading.value = false
           } catch (err) {
@@ -158,6 +164,7 @@ export default {
 
             let user = localStorage.getItem('userInfo')
             let userObj = JSON.parse(user)
+
             if (userObj.email_verified_at === null) {
               $q.notify({
                 color: 'red',
@@ -167,6 +174,10 @@ export default {
               setTimeout(() => {
                 window.location.href = '/#/setemail'
               }, 2000)
+            } else if (userObj.role === '') {
+              setTimeout(() => {
+                window.location.href = '/#/role'
+              }, 500)
             } else {
               setTimeout(() => {
                 $q.notify({

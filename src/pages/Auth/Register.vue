@@ -203,30 +203,42 @@ export default {
             let userInfo = JSON.stringify(resp.data.data.user)
             localStorage.setItem('userInfo', userInfo)
             
+            if (resp.data.data.user.email_verified_at === null) {
+              setTimeout(() => {
+                window.location.href = '/#/setemail'
+              }, 500)
+            } else if (resp.data.data.user.role === '') {
+              setTimeout(() => {
+                window.location.href = '/#/role'
+              }, 500)
+            } else {
+              window.location.href = '/'
+            }
             
-            // if (resp.data.data.user.email_verified_at === null) {
-            //   setTimeout(() => {
-            //     window.location.href = '/#/setemail'
-            //   }, 500)
-            // } else if (resp.data.data.user.role === '') {
-            //   setTimeout(() => {
-            //     window.location.href = '/#/role'
-            //   }, 500)
-            // } else {
-            //   window.location.href = '/'
-            // }
           })
           loading.value = false
         } catch (err) {
           console.log(err)
           loading.value = false
-          setTimeout(() => {
-            $q.notify({
-              color: 'red',
-              timeout: 3000,
-              message: 'Такой e-mail уже зарегистрирован'
-            })
-          }, 0)
+
+          if (resp.data.data.user.email_verified_at === null) {
+            setTimeout(() => {
+              window.location.href = '/#/setemail'
+            }, 500)
+          } else if (resp.data.data.user.role === '') {
+            setTimeout(() => {
+              window.location.href = '/#/role'
+            }, 500)
+          } else {
+            setTimeout(() => {
+              $q.notify({
+                color: 'red',
+                timeout: 3000,
+                message: 'Такой e-mail уже зарегистрирован'
+              })
+            }, 0)
+          }
+          
         }
       } else {
         loading.value = false
@@ -250,10 +262,6 @@ export default {
     const figure = ref()
     const link = ref()
 
-
-    
-    
-
     onMounted(() => {
       
     })
@@ -273,7 +281,6 @@ export default {
 
       figure,
       link,
- 
     }
   }
 }

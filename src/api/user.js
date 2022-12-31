@@ -25,6 +25,25 @@ export const userApi = {
       console.log(err)
     }
   },
+
+  setRoleForUser() {
+
+    const formData = new FormData()
+    formData.append(`role_id`, 3);
+    
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/setRole`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
   
 
 }

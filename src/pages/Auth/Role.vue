@@ -57,6 +57,7 @@
             padding="20px 10px"
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
             label="Готово"
+            @click="onSubmit"
           />
         </div>
       </div>
@@ -69,8 +70,8 @@
 <script>
 import { ref, computed } from 'vue'
 import { useStore } from 'vuex';
-import { authApi } from 'src/api/auth';
 import { useQuasar } from 'quasar'
+import { userApi } from 'src/api/user';
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
@@ -83,8 +84,19 @@ export default {
   setup () {
     const tab = ref('mails')
 
+    async function onSubmit() {
+      try {
+        await userApi.setRoleForUser().then(resp => {
+          window.location.href = '/'
+        })
+      } catch (err) {
+        console.log(err)
+      }
+      
+    }
     return {
-      tab
+      tab,
+      onSubmit
     }
   }
 }

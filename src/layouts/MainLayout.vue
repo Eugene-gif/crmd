@@ -467,7 +467,6 @@ export default ({
         window.location.href = '/#/setemail'
       } else if (userObj.role === '') {
         window.location.href = '/#/role'
-        
       }
     })
     return {
