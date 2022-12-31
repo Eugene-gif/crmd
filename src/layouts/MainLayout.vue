@@ -465,6 +465,9 @@ export default ({
       console.log(user)
       if (userObj.email_verified_at === null) {
         window.location.href = '/#/setemail'
+      } else if (userObj.role === '') {
+        window.location.href = '/#/role'
+        
       }
     })
     return {

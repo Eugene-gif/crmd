@@ -203,11 +203,18 @@ export default {
             let userInfo = JSON.stringify(resp.data.data.user)
             localStorage.setItem('userInfo', userInfo)
             
-            if (resp.data.data.user.email_verified_at === null) {
-              window.location.href = '/#/setemail'
-            } else {
-              window.location.href = '/'
-            }
+            
+            // if (resp.data.data.user.email_verified_at === null) {
+            //   setTimeout(() => {
+            //     window.location.href = '/#/setemail'
+            //   }, 500)
+            // } else if (resp.data.data.user.role === '') {
+            //   setTimeout(() => {
+            //     window.location.href = '/#/role'
+            //   }, 500)
+            // } else {
+            //   window.location.href = '/'
+            // }
           })
           loading.value = false
         } catch (err) {
