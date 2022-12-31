@@ -18,5 +18,6 @@ export const init = async ({commit}) => {
   if (token) {
     await commit('setToken', JSON.parse(token))
     await commit('setMe', JSON.parse(user))
+    
   } else commit('removeToken')
 }

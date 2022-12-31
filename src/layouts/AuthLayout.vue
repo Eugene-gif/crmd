@@ -17,13 +17,22 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
 
-export default ({
+export default defineComponent({
   name: 'AuthLayout',
   components: {},
 
   setup () {
+    onMounted(() => {
+      let user = localStorage.getItem('userInfo')
+      let userObj = JSON.parse(user)
+
+      console.log(user)
+      if (userObj.email_verified_at === null) {
+        window.location.href = '/#/setemail'
+      }
+    })
     return {
       
     }

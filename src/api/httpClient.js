@@ -17,7 +17,7 @@ const token = JSON.parse(localStorage.getItem('token'))
 httpClient.interceptors.request.use(
   (config) => {
     config.headers.Authorization = `Bearer ${token}`
-    return config
+    return config  
   },
   (error) => {
     const { data } = error?.response || {}

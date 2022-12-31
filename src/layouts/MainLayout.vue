@@ -459,7 +459,13 @@ export default ({
     })   
     
     onMounted(() => {
+      let user = localStorage.getItem('userInfo')
+      let userObj = JSON.parse(user)
 
+      console.log(user)
+      if (userObj.email_verified_at === null) {
+        window.location.href = '/#/setemail'
+      }
     })
     return {
       userInfo, 

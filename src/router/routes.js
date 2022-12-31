@@ -30,7 +30,11 @@ const routes = [
       {
         path: '/pass',
         component: () => import('pages/Auth/Pass.vue')
-      }
+      },
+      {
+        path: '/setemail',
+        component: () => import('pages/Auth/SetEmail.vue')
+      },
     ]
   },
   {

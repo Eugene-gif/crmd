@@ -144,19 +144,39 @@ export default {
               
               let userInfo = JSON.stringify(resp.data.data.user)
               localStorage.setItem('userInfo', userInfo)
-              window.location.href = '/'
+
+              if (resp.data.data.user.email_verified_at === null) {
+                window.location.href = '/#/setemail'
+              } else {
+                window.location.href = '/'
+              }
             })
             loading.value = false
           } catch (err) {
             console.log(err)
             loading.value = false
-            setTimeout(() => {
+
+            let user = localStorage.getItem('userInfo')
+            let userObj = JSON.parse(user)
+            if (userObj.email_verified_at === null) {
               $q.notify({
                 color: 'red',
                 timeout: 2000,
-                message: 'Неправильный логин или пароль'
+                message: 'подтвердите ваш Email'
               })
-            }, 0)
+              setTimeout(() => {
+                window.location.href = '/#/setemail'
+              }, 2000)
+            } else {
+              setTimeout(() => {
+                $q.notify({
+                  color: 'red',
+                  timeout: 2000,
+                  message: 'Неправильный логин или пароль'
+                })
+              }, 0)
+            }
+
           }
         }
       },
