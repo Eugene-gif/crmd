@@ -44,6 +44,17 @@ export const userApi = {
       console.log(err)
     }
   },
+
+  getRoleForUser() {    
+    try {
+      return httpClient.post(`${url}/getRoles`)
+      .then(( response ) => {
+        return true
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
   
 
 }

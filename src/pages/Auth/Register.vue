@@ -182,7 +182,7 @@ export default {
       password: '',
       confirmPassword: '',
       image: null,
-      role: '3'
+      role: 2
     })   
     const isValidPass = computed(() => {
       return form.value.password == form.value.confirmPassword
@@ -207,11 +207,9 @@ export default {
               setTimeout(() => {
                 window.location.href = '/#/setemail'
               }, 500)
-            } else if (resp.data.data.user.role === '') {
-              setTimeout(() => {
-                window.location.href = '/#/role'
-              }, 500)
-            } else {
+            }
+
+            else {
               window.location.href = '/'
             }
             

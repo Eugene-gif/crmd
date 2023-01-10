@@ -46,17 +46,37 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-
+import { ref, onMounted } from 'vue'
+import { userApi } from 'src/api/user'
 
 export default {
   setup () {   
     const user = ref(JSON.parse(localStorage.getItem('userInfo')))
+
+    async function getRoleForUser() {
+      try {
+        await userApi.getRoleForUser().then(resp => {
+          let user = localStorage.getItem('userInfo')
+          let userObj = JSON.parse(user)
+          userObj.email_verified_at = true
+
+          let userInfo = JSON.stringify(userObj)
+          localStorage.setItem('userInfo', userInfo)
+
+          // window.location.href = '/#/role'
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
     onMounted(() => {
       console.log(user)
+      getRoleForUser()
     })
     return {
-      user
+      user,
+      getRoleForUser
     }
   }
 }
