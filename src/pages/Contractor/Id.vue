@@ -487,7 +487,7 @@ export default {
           left: i,
           behavior: 'smooth'
         })
-        i += 3
+        i += 3 
       }, 70)
       
       const inetval2 = setInterval(() => {

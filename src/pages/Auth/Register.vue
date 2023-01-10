@@ -221,23 +221,26 @@ export default {
           console.log(err)
           loading.value = false
 
-          if (resp.data.data.user.email_verified_at === null) {
-            setTimeout(() => {
-              window.location.href = '/#/setemail'
-            }, 500)
-          } else if (resp.data.data.user.role === '') {
-            setTimeout(() => {
-              window.location.href = '/#/role'
-            }, 500)
-          } else {
-            setTimeout(() => {
-              $q.notify({
-                color: 'red',
-                timeout: 3000,
-                message: 'Такой e-mail уже зарегистрирован'
-              })
-            }, 0)
-          }
+          // let user = localStorage.getItem('userInfo')
+          // let userObj = JSON.parse(user)
+
+          // if (userObj.email_verified_at === null) {
+          //   setTimeout(() => {
+          //     window.location.href = '/#/setemail'
+          //   }, 500)
+          // } else if (userObj.role === '') {
+          //   setTimeout(() => {
+          //     window.location.href = '/#/role'
+          //   }, 500)
+          // } else {
+          //   setTimeout(() => {
+          //     $q.notify({
+          //       color: 'red',
+          //       timeout: 3000,
+          //       message: 'Такой e-mail уже зарегистрирован'
+          //     })
+          //   }, 0)
+          // }
           
         }
       } else {

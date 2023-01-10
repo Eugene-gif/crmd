@@ -72,6 +72,7 @@ import { ref, computed } from 'vue'
 import { useStore } from 'vuex';
 import { useQuasar } from 'quasar'
 import { userApi } from 'src/api/user';
+import { contractorApi } from 'src/api/contractor'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
@@ -84,9 +85,31 @@ export default {
   setup () {
     const tab = ref('mails')
 
+    async function getInfoContractor() {
+      try {
+        await contractorApi.getInfoContractor().then(resp => {
+          console.log('успех')
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+
     async function onSubmit() {
+      // getInfoContractor()
       try {
         await userApi.setRoleForUser().then(resp => {
+          let user = localStorage.getItem('userInfo')
+          let userObj = JSON.parse(user)
+          userObj.email_verified_at = true
+
+          let userInfo = JSON.stringify(userObj)
+          localStorage.setItem('userInfo', userInfo)
+
           window.location.href = '/'
         })
       } catch (err) {
@@ -96,7 +119,8 @@ export default {
     }
     return {
       tab,
-      onSubmit
+      onSubmit,
+      getInfoContractor
     }
   }
 }
