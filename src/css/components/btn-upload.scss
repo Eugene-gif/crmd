@@ -163,7 +163,7 @@
     position: relative;
     width: 100%;
     max-height: max-content;
-    min-height: 150px;
+    min-height: auto;
     
     .q-uploader__header {
       border-radius: 6px;
@@ -250,6 +250,8 @@
       border-radius: 10px;
       padding-top: 10px;
       padding-bottom: 10px;
+      min-height: 1px;
+      flex: auto;
       @media (max-width: 772px) {
         border: none;
         padding-left: 0;

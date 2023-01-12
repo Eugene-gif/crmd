@@ -63,7 +63,7 @@ export default {
           let userInfo = JSON.stringify(userObj)
           localStorage.setItem('userInfo', userInfo)
 
-          // window.location.href = '/#/role'
+          window.location.href = '/#/role'
         })
       } catch (err) {
         console.log(err)

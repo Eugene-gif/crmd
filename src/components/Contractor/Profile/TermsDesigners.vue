@@ -65,7 +65,7 @@
         <q-list>
           <q-item class="q-item-textarea">
             <div class="title">Условия выплаты</div>
-            <q-input type="textarea" v-model="term_text" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+            <q-input type="textarea" v-model="term_text" class="my-input bg-grey-3 my-textarea" placeholder="Опишите условия" />
           </q-item>
         </q-list>
         <q-list>

@@ -31,7 +31,7 @@
       <div class="sec">
         <div class="item">
           <div class="cell">Тип</div>
-          <div class="cell" v-if="formData.company_type_id != null">{{formData.company_type.name}}</div>
+          <div class="cell" v-if="formData.company_obj.id != null">{{formData.company_obj.name}}</div>
           <div v-else>—</div>
         </div>
         <div class="item">
@@ -118,7 +118,7 @@
             <div class="title">Тип</div>
             <q-select
               filled
-              v-model="formData.company_type"
+              v-model="formData.company_obj"
               :options="optionsCompany_type"
               option-value="id"
               option-label="name"
@@ -127,7 +127,7 @@
               class="my-select"
               behavior="menu"
               popup-content-class="my-select-menu"
-              :label="formData.company_type.name ? undefined : 'Выберите тип компании'"
+              :label="formData.company_obj ? null : 'Выберите тип компании'"
             />
           </q-item>
           <q-item>
@@ -230,7 +230,10 @@ export default {
       documents: false,
     })  
     const formData = ref({
-      company_type: '',
+      company_obj: {
+        id: null,
+        name: null
+      },
       company_name: '',
       legal_address: '',
       actual_address: '',
@@ -251,16 +254,17 @@ export default {
     async function getInfoDocs(val, data) {
       lodingBtn.value = true
       
-      if (formData.value.company_type) {
-        formData.value.company_type_id = formData.value.company_type_id.id
+      if (formData.value.company_obj.id !== null) {
+        data.company_type_id = formData.value.company_obj.id
       }
       
       try {
         await contractorApi.getBankingInfo(data).then(resp => {
           formData.value = resp
-          formData.value.company_type = {
+          console.log(resp)
+          formData.value.company_obj = {
             id: resp.company_type_id,
-            name: resp.company_type,
+            name: resp.company_type
           }
           $q.notify({
             color: 'positive',

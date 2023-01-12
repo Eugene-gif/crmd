@@ -75,7 +75,7 @@
 
 <script>
 import { defineComponent, ref, onMounted , computed} from 'vue'
-import { albumsApi } from 'src/api/albums';
+import { filesApi } from 'src/api/files';
 import { useQuasar } from 'quasar'
 
 export default defineComponent({
@@ -89,7 +89,6 @@ export default defineComponent({
     const formData = ref({
       name: '',
       link: '',
-      description: '',
       files: []
     })
 
@@ -107,13 +106,15 @@ export default defineComponent({
     }
 
     async function uploadFiles() {
-      if (formData.value.files.length > 0) {
+      console.log(formData.value)
+      if (formData.value.link.length > 0 || formData.value.files.length > 0) {
         try {
-          await albumsApi.uploadFiles(formData.value).then(resp => {
+          await filesApi.uploadFiles(formData.value).then(resp => {
             console.log(resp)
+            modalFalse()
             $q.notify({
               color: 'positive',
-              message: 'Альбом создан'
+              message: 'файл загружен'
             })
           })
         } catch (err) {
@@ -126,7 +127,7 @@ export default defineComponent({
       } else {
         $q.notify({
           color: 'negative',
-          message: 'Загрузите пожалуйста фото'
+          message: 'Загрузите пожалуйста файл'
         })
       }
     }

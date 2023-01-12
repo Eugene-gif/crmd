@@ -7,7 +7,7 @@ export const contractorApi = {
   // info
   getBankingInfo(formData) {
     if (typeof formData.company_type_id === 'object') {
-      formData.company_type_id = formData.company_type_id.id
+      formData.company_type_id = formData.company_type.id
     }
     try {
       return httpClient.post(`${url}/info/updateBankingInfo`, formData)
@@ -148,7 +148,7 @@ export const contractorApi = {
   delAffiliate(man_id) {
     try {
       return httpClient.post(`${url}/info/deleteAffiliate`, {
-        id: man_id
+        affiliate_id: man_id
       })
       .then(( {response} ) => {
         return response
@@ -203,7 +203,7 @@ export const contractorApi = {
   delManager(man_id, val) {
     try {
       return httpClient.post(`${url}/info/deleteManager`, {
-        id: man_id
+        manager_id: man_id
       })
       .then(( {response} ) => {
         return response

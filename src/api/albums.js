@@ -101,7 +101,7 @@ export const albumsApi = {
 
   getAlbum(alb_id) {
     try {
-      return httpClient.post(`${url}/get`, {album_id: Number(alb_id)})
+      return httpClient.post(`${url}/get`, {album_id: alb_id})
       .then(({ data }) => {
         return data.data.images
       });

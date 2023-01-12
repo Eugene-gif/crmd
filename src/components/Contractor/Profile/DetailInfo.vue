@@ -234,6 +234,7 @@ export default {
       }
       lodingBtn2.value = false
     }
+
     async function getAlbum() {
       let storageUser = JSON.parse(localStorage.getItem('userInfo'))
       let id = storageUser.profile_album_id
@@ -245,6 +246,7 @@ export default {
         console.log(err)
       }
     }
+
     async function delImage(id) {
       lodingBtn2.value = true
       try {

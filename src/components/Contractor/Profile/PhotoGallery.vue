@@ -136,9 +136,11 @@
               v-model="formData.public_email" 
               class="my-input bg-grey-3" 
               placeholder="Введите название" 
-              :rules="[ val => val && val.length > 0 || '']"
+              
             />
-            <!-- :rules="[ val => val.length && val.includes('@')]" -->
+            <!-- :rules="[ val => val.length && val.includes('@')]" 
+            :rules="[ val => val && val.length > 0 || '']"
+            -->
           </q-item>
           <q-item>
             <div class="title">Сайт</div>

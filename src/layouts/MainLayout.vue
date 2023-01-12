@@ -463,12 +463,13 @@ export default ({
       let userObj = JSON.parse(user)
 
       // console.log(user)
-      if (userObj.email_verified_at === null) {
-        window.location.href = '/#/setemail'
-      }
       if (userObj.role === '') {
         window.location.href = '/#/role'
       }
+      if (userObj.email_verified_at === null) {
+        window.location.href = '/#/setemail'
+      }
+      
     })
     return {
       userInfo, 
