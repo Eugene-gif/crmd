@@ -30,7 +30,7 @@
               :name="item"
               v-touch-swipe.mouse.right="handleSwipePrev"
               v-touch-swipe.mouse.left="handleSwipeNext"
-              :style="`background: url(http://crmd.crookedweb.ru/${item})`"
+              :style="`background: url(${item})`"
               :class="{'image-chek': item == ' '}"
             />
           </q-tab-panels>
@@ -51,7 +51,7 @@ export default {
     images: Array
   },
   setup(props) {
-    const tab = ref(props.images[0].file)
+    const tab = ref(props.images[0].url)
     const openTabs = ref(false)
     const openModal = ref(false)
     const tabList = ref([])
@@ -79,7 +79,7 @@ export default {
 
     function start() {
       tabList.value = props.images.map(el => {
-        return el.file
+        return el.url
       })
       
     }

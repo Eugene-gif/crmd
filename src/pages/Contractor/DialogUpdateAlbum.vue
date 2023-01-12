@@ -50,7 +50,7 @@
                   @click="delImage(img.id)"
                 />
               </div>
-              <img :src="`http://crmd.crookedweb.ru/${img.file}`" alt="">
+              <img :src="`${img.thumbnail}`" alt="">
             </div>
           </div>
         </q-card-section>

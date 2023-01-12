@@ -277,6 +277,7 @@ export default {
       try {
         await contractorApi.getInfoContractor().then(resp => {
           formData.value = resp
+          query.value = resp.city
         })
       } catch (err) {
         $q.notify({

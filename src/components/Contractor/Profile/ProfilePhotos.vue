@@ -41,7 +41,7 @@
         Фото
       </div>
     </template>
-
+    
     <q-card class="q-card-visual-slider">
       <q-card-section
           v-for="item in visual"
