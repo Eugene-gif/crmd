@@ -51,7 +51,7 @@ import { userApi } from 'src/api/user'
 
 export default {
   setup () {   
-    const user = ref(JSON.parse(localStorage.getItem('userInfo')))
+    const user = ref(JSON.parse(localStorage.getItem('userInfo')) || '')
 
     async function getRoleForUser() {
       try {

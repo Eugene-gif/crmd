@@ -26,16 +26,17 @@ export default defineComponent({
   setup () {
     onMounted(() => {
       let user = localStorage.getItem('userInfo')
-      let userObj = JSON.parse(user)
+      if (user) {
+        let userObj = JSON.parse(user)
 
-      console.log(user)
-      if (userObj.role === '') {
-        window.location.href = '/#/role'
+        console.log(user)
+        if (userObj.role === '') {
+          window.location.href = '/#/role'
+        }
+        if (userObj.email_verified_at === null) {
+          window.location.href = '/#/setemail'
+        }
       }
-      if (userObj.email_verified_at === null) {
-        window.location.href = '/#/setemail'
-      }
-      
       
     })
     return {

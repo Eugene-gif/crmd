@@ -182,7 +182,9 @@ export default {
       password: '',
       confirmPassword: '',
       image: null,
-      role: 2
+      role: {
+        id: 2
+      }
     })   
     const isValidPass = computed(() => {
       return form.value.password == form.value.confirmPassword
@@ -219,6 +221,15 @@ export default {
           console.log(err)
           loading.value = false
 
+          if (err.response.status === 422) {
+            setTimeout(() => {
+              $q.notify({
+                color: 'red',
+                timeout: 3000,
+                message: 'Такой e-mail уже зарегистрирован'
+              })
+            }, 0)
+          }
           // let user = localStorage.getItem('userInfo')
           // let userObj = JSON.parse(user)
 
@@ -231,13 +242,7 @@ export default {
           //     window.location.href = '/#/role'
           //   }, 500)
           // } else {
-          //   setTimeout(() => {
-          //     $q.notify({
-          //       color: 'red',
-          //       timeout: 3000,
-          //       message: 'Такой e-mail уже зарегистрирован'
-          //     })
-          //   }, 0)
+          
           // }
           
         }

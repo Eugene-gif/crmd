@@ -1,9 +1,7 @@
 import axios from "axios";
-import { useStore } from 'vuex';
 
-const store = useStore();
 function logOut() {
-  store.dispatch('auth/singOut')
+  localStorage.clear();
   window.location.href = '/'
 }
 
@@ -14,33 +12,39 @@ const config = {
 const httpClient = axios.create(config);
 const token = JSON.parse(localStorage.getItem('token'))
 
-httpClient.interceptors.request.use(
-  (config) => {
-    config.headers.Authorization = `Bearer ${token}`
-    return config  
-  },
-  (error) => {
-    const { data } = error?.response || {}
-    console.error(data);
-
-    switch (error.response?.status) {
-      case 401: {
-        showError(data || { message: 'Неавторизован' })
+if (token) {
+  httpClient.interceptors.request.use(
+    (config) => {
+      config.headers.Authorization = `Bearer ${token}`
+      return config  
+    }
+  );
+  
+  httpClient.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    const err = error.response.status
+  
+    const originalRequest = error.config;
+    if (originalRequest && !originalRequest._isRetry) {
+      originalRequest._isRetry = true;
+  
+      if(err === 401) {
+        console.log('Неавторизован')
         logOut() 
-        break
       }
-      case 403: {
-        showError(data || { message: 'Нет доступа' })
-        break
+      if(err === 403) {
+        console.log('Нет доступа')
       }
-      case 404: {
-        showError(data || { message: 'Не найдено' })
-        break
+      if(err === 404) {
+        console.log('Не найдено')
       }
     }
-    return Promise.reject(error)
-  }
-);
+    return Promise.reject(error);
+  });
+}
+
+
 
 
 export default httpClient

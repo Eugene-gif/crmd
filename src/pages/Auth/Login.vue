@@ -148,7 +148,7 @@ export default {
                 setTimeout(() => {
                   window.location.href = '/#/setemail'
                 }, 500)
-              } else if (resp.data.data.user.role === '') {
+              } else if (resp.data.data.user.role.id === '') {
                 setTimeout(() => {
                   window.location.href = '/#/role'
                 }, 500)
@@ -174,7 +174,7 @@ export default {
               setTimeout(() => {
                 window.location.href = '/#/setemail'
               }, 2000)
-            } else if (userObj.role === '') {
+            } else if (userObj.role.id === '') {
               setTimeout(() => {
                 window.location.href = '/#/role'
               }, 500)
