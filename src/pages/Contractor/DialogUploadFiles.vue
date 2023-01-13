@@ -59,6 +59,7 @@
             no-caps
             padding="20px 10px"
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
+            :class="{'btn-load': lodingBtn}"
             type="submit"
           >
             <span class="block">
@@ -85,6 +86,7 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const $q = useQuasar()
+    const lodingBtn = ref(false)
 
     const formData = ref({
       name: '',
@@ -106,12 +108,11 @@ export default defineComponent({
     }
 
     async function uploadFiles() {
-      console.log(formData.value)
+      lodingBtn.value = true
       if (formData.value.link.length > 0 || formData.value.files.length > 0) {
         try {
           await filesApi.uploadFiles(formData.value).then(resp => {
-            console.log(resp)
-            modalFalse()
+            modalFalse(resp)
             $q.notify({
               color: 'positive',
               message: 'файл загружен'
@@ -130,6 +131,7 @@ export default defineComponent({
           message: 'Загрузите пожалуйста файл'
         })
       }
+      lodingBtn.value = false
     }
 
     function modalFalse(val) {
@@ -146,7 +148,8 @@ export default defineComponent({
       onFileChange,
       onRejected,
       uploadFiles,
-      checkFileSize
+      checkFileSize,
+      lodingBtn
     }
   }
 })

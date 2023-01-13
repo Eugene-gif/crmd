@@ -136,11 +136,21 @@
           </q-item>
           <q-item>
             <div class="title">ИНН</div>
-            <q-input v-model="formData.inn" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input
+              v-model="formData.inn"
+              class="my-input bg-grey-3"
+              placeholder="Введите название"
+              :rules="[ val => val && val.length === 10]"
+            />
           </q-item>
           <q-item>
             <div class="title">КПП (для ООО)</div>
-            <q-input v-model="formData.kpp" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input 
+              v-model="formData.kpp" 
+              class="my-input bg-grey-3" 
+              placeholder="Введите название" 
+              :rules="[ val => val && val.length === 19]"
+            />
           </q-item>
         </q-list>
 
@@ -155,7 +165,12 @@
           </q-item>
           <q-item>
             <div class="title">ОГРН (для ООО и ИП)</div>
-            <q-input v-model="formData.ogrn" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input
+              v-model="formData.ogrn"
+              class="my-input bg-grey-3"
+              placeholder="Введите название"
+              :rules="[ val => val && val.length === 13]"
+            />
           </q-item>
         </q-list>
       </div>
@@ -199,7 +214,12 @@
           </q-item>
           <q-item>
             <div class="title">БИК банка</div>
-            <q-input v-model="formData.bank_bik" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input 
+              v-model="formData.bank_bik" 
+              class="my-input bg-grey-3" 
+              placeholder="Введите название" 
+              :rules="[ val => val && val.length === 9]"
+            />
           </q-item>
         </q-list>
       </div>
