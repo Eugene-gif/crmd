@@ -25,23 +25,32 @@ export const filesApi = {
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
       }).then(({data}) => {
-        if (data.data[0].size) {
-          let beforeForm = data.data[0].name.split('.')
-          let format = beforeForm[beforeForm.length - 1]
-          return {
-            file: data.data[0].file,
-            id: data.data[0].id,
-            name: data.data[0].name,
-            size: data.data[0].size,
-            format: format
-          }
-        } else {
-          return {
-            file: data.data[0].file,
-            id: data.data[0].id,
-            name: data.data[0].name,
-          }
-        }
+        return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  updateFiles(data) {
+    const formData = new FormData();
+    formData.append("file_id", data.id)
+    formData.append("name", data.name)
+    
+    if (data.link.length > 0) {
+      formData.append("link", data.link)
+    } else {
+      formData.append("file", data.files[0])
+    }
+
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
       })
     } catch (err) {
       console.log(err)
@@ -52,25 +61,7 @@ export const filesApi = {
     try {
       return httpClient.post(`${url}/getAll`)
       .then(({ data }) => {
-        return data = data.data.map(el => {
-          if (el.size) {
-            let beforeForm = el.name.split('.')
-            let format = beforeForm[beforeForm.length - 1]
-            return {
-              file: el.file,
-              id: el.id,
-              name: el.name,
-              size: el.size,
-              format: format
-            }
-          } else {
-            return {
-              file: el.file,
-              id: el.id,
-              name: el.name,
-            }
-          }
-        })
+        return data.data
       })
     } catch(err) {
       console.log(err)

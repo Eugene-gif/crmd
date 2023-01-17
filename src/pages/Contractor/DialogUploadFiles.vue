@@ -3,11 +3,12 @@
     <div class="q-card-background" @click="modalFalse()"></div>
     <div class="dialog-section">
       <q-form
-        @submit="uploadFiles"
+        @submit="branchFile"
       >
         <q-card-section class="row items-center justify-between head">
           <div class="title">
-            Загрузить файл
+            <span v-if="!updateActivated">Загрузить файл</span>
+            <span v-else>Обновить файл</span>
           </div>
           <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
         </q-card-section>     
@@ -51,8 +52,19 @@
             />
             <!-- <div class="text">Поле для размещения</div> -->
           </div>
+
         </q-card-section>
-        {{uploadActive}}
+        <div
+          class="uploadedFile-section"
+          v-show="propsFile !== '' && formData.files.length === 0"
+        >
+          <div
+            class="uploadedFile"
+          >
+            {{propsFile}}
+          </div>
+        </div>
+        
         <q-card-actions>
           <q-btn
             unelevated
@@ -62,8 +74,11 @@
             :class="{'btn-load': lodingBtn}"
             type="submit"
           >
-            <span class="block">
+            <span class="block" v-if="!updateActivated">
               Добавить
+            </span>
+            <span class="block" v-else>
+              Сохранить
             </span>
           </q-btn>
         </q-card-actions>
@@ -94,6 +109,7 @@ export default defineComponent({
       link: '',
       files: []
     })
+    const propsFile = ref('')
 
     async function onFileChange(file) {
       formData.value.files = file
@@ -106,6 +122,14 @@ export default defineComponent({
         type: 'negative',
         message: 'Файл не соответствуeт расширению'
       })
+    }
+
+    function branchFile() {
+      if (props.updateActivated === true) {
+        updateFiles()
+      } else {
+        uploadFiles()
+      }
     }
 
     async function uploadFiles() {
@@ -135,33 +159,74 @@ export default defineComponent({
       lodingBtn.value = false
     }
 
+    async function updateFiles() {
+      lodingBtn.value = true
+      if (formData.value.link.length > 0 || formData.value.files.length > 0) {
+        try {
+          await filesApi.updateFiles(formData.value).then(resp => {
+            modalFalseUp(resp)
+            $q.notify({
+              color: 'positive',
+              message: 'файл обновлен'
+            })
+          })
+        } catch (err) {
+          $q.notify({
+            color: 'negative',
+            message: 'произошла ошибка'
+          })
+          console.log(err)
+        }
+      } else {
+        $q.notify({
+          color: 'negative',
+          message: 'Загрузите пожалуйста файл или ссылку'
+        })
+      }
+      lodingBtn.value = false
+    } 
+
     function modalFalse(val) {
       emit('modalFalse', val)
+    }
+    function modalFalseUp(val) {
+      emit('modalFalseUp', val)
     }
   
     onMounted(() => {
       if (props.updateActivated === true) {
         console.log(props.updateObject)
-        if (props.updateActivated.format) {
-          formData.value.link = props.updateObject.file
+        if (props.updateObject.size) {
           formData.value.id = props.updateObject.id
           formData.value.name = props.updateObject.name
+          propsFile.value = props.updateObject.name
         } else {
           formData.value.link = props.updateObject.file
           formData.value.id = props.updateObject.id
           formData.value.name = props.updateObject.name
         }
+      } else {
+        formData.value = {
+          name: '',
+          link: '',
+          files: []
+        }
+        propsFile.value = ''
       }
     })
 
     return {     
       formData,
       modalFalse,
+      modalFalseUp,
       onFileChange,
       onRejected,
       uploadFiles,
       checkFileSize,
-      lodingBtn
+      branchFile,
+      updateFiles,
+      lodingBtn,
+      propsFile
     }
   }
 })

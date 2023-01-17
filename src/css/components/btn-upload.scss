@@ -408,3 +408,25 @@
     }
   }
 }
+
+.uploadedFile {
+  background: #FFFFFF;
+  border: 1px solid #F0F0F0;
+  border-radius: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  padding: 20px 19px;
+  color: #444444;
+  @media (max-width: 772px) {
+    font-size: 16px;
+    line-height: 16px;
+    padding: 12px 19px;
+    border-radius: 6px;
+  }
+}
+.uploadedFile-section {
+  @media (max-width: 772px) {
+    padding: 0 20px;
+  }
+}

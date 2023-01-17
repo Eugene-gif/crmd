@@ -7,6 +7,7 @@
   >
     <DialogUploadFiles 
       @modalFalse="modalFalse"
+      @modalFalseUp="modalFalseUp"
       :updateActivated="updateActive"
       :updateObject="updateObj"
     />
@@ -36,7 +37,7 @@
           <span class="mb-visible format" v-if="!file.size">Ссылка</span>
 
           <div class="size" v-if="file.size">
-            <span class="lg-visible">{{file.format}},</span> {{file.size}}
+            <span class="lg-visible">{{file.mime}},</span> {{file.size}}
           </div>
           <span class="mb-visible format" v-if="file.size">
             {{file.format}}
@@ -111,6 +112,7 @@ export default {
     async function getAllFiles() {
       try {
         await filesApi.getAllFiles().then(resp => {
+          console.log('resp')
           console.log(resp)
           files.value = resp
         })
@@ -154,6 +156,21 @@ export default {
     function openLink(link) {
       window.open(link, '_blank');
     }
+    function modalFalseUp(obj) {
+      dialog.value = false
+      if (obj) {
+        console.log(obj)
+        let arr = []
+        files.value.filter((el) => {
+          if (el.id === obj.id) {
+            el = obj
+          } 
+          arr.push(el)
+        })
+        files.value = arr
+      }
+      updateActive.value = false
+    }
 
     onMounted(() => {
       getAllFiles()
@@ -170,9 +187,12 @@ export default {
       updateFile,
       modalFalse(obj) {
         dialog.value = false
-        files.value.push(obj)
-        // console.log(obj)
+        if (obj) {
+          files.value.push(obj[0])
+        }
+        updateActive.value = false
       },
+      modalFalseUp
     }
   },
 }

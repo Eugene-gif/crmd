@@ -162,6 +162,12 @@ export default {
             console.log(err)
             loading.value = false
 
+            $q.notify({
+              color: 'red',
+              timeout: 2000,
+              message: 'Неправильный логин или пароль'
+            })
+
             let user = localStorage.getItem('userInfo')
             let userObj = JSON.parse(user)
 
@@ -178,16 +184,10 @@ export default {
               setTimeout(() => {
                 window.location.href = '/#/role'
               }, 500)
-            } else {
-              setTimeout(() => {
-                $q.notify({
-                  color: 'red',
-                  timeout: 2000,
-                  message: 'Неправильный логин или пароль'
-                })
-              }, 0)
-            }
-
+            } 
+            
+              
+            
           }
         }
       },
