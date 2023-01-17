@@ -7,6 +7,8 @@
   >
     <DialogUploadFiles 
       @modalFalse="modalFalse"
+      :updateActivated="updateActive"
+      :updateObject="updateObj"
     />
   </q-dialog>
   <q-expansion-item
@@ -24,7 +26,7 @@
 
       <q-item
         v-for="file in files"
-        :key="file.id"
+        :key="file"
       >
         <q-item-section>
           <div class="subtitle">
@@ -47,6 +49,7 @@
               flat
               class="my-btn my-effect h-opacity btn-add"
               padding="0"
+              @click="updateFile(file)"
             >
               <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="16px" class="q-mr-sm" />
               <span class="block text-grey-5">Редактировать</span>
@@ -102,6 +105,8 @@ export default {
     const dialog = ref(false)
     const files = ref([])
     const $q = useQuasar()
+    const updateActive = ref(false)
+    const updateObj = ref({})
 
     async function getAllFiles() {
       try {
@@ -116,6 +121,12 @@ export default {
         })
         console.log(err)
       }
+    }
+
+    function updateFile(file) {
+      updateActive.value = true
+      dialog.value = true
+      updateObj.value = file
     }
 
     async function delFile(id) {
@@ -151,9 +162,12 @@ export default {
     return {
       dialog,
       files,
+      updateActive,
+      updateObj,
       openLink,
       getAllFiles,
       delFile,
+      updateFile,
       modalFalse(obj) {
         dialog.value = false
         files.value.push(obj)

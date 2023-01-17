@@ -82,7 +82,8 @@ import { useQuasar } from 'quasar'
 export default defineComponent({
   name: 'DialogUploadImg',
   props: {
-    
+    updateObject: Array,
+    updateActivated: Boolean
   },
   setup (props, { emit }) {
     const $q = useQuasar()
@@ -139,7 +140,18 @@ export default defineComponent({
     }
   
     onMounted(() => {
-      
+      if (props.updateActivated === true) {
+        console.log(props.updateObject)
+        if (props.updateActivated.format) {
+          formData.value.link = props.updateObject.file
+          formData.value.id = props.updateObject.id
+          formData.value.name = props.updateObject.name
+        } else {
+          formData.value.link = props.updateObject.file
+          formData.value.id = props.updateObject.id
+          formData.value.name = props.updateObject.name
+        }
+      }
     })
 
     return {     
