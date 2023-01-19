@@ -55,7 +55,7 @@
           </div>
         </q-card-section>
 
-        <q-card-section class="form-section">
+        <!-- <q-card-section class="form-section">
           <label class="lable-title">Добавить фото</label>
           <div class="multiple-upload">
             <q-uploader
@@ -66,9 +66,8 @@
               @rejected="onRejected"
               :rules="[ val => val && val.length > 0 || '']"
             />
-            <!-- <div class="text">Поле для размещения</div> -->
           </div>
-        </q-card-section>
+        </q-card-section> -->
         
         <q-card-actions>
           <q-btn
@@ -109,7 +108,8 @@ export default defineComponent({
       id: null,
       name: '',
       description: '',
-      images: []
+      images: [],
+
     })
 
     async function onFileChange(file) {

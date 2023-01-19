@@ -35,7 +35,6 @@
             v-model="formData.email" 
             class="my-input bg-grey-3"
             placeholder="Введите e-mail" 
-            :rules="[ val => val && val.length > 0 || '']"
           />
         </q-card-section>
         <q-card-section class="form-section">
@@ -44,7 +43,6 @@
             v-model="formData.phone" 
             class="my-input bg-grey-3"
             placeholder="Введите телефон" 
-            :rules="[ val => val && val.length > 0 || '']"
           />
         </q-card-section>
         

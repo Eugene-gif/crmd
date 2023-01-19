@@ -46,11 +46,11 @@
               :filter="checkFileSize"
               :max-files="1"
               @added="onFileChange"
-              accept=".doc, .pdf, .docx"
+              
               @rejected="onRejected"
               :disable="(formData.link.length > 0)"
             />
-            <!-- <div class="text">Поле для размещения</div> -->
+            <!-- accept=".doc, .pdf, .docx" -->
           </div>
 
         </q-card-section>

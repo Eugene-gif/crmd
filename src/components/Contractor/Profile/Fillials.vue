@@ -109,8 +109,8 @@
         </div>
         <div class="txt-content">
           Должность: {{item.jobtitle}}<br>
-          Email: {{item.email}}<br>
-          Тел: {{item.phone}}
+          <span v-show="item.email.length">Email: {{item.email}}</span><br>
+          <span v-show="item.phone.length">Тел: {{item.phone}}</span>
         </div>
       </div>
       <div class="btn-sec">
