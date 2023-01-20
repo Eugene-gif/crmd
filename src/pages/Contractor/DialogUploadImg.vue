@@ -29,7 +29,7 @@
             class="my-input bg-grey-3 my-textarea"
             placeholder="Введите описание"
             style="min-height: 140px;"
-            :rules="[ val => val && val.length > 0 || '']"
+            
           />
         </q-card-section>
         <q-card-section class="form-section">

@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <div class="q-card-background" @click="modalFalse()"></div>
+    <div class="q-card-background" @click="modalFalseUpdate()"></div>
     <div class="dialog-section">
       <q-form
         @submit="updateAlbum"
@@ -29,7 +29,7 @@
             class="my-input bg-grey-3 my-textarea"
             placeholder="Введите описание"
             style="min-height: 140px;"
-            :rules="[ val => val && val.length > 0 || '']"
+            
           />
         </q-card-section>
 
@@ -146,7 +146,7 @@ export default defineComponent({
       lodingBtn.value = true
       try {
         await albumsApi.updateAlbum(formData.value).then(resp => {
-          console.log(resp)
+          modalFalseUpdate(resp)
           $q.notify({
             color: 'positive',
             message: 'Альбом обновлен'
@@ -162,8 +162,8 @@ export default defineComponent({
       lodingBtn.value = false
     }
 
-    function modalFalse(val) {
-      emit('modalFalse', val)
+    function modalFalseUpdate(val) {
+      emit('modalFalseUpdate', val)
     }
   
     onMounted(() => {
@@ -177,7 +177,7 @@ export default defineComponent({
       formData,
       lodingBtn,
       delImage,
-      modalFalse,
+      modalFalseUpdate,
       onFileChange,
       onRejected,
       updateAlbum

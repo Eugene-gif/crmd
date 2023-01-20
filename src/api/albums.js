@@ -58,11 +58,11 @@ export const albumsApi = {
   },
 
   updateAlbum(datas) {
-    const formData = {
-      album_id: datas.id,
-      name: datas.name,
-      description: datas.description 
-    }
+    const formData = new FormData();
+    formData.append("album_id", datas.id)
+    formData.append("name", datas.name)
+    formData.append("description", datas.description)
+
     try {
       return httpClient({
         method: "post",

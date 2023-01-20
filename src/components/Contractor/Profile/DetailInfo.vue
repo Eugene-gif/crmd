@@ -10,6 +10,19 @@
       @modalFalse="modalFalse"
     />
   </q-dialog>
+  <q-dialog
+    v-model="dialogLightbox"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog dialog-light-box"
+  >
+    <DialogLightbox 
+      @modalFalseLightbox="UnModalFalseLightbox"
+      :images="images"
+      :currentObj="lightBoxObj"
+    />
+  </q-dialog>
+
   <q-expansion-item
     expand-separator
     default-opened
@@ -79,7 +92,7 @@
           <div class="no-photo" v-if="!images.length">Фото для главной пока не загружены</div>
           <div class="scroll-x my-scrollbar">
             <div
-              class="sec-imgage"
+              class="sec-imgage lightbox-photo"
               v-for="item in images"
               :key="item"
             >
@@ -92,7 +105,11 @@
                   @click="delImage(item.id)"
                 />
               </div>
-              <img :src="`${item.url}`" alt="">
+              <img 
+                :src="`${item.url}`" 
+                alt=""
+                @click="openLightbox(item)"
+              >
             </div>
           </div>
         </div>
@@ -141,21 +158,26 @@ import { useStore } from 'vuex';
 
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 import DialogDelite from 'components/dialog/DialogDelite'
+import DialogLightbox from 'components/dialog/DialogLightbox'
 
 export default {
   name: 'ProfileDetilInfo',
   components: {
     PhotoGallery,
-    DialogDelite
+    DialogDelite,
+    DialogLightbox
   },
   setup() {
     const $q = useQuasar()
     const store = useStore()
 
     const dialog = ref(false)
+    const dialogLightbox = ref(false)
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
     const dialogName = ref()
+
+    const lightBoxObj = ref({})
     
     const me = computed(() => store.state['auth'].me)
 
@@ -296,6 +318,14 @@ export default {
       if (dialogName.value === 'delAllPhotosUser' && val) delUserAlbum()
       if (dialogName.value === 'delAvatar' && val) onFileChange()
     }
+
+    function openLightbox (obj) {
+      lightBoxObj.value = obj
+      dialogLightbox.value = true
+    }
+    function UnModalFalseLightbox() {
+      dialogLightbox.value = false
+    }
     
     // загрузка множества 
 
@@ -307,12 +337,14 @@ export default {
 
     return {
       dialog,
+      dialogLightbox,
       userImage,
       images,
       systemImage,
       lodingBtn,
       lodingBtn2,
       dialogName,
+      lightBoxObj,
       callDelDialog,
       getUserImage,
       checkFileSize,
@@ -323,6 +355,8 @@ export default {
       delImage,
       delUserAlbum,
       modalFalse,
+      UnModalFalseLightbox,
+      openLightbox,
     }
   },
 }

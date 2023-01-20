@@ -16,7 +16,7 @@
     class="my-dialog contractor-dialog-share"
   >
     <DialogUpdateAlbum 
-      @modalFalse="modalFalseUpdate"
+      @modalFalseUpdate="modalFalseUpdate"
       :data="modalUpdateData"
     />
   </q-dialog>
@@ -45,7 +45,7 @@
     <q-card class="q-card-visual-slider">
       <q-card-section
           v-for="item in visual"
-          :key="item.id"
+          :key="item"
         >
           <VisualSlider
             :images="item.images"
@@ -206,8 +206,15 @@ export default {
         visual.value.push(val)
       },
       modalFalseUpdate(val) {
-        dialog.value = false
-        visual.value.push(val)
+        dialogUpdate.value = false
+        let arr = []
+        visual.value.filter((el) => {
+          if (el.id === val.id) {
+            el = val
+          }
+          arr.push(el)
+        })
+        visual.value = arr
       },
     }
   },
