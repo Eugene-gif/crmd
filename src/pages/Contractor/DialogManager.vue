@@ -55,9 +55,9 @@
             type="submit"
           >
             <span class="block">
-              <span v-show="modalCustom === false">Добавить</span>
-              <span v-show="modalCustom === true">Редактировать</span>
-              менеджера
+              <span v-show="modalCustom === false">Добавить менеджера</span>
+              <span v-show="modalCustom === true">Сохранить</span>
+              
             </span>
           </q-btn>
         </q-card-actions>

@@ -26,6 +26,17 @@
     />
   </q-dialog>
 
+  <q-dialog
+    v-model="dialogDel"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogDelite 
+      @modalFalse="modalDelClose"
+    />
+  </q-dialog>
+  
   <q-expansion-item
     expand-separator
     default-opened
@@ -68,7 +79,7 @@
           flat
           class="my-btn my-effect h-opacity btn-add"
           padding="0"
-          @click="delAffiliate(item.id)"
+          @click="callDelDialog(item.id, 'delFillial')"
         >
           <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
           <span class="block text-grey-5">Удалить</span>
@@ -131,7 +142,7 @@
           flat
           class="my-btn my-effect h-opacity btn-add"
           padding="0"
-          @click="delManager(item.id)"
+          @click="callDelDialog(item.id, 'delMamager')"
         >
           <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
           <span class="block text-grey-5">Удалить</span>
@@ -155,6 +166,7 @@
 import { ref, onMounted } from 'vue'
 import DialogManager from 'pages/Contractor/DialogManager'
 import DialogFillials from 'pages/Contractor/DialogFillials'
+import DialogDelite from 'components/dialog/DialogDelite'
 import { contractorApi } from 'src/api/contractor'
 import { useQuasar } from 'quasar'
 
@@ -162,11 +174,13 @@ export default {
   name: 'ProfileFillials',
   components: {
     DialogManager,
-    DialogFillials
+    DialogFillials,
+    DialogDelite
   },
   setup() {
     const $q = useQuasar()
     const modalCustom = ref(false)
+    const dialogDel = ref(false)
 
     // fillals
     const dialogAffiliate = ref(false)
@@ -253,6 +267,20 @@ export default {
       }
     }
 
+    const dialogDelId = ref()
+    const dialogName = ref('')
+    function callDelDialog(id, val) {
+      dialogName.value = val
+      dialogDelId.value = id
+      dialogDel.value = true
+    }
+
+    function modalDelClose(val) {
+      dialogDel.value = false
+      if (dialogName.value === 'delFillial' && val) delAffiliate(dialogDelId.value)
+      if (dialogName.value === 'delMamager' && val) delManager(dialogDelId.value)
+    }
+
     const dialog = ref(false)
 
     onMounted(() => {
@@ -275,6 +303,11 @@ export default {
       getAllManagers,
       editManager,
       delManager,
+
+      dialogDel,
+      modalDelClose,
+      dialogName,
+      callDelDialog,
 
       modalFalse(val) {
         dialog.value = false

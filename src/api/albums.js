@@ -113,7 +113,7 @@ export const albumsApi = {
   delAlbum(id) {
     try {
       return httpClient.post(`${url}/delete`, {
-        id: id 
+        album_id: id 
       }).then(({ data }) => {
         return data
       })
