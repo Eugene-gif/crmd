@@ -2864,6 +2864,19 @@
                       margin-top: 24px;
                     }
                   }
+                  &-active {
+                    display: flex;
+                    align-items: center;
+                    &::before {
+                      display: none;
+                    }
+                    .btn-upload {
+                      height: 16px;
+                    }
+                    .btn-custom {
+                      display: none;
+                    }
+                  }
                 }
               }
 

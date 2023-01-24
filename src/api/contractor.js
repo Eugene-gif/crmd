@@ -191,8 +191,12 @@ export const contractorApi = {
     }
   },
   updateManager(formData) {
+    let data = formData
+    if (formData.phone === '') delete data.phone
+    if (formData.email === '') delete data.email
+
     try {
-      return httpClient.post(`${url}/info/updateManager`, formData)
+      return httpClient.post(`${url}/info/updateManager`, data)
       .then(( {response} ) => {
         return response
       })

@@ -328,6 +328,7 @@
         border-radius: 10px;
         border: 1px solid #F0F0F0;
         padding: 0;
+        background: none !important;
         & + .q-uploader__file {
           margin: 0;
           margin-top: 10px;
@@ -337,6 +338,8 @@
           padding-right: 19px;
           min-height: 58px;
           top: -1px;
+          padding-top: 4px;
+          padding-bottom: 4px;
           .q-btn--dense {
             min-height: 16px;
             min-width: 16px;

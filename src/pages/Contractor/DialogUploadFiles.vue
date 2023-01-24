@@ -36,16 +36,18 @@
             v-model="formData.link" 
             class="my-input bg-grey-3" 
             placeholder="Вставьте ссылку" 
+            :disable="formData.files.length === 1"
           />
         </q-card-section>
         <q-card-section class="form-section">
-          <label class="lable-title">Загрузка файл</label>
+          <label class="lable-title">Загрузить файл</label>
           <div class="multiple-upload-files">
             <q-uploader
               label="Выберите файл"
               :filter="checkFileSize"
               :max-files="1"
               @added="onFileChange"
+              @removed="formData.files = []"
               
               @rejected="onRejected"
               :disable="(formData.link.length > 0)"
@@ -122,6 +124,10 @@ export default defineComponent({
         type: 'negative',
         message: 'Файл не соответствуeт расширению'
       })
+    }
+
+    function delFilesUploader() {
+      
     }
 
     function branchFile() {
@@ -225,6 +231,7 @@ export default defineComponent({
       checkFileSize,
       branchFile,
       updateFiles,
+      delFilesUploader,
       lodingBtn,
       propsFile
     }

@@ -1022,6 +1022,12 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+.q-field {
+  &[aria-disabled="true"] {
+    opacity: 0.3;
+  }
+}
+
 // плде 
 // .q-field--error {
 //   border: 2px solid $red;

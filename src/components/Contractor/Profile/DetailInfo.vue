@@ -61,7 +61,7 @@
           </div>
           <img :src="`${userImage}`" alt="">
         </div>
-        <div class="sec-btn">
+        <div class="sec-btn" :class="{'sec-btn-active': systemImage}">
           <div class="btn-upload">
             <q-uploader
               @added="onFileChange"
@@ -76,11 +76,11 @@
             no-caps
             class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom btn-custom-del mb-visible"
             padding="0"
-            :class="{'btn-load': lodingBtn}"
             @click="callDelDialog('delAvatar')"
           >
             <span class="block text-grey-5">Удалить аватар</span>
           </q-btn>
+
         </div>
       </div>
 
@@ -136,7 +136,6 @@
             color="grey-5"
             padding="0"
             label="Удалить все"
-            :class="{'btn-load-grey': lodingBtn2}"
             @click="callDelDialog('delAllPhotosUser')"
           />
         </div>
@@ -316,7 +315,10 @@ export default {
     function modalFalse(val) {
       dialog.value = false
       if (dialogName.value === 'delAllPhotosUser' && val) delUserAlbum()
-      if (dialogName.value === 'delAvatar' && val) onFileChange()
+      if (dialogName.value === 'delAvatar' && val) {
+        onFileChange()
+        systemImage.value = true
+      } 
     }
 
     function openLightbox (obj) {
