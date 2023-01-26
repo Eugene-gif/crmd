@@ -140,7 +140,7 @@
               v-model="formData.inn"
               class="my-input bg-grey-3"
               placeholder="Введите название"
-              :rules="[ val => val && val.length === 10]"
+              :rules="[ val => val && val.length === 12]"
             />
           </q-item>
           <q-item>

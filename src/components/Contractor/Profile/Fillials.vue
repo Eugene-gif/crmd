@@ -191,7 +191,6 @@ export default {
       try {
         await contractorApi.getAllAffiliate().then(resp => {
           fillials.value = resp
-          console.log(resp)
         })
       } catch (err) {
         $q.notify({

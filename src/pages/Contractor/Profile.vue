@@ -1,7 +1,7 @@
 <template>
   <q-page class="page-contractor-single page-contractor-profile">
     <div class="row justify-between items-center">
-      <div class="text-h2">СтройПро</div>
+      <div class="text-h2">{{companyName}}</div>
       <q-icon
         size="18px"
         class="mb-visible"
@@ -34,6 +34,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
+import { inject } from 'vue'
 import CardInfo from 'components/CardInfo'
 import Info1 from 'components/Contractor/Profile/Info1'
 import Info2 from 'components/Contractor/Profile/Info2'
@@ -63,7 +64,13 @@ export default {
   },
 
   setup () {
-    
+    const companyName = ref()
+
+    const emitter = inject('emitter')     
+    emitter.on('myevent', (value) => { 
+      companyName.value = value
+    })
+
     function start() {
 
     }
@@ -71,7 +78,7 @@ export default {
       
     })
     return {
-      
+      companyName
     }
   }
 }

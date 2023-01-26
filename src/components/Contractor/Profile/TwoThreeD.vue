@@ -12,6 +12,16 @@
       :updateObject="updateObj"
     />
   </q-dialog>
+  <q-dialog
+    v-model="dialogDelModal"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite 
+      @modalFalse="modalOpenDel"
+    />
+  </q-dialog>
   <q-expansion-item
     expand-separator
     default-opened
@@ -61,7 +71,7 @@
               flat
               class="my-btn my-effect h-opacity btn-add"
               padding="0"
-              @click="delFile(file.id)"
+              @click="callDelDialog('delFile', file.id)"
             >
               <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
               <span class="block text-grey-5">Удалить</span>
@@ -94,17 +104,22 @@
 <script>
 import { ref, onMounted } from 'vue'
 import DialogUploadFiles from 'src/pages/Contractor/DialogUploadFiles'
+import DialogDelite from 'components/dialog/DialogDelite'
 import { filesApi } from 'src/api/files'
 import { useQuasar } from 'quasar'
 
 export default {
   name: 'ProfileTwoThreeD',
   components: {
-    DialogUploadFiles
+    DialogUploadFiles,
+    DialogDelite
   },
   setup() {
     const dialog = ref(false)
     const files = ref([])
+    const dialogName = ref()
+    const delFileId = ref()
+    const dialogDelModal = ref(false)
     const $q = useQuasar()
     const updateActive = ref(false)
     const updateObj = ref({})
@@ -112,8 +127,6 @@ export default {
     async function getAllFiles() {
       try {
         await filesApi.getAllFiles().then(resp => {
-          console.log('resp')
-          console.log(resp)
           files.value = resp
         })
       } catch (err) {
@@ -129,6 +142,17 @@ export default {
       updateActive.value = true
       dialog.value = true
       updateObj.value = file
+    }
+
+    function callDelDialog(modal, id) {
+      dialogName.value = modal
+      dialogDelModal.value = true
+      delFileId.value = id
+    }
+    function modalOpenDel(val) {
+      dialogDelModal.value = false
+      if (dialogName.value === 'delFile' && val) delFile(delFileId.value)
+      delFileId.value = null
     }
 
     async function delFile(id) {
@@ -181,9 +205,14 @@ export default {
       files,
       updateActive,
       updateObj,
+      dialogName,
       openLink,
       getAllFiles,
       delFile,
+      modalOpenDel,
+      callDelDialog,
+      dialogDelModal,
+      delFileId,
       updateFile,
       modalFalse(obj) {
         dialog.value = false

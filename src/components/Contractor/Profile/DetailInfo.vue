@@ -193,7 +193,6 @@ export default {
         userImage.value = me.value.image.url
         systemImage.value = false
       }  
-      console.log(userImage.value)
     }
 
     function checkFileSize (files) {

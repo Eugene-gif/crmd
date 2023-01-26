@@ -40,7 +40,15 @@
           />
         </q-card-section>
         <q-card-section class="form-section">
-          <label class="lable-title">Загрузить файл</label>
+          <label class="lable-title">
+            <span class="block" v-if="!updateActivated">
+              Загрузить файл
+            </span>
+            <span class="block" v-else>
+              Заменить файл
+            </span>
+            
+          </label>
           <div class="multiple-upload-files">
             <q-uploader
               label="Выберите файл"

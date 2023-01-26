@@ -126,6 +126,12 @@
       display: none;
     }
   }
+  @media (max-width: 772px) {
+    textarea {
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
 }
 
 .my-select {

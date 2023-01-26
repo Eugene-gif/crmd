@@ -193,6 +193,7 @@
 .btn-load-grey {
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
   &:after {
     content: '';
     width: 100%;
@@ -212,6 +213,9 @@
     &:after {
       background: #E2E2E2;
     }
+  }
+  @media (max-width: 772px) {
+    border-radius: 6px;
   }
 }
 

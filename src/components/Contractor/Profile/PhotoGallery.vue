@@ -1,5 +1,5 @@
 <template>
-  
+
   <div class="details" v-show="!isActive.details">
     <div class="item">
       <div class="cell">Название</div>
@@ -213,16 +213,18 @@
       />
       <!--  -->
     </q-form>
+    
   </div>
 
 </template>
 
 <script>
 import { ref, onMounted, computed } from 'vue'
-import { contractorApi } from 'src/api/contractor';
-import { VueDadata } from 'vue-dadata';
+import { contractorApi } from 'src/api/contractor'
+import { VueDadata } from 'vue-dadata'
 import { useQuasar } from 'quasar'
-import axios from "axios";
+import { inject } from 'vue'
+import axios from "axios"
 
 export default {
   name: 'PhotoGallery',
@@ -234,6 +236,7 @@ export default {
     const lodingBtn = ref(false)
     const query = ref(null)
     const suggestion = ref(undefined);
+    const emitter = inject('emitter');
 
     const formData = ref({
       name: '',
@@ -265,6 +268,7 @@ export default {
             message: 'Информация обновлена'
           })
         })
+        emitter.emit('myevent', formData.value.name)
       } catch (err) {
         $q.notify({
           color: 'negative',
@@ -281,12 +285,14 @@ export default {
           formData.value = resp
           query.value = resp.city
         })
+        emitter.emit('myevent', formData.value.name)
       } catch (err) {
         $q.notify({
           color: 'negative',
           message: 'произошла ошибка'
         })
         console.log(err)
+        emitter.emit('myevent', '')
       }
     }
 
@@ -328,7 +334,7 @@ export default {
         })
         .catch(error => console.log("error", error));
     }
-    
+
     onMounted(() => {
       getInfoContractor()
     }) 
@@ -343,6 +349,7 @@ export default {
       token: '4e03d732e3760f1aaf0f990ea5f6bedf457ee979',
       query,
       suggestion,
+
     }
   },
 }

@@ -182,6 +182,12 @@
       .q-uploader__subtitle {
         display: none;
       }
+      @media (max-width: 772px) {
+        .q-uploader__title {
+          font-size: 16px;
+          line-height: 16px;
+        }
+      }
     }
     .q-uploader__header-content {
       padding-left: 19px;
@@ -299,9 +305,7 @@
             display: none;
           }
         }
-        @media (max-width: 772px) {
-          margin-top: 6px;
-        }
+        
       }
     }
   }
