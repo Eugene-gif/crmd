@@ -32,15 +32,20 @@
             
           />
         </q-card-section>
+
         <q-card-section class="form-section">
           <label class="lable-title">Загрузка фото</label>
-          <div class="multiple-upload">
+          <div 
+            class="multiple-upload"
+            :class="{'multiple-upload-uploaded': formData.images.length > 0}"
+          >
             <q-uploader
               label="Выберите файл"
               multiple
               @added="onFileChange"
               accept=".jpg, image/*"
               @rejected="onRejected"
+              @removed="delFileInArr"
               :rules="[ val => val && val.length > 0 || '']"
             />
             <!-- <div class="text">Поле для размещения</div> -->
@@ -87,6 +92,7 @@ export default defineComponent({
       description: '',
       images: []
     })
+    const lenghtFiles = ref(null)
 
     async function onFileChange(file) {
       formData.value.images = file
@@ -96,6 +102,9 @@ export default defineComponent({
         type: 'negative',
         message: 'Файл не соответствуeт расширению'
       })
+    }
+    function delFileInArr(file) {
+      formData.value.images = formData.value.images.filter((el) => el.__key !== file[0].__key)
     }
 
     async function createAlbum() {
@@ -136,10 +145,12 @@ export default defineComponent({
     return {     
       formData,
       lodingBtn,
+      lenghtFiles,
       modalFalse,
       onFileChange,
       onRejected,
-      createAlbum
+      createAlbum,
+      delFileInArr
     }
   }
 })
