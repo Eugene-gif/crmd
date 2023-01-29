@@ -101,7 +101,7 @@
           name="svguse:icons/btnIcons.svg#delete" 
           size="16px" 
           style="margin-left: auto;" 
-          @click="addTagInCategory(el.id, false)"
+          @click="addTagInCategory(el.id, false, el.category_id)"
         />
       </q-btn>
     </q-expansion-item>
@@ -185,26 +185,38 @@ export default defineComponent({
           activeTagsList.value = activeTagsList.value.filter((name) => name !== item.id)
         })
       }
-      await addTagInCategory(null,null)
+      await addTagInCategory(null,null,null)
     }
 
-    async function addTagInCategory(checkId, val) {
+    async function addTagInCategory(checkId, val, catId) {
+      
       if (checkId !== null && val !== null) {
         if (val === true) {
           activeTagsList.value.push(checkId)
         } else {
-          activeTagsList.value = activeTagsList.value.filter((name) => name !== checkId);
+          activeTagsList.value = activeTagsList.value.filter((name) => name !== checkId)
         }
       }
-
+      
       if (activeTagsList.value.length === 0) {
         activeTagsList.value = [0]
       }
+
+      if (catId !== null && catId !== undefined) {
+        if (activeList.value.id === catId) {
+          activeList.value.tags.filter((item) => {
+            if (item.id === checkId) {
+              item.value = false
+            }
+          })
+        }
+      }
+      
       try {
         await contractorApi.addTagInCategory(activeTagsList.value).then(resp => {
           activeTagsList.value = resp.arr
           gotActiveListTags.value = resp.arr2
-          console.log(activeTagsList.value)
+
           $q.notify({
             color: 'positive',
             message: `Тег обновлен`

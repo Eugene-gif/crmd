@@ -132,14 +132,14 @@
           </q-item>
           <q-item>
             <div class="title">Юридический адрес</div>
-            <q-input v-model="formData.legal_address" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.legal_address" class="my-input bg-grey-3" placeholder="Укажите юридический адрес" />
           </q-item>
           <q-item>
             <div class="title">ИНН</div>
             <q-input
               v-model="formData.inn"
               class="my-input bg-grey-3"
-              placeholder="Введите название"
+              placeholder="Введите ИНН"
               :rules="[ val => val && val.length === 12]"
             />
           </q-item>
@@ -148,7 +148,7 @@
             <q-input 
               v-model="formData.kpp" 
               class="my-input bg-grey-3" 
-              placeholder="Введите название" 
+              placeholder="Введите КПП" 
               :rules="[ val => val && val.length === 19]"
             />
           </q-item>
@@ -157,18 +157,18 @@
         <q-list>
           <q-item>
             <div class="title">Название компании</div>
-            <q-input v-model="formData.company_name" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.company_name" class="my-input bg-grey-3" placeholder="Введите название компании" />
           </q-item>
           <q-item>
             <div class="title">Фактический адрес</div>
-            <q-input v-model="formData.actual_address" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.actual_address" class="my-input bg-grey-3" placeholder="Укажите фактический адрес" />
           </q-item>
           <q-item>
             <div class="title">ОГРН (для ООО и ИП)</div>
             <q-input
               v-model="formData.ogrn"
               class="my-input bg-grey-3"
-              placeholder="Введите название"
+              placeholder="Введите ОРГН или ОГРНИП"
               :rules="[ val => val && val.length === 13]"
             />
           </q-item>
@@ -179,18 +179,18 @@
         <q-list>
           <q-item>
             <div class="title">ФИО подписанта </div>
-            <q-input v-model="formData.person_name" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.person_name" class="my-input bg-grey-3" placeholder="Укажите ФИО" />
           </q-item>
           <q-item>
             <div class="title">Основание (для ООО)</div>
-            <q-input v-model="formData.person_based_on" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.person_based_on" class="my-input bg-grey-3" placeholder="Устав или доверенность" />
           </q-item>
         </q-list>
 
         <q-list>
           <q-item>
             <div class="title">Должность (для ООО)</div>
-            <q-input v-model="formData.person_position" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.person_position" class="my-input bg-grey-3" placeholder="Укажите должность" />
           </q-item>
         </q-list>
       </div>
@@ -199,25 +199,25 @@
         <q-list>
           <q-item>
             <div class="title">Расчётный счёт</div>
-            <q-input v-model="formData.settlement_account" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.settlement_account" class="my-input bg-grey-3" placeholder="Введите номер счёта" />
           </q-item>
           <q-item>
             <div class="title">Отделение банка</div>
-            <q-input v-model="formData.bank_branch" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.bank_branch" class="my-input bg-grey-3" placeholder="Введите отделение" />
           </q-item>
         </q-list>
 
         <q-list>
           <q-item>
             <div class="title">Корреспондетский счёт</div>
-            <q-input v-model="formData.correspondent_account" class="my-input bg-grey-3" placeholder="Введите название" />
+            <q-input v-model="formData.correspondent_account" class="my-input bg-grey-3" placeholder="Введите номер счёта" />
           </q-item>
           <q-item>
             <div class="title">БИК банка</div>
             <q-input 
               v-model="formData.bank_bik" 
               class="my-input bg-grey-3" 
-              placeholder="Введите название" 
+              placeholder="Введите БИК" 
               :rules="[ val => val && val.length === 9]"
             />
           </q-item>

@@ -87,6 +87,7 @@
               v-model="query"
               :fromBound="`city`"
               :toBound="`city`"
+              label="sdf"
               :token="token"
             />
           </q-item>
@@ -96,7 +97,7 @@
               type="textarea"
               v-model="formData.region"
               class="my-input bg-grey-3 my-textarea"
-              placeholder="Введите название"
+              placeholder="Укажите вашу область работы в свободной форме"
               style="min-height: 140px;"
               
             />
@@ -106,7 +107,12 @@
         <q-list>
           <q-item class="q-item-textarea">
             <div class="title">Описание</div>
-            <q-input type="textarea" v-model="formData.description" class="my-input bg-grey-3 my-textarea" placeholder="Введите название" />
+            <q-input 
+              type="textarea" 
+              v-model="formData.description" 
+              class="my-input bg-grey-3 my-textarea" 
+              placeholder="Опишите вашу компанию" 
+            />
           </q-item>
         </q-list>
       </div>
@@ -118,16 +124,16 @@
             <q-input 
               v-model="formData.public_phone" 
               class="my-input bg-grey-3" 
-              placeholder="Введите название"
+              placeholder="Укажите ваш номер"
               type="Number" 
             />
           </q-item>
           <q-item>
-            <div class="title">Общий адрес</div>
+            <div class="title">Адрес</div>
             <q-input 
               v-model="formData.public_address" 
               class="my-input bg-grey-3" 
-              placeholder="Введите название" 
+              placeholder="Укажите ваш адрес" 
             />
           </q-item>
           <q-item>
@@ -135,7 +141,7 @@
             <q-input 
               v-model="formData.public_email" 
               class="my-input bg-grey-3" 
-              placeholder="Введите название" 
+              placeholder="Укажите вашу почту" 
               
             />
             <!-- :rules="[ val => val.length && val.includes('@')]" 
@@ -147,19 +153,19 @@
             <q-input 
               v-model="formData.url" 
               class="my-input bg-grey-3" 
-              placeholder="Введите название" 
+              placeholder="Ссылка на ваш сайт" 
             />
           </q-item>
         </q-list>
         <q-list>
           <q-item>
             <div class="title">
-              Ссылка на WhatsApp
+              WhatsApp
             </div>
             <q-input
               v-model="formData.soc_wa"
               class="my-input bg-grey-3"
-              placeholder="Ссылка на WhatsApp"
+              placeholder="Ссылка на WhatsApp Business"
               lazy-rules
             >
               <template v-slot:after>
@@ -169,12 +175,12 @@
           </q-item>
           <q-item>
             <div class="title">
-              Ссылка на Telegram
+              Telegram
             </div>
             <q-input
               v-model="formData.soc_tg"
               class="my-input bg-grey-3"
-              placeholder="Ссылка на Telegram"
+              placeholder="@аккаунт"
               lazy-rules
               
             >
@@ -186,12 +192,12 @@
           </q-item>
           <q-item>
             <div class="title">
-              Ссылка на Instagram
+              Instagram
             </div>
             <q-input
               v-model="formData.soc_inst"
               class="my-input bg-grey-3"
-              placeholder="Ссылка на Instagram"
+              placeholder="@аккаунт"
               lazy-rules
               
             >

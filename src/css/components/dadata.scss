@@ -110,6 +110,17 @@
   .vue-dadata__suggestions-item {
     font-size: 16px;
     line-height: 20px;
-    min-height: 26px;
+    min-height: max-content;
+    margin: 0;
+    padding-top: 6px;
+    &:after {
+      right: -0px;
+    }
+    &:first-child {
+      padding-top: 15px;
+    }
+    &:last-child {
+      padding-bottom: 15px;
+    }
   }
 }

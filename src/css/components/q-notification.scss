@@ -9,6 +9,12 @@
     .q-icon {
       display: none;
     }
+    &.bg-positive {
+      border: 1px solid #5FBC31;
+    }
+    &.bg-negative {
+      border: 1px solid #E74A4A;
+    }
     .q-notification__message {
 
     }
