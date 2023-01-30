@@ -127,7 +127,7 @@
               class="my-select"
               behavior="menu"
               popup-content-class="my-select-menu"
-              :label="formData.company_obj ? null : 'Выберите тип компании'"
+              :label="formData.company_obj.name ? null : 'Выберите тип компании'"
             />
           </q-item>
           <q-item>
@@ -140,7 +140,7 @@
               v-model="formData.inn"
               class="my-input bg-grey-3"
               placeholder="Введите ИНН"
-              :rules="[ val => val && val.length === 12]"
+              :rules="[ val => val && val.length === 10 || val.length === 11 || val.length === 12]"
             />
           </q-item>
           <q-item>

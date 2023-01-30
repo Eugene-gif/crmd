@@ -49,7 +49,10 @@
             </span>
             
           </label>
-          <div class="multiple-upload-files">
+          <div 
+            class="multiple-upload-files"
+            :class="{'multiple-upload-files-uploaded': formData.files.length > 0}"
+          >
             <q-uploader
               label="Выберите файл"
               :filter="checkFileSize"
@@ -66,6 +69,7 @@
         </q-card-section>
         <div
           class="uploadedFile-section"
+          :class="{'uploadedFile-section-uploaded': formData.files.length > 0}"
           v-show="propsFile !== '' && formData.files.length === 0"
         >
           <div
@@ -209,11 +213,12 @@ export default defineComponent({
   
     onMounted(() => {
       if (props.updateActivated === true) {
+        console.log('props.updateObject')
         console.log(props.updateObject)
         if (props.updateObject.size) {
           formData.value.id = props.updateObject.id
           formData.value.name = props.updateObject.name
-          propsFile.value = props.updateObject.name
+          propsFile.value = props.updateObject.file_name
         } else {
           formData.value.link = props.updateObject.file
           formData.value.id = props.updateObject.id

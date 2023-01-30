@@ -126,6 +126,9 @@
     }
   }
   @media (max-width: 772px) {
+    .q-btn {
+      min-height: 43px !important;
+    }
     .my-btn-custom-big {
       padding: 0 17px 0 19px !important;
     }
@@ -134,7 +137,7 @@
       width: 100%;
       position: relative;
       right: 0;
-      top: 0;
+      top: 14px;
       left: 0;
       padding: 29px 20px;
       box-shadow: none;

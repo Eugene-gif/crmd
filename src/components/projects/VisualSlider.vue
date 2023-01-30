@@ -34,7 +34,6 @@
               :class="{'image-chek': item == ' '}"
             />
           </q-tab-panels>
-          
         </q-item-section>
         
       </q-item>

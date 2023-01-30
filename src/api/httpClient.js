@@ -2,7 +2,8 @@ import axios from "axios";
 
 function logOut() {
   localStorage.clear();
-  window.location.href = '/'
+  window.location.href = '/login'
+  location.reload()
 }
 
 const config = {

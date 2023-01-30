@@ -67,8 +67,8 @@ export default {
     const store = useStore();    
     const followeMe = ref(false);    
     const form = ref({
-      email: 'admin@mail.com',
-      password: '123123'
+      email: '',
+      password: ''
     })
     const stateToken = computed(() => store.state['auth'].token)    
 
