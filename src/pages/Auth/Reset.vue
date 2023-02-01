@@ -36,6 +36,7 @@
             padding="20px 10px"
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
             label="Отправить"
+            :class="{'btn-load': lodingBtn}"
           />
           <q-item to="/login" class="q-item-none reset mb-visible">Обратно к форме входа</q-item>
         </div>
@@ -64,11 +65,13 @@ export default {
     const $q = useQuasar()
     const accept = ref(false)
     const followeMe = ref(false);    
+    const lodingBtn = ref(false)
     const form = ref({
       email: ''
     })
 
     async function onSubmit () {
+      lodingBtn.value = true
       if (accept.value !== true) {
         try {
           await authApi.resetPass(form.value.email).then(resp => {
@@ -96,6 +99,7 @@ export default {
           
         }
       }
+      lodingBtn.value = false
     }
 
     return {
