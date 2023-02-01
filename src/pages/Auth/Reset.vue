@@ -50,11 +50,10 @@
 
 <script>
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoginIn from 'src/components/auth/LoginIn.vue'
+import { authApi } from 'src/api/auth'
+import { useQuasar } from 'quasar'
 
 export default {
   components: {
@@ -62,36 +61,50 @@ export default {
     LoginIn
   },
   setup () {
-    const router = useRouter();
+    const $q = useQuasar()
     const accept = ref(false)
-    const store = useStore();    
     const followeMe = ref(false);    
     const form = ref({
-      email: '',
-      password: ''
+      email: ''
     })
-    const stateToken = computed(() => store.state['auth'].token)    
+
+    async function onSubmit () {
+      if (accept.value !== true) {
+        try {
+          await authApi.resetPass(form.value.email).then(resp => {
+            $q.notify({
+              color: 'positive',
+              timeout: 3000,
+              message: 'Сообщение со сбросом пароля отправлено на ваш E-mail'
+            })
+          })
+        } catch (err) {
+          console.log(err.response.status)
+          if (err.response.status === 429) {
+            $q.notify({
+              color: 'negative',
+              timeout: 3000,
+              message: 'Лимит на сброс пароля для одного E-mail'
+            })
+          } else {
+            $q.notify({
+              color: 'negative',
+              timeout: 3000,
+              message: 'Произошла ошибка, попробуйте позже'
+            })
+          }
+          
+        }
+      }
+    }
 
     return {
       accept,
       form,
-      stateToken,
       followeMe,
-
-      async onSubmit () {
-        if (accept.value !== true) {
-          try {
-            await store.dispatch('auth/doReset', form.value)
-          } catch (err) {
-            console.log(err)
-          }
-        }
-      },
-
+      onSubmit,
       onReset () {
-        email.value = null
-        pass.value = null
-        accept.value = false
+        form.value.email = null
       }
     }
   }

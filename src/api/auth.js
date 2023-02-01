@@ -20,9 +20,18 @@ export const authApi = {
       console.log(err)
     }
   },
+  resetPass(mail) {
+    try {
+      return httpClient.post(`${url}/password/reset`, {
+        email: mail
+      }).then(response => {
+        return response
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
 
-  
-  
 
 
   doRegister(data) {
