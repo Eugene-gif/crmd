@@ -96,7 +96,7 @@
       no-caps
       class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="5px 25px"
-      @click="dialog = true"
+      @click="addAlbum"
     >
       <span class="block text-grey-5">Добавить альбом</span>
       <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" style="margin-left: auto;" />
@@ -131,6 +131,17 @@ export default {
     const visual = ref([])
     const modalUpdateData = ref()
     
+    function addAlbum() {
+      if (visual.value.length > 7) {
+        $q.notify({
+          color: 'negative',
+          message: 'Создать можно не более - 8 альбомов'
+        })
+      } else {
+        dialog.value = true
+      }
+    }
+
     async function getAllDataAlbums() {
       try {
         await albumsApi.getAllAlbums().then(resp => {
@@ -202,6 +213,7 @@ export default {
       updateAlubum,
       callDelDialog,
       modalOpenDel,
+      addAlbum,
       modalFalse(val) {
         dialog.value = false
         visual.value.push(val)

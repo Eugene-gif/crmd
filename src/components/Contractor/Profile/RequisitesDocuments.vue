@@ -320,13 +320,16 @@ export default {
       await getDocCompanyTypes()
       let arr = Object.values(formData.value)
       let bool = null
-      arr.find(item => {
-        if (item === null) {
-          bool = true
-        }
-      })
+      if (arr[0] !== null) {
+        bool = true
+      }
+      // arr.find(item => {
+      //   if (item === null) {
+      //     bool = true
+      //   }
+      // })
       if (bool === true) {
-        isActive.value.documents = true
+        isActive.value.documents = false
       }
     }
     onMounted(() => {

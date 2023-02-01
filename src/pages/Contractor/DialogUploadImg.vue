@@ -42,13 +42,15 @@
             <q-uploader
               label="Выберите файл"
               multiple
+              max-files="24"
+              
               @added="onFileChange"
               accept=".jpg, image/*"
               @rejected="onRejected"
               @removed="delFileInArr"
               :rules="[ val => val && val.length > 0 || '']"
             />
-            <!-- <div class="text">Поле для размещения</div> -->
+            <!-- <div class="text">Поле для размещения</div> max-total-size="4096" -->
           </div>
         </q-card-section>
         
@@ -97,11 +99,21 @@ export default defineComponent({
     async function onFileChange(file) {
       formData.value.images = file
     }
-    function onRejected () {
-      $q.notify({
-        type: 'negative',
-        message: 'Файл не соответствуeт расширению'
-      })
+    function onRejected (err) {
+      console.log(err[0])
+      if (err[0].failedPropValidation === 'max-files') {
+        $q.notify({
+          type: 'negative',
+          message: 'Максимальное количество фото - 24 штуки'
+        })
+      }
+      // if (err[0].failedPropValidation === 'max-total-size') {
+      //   $q.notify({
+      //     type: 'negative',
+      //     message: 'Максимальный размер загружаемого контента = 4056mb'
+      //   })
+      // }
+      
     }
     function delFileInArr(file) {
       formData.value.images = formData.value.images.filter((el) => el.__key !== file[0].__key)

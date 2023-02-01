@@ -341,8 +341,17 @@ export default {
         .catch(error => console.log("error", error));
     }
 
-    onMounted(() => {
-      getInfoContractor()
+    onMounted( async () => {
+      await getInfoContractor()
+      let bool = formData.value.name !== '' && 
+      formData.value.city !== '' && 
+      formData.value.region !== '' && 
+      formData.value.public_email !== '' && 
+      formData.value.public_phone !== ''
+
+      if (!bool) {
+        isActive.value.details = true
+      }
     }) 
 
     return {

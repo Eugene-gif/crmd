@@ -195,6 +195,7 @@ export default {
       }  
     }
 
+
     function checkFileSize (files) {
       return files.filter(file => file.size < 2048)
     }
@@ -235,22 +236,32 @@ export default {
 
     async function uploadProfilePhoto(file) {
       lodingBtn2.value = true
-      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      let id = storageUser.profile_album_id
-      try {
-        await albumsApi.addImagesInAlbum(file, id).then(resp => {
-          images.value = resp.images
-          $q.notify({
-            type: 'positive',
-            message: 'Фото загружены'
-          })
-        })
-      } catch (err) {
-        console.log(err)
+
+      let lenghtImages = images.value.length + file.length
+
+      if (lenghtImages > 8 ) {
         $q.notify({
           type: 'negative',
-          message: 'Происошла ошибка'
+          message: 'Максимальное количество фото - 8 штук'
         })
+      } else {
+        let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+        let id = storageUser.profile_album_id
+        try {
+          await albumsApi.addImagesInAlbum(file, id).then(resp => {
+            images.value = resp.images
+            $q.notify({
+              type: 'positive',
+              message: 'Фото загружены'
+            })
+          })
+        } catch (err) {
+          console.log(err)
+          $q.notify({
+            type: 'negative',
+            message: 'Происошла ошибка'
+          })
+        }
       }
       lodingBtn2.value = false
     }
