@@ -30,7 +30,7 @@
           />
         </q-card-section>
         <q-card-section class="form-section">
-          <label class="lable-title">E-mail:</label>
+          <label class="lable-title">e-mail:</label>
           <q-input 
             v-model="formData.email" 
             class="my-input bg-grey-3"
