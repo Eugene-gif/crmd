@@ -78,7 +78,7 @@ export default {
             $q.notify({
               color: 'positive',
               timeout: 3000,
-              message: 'Сообщение со сбросом пароля отправлено на ваш E-mail'
+              message: 'Сообщение со сбросом пароля отправлено на ваш e-mail'
             })
           })
         } catch (err) {
@@ -87,7 +87,7 @@ export default {
             $q.notify({
               color: 'negative',
               timeout: 3000,
-              message: 'Лимит на сброс пароля для одного E-mail'
+              message: 'Лимит на сброс пароля для одного -mail'
             })
           } else {
             $q.notify({
