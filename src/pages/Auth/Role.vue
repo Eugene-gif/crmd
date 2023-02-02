@@ -10,7 +10,7 @@
     >
       <div class="form-section">
         <div class="head">
-          <q-item to="/role">
+          <q-item to="/role" style="cursor: default !important;">
             <span>Выберите роль</span>
           </q-item>
           <q-item></q-item>
