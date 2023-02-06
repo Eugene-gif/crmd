@@ -107,6 +107,23 @@
           flex: 0 0 100%;
         }
       }
+      
+      .form-col-4 {
+        padding: 0 26.5px;
+        flex: 0 0 33.333333%;
+        display: flex;
+        flex-direction: column;
+        .q-field {
+          max-width: 140px;
+        }
+      }
+      
+      .q-pl-none {
+        padding-left: 0;
+      }
+      .q-pr-none {
+        padding-right: 0;
+      }
       .form-col-hint .hint{
         margin-left: 20px;
         margin-top: 8px;
@@ -394,6 +411,13 @@
             margin-bottom: 19px;
           }
         }
+        .form-col-4 {
+          padding: 0 10px;
+          align-items: flex-start;
+          .q-field {
+            max-width: 100%;
+          }
+        }
         .form-col-hint {
           max-width: 140px;
           margin-top: auto;
@@ -421,44 +445,54 @@
       }
     }
     .dialog-section {
-      .form-section-upload {
-        flex-wrap: wrap;
-        padding-left: 0;
-        padding-right: 0;
-        .lable-title {
-          margin-top: 19px;
+      .form-section-uploud-file {
+        & > .lable-title {
+          display: none;
         }
-        .my-textarea {
-          flex: 0 0 100%;
-          max-width: 100%;
-          border-radius: 6px;
-          &.q-field--focused + .my-file-upload {
-            .q-uploader {
-              background: #ECECEC;
+      }
+      
+      .form-section-upload {
+        // flex-wrap: wrap;
+        padding-left: 0;
+        // padding-right: 0;
+        & > .my-textarea {
+          display: none;
+        }
+        .form-col-delimiter {
+          flex: 0 0 calc(100% - 90px);
+          max-width: calc(100% - 90px);
+          padding-right: 20px;
+          .my-textarea {
+            height: 82px;
+            .q-field__control {
+              padding-left: 13px;
+            }
+            textarea {
+              padding-right: 0px;
+              height: 82px;
+              padding-top: 12px;
             }
           }
-          textarea {
-            padding-right: 0;
-          }
         }
+        
         .my-file-upload {
-          flex: 0 0 100%;
-          max-width: 100%;
+          flex: 1 1 calc(100% - 20px);
+          max-width: calc(100% - 20px);
           position: relative;
           border: none;
           overflow: visible;
           .q-uploader {
-            width: 125px;
-            height: 125px;
+            width: 100%;
+            height: 82px;
             border-radius: 6px;
             .q-uploader__header {
               .q-uploader__header-content {
                 .q-btn {
                   &:before {
-                    margin-top: 30px;
+                    margin-top: 6px;
                   }
                   &:after {
-                    top: 68px;
+                    top: 43px;
                   }
                 }
               }
