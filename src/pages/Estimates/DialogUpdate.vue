@@ -3,7 +3,7 @@
     <div class="q-card-background" @click="$emit('modalFalse')"></div>
     <div class="dialog-section">
       <q-card-section class="row items-center justify-between head">
-        <div class="title">Добавить позицию</div>
+        <div class="title">Изменить</div>
         <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
       </q-card-section>
 
@@ -44,7 +44,7 @@
         </q-card-section>
       </q-card-section>
 
-      <q-card-section class="form-section form-section-row">
+      <q-card-section class="form-section form-section-row form-section-row-behiver">
         <div class="form-col">
           <label class="lable-title">Помещение<sup style="font-size: 10px;font-weight: bold;">2</sup></label>
           <q-select
@@ -62,20 +62,21 @@
             :label="select1 ? undefined : 'Выбрать'"
           />
         </div>
-        <div class="form-col lg-visible">
+        <div class="form-col">
           <label class="lable-title">Кол-во</label>
           <q-input v-model="text3" class="my-input bg-grey-3" />
         </div>
       </q-card-section>
 
-      <q-card-section class="form-section form-section-row">
+
+      <q-card-section class="form-section form-section-row no-wrap">
         <div class="form-col-4 q-pl-none items-start">
           <label class="lable-title" style="display: flex;">
             Прогноз цены
             <div class="circle-warning-15">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
               <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
-                Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+                Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
               </q-tooltip>
             </div>
           </label>
@@ -90,7 +91,7 @@
           <q-input 
             v-model="text3" 
             type="number" 
-            class="my-input bg-grey-3" 
+            class="my-input bg-grey-3 q-field-procent" 
             placeholder="15" 
           >
             <template v-slot:append>
@@ -99,6 +100,74 @@
           </q-input>
         </div>
       </q-card-section>
+
+
+      <q-card-section 
+        class="form-section-row-offer"
+        :class="{'form-section-row-offer-enter': offer1.length || offer2.length || offer3.length}"
+      >
+        <div class="title">
+          <span>Подать предложение по цене</span>
+          <div class="circle-warning-15">
+            <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+            <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
+              Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
+            </q-tooltip>
+          </div>
+        </div>
+        <q-btn 
+          flat 
+          no-caps 
+          padding="0 12px" 
+          label="Вставить" 
+          icon="svguse:icons/allIcons.svg#past" 
+          class="btn-past text-grey-5" 
+        />
+        <div class="form-section form-section-row"> 
+          <div class="form-col-4 q-pl-none items-start">
+            <label class="lable-title" style="display: flex;">
+              Цена за единицу
+            </label>
+            <q-input v-model="offer1" type="number" class="my-input bg-grey-3" placeholder="Цена" />
+          </div>
+          <div class="form-col-4">
+            <label class="lable-title">Срок, дней</label>
+            <q-input v-model="offer2" type="number" class="my-input bg-grey-3" placeholder="Срок" />
+          </div>
+          <div class="form-col-4 q-pr-none items-end">
+            <label class="lable-title">Ставка, процент</label>
+            <q-input 
+              v-model="offer3" 
+              type="number" 
+              class="my-input bg-grey-3 q-field-procent" 
+              placeholder="15" 
+            >
+              <template v-slot:append>
+                %
+              </template>
+            </q-input>
+          </div>
+        </div>
+        <div class="btns-sec">
+          <q-btn 
+            flat 
+            no-caps 
+            padding="0" 
+            label="Сделать предложение" 
+            class="text-white btn-flat" 
+          />
+          <q-btn 
+            flat 
+            no-caps 
+            padding="0" 
+            label="Отмена" 
+            class="text-white btn-flat" 
+            @click="offer1 = '', offer2 = '', offer3 = ''"
+          />
+        </div>
+      </q-card-section>
+
+
 
       <q-card-section class="form-section">
         <label class="lable-title">Ссылка</label>
@@ -109,12 +178,12 @@
         <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Укажите производителя" />
       </q-card-section>
 
-      <q-card-section class="form-section form-section-row">
+      <q-card-section class="form-section form-section-row form-section-row-behiver">
         <div class="form-col">
           <label class="lable-title">Артикул</label>
           <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Укажите артикул" />
         </div>
-        <div class="form-col lg-visible">
+        <div class="form-col">
           <label class="lable-title">Цвет</label>
           <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Код"  />
         </div>
@@ -189,17 +258,19 @@ export default ({
     function checkFileSize (files) {
       return files.filter(file => file.size > 2048)
     }
-
     function onRejected () {
       $q.notify({
         type: 'negative',
         message: 'Файл не соответствуeт расширению'
       })
     }
-
     const formData = ref({
       file: null
     })
+
+    const offer1 = ref('')
+    const offer2 = ref('')
+    const offer3 = ref('')
 
     return {
       checkFileSize,
@@ -219,6 +290,7 @@ export default ({
       val32: ref(false),
       val4: ref(false),
       val5: ref(false),
+
       addCustomer: ref(false),
       type: [
         {
@@ -257,6 +329,10 @@ export default ({
       telegram: ref(),
       instagram: ref(),
       textarea: ref(),
+
+      offer1,
+      offer2,
+      offer3,
 
       file: ref(),
       focusSelect() {

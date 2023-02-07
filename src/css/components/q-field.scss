@@ -1035,6 +1035,13 @@ input::-webkit-inner-spin-button {
   }
 }
 
+.q-field-procent {
+  .q-field__append {
+    padding-left: 7px;
+    font-size: 18px;
+  }
+}
+
 // плде 
 // .q-field--error {
 //   border: 2px solid $red;

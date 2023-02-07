@@ -221,7 +221,27 @@
   }
 }
 
-
+.btn-flat {
+  .block,
+  .q-icon {
+    transition: all 0.25s;
+  }
+  .q-focus-helper {
+    display: none;
+  }
+  &:hover {
+    .block,
+    .q-icon {
+      opacity: 0.6;
+    }
+  }
+  &:active {
+    .block,
+    .q-icon {
+      opacity: 0.2;
+    }
+  }
+}
 @keyframes animate_grow {
 	0% {		
     transform: translateX(-100%);

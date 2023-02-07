@@ -38,6 +38,7 @@
       :editData="dataEdit"
     />
   </q-dialog>
+
   <q-page class="page-estimates page-estimates-all">
     <div class="row justify-between items-center">
       <div class="text-h2">Общая смета</div>
@@ -212,6 +213,7 @@
                 color="grey-3"
                 class="my-btn my-effect my-btn--outline"
                 padding="5.5px 0"
+                @click.stop="dialogPosition = true"
               >
                 <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="12px" class="q-mr-sm" />
                 <div class="block text-grey-5">Редактировать</div>
@@ -337,10 +339,10 @@
 <script>
 import { ref } from 'vue'
 import EstimateTable from 'components/Table/EstimateTable.vue'
-import DialogEdit from 'pages/Estimates/dialog-edit.vue'
-import DialogSecurity from 'pages/Estimates/dialog-security.vue'
-import DialogExport from 'pages/Estimates/dialog-export.vue'
-import DialogSettings from 'pages/Estimates/dialog-settings.vue'
+import DialogEdit from 'src/pages/Estimates/DialogEdit.vue' 
+import DialogSecurity from 'src/pages/Estimates/DialogSecurity.vue'
+import DialogExport from 'src/pages/Estimates/DialogExport.vue'
+import DialogSettings from 'src/pages/Estimates/DialogSettings.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 
 const cutTitle = function(title) {

@@ -8,6 +8,14 @@
     <DialogPosition @modalFalse="modalFalse" />
   </q-dialog>
   <q-dialog
+    v-model="dialogUpdate"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog estimates-dialog"
+  >
+    <DialogUpdate @modalFalse="modalFalse" />
+  </q-dialog>
+  <q-dialog
     v-model="dialogSecurity"
     transition-show="fade"
     transition-hide="fade" 
@@ -69,6 +77,17 @@
       >
         <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
         <span class="block q-ml-xs">Добавить позицию</span>
+      </q-btn>
+      <q-btn
+        rounded
+        unelevated
+        no-caps
+        class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
+        padding="12px 24px 12px 20px"
+        @click="dialogUpdate = true"
+      >
+        <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
+        <span class="block q-ml-xs">Изменить</span>
       </q-btn>
       <q-btn
         rounded
@@ -352,11 +371,12 @@
 
 <script>
 import { ref } from 'vue'
-import EstimateTable from 'components/Table/EstimateTable.vue'
-import DialogPosition from 'pages/Estimates/dialog-position.vue'
-import DialogSecurity from 'pages/Estimates/dialog-security.vue'
-import DialogExport from 'pages/Estimates/dialog-export.vue'
-import DialogSettings from 'pages/Estimates/dialog-settings.vue'
+import EstimateTable from 'components/Table/EstimateTable'
+import DialogPosition from 'src/pages/Estimates/DialogPosition'
+import DialogUpdate from 'src/pages/Estimates/DialogUpdate'
+import DialogSecurity from 'src/pages/Estimates/DialogSecurity'
+import DialogExport from 'src/pages/Estimates/DialogExport'
+import DialogSettings from 'src/pages/Estimates/DialogSettings'
 
 const cutTitle = function(title) {
   return String(title.substring(0,2))
@@ -447,15 +467,19 @@ export default {
     DialogPosition,
     DialogSecurity,
     DialogExport,
-    DialogSettings
+    DialogSettings,
+    DialogUpdate,
   },
   setup () {
     const dialogPosition = ref(false)
     const dialogSecurity = ref(false)
     const dialogExport = ref(false)
     const dialogSettings = ref(false)
+    const dialogUpdate = ref(false)
+
     const toggle = ref(true)
     const tab = ref()
+
     const tabs = ref([
       {
         name: '1',
@@ -500,6 +524,7 @@ export default {
       dialogPosition,
       dialogSecurity,
       dialogExport,
+      dialogUpdate,
       columnsTable,
       dialogSettings,
       rowTable,

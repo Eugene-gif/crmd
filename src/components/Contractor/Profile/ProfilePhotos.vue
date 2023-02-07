@@ -47,7 +47,6 @@
           v-for="item in visual"
           :key="item"
         >
-        
           <VisualSlider
             :images="item.images"
           />
