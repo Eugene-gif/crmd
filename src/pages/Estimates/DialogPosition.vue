@@ -75,7 +75,7 @@
             Прогноз цены
             <div class="circle-warning-15">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-              <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
+              <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
                 Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
               </q-tooltip>
             </div>

@@ -75,7 +75,7 @@
             Прогноз<br class="mb-visible"> цены
             <div class="circle-warning-15">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-              <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
+              <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
                 Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
               </q-tooltip>
             </div>
@@ -104,13 +104,20 @@
 
       <q-card-section 
         class="form-section-row-offer"
-        :class="{'form-section-row-offer-enter': offer1.length || offer2.length || offer3.length}"
+        :class="[
+          {'form-section-row-offer-enter': offer1.length && offer2.length && offer3.length && !offerActive},
+          {'form-section-row-offer-activated': offerActive}
+        ]"
       >
+        <div class="close-form rotate" @click="offerActive = false">
+          <q-icon name="svguse:icons/allIcons.svg#close-modal" size="12px"/>
+        </div>
+        
         <div class="title">
           <span>Подать предложение по цене</span>
           <div class="circle-warning-15">
             <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-            <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
+            <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
               Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
             </q-tooltip>
           </div>
@@ -155,6 +162,7 @@
             padding="0" 
             label="Сделать предложение" 
             class="text-white btn-flat" 
+            @click="offerActive = true"
           />
           <q-btn 
             flat 
@@ -166,7 +174,6 @@
           />
         </div>
       </q-card-section>
-
 
 
       <q-card-section class="form-section">
@@ -271,6 +278,7 @@ export default ({
     const offer1 = ref('')
     const offer2 = ref('')
     const offer3 = ref('')
+    const offerActive = ref(false)
 
     return {
       checkFileSize,
@@ -333,6 +341,7 @@ export default ({
       offer1,
       offer2,
       offer3,
+      offerActive,
 
       file: ref(),
       focusSelect() {
