@@ -20,7 +20,7 @@
             type="textarea"
             v-model="textarea"
             class="my-textarea bg-grey-3 lg-visivle"
-            placeholder="Введите примечание"
+            placeholder="Введите описание"
           />
 
           <div class="form-col-delimiter mb-visible">
@@ -64,7 +64,7 @@
         </div>
         <div class="form-col">
           <label class="lable-title">Кол-во</label>
-          <q-input v-model="text3" class="my-input bg-grey-3" />
+          <q-input v-model="text3" class="my-input bg-grey-3" placeholder="шт/м2" />
         </div>
       </q-card-section>
 
@@ -91,7 +91,7 @@
           <q-input 
             v-model="text3" 
             type="number" 
-            class="my-input bg-grey-3" 
+            class="my-input bg-grey-3 q-field-procent" 
             placeholder="15" 
           >
             <template v-slot:append>

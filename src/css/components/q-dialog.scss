@@ -65,6 +65,10 @@
         color: black;
         display: block;
         margin-bottom: 20px;
+        align-items: center;
+        @media (min-width: 772px) {
+          height: 18px;
+        }
       }
       .hint {
         font-weight: 400;
@@ -175,6 +179,8 @@
         }
         .q-icon {
           font-size: 15px;
+          height: 15px;
+          overflow: hidden;
           color: #CCCCCC;
           margin-right: 8px;
           transition: all 0.25s;
@@ -246,7 +252,7 @@
           padding-left: 7px;
           padding-right: 7px;
 
-          top: -8px;
+          top: -10px;
           left: 7px;
           span {
             font-size: 16px;
@@ -672,6 +678,8 @@
           padding-right: 20px;
           .my-textarea {
             height: 82px;
+            border-radius: 6px;
+            top: 2px;
             .q-field__control {
               padding-left: 13px;
             }
@@ -700,10 +708,16 @@
                 }
                 .q-btn {
                   &:before {
-                    margin-top: 6px;
+                    margin-top: 15px;
+                    width: 30px;
+                    height: 25px;
+                    background-size: 30px 25px;
+                    opacity: 0.9;
                   }
                   &:after {
-                    top: 43px;
+                    top: 45px;
+                    font-size: 12px;
+                    line-height: 12px;
                   }
                 }
               }

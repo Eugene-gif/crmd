@@ -157,6 +157,9 @@
   }
   .q-select__dropdown-icon {
     font-size: 11px;
+    @media screen and (-webkit-min-device-pixel-ratio:0){
+      top: -1.5px;
+    }
   }
   .q-field__control {
     padding-left: 19px;
@@ -571,7 +574,7 @@
             top: 80px;
             display: block;
             padding: 0 20px;
-            text-transform: capitalize;
+            text-transform: none;
           }
           // top: 0;
           // left: 0;
@@ -1039,6 +1042,10 @@ input::-webkit-inner-spin-button {
   .q-field__append {
     padding-left: 7px;
     font-size: 18px;
+    padding-top: 2px;
+    @media (max-width: 772px) {
+      font-size: 16px;
+    }
   }
 }
 

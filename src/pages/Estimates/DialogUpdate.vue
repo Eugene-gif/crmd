@@ -20,7 +20,7 @@
             type="textarea"
             v-model="textarea"
             class="my-textarea bg-grey-3 lg-visivle"
-            placeholder="Введите примечание"
+            placeholder="Введите описание"
           />
 
           <div class="form-col-delimiter mb-visible">
@@ -64,7 +64,7 @@
         </div>
         <div class="form-col">
           <label class="lable-title">Кол-во</label>
-          <q-input v-model="text3" class="my-input bg-grey-3" />
+          <q-input v-model="text3" class="my-input bg-grey-3" placeholder="шт/м2" />
         </div>
       </q-card-section>
 
@@ -72,7 +72,7 @@
       <q-card-section class="form-section form-section-row no-wrap">
         <div class="form-col-4 q-pl-none items-start">
           <label class="lable-title" style="display: flex;">
-            Прогноз цены
+            Прогноз<br class="mb-visible"> цены
             <div class="circle-warning-15">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
               <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
@@ -83,11 +83,11 @@
           <q-input v-model="val31" type="number" class="my-input bg-grey-3" placeholder="Цена" />
         </div>
         <div class="form-col-4">
-          <label class="lable-title">Срок, дней</label>
+          <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
           <q-input v-model="val32" type="number" class="my-input bg-grey-3" placeholder="Срок" />
         </div>
         <div class="form-col-4 q-pr-none items-end">
-          <label class="lable-title">Ставка, процент</label>
+          <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
           <q-input 
             v-model="text3" 
             type="number" 
@@ -126,16 +126,16 @@
         <div class="form-section form-section-row"> 
           <div class="form-col-4 q-pl-none items-start">
             <label class="lable-title" style="display: flex;">
-              Цена за единицу
+              Цена за<br class="mb-visible"> единицу
             </label>
             <q-input v-model="offer1" type="number" class="my-input bg-grey-3" placeholder="Цена" />
           </div>
           <div class="form-col-4">
-            <label class="lable-title">Срок, дней</label>
+            <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
             <q-input v-model="offer2" type="number" class="my-input bg-grey-3" placeholder="Срок" />
           </div>
           <div class="form-col-4 q-pr-none items-end">
-            <label class="lable-title">Ставка, процент</label>
+            <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
             <q-input 
               v-model="offer3" 
               type="number" 

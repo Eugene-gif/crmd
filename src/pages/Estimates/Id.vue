@@ -534,6 +534,7 @@ export default {
         dialogSecurity.value = false
         dialogExport.value = false
         dialogSettings.value = false
+        dialogUpdate.value = false
       },
       priceForecast
     }
