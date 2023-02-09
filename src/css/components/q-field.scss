@@ -134,6 +134,19 @@
   }
 }
 
+.my-textarea-full {
+  .q-field__control {
+    height: 100%;
+    padding-bottom: 10px;
+  }
+}
+
+.ib-mb {
+  @media (max-width: 772px) {
+    align-items: baseline !important;
+  }
+}
+
 .my-select {
   font-weight: 400;
   font-size: 18px;
@@ -1046,6 +1059,12 @@ input::-webkit-inner-spin-button {
     @media (max-width: 772px) {
       font-size: 16px;
     }
+  }
+}
+
+.q-field__no-append {
+  .q-field__append {
+    display: none;
   }
 }
 

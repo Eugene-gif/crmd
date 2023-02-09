@@ -2747,7 +2747,7 @@
                 .scroll-x {
                   display: flex;
                   flex-wrap: nowrap;
-                  overflow-x: scroll;
+                  overflow-x: auto;
                   overflow-y: hidden;
                   position: relative;
                   padding: 29px 0 18px 0;
@@ -3547,12 +3547,13 @@
               padding: 0;
               .subtitle {
                 flex: 0 0 100%;
-                max-width: 100%;
                 padding-left: 20px;
                 padding-right: 20px;
                 padding-top: 20px;
                 margin-left: 0;
                 margin-bottom: 15px;
+                max-width: calc(100% - 7px);
+                overflow: hidden;
               }
               .size {
                 order: 3;

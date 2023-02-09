@@ -110,7 +110,7 @@
             <q-input 
               type="textarea" 
               v-model="formData.description" 
-              class="my-input bg-grey-3 my-textarea" 
+              class="my-input bg-grey-3 my-textarea my-textarea-full" 
               placeholder="Опишите вашу компанию" 
             />
           </q-item>

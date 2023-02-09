@@ -73,8 +73,9 @@
             <div class="title">Вознаграждение</div>
             <q-input
               v-model="term_bid" type="number"
-              class="my-input bg-grey-3"
-              placeholder="Введите название"
+              class="my-input bg-grey-3 q-field__no-append"
+              :error="isValid(term_bid)"
+              placeholder="Введите значение"
             >
               <span class="procent">%</span>
             </q-input>
@@ -108,7 +109,7 @@
 
 <script>
 import { start } from 'repl'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { contractorApi } from 'src/api/contractor'
 
@@ -123,6 +124,11 @@ export default {
       designer: false,
       documents: false,
     })  
+
+    function isValid(value) {
+      if (`${value}`.length > 2) return true
+      else return false
+    }
 
     const term_bid = ref()
     const term_text = ref('')
@@ -143,28 +149,33 @@ export default {
     }
 
     async function updateData() {
-      lodingBtn.value = true
-      isActive.value.designer = !isActive.value.designer
-      let obj = {
-        term_bid: term_bid.value,
-        term_text: term_text.value
-      }
-      try {
-        await contractorApi.updateSetTerms(obj).then(resp => {
-          term_bid.value = resp.term_bid
-          term_text.value = resp.term_text
-          $q.notify({
-            color: 'positive',
-            message: 'Данные обновлены'
+      if (isValid(term_bid.value)) {
+        return false
+      } else {
+        lodingBtn.value = true
+        isActive.value.designer = !isActive.value.designer
+        let obj = {
+          term_bid: term_bid.value,
+          term_text: term_text.value
+        }
+        try {
+          await contractorApi.updateSetTerms(obj).then(resp => {
+            term_bid.value = resp.term_bid
+            term_text.value = resp.term_text
+            $q.notify({
+              color: 'positive',
+              message: 'Данные обновлены'
+            })
           })
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
+        } catch (err) {
+          $q.notify({
+            color: 'negative',
+            message: 'произошла ошибка'
+          })
+          console.log(err)
+        }
       }
+      
       lodingBtn.value = false
     }
 
@@ -179,7 +190,8 @@ export default {
       lodingBtn,
       start,
       updateData,
-      getData
+      getData,
+      isValid,
     }
   },
 }

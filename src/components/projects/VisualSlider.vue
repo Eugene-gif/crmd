@@ -50,7 +50,7 @@ export default {
     images: Array
   },
   setup(props) {
-    const tab = ref(props.images[0].url)
+    const tab = ref(props.images[0].thumbnail)
     const openTabs = ref(false)
     const openModal = ref(false)
     const tabList = ref([])
@@ -78,7 +78,7 @@ export default {
 
     function start() {
       tabList.value = props.images.map(el => {
-        return el.url
+        return el.thumbnail
       })
       
     }

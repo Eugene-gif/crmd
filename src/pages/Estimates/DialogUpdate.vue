@@ -46,7 +46,7 @@
 
       <q-card-section class="form-section form-section-row form-section-row-behiver">
         <div class="form-col">
-          <label class="lable-title">Помещение<sup style="font-size: 10px;font-weight: bold;">2</sup></label>
+          <label class="lable-title">Помещение</label>
           <q-select
             filled
             v-model="select1"
@@ -71,7 +71,7 @@
 
       <q-card-section class="form-section form-section-row no-wrap">
         <div class="form-col-4 q-pl-none items-start">
-          <label class="lable-title" style="display: flex;">
+          <label class="lable-title ib-mb" style="display: flex;">
             Прогноз<br class="mb-visible"> цены
             <div class="circle-warning-15">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
@@ -80,19 +80,32 @@
               </q-tooltip>
             </div>
           </label>
-          <q-input v-model="val31" type="number" class="my-input bg-grey-3" placeholder="Цена" />
+          <q-input 
+            v-model="val31" 
+            type="number" 
+            class="my-input bg-grey-3 q-field__no-append" 
+            placeholder="Цена" 
+            :error="isValid(val31)"
+          />
         </div>
         <div class="form-col-4">
           <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
-          <q-input v-model="val32" type="number" class="my-input bg-grey-3" placeholder="Срок" />
+          <q-input 
+            v-model="val32" 
+            type="number" 
+            class="my-input bg-grey-3 q-field__no-append" 
+            placeholder="Срок" 
+            :error="isValid(val32)"
+          />
         </div>
         <div class="form-col-4 q-pr-none items-end">
           <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
           <q-input 
             v-model="text3" 
             type="number" 
-            class="my-input bg-grey-3 q-field-procent" 
+            class="my-input bg-grey-3 q-field-procent q-field__no-append" 
             placeholder="15" 
+            :error="isValid(text3)"
           >
             <template v-slot:append>
               %
@@ -118,7 +131,7 @@
           <div class="circle-warning-15">
             <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
             <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
-              Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
+              Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
             </q-tooltip>
           </div>
         </div>
@@ -135,19 +148,32 @@
             <label class="lable-title" style="display: flex;">
               Цена за<br class="mb-visible"> единицу
             </label>
-            <q-input v-model="offer1" type="number" class="my-input bg-grey-3" placeholder="Цена" />
+            <q-input 
+              v-model="offer1" 
+              type="number" 
+              class="my-input bg-grey-3 q-field__no-append" 
+              placeholder="Цена" 
+              :error="isValid(offer1)"
+            />
           </div>
           <div class="form-col-4">
             <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
-            <q-input v-model="offer2" type="number" class="my-input bg-grey-3" placeholder="Срок" />
+            <q-input 
+              v-model="offer2" 
+              type="number" 
+              class="my-input bg-grey-3 q-field__no-append" 
+              placeholder="Срок"
+              :error="isValid(offer2)"
+            />
           </div>
           <div class="form-col-4 q-pr-none items-end">
             <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
             <q-input 
               v-model="offer3" 
               type="number" 
-              class="my-input bg-grey-3 q-field-procent" 
+              class="my-input bg-grey-3 q-field-procent q-field__no-append" 
               placeholder="15" 
+              :error="isValid(offer3)"
             >
               <template v-slot:append>
                 %
@@ -280,7 +306,22 @@ export default ({
     const offer3 = ref('')
     const offerActive = ref(false)
 
+    const val = ref('')
+    const val1 = ref('')
+    const val2 = ref('')
+    const val3 = ref('')
+    const val31 = ref('')
+    const val32 = ref('')
+    const val4 = ref('')
+    const val5 = ref('')
+
+    function isValid(value) {
+      if (`${value}`.length > 2) return true
+      else return false
+    }
+
     return {
+      isValid,
       checkFileSize,
       onRejected,
       formData,
@@ -290,14 +331,15 @@ export default ({
           value: 1
         },
       ),
-      val: ref(false),
-      val1: ref(false),
-      val2: ref(true),
-      val3: ref(false),
-      val31: ref(false),
-      val32: ref(false),
-      val4: ref(false),
-      val5: ref(false),
+      
+      val,
+      val1,
+      val2,
+      val3,
+      val31,
+      val32,
+      val4,
+      val5,
 
       addCustomer: ref(false),
       type: [
@@ -324,7 +366,7 @@ export default ({
       text: ref(''),
       text2: ref(''),
       show: ref(false),
-      text3: ref(),
+      text3: ref(''),
       text4: ref(15),
 
       customer1: ref(),

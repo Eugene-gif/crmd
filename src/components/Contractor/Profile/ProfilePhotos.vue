@@ -60,7 +60,7 @@
               class="bg-grey-3 text-grey-5 my-btn my-effect btn-kolvo"
               padding="7.5px 12px"
             >
-              {{item.images.length}} фото
+              фото
             </q-btn>
             <div class="btn-sec">
               <q-btn

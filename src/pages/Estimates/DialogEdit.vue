@@ -65,7 +65,6 @@
         <div class="form-col">
           <label class="lable-title">
             Помещение
-            <!-- <sup style="font-size: 10px;font-weight: bold;">2</sup> -->
           </label>
           <q-select
             filled

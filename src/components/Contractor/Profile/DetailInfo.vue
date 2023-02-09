@@ -106,7 +106,7 @@
                 />
               </div>
               <img 
-                :src="`${item.url}`" 
+                :src="`${item.thumbnail}`" 
                 alt=""
                 @click="openLightbox(item)"
               >
@@ -136,6 +136,7 @@
             color="grey-5"
             padding="0"
             label="Удалить все"
+            :disable="images.length === 0"
             @click="callDelDialog('delAllPhotosUser')"
           />
         </div>
@@ -239,10 +240,10 @@ export default {
 
       let lenghtImages = images.value.length + file.length
 
-      if (lenghtImages > 8 ) {
+      if (lenghtImages > 24 ) {
         $q.notify({
           type: 'negative',
-          message: 'Максимальное количество фото - 8 штук'
+          message: 'Максимальное количество фото - 24 штук'
         })
       } else {
         let storageUser = JSON.parse(localStorage.getItem('userInfo'))

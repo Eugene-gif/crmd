@@ -46,7 +46,7 @@
 
       <q-card-section class="form-section form-section-row form-section-row-behiver">
         <div class="form-col">
-          <label class="lable-title">Помещение<sup style="font-size: 10px;font-weight: bold;">2</sup></label>
+          <label class="lable-title">Помещение</label>
           <q-select
             filled
             v-model="select1"
@@ -71,28 +71,41 @@
 
       <q-card-section class="form-section form-section-row no-wrap">
         <div class="form-col-4 q-pl-none items-start">
-          <label class="lable-title" style="display: flex;">
+          <label class="lable-title ib-mb" style="display: flex;">
             Прогноз цены
             <div class="circle-warning-15">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
               <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
-                Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
+                Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
               </q-tooltip>
             </div>
           </label>
-          <q-input v-model="val31" type="number" class="my-input bg-grey-3" placeholder="Цена" />
+          <q-input 
+            v-model="val31" 
+            type="number" 
+            class="my-input bg-grey-3 q-field__no-append" 
+            placeholder="Цена" 
+            :error="isValid(val31)"
+          />
         </div>
         <div class="form-col-4">
           <label class="lable-title">Срок, дней</label>
-          <q-input v-model="val32" type="number" class="my-input bg-grey-3" placeholder="Срок" />
+          <q-input 
+            v-model="val32" 
+            type="number" 
+            class="my-input bg-grey-3 q-field__no-append" 
+            placeholder="Срок" 
+            :error="isValid(val32)"
+          />
         </div>
         <div class="form-col-4 q-pr-none items-end">
           <label class="lable-title">Ставка, процент</label>
           <q-input 
             v-model="text3" 
             type="number" 
-            class="my-input bg-grey-3 q-field-procent" 
+            class="my-input bg-grey-3 q-field__no-append q-field-procent" 
             placeholder="15" 
+            :error="isValid(text3)"
           >
             <template v-slot:append>
               %
@@ -204,7 +217,13 @@ export default ({
       file: null
     })
 
+    function isValid(value) {
+      if (`${value}`.length > 2) return true
+      else return false
+    }
+
     return {
+      isValid,
       checkFileSize,
       onRejected,
       formData,
