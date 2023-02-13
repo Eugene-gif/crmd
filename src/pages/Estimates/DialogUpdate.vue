@@ -73,7 +73,19 @@
         <div class="form-col-4 q-pl-none items-start">
           <label class="lable-title ib-mb" style="display: flex;">
             Прогноз<br class="mb-visible"> цены
-            <div class="circle-warning-15">
+            <q-btn flat class="circle-warning-15 mb-visible">
+              <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+                <q-menu
+                  :offset="[10, 10]"
+                  anchor="top middle" self="bottom middle"
+                  class="circle-warning-tooltip"
+                  ref="menu"
+                  width="300px"
+                >
+                  Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
+                </q-menu>
+            </q-btn>
+            <div class="circle-warning-15 lg-visible">
               <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
               <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
                 Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
@@ -128,7 +140,19 @@
         
         <div class="title">
           <span>Подать предложение по цене</span>
-          <div class="circle-warning-15">
+          <q-btn flat class="circle-warning-15 mb-visible">
+            <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+              <q-menu
+                :offset="[10, 10]"
+                anchor="top middle" self="bottom middle"
+                class="circle-warning-tooltip"
+                ref="menu"
+                width="300px"
+              >
+                Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+              </q-menu>
+          </q-btn>
+          <div class="circle-warning-15 lg-visible">
             <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
             <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
               Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.

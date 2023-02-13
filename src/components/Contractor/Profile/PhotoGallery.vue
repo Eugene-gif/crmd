@@ -38,17 +38,17 @@
     </div>
     <div class="item">
       <div class="cell">WhatsApp</div>
-      <div class="cell" v-if="formData.soc_wa != ''">{{formData.soc_wa}}</div>
+      <div class="cell" v-if="formData.soc_wa != ''"><a :href="formData.soc_wa" target="_blank">{{formData.soc_wa}}</a></div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Telegram</div>
-      <div class="cell" v-if="formData.soc_tg != ''">{{formData.soc_tg}}</div>
+      <div class="cell" v-if="formData.soc_tg != ''"><a :href="formData.soc_tg" target="_blank">{{formData.soc_tg}}</a></div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Instagram</div>
-      <div class="cell" v-if="formData.soc_inst != ''">{{formData.soc_inst}}</div>
+      <div class="cell" v-if="formData.soc_inst != ''"><a :href="formData.soc_inst" target="_blank">{{formData.soc_inst}}</a></div>
       <div v-else>—</div>
     </div>
     <div class="item">
@@ -263,12 +263,29 @@ export default {
       documents: false,
     })  
 
+    function checkMessages(resp) {
+      if (formData.value.soc_wa.indexOf('http') === -1) {
+        formData.value.soc_wa = `https://wa.me/${resp.soc_wa}`
+      }
+
+      if (formData.value.soc_tg.indexOf('http') === -1) {
+        formData.value.soc_tg = `https://t.me/${resp.soc_tg}`
+      }
+
+      if (formData.value.soc_inst.indexOf('http') === -1) {
+        formData.value.soc_inst = `https://www.instagram.com/${resp.soc_inst}`
+      }
+
+      console.log(formData.value.soc_inst.indexOf('http'))
+    }
+
     async function updateContractor() {
       lodingBtn.value = true
       try {
         await contractorApi.updateContractor(formData.value).then(resp => {
           formData.value = resp
           isActive.value.details = false
+          checkMessages(resp)
           $q.notify({
             color: 'positive',
             message: 'Информация обновлена'
@@ -364,7 +381,7 @@ export default {
       token: '4e03d732e3760f1aaf0f990ea5f6bedf457ee979',
       query,
       suggestion,
-
+      checkMessages,
     }
   },
 }

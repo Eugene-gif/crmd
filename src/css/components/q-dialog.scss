@@ -188,6 +188,10 @@
         &:hover {
           .block,
           .q-icon {
+            opacity: 1;
+          }
+          .q-icon {
+            color: #444444;
             opacity: 0.6;
           }
         }

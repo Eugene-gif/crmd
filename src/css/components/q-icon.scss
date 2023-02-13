@@ -81,11 +81,18 @@
   justify-content: center;
   align-items: center;
   transition: all 0.25s;
+  position: relative;
   .q-ripple {
     display: none;
   }
   .q-icon {
     color: white !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
   }
   &:hover {
     background: $positive;
@@ -95,5 +102,15 @@
         color: white !important;
       }
     }
+  }
+}
+
+.q-btn.circle-warning-15 {
+  min-height: 15px;
+  padding: 0;
+  .q-icon {
+    color: white !important;
+    font-size: 7px;
+    opacity: 1 !important;
   }
 }

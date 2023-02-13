@@ -132,7 +132,8 @@
             no-caps
             flat
             class="my-btn my-effect h-opacity btn-delete"
-            style="margin-left: auto;opacity: 0.3"
+            :class="{'btn-disable': images.length === 0}"
+            style="margin-left: auto;"
             color="grey-5"
             padding="0"
             label="Удалить все"

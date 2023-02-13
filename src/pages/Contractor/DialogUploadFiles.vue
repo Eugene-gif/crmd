@@ -213,8 +213,6 @@ export default defineComponent({
   
     onMounted(() => {
       if (props.updateActivated === true) {
-        console.log('props.updateObject')
-        console.log(props.updateObject)
         if (props.updateObject.size) {
           formData.value.id = props.updateObject.id
           formData.value.name = props.updateObject.name

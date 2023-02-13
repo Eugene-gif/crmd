@@ -400,3 +400,7 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
+
+.q-btn.disabled.btn-disable {
+  opacity: 0.1 !important;
+}
