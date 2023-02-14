@@ -77,6 +77,28 @@ export const albumsApi = {
     }
   },
 
+  addImagesInAlbum(data) {
+    const formData = new FormData();
+    formData.append("album_id", data.album_id)
+    for( var i = 0; i < data.images.length; i++ ){
+      let file = data.images[i];
+      formData.append(`images[]`, file);
+    }
+
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/addImages`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   getAllAlbums() {
     try {
       return httpClient.post(`${url}/getAll`)

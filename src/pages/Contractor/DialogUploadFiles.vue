@@ -179,27 +179,20 @@ export default defineComponent({
 
     async function updateFiles() {
       lodingBtn.value = true
-      if (formData.value.link.length > 0 || formData.value.files.length > 0) {
-        try {
-          await filesApi.updateFiles(formData.value).then(resp => {
-            modalFalseUp(resp)
-            $q.notify({
-              color: 'positive',
-              message: 'файл обновлен'
-            })
-          })
-        } catch (err) {
+      try {
+        await filesApi.updateFiles(formData.value).then(resp => {
+          modalFalseUp(resp)
           $q.notify({
-            color: 'negative',
-            message: 'произошла ошибка'
+            color: 'positive',
+            message: 'файл обновлен'
           })
-          console.log(err)
-        }
-      } else {
+        })
+      } catch (err) {
         $q.notify({
           color: 'negative',
-          message: 'Загрузите пожалуйста файл или ссылку'
+          message: 'произошла ошибка'
         })
+        console.log(err)
       }
       lodingBtn.value = false
     } 

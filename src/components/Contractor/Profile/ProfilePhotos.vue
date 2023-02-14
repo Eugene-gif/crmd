@@ -17,6 +17,7 @@
   >
     <DialogUpdateAlbum 
       @modalFalseUpdate="modalFalseUpdate"
+      @modalFalseUpdatePhotos="modalFalseUpdatePhotos"
       :data="modalUpdateData"
     />
   </q-dialog>
@@ -194,7 +195,16 @@ export default {
       if (dialogName.value === 'delAvatar' && val) delAlbum(delAlbumId.value)
       delAlbumId.value = null
     }
-    
+
+    function modalFalseUpdatePhotos(val) {      
+      const newList = visual.value.map(element => {
+        if (element.id === val.id) {
+          return val;
+        }
+        return element;
+      })
+      visual.value = newList
+    }    
 
     onMounted( async () => {
       await getAllDataAlbums()
@@ -228,6 +238,7 @@ export default {
         })
         visual.value = arr
       },
+      modalFalseUpdatePhotos,
     }
   },
 }

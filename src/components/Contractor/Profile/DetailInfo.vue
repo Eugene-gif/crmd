@@ -204,7 +204,7 @@ export default {
     function onRejected (rejectedEntries) {
       $q.notify({
         type: 'negative',
-        message: 'Файл не соответствуeт расширению'
+        message: 'Ошибка загрузки'
       })
     }
     
@@ -238,7 +238,7 @@ export default {
 
     async function uploadProfilePhoto(file) {
       lodingBtn2.value = true
-
+      
       let lenghtImages = images.value.length + file.length
 
       if (lenghtImages > 24 ) {

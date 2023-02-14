@@ -7,7 +7,7 @@
       >
         <q-card-section class="row items-center justify-between head">
           <div class="title">
-            Редактировать альбом
+            Изменить альбом
           </div>
           <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
         </q-card-section>     
@@ -34,6 +34,21 @@
         </q-card-section>
 
         <q-card-section class="form-section">
+          <label class="lable-title">Добавить фото</label>
+          <div class="multiple-upload">
+            <q-uploader
+              label="Выберите файл"
+              multiple
+              @added="onFileChange"
+              accept=".jpg, image/*"
+              @rejected="onRejected"
+              class="q-uploader-no-list"
+              :rules="[ val => val && val.length > 0 || '']"
+            />
+          </div>
+        </q-card-section>
+
+        <q-card-section class="form-section">
           <label class="lable-title">Фото альбома</label>
           <div class="section-images">
             <div 
@@ -54,20 +69,6 @@
             </div>
           </div>
         </q-card-section>
-
-        <!-- <q-card-section class="form-section">
-          <label class="lable-title">Добавить фото</label>
-          <div class="multiple-upload">
-            <q-uploader
-              label="Выберите файл"
-              multiple
-              @added="onFileChange"
-              accept=".jpg, image/*"
-              @rejected="onRejected"
-              :rules="[ val => val && val.length > 0 || '']"
-            />
-          </div>
-        </q-card-section> -->
         
         <q-card-actions>
           <q-btn
@@ -108,12 +109,36 @@ export default defineComponent({
       id: null,
       name: '',
       description: '',
-      images: [],
-
+      images: []
     })
 
     async function onFileChange(file) {
-      formData.value.images = file
+      lodingBtn.value = true
+      
+      console.log(file)
+      let data = {
+        album_id: props.data.id,
+        images: file
+      }
+      
+      try {
+        await albumsApi.addImagesInAlbum(data).then(resp => {
+          modalFalseUpdatePhotos(resp)
+          $q.notify({
+            color: 'positive',
+            message: 'Фото добавлены'
+          })
+          formData.value.images = resp.images
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+      lodingBtn.value = false
+
     }
     function onRejected () {
       $q.notify({
@@ -127,6 +152,7 @@ export default defineComponent({
       try {
         await imagesApi.delImage(id).then(resp => {
           formData.value.images = formData.value.images.filter((item) => item.id !== id)
+          modalFalseUpdatePhotos(formData.value)
           $q.notify({
             type: 'positive',
             message: 'Картинка удалена'
@@ -165,7 +191,10 @@ export default defineComponent({
     function modalFalseUpdate(val) {
       emit('modalFalseUpdate', val)
     }
-  
+    function modalFalseUpdatePhotos(val) {
+      emit('modalFalseUpdatePhotos', val)
+    }
+
     onMounted(() => {
       formData.value.id = props.data.id
       formData.value.name = props.data.name
@@ -180,7 +209,8 @@ export default defineComponent({
       modalFalseUpdate,
       onFileChange,
       onRejected,
-      updateAlbum
+      updateAlbum,
+      modalFalseUpdatePhotos,
     }
   }
 })

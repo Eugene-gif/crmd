@@ -40,7 +40,9 @@ export const filesApi = {
     if (data.link.length > 0) {
       formData.append("link", data.link)
     } else {
-      formData.append("file", data.files[0])
+      if (data.files[0] !== '' && data.files[0] !== null && data.files[0] !== undefined) {
+        formData.append("file", data.files[0])
+      }
     }
 
     try {

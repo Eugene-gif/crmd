@@ -95,6 +95,17 @@
         padding: 0;
         margin: 0;
       }
+      & > div {
+        .q-hoverable {
+          &:first-child,
+          &:last-child {
+            display: none;
+          }
+        }
+        .col + .q-hoverable {
+          display: inherit;
+        }
+      }
     }
   }
   .upload-content {
@@ -307,6 +318,26 @@
         }
         
       }
+    }
+  }
+  .q-uploader-no-list {
+    .q-uploader__header {
+      .q-uploader__header-content {
+        & > div {
+          .q-btn--dense {
+            &:first-child,
+            &:last-child {
+              display: none;
+            }
+          }
+          .col + .q-btn--dense {
+            display: inherit;
+          }
+        }
+      }
+    }
+    .q-uploader__list {
+      display: none;
     }
   }
 }
