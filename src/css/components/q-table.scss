@@ -215,6 +215,10 @@
         .q-td-action {
           display: flex;
           justify-content: flex-end;
+          align-items: center;
+          .circle-warning-26 {
+            margin-right: 11px;
+          }
         }
       }
       .q-tr__transfer {

@@ -92,7 +92,17 @@
       }
     }
   }
-}
+  .q-field__append {
+    .text {
+      font-size: 18px;
+      line-height: 18px;
+      text-align: right;
+      color: #444444;
+      opacity: 0.6;
+      }
+    }
+  }
+  
 .input-auth {
   background: $grey-3;
 }

@@ -194,6 +194,13 @@
               :props="props"
               :class="`q-td-action`"
             >
+              <div 
+                class="circle-warning-26 mb-19-grey" 
+                :class="{'circle-warning-26-active': props.row.status === 3}"
+                v-show="props.row.status === 2 || props.row.status === 3"
+              >
+                <q-icon name="svguse:icons/financeTable.svg#warning" size="26px"/>
+              </div>
               <ActionBtn 
                 :propsEl="props"
                 :offsetYX="[55, -258]"
@@ -249,9 +256,7 @@
               key="status"
               :props="props"
             >
-              <div class="q-td__status">
-                <q-icon name="svguse:icons/financeTable.svg#warning" color="white" size="26px"/>        
-              </div>
+              
             </q-td>
             <q-td
               key="sum"

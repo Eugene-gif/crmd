@@ -35,7 +35,7 @@ export const albumsApi = {
     }
   },
 
-  addImagesInAlbum(data, id) {
+  addImagesInMainAlbum(data, id) {
     const formData = new FormData();
     formData.append("album_id", id)
     for( var i = 0; i < data.length; i++ ){

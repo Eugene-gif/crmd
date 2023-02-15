@@ -250,7 +250,7 @@ export default {
         let storageUser = JSON.parse(localStorage.getItem('userInfo'))
         let id = storageUser.profile_album_id
         try {
-          await albumsApi.addImagesInAlbum(file, id).then(resp => {
+          await albumsApi.addImagesInMainAlbum(file, id).then(resp => {
             images.value = resp.images
             $q.notify({
               type: 'positive',

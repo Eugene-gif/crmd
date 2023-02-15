@@ -71,7 +71,8 @@
   }
 }
 
-.circle-warning-15 {
+.circle-warning-15,
+.circle-warning-26 {
   margin-left: 10px;
   min-width: 15px;
   height: 15px;
@@ -112,5 +113,37 @@
     color: white !important;
     font-size: 7px;
     opacity: 1 !important;
+  }
+}
+
+.circle-warning-26 {
+  min-width: 26px;
+  height: 26px;
+  margin-left: 0;
+  background: #F0F0F0;
+  opacity: 1 !important;
+  .q-icon {
+    color: black !important;
+    opacity: 0.3;
+  }
+  &:hover {
+    background: $positive;
+    .q-icon {
+      color: white !important;
+      opacity: 1;
+    }
+  }
+  &-active {
+    background: #FFFFFF;
+  }
+  @media (max-width: 772px) {
+    &.mb-19-grey {
+      min-width: 19px;
+      height: 19px;
+      background: #CCCCCC;
+      .q-icon {
+        font-size: 19px !important;
+      }
+    }
   }
 }

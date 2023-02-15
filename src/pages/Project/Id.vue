@@ -111,7 +111,7 @@
       >
       <template v-slot:header>
         <div class="title">
-          Дашборд
+          Данные объекта
         </div>
         <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
       </template>
@@ -157,6 +157,13 @@
             <img src="~assets/project-1.jpg" alt="">
           </q-card-section>
         </q-card>
+        <q-btn
+          unelevated 
+          no-caps
+          class="my-btn my-effect h-opacity btn-custom text-grey-5"
+          color="grey-3"
+          label="Изменить"
+        />
       </q-expansion-item>
 
       <q-expansion-item
@@ -251,6 +258,13 @@
             <GraficGant />
           </q-card-section>
         </q-card>
+        <q-btn
+          unelevated 
+          no-caps
+          class="my-btn my-effect h-opacity btn-custom text-grey-5"
+          color="grey-3"
+          label="Изменить"
+        />
       </q-expansion-item>
 
       <q-expansion-item
@@ -505,6 +519,23 @@
           >
             <q-item to="#dsf" class="link-all"></q-item>
             <div class="title">{{item.name}}</div>
+            <q-btn
+              rounded
+              unelevated
+              no-caps
+              padding="4.5px 10px"
+              class="
+                bg-negative 
+                text-white 
+                my-btn 
+                my-btn-14 
+                my-effect 
+                h-dark
+                btn-news
+              "
+              :label="`Новых предложений: ${item.news}`"
+              :class="{'btn-hide': item.news === null}"
+            />
             <div class="text">
               Изменена: {{item.changed}} <br>
               Создана: {{item.created}}
@@ -985,7 +1016,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: 24,
       },
       {
         id: 2,
@@ -1017,7 +1049,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: null,
       },
       {
         id: 3,
@@ -1049,7 +1082,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: 24,
       },
       {
         id: 4,
@@ -1081,7 +1115,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: null,
       },
       {
         id: 5,
@@ -1113,7 +1148,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: 24,
       },
       {
         id: 6,
@@ -1145,7 +1181,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: null,
       },
       {
         id: 7,
@@ -1177,7 +1214,8 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: 24,
       },
       {
         id: 8,
@@ -1209,17 +1247,25 @@ export default {
             icon: '/icons/stroipro.jpg',
             link: ''
           }
-        ]
+        ],
+        news: null,
       },
-      
     ])
+
+
     const visual = ref([
       {
         id: 1,
         images: [
-          '/project-1.jpg',
-          '/project-2.jpg',
-          '/project-3.jpg',
+          {
+            thumbnail: '/project-1.jpg'
+          },
+          {
+            thumbnail: '/project-2.jpg'
+          },
+          {
+            thumbnail: '/project-3.jpg'
+          },
         ],
         name: 'Планы, чертежи, схемы',
         share: [
@@ -1252,9 +1298,15 @@ export default {
       {
         id: 2,
         images: [
-          '/project-1.jpg',
-          '/project-2.jpg',
-          '/project-3.jpg',
+          {
+            thumbnail: '/project-1.jpg'
+          },
+          {
+            thumbnail: '/project-2.jpg'
+          },
+          {
+            thumbnail: '/project-3.jpg'
+          },
         ],
         name: 'Планы, чертежи, схемы',
         share: [
@@ -1287,9 +1339,15 @@ export default {
       {
         id: 3,
         images: [
-          '/project-1.jpg',
-          '/project-2.jpg',
-          '/project-3.jpg',
+          {
+            thumbnail: '/project-1.jpg'
+          },
+          {
+            thumbnail: '/project-2.jpg'
+          },
+          {
+            thumbnail: '/project-3.jpg'
+          },
         ],
         name: 'Планы, чертежи, схемы',
         share: [
@@ -1322,9 +1380,15 @@ export default {
       {
         id: 4,
         images: [
-          '/project-1.jpg',
-          '/project-2.jpg',
-          '/project-3.jpg',
+          {
+            thumbnail: '/project-1.jpg'
+          },
+          {
+            thumbnail: '/project-2.jpg'
+          },
+          {
+            thumbnail: '/project-3.jpg'
+          },
         ],
         name: 'Планы, чертежи, схемы',
         share: [
