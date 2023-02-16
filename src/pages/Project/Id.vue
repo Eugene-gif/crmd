@@ -115,7 +115,6 @@
         </div>
         <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
       </template>
-      
         <q-card>
           <q-card-section>
             <div class="section">

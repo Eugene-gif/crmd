@@ -175,7 +175,6 @@ export default {
     const $q = useQuasar()
 
     const form = ref({
-      login: '',
       name: '',
       lastName: '',
       email: '',
@@ -209,9 +208,7 @@ export default {
               setTimeout(() => {
                 window.location.href = '/#/setemail'
               }, 500)
-            }
-
-            else {
+            } else {
               window.location.href = '/'
             }
             
@@ -229,22 +226,13 @@ export default {
                 message: 'Такой e-mail уже зарегистрирован'
               })
             }, 0)
-          }
-          // let user = localStorage.getItem('userInfo')
-          // let userObj = JSON.parse(user)
-
-          // if (userObj.email_verified_at === null) {
-          //   setTimeout(() => {
-          //     window.location.href = '/#/setemail'
-          //   }, 500)
-          // } else if (userObj.role === '') {
-          //   setTimeout(() => {
-          //     window.location.href = '/#/role'
-          //   }, 500)
-          // } else {
-          
-          // }
-          
+          } else {
+            if (resp.data.data.user.email_verified_at === null) {
+              window.location.href = '/#/setemail'
+            } else {
+              window.location.href = '/'
+            }
+          }      
         }
       } else {
         loading.value = false

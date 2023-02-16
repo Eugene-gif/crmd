@@ -29,7 +29,7 @@ export const userApi = {
   setRoleForUser() {
 
     const formData = new FormData()
-    formData.append(`role_id`, 3);
+    formData.append('role_id', 3);
     
     try {
       return httpClient({

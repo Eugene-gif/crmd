@@ -263,30 +263,34 @@ export default {
       documents: false,
     })  
 
-    function checkMessages() {
+    function checkWa() {
       if (formData.value.soc_wa === '') {
         return true
       } else if (formData.value.soc_wa.indexOf('http') === -1) {
-        formData.value.soc_wa = `https://wa.me/${formData.value.soc_wa}`.replace(/[@]/gi, '')
+        return formData.value.soc_wa = `https://wa.me/${formData.value.soc_wa}`.replace(/[@]/gi, '')
+        // formData.value.soc_wa.replace(/[@]/gi, '')
       } 
-
+    }
+    function checkTg() {
       if (formData.value.soc_tg === '') {
         return true
       } else if (formData.value.soc_tg.indexOf('http') === -1) {
-        formData.value.soc_tg = `https://t.me/${formData.value.soc_tg}`.replace(/[@]/gi, '')
+        return formData.value.soc_tg = `https://t.me/${formData.value.soc_tg}`.replace(/[@]/gi, '')
+        // formData.value.soc_tg.replace(/[@]/gi, '')
       } 
-
+    }
+    function checkInst() {
       if (formData.value.soc_inst === '') {
         return true
       } else if (formData.value.soc_inst.indexOf('http') === -1) {
-        formData.value.soc_inst = `https://www.instagram.com/${formData.value.soc_inst}`.replace(/[@]/gi, '')
+        return formData.value.soc_inst = `https://www.instagram.com/${formData.value.soc_inst}`.replace(/[@]/gi, '')
+        // formData.value.soc_inst.replace(/[@]/gi, '')
       } 
     }
 
     async function updateContractor() {
       lodingBtn.value = true
       try {
-        checkMessages()
         await contractorApi.updateContractor(formData.value).then(resp => {
           formData.value = resp
           isActive.value.details = false
@@ -295,6 +299,9 @@ export default {
             message: 'Информация обновлена'
           })
         })
+        checkWa()
+        checkTg()
+        checkInst()
         emitter.emit('myevent', formData.value.name)
       } catch (err) {
         $q.notify({
@@ -385,7 +392,9 @@ export default {
       token: '4e03d732e3760f1aaf0f990ea5f6bedf457ee979',
       query,
       suggestion,
-      checkMessages,
+      checkWa,
+      checkTg,
+      checkInst,
     }
   },
 }

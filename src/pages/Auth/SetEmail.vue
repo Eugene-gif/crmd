@@ -47,7 +47,8 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { userApi } from 'src/api/user'
+// import { userApi } from 'src/api/user'
+import { authApi } from 'src/api/auth'
 
 export default {
   setup () {   
@@ -55,7 +56,12 @@ export default {
 
     async function getRoleForUser() {
       try {
-        await userApi.getRoleForUser().then(resp => {
+        await authApi.getEmailVerified().then(resp => {
+          window.location.href = '/#/setemail'
+        })
+      } catch (err) {
+        console.log(err)
+        if (err.response.status === 400) {
           let user = localStorage.getItem('userInfo')
           let userObj = JSON.parse(user)
           userObj.email_verified_at = true
@@ -64,9 +70,7 @@ export default {
           localStorage.setItem('userInfo', userInfo)
 
           window.location.href = '/#/role'
-        })
-      } catch (err) {
-        console.log(err)
+        }
       }
     }
 

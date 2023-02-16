@@ -32,8 +32,6 @@ export const authApi = {
     }
   },
 
-
-
   doRegister(data) {
     const formData = new FormData();
     formData.append("email", data.email)
@@ -43,7 +41,7 @@ export const authApi = {
     formData.append("first_name", data.name)
     formData.append("last_name", data.lastName)
     // formData.append("verify", 'y')
-    // formData.append("role_id", data.role)
+    // formData.append("role_id", data.role.id)
     if (data.image !== null && data.image !== '') {
       formData.append("image", data.image)
     }
@@ -60,6 +58,17 @@ export const authApi = {
     } catch (err) {
       console.log(err)
     }
-  }
+  },
+
+  getEmailVerified() {    
+    try {
+      return httpClient.post(`${url}/email/resend`)
+      .then(( response ) => {
+        return response
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
 
 }
