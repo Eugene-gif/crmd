@@ -199,7 +199,19 @@
                 :class="{'circle-warning-26-active': props.row.status === 3}"
                 v-show="props.row.status === 2 || props.row.status === 3"
               >
-                <q-icon name="svguse:icons/financeTable.svg#warning" size="26px"/>
+                <q-icon name="svguse:icons/financeTable.svg#warning" size="26px" />
+                <q-menu
+                  :offset="[10, 10]"
+                  anchor="top middle" self="bottom middle"
+                  class="circle-warning-tooltip"
+                  ref="menu"
+                  width="300px"
+                >
+                  Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+                </q-menu>
+                <q-tooltip max-width="300px" anchor="top middle" self="bottom middle" class="lg-visible">
+                  Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+                </q-tooltip>
               </div>
               <ActionBtn 
                 :propsEl="props"

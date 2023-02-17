@@ -8,22 +8,11 @@
       <div class="title">
         Реквизиты для документов
       </div>
-      <q-btn
-        unelevated 
-        no-caps
-        flat
-        class="my-btn my-effect h-opacity btn-custom"
-        style="margin-left: auto;"
-        color="grey-5"
-        padding="0"
-        label="Изменить"
-        @click.stop="isActive.documents = !isActive.documents"
-      />
       <q-icon
         name="svguse:icons/allIcons.svg#settings"
-        size="13px"
-        class="settings-icon mb-visible"
-        @click.stop="isActive.documents = !isActive.documents"
+        size="17px"
+        class="settings-icon"
+        @click.stop="isActive.documents = true"
       />
     </template>
 

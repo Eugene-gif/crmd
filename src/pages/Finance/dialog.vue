@@ -4,7 +4,11 @@
     <div class="dialog-section">
       <q-card-section class="row items-center justify-between head">
         <div class="title">Указать перевод</div>
-        <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
+        <q-icon
+          class="close rotate"
+          v-close-popup
+          name="svguse:icons/allIcons.svg#close-modal"
+        />
       </q-card-section>
 
       <q-card-section class="form-section">
@@ -30,29 +34,57 @@
         <DropBox />
       </q-card-section>
 
-      <q-card-section class="form-section"  v-show="select1.value === 1 || select1.value === 2 || select1.value === 3">
+      <q-card-section
+        class="form-section"
+        v-show="
+          select1.value === 1 || select1.value === 2 || select1.value === 3
+        "
+      >
         <label class="lable-title">От кого</label>
         <DropBox />
       </q-card-section>
-      
-      <q-card-section class="form-section" v-show="select1.value === 3 || select1.value === 4">
+
+      <q-card-section
+        class="form-section"
+        v-show="select1.value === 3 || select1.value === 4"
+      >
         <label class="lable-title">Кому</label>
         <DropBox />
       </q-card-section>
 
-      <q-card-section class="form-section" v-show="select1.value === 1 || select1.value === 2 || select1.value === 4">
+      <q-card-section
+        class="form-section"
+        v-show="
+          select1.value === 1 || select1.value === 2 || select1.value === 4
+        "
+      >
         <label class="lable-title">Сумма, руб.</label>
-        <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Введите сумму" />
+        <q-input
+          v-model="text2"
+          class="my-input bg-grey-3"
+          placeholder="Введите сумму"
+        />
       </q-card-section>
 
-      <q-card-section class="form-section form-section-row" v-show="select1.value === 3">
+      <q-card-section
+        class="form-section form-section-row"
+        v-show="select1.value === 3"
+      >
         <div class="form-col">
           <label class="lable-title">Сумма, руб.</label>
-          <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Введите сумму" />
+          <q-input
+            v-model="text3"
+            class="my-input bg-grey-3"
+            placeholder="Введите сумму"
+          />
         </div>
         <div class="form-col">
           <label class="lable-title">Агентские, %</label>
-          <q-input v-model="text4" class="my-input bg-grey-3" placeholder="Введите сумму" />
+          <q-input
+            v-model="text4"
+            class="my-input bg-grey-3"
+            placeholder="Введите сумму"
+          />
         </div>
         <div class="form-col form-col-hint">
           <div class="hint">Сумма агентских: 15 000 руб.</div>
@@ -64,78 +96,94 @@
         <BtnDate />
       </q-card-section>
 
+      <q-card-section class="form-section">
+        <label class="lable-title">Описание</label>
+        <q-input
+          v-model="desc"
+          type="textarea"
+          class="my-input bg-grey-3 my-textarea"
+          placeholder="Введите описание"
+          style="min-height: 100px;"
+        />
+      </q-card-section>
+
       <q-card-actions align="center">
         <q-btn
           unelevated
           no-caps
           padding="20px 10px"
-          class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
+          class="
+            full-width
+            bg-positive
+            text-white
+            my-btn my-effect
+            h-dark
+            q-btn-actions
+          "
           label="Добавить перевод"
         />
       </q-card-actions>
     </div>
   </q-card>
-  
 </template>
 
 <script>
-import { ref } from 'vue'
-import BtnDate from 'components/BtnDate.vue'
-import DropBox from 'components/DropBox.vue'
+import { ref } from "vue";
+import BtnDate from "components/BtnDate.vue";
+import DropBox from "components/DropBox.vue";
 
-export default ({
-  name: 'FinanceDialog',
-  emits: ['modalFalse'],
+export default {
+  name: "FinanceDialog",
+  emits: ["modalFalse"],
   components: {
     BtnDate,
-    DropBox
-  }, 
-  setup () {
+    DropBox,
+  },
+  setup() {
     const selectDropbox = ref();
     return {
-      select1: ref(
-        {
-          label: 'Гонорар',
-          value: 1
-        },
-      ),
-      
+      select1: ref({
+        label: "Гонорар",
+        value: 1,
+      }),
+
       type: [
         {
-          label: 'Гонорар',
-          value: 1
+          label: "Гонорар",
+          value: 1,
         },
         {
-          label: 'Агентсткие',
-          value: 2
+          label: "Агентсткие",
+          value: 2,
         },
         {
-          label: 'Трансфер',
-          value: 3
+          label: "Трансфер",
+          value: 3,
         },
         {
-          label: 'Возврат',
-          value: 4
-        }
+          label: "Возврат",
+          value: 4,
+        },
       ],
-      
+
       selectDropbox,
 
-      text: ref(''),
-      text2: ref(''),
+      text: ref(""),
+      text2: ref(""),
       show: ref(false),
       text3: ref(),
       text4: ref(15),
+      desc: ref(""),
       focusSelect() {
         function func() {
-          selectDropbox.value.blur()
+          selectDropbox.value.blur();
         }
         setTimeout(func, 100);
       },
       beforeHide() {
         show.value = true;
-      }
-    }
-  }
-})
+      },
+    };
+  },
+};
 </script>

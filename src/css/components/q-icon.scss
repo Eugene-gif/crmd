@@ -106,6 +106,10 @@
   }
 }
 
+.my-input .q-field__marginal .q-icon {
+  opacity: 1;
+}
+
 .q-btn.circle-warning-15 {
   min-height: 15px;
   padding: 0;
@@ -115,6 +119,7 @@
     opacity: 1 !important;
   }
 }
+
 
 .circle-warning-26 {
   min-width: 26px;
@@ -130,11 +135,24 @@
     background: $positive;
     .q-icon {
       color: white !important;
+      fill: white !important;
       opacity: 1;
+      svg {
+        color: white !important;
+        fill: white !important;
+      }
     }
   }
-  &-active {
-    background: #FFFFFF;
+  &:active {
+    .q-icon {
+      color: white !important;
+      fill: white !important;
+      opacity: 1;
+      svg {
+        color: white !important;
+        fill: white !important;
+      }
+    }
   }
   @media (max-width: 772px) {
     &.mb-19-grey {
@@ -143,6 +161,18 @@
       background: #CCCCCC;
       .q-icon {
         font-size: 19px !important;
+      }
+      &:hover {
+        background: $positive !important;
+        .q-icon {
+          color: white !important;
+          fill: white !important;
+          opacity: 1;
+          svg {
+            color: white !important;
+            fill: white !important;
+          }
+        }
       }
     }
   }

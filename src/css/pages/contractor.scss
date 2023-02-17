@@ -2668,6 +2668,9 @@
               .q-item__section--side {
                 margin-left: auto;
               }
+              .settings-icon + .q-item__section--side {
+                margin-left: 10px;
+              }
               .btn-custom {
                 display: none;
               }
@@ -3359,7 +3362,7 @@
           .q-expansion-item__container {
             & > .q-item {
               .q-item__section--side {
-                margin-left: 0;
+                margin-left: 10px;
               }
             }
           }

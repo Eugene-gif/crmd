@@ -32,15 +32,10 @@
       <div class="title">
         Общая информация
       </div>
-      <q-btn
-        unelevated 
-        no-caps
-        flat
-        class="my-btn my-effect h-opacity btn-custom"
-        style="margin-left: auto;"
-        color="grey-5"
-        padding="0"
-        label="Изменить"
+      <q-icon
+        name="svguse:icons/allIcons.svg#settings"
+        size="17px"
+        class="settings-icon"
       />
     </template>
 

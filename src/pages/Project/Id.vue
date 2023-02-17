@@ -103,67 +103,7 @@
     </div>
 
     <q-list class="project-sections">
-      <q-expansion-item
-        expand-separator
-        default-opened
-        label="Wifi settings"
-        class="dashboard"
-      >
-      <template v-slot:header>
-        <div class="title">
-          Данные объекта
-        </div>
-        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
-      </template>
-        <q-card>
-          <q-card-section>
-            <div class="section">
-              <q-item class="square">
-                <div class="title">Площадь</div>
-                <div class="number">115 м<sup>2</sup></div>
-              </q-item>
-              <q-item class="info">
-                <p class="adres">
-                  Адрес: г. Краснодар,
-                  ул. Ленина, д. 15
-                </p>
-                <p class="type">
-                  Тип: Квартира<br>
-                  Заказчик: Иванов Петр
-                </p>
-              </q-item>
-            </div>
-            <div class="img-section mb-visible">
-              <img src="~assets/project-1-mb.jpg" alt="">
-            </div>
-            
-            <div class="q-item section-toolbar">
-              <div class="item">
-                <div class="title">Прогресс проекта <span>40%</span></div>
-                <div class="flex toolbar">
-                  <div class="toolbar-procent bg-primary" style="width: 40%"></div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="title">Оплата <span>20%</span></div>
-                <div class="flex toolbar">
-                  <div class="toolbar-procent bg-positive" style="width: 30%"></div>
-                </div>
-              </div>
-            </div> 
-          </q-card-section>
-          <q-card-section class="img-section">
-            <img src="~assets/project-1.jpg" alt="">
-          </q-card-section>
-        </q-card>
-        <q-btn
-          unelevated 
-          no-caps
-          class="my-btn my-effect h-opacity btn-custom text-grey-5"
-          color="grey-3"
-          label="Изменить"
-        />
-      </q-expansion-item>
+      <DashboardComp />
 
       <q-expansion-item
         expand-separator
@@ -174,9 +114,9 @@
         <div class="title">
           План-график проекта
         </div>
-        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
+        <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="grafficActive = true" />
       </template>
-        <q-card class="q-card-graffic-option">
+        <q-card class="q-card-graffic-option" v-show="grafficActive">
           <q-card-section>
             <q-item>
               <div class="title">Услуга</div>
@@ -234,7 +174,7 @@
             </q-item>
           </q-card-section>
         </q-card>
-        <q-card class="q-card-graffic">
+        <q-card class="q-card-graffic" v-show="!grafficActive">
           <q-card-section class="info">
             <div class="head">
               <p>
@@ -263,6 +203,17 @@
           class="my-btn my-effect h-opacity btn-custom text-grey-5"
           color="grey-3"
           label="Изменить"
+          v-show="!grafficActive"
+          @click="grafficActive = true"
+        />
+        <q-btn
+          unelevated 
+          no-caps
+          class="my-btn my-effect h-opacity btn-custom text-white"
+          color="positive"
+          label="Сохранить изменения"
+          v-show="grafficActive"
+          @click="grafficActive = false"
         />
       </q-expansion-item>
 
@@ -905,6 +856,7 @@ import ActionBtn from 'components/Table/ActionBtn.vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
 import GraficGant from 'components/GraficGant.vue'
 import BtnDate from 'components/BtnDate.vue'
+import DashboardComp from "components/projects/id/DashboardComp"
 
 import { ref } from 'vue'
 
@@ -980,7 +932,8 @@ export default {
     ActionBtn,
     VisualSlider,
     GraficGant,
-    BtnDate
+    BtnDate,
+    DashboardComp,
   },
   setup () {
     const dialog = ref(false)
@@ -1251,6 +1204,7 @@ export default {
       },
     ])
 
+    const grafficActive = ref(false)
 
     const visual = ref([
       {
@@ -1440,6 +1394,7 @@ export default {
         date: '10-6-2022'
       },
     ])
+
     return {
       columns,
       rows,
@@ -1509,6 +1464,7 @@ export default {
         'Оплата',
         'Готовность'
       ],
+      grafficActive,
       modalFalse() {
         dialog.value = false
       }

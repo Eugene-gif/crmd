@@ -261,6 +261,7 @@
           display: flex;
         }
       }
+      
       @media (max-width: 772px) {
         border: 1px solid #F0F0F0;
         border-radius: 6px;
@@ -338,6 +339,12 @@
           border-radius: 6px;
           border: 1px solid #000000;
         }
+      }
+    }
+    .form-section-row-offer-enter.form-section-row-offer-activated {
+      margin-bottom: 0;
+      .btns-sec {
+        display: none;
       }
     }
     .form-section-row-2 {

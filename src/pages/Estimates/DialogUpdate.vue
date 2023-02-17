@@ -9,7 +9,7 @@
 
       <q-card-section class="form-section">
         <label class="lable-title">Название</label>
-        <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Введите название" />
+        <q-input v-model="formData.text2" class="my-input bg-grey-3" placeholder="Введите название" />
       </q-card-section>
 
       <q-card-section class="form-section form-section-uploud-file">
@@ -18,7 +18,7 @@
           <q-input
             filled
             type="textarea"
-            v-model="textarea"
+            v-model="formData.textarea"
             class="my-textarea bg-grey-3 lg-visivle"
             placeholder="Введите описание"
           />
@@ -28,7 +28,7 @@
             <q-input
               filled
               type="textarea"
-              v-model="textarea"
+              v-model="formData.textarea"
               class="my-textarea bg-grey-3"
               placeholder="Введите примечание"
             />
@@ -49,7 +49,7 @@
           <label class="lable-title">Помещение</label>
           <q-select
             filled
-            v-model="select1"
+            v-model="formData.select1"
             :options="type"
             stack-label
             placeholder="Выбрать"
@@ -64,7 +64,7 @@
         </div>
         <div class="form-col">
           <label class="lable-title">Кол-во</label>
-          <q-input v-model="text3" class="my-input bg-grey-3" placeholder="шт/м2" />
+          <q-input v-model="formData.text3" class="my-input bg-grey-3" placeholder="шт/м2" />
         </div>
       </q-card-section>
 
@@ -93,31 +93,31 @@
             </div>
           </label>
           <q-input 
-            v-model="val31" 
+            v-model="formData.val31" 
             type="number" 
             class="my-input bg-grey-3 q-field__no-append" 
             placeholder="Цена" 
-            :error="isValid(val31)"
+            :error="isValid(formData.val31)"
           />
         </div>
         <div class="form-col-4">
           <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
           <q-input 
-            v-model="val32" 
+            v-model="formData.val32" 
             type="number" 
             class="my-input bg-grey-3 q-field__no-append" 
             placeholder="Срок" 
-            :error="isValid(val32)"
+            :error="isValid(formData.val32)"
           />
         </div>
         <div class="form-col-4 q-pr-none items-end">
           <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
           <q-input 
-            v-model="text3" 
+            v-model="formData.stavka" 
             type="number" 
             class="my-input bg-grey-3 q-field-procent q-field__no-append" 
             placeholder="15" 
-            :error="isValid(text3)"
+            :error="isValid(formData.stavka)"
           >
             <template v-slot:append>
               %
@@ -130,11 +130,11 @@
       <q-card-section 
         class="form-section-row-offer"
         :class="[
-          {'form-section-row-offer-enter': offer1.length && offer2.length && offer3.length && !offerActive},
+          {'form-section-row-offer-enter': formData.offer1.length || formData.offer2.length || formData.offer3.length && !offerActive},
           {'form-section-row-offer-activated': offerActive}
         ]"
       >
-        <div class="close-form rotate" @click="offerActive = false">
+        <div class="close-form rotate" @click="offerDisActive">
           <q-icon name="svguse:icons/allIcons.svg#close-modal" size="12px"/>
         </div>
         
@@ -173,31 +173,31 @@
               Цена за<br class="mb-visible"> единицу
             </label>
             <q-input 
-              v-model="offer1" 
+              v-model="formData.offer1" 
               type="number" 
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Цена" 
-              :error="isValid(offer1)"
+              :error="isValid(formData.offer1)"
             />
           </div>
           <div class="form-col-4">
             <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
             <q-input 
-              v-model="offer2" 
+              v-model="formData.offer2" 
               type="number" 
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Срок"
-              :error="isValid(offer2)"
+              :error="isValid(formData.offer2)"
             />
           </div>
           <div class="form-col-4 q-pr-none items-end">
             <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
             <q-input 
-              v-model="offer3" 
+              v-model="formData.offer3" 
               type="number" 
               class="my-input bg-grey-3 q-field-procent q-field__no-append" 
               placeholder="15" 
-              :error="isValid(offer3)"
+              :error="isValid(formData.offer3)"
             >
               <template v-slot:append>
                 %
@@ -220,7 +220,7 @@
             padding="0" 
             label="Отмена" 
             class="text-white btn-flat" 
-            @click="offer1 = '', offer2 = '', offer3 = ''"
+            @click="formData.offer1 = '', formData.offer2 = '', formData.offer3 = ''"
           />
         </div>
       </q-card-section>
@@ -228,46 +228,23 @@
 
       <q-card-section class="form-section">
         <label class="lable-title">Ссылка</label>
-        <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Укажите ссылку на товар" />
+        <q-input v-model="formData.text2" class="my-input bg-grey-3" placeholder="Укажите ссылку на товар" />
       </q-card-section>
       <q-card-section class="form-section">
         <label class="lable-title">Производитель</label>
-        <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Укажите производителя" />
+        <q-input v-model="formData.proizvoditel" class="my-input bg-grey-3" placeholder="Укажите производителя" />
       </q-card-section>
 
       <q-card-section class="form-section form-section-row form-section-row-behiver">
         <div class="form-col">
           <label class="lable-title">Артикул</label>
-          <q-input v-model="text2" class="my-input bg-grey-3" placeholder="Укажите артикул" />
+          <q-input v-model="formData.text2" class="my-input bg-grey-3" placeholder="Укажите артикул" />
         </div>
         <div class="form-col">
           <label class="lable-title">Цвет</label>
-          <q-input v-model="text3" class="my-input bg-grey-3" placeholder="Код"  />
+          <q-input v-model="formData.color" class="my-input bg-grey-3" placeholder="Код"  />
         </div>
       </q-card-section>
-
-      <!-- <q-card-section class="form-section mb-visible">
-        <q-card-section class="form-section form-section-upload form-section-upload-mb">
-          <div class="my-file-upload">
-            <div
-              class="mb-visible"
-            >
-              <div class="form-col">
-                <label class="lable-title">Кол-во</label>
-                <q-input v-model="text3" class="my-input bg-grey-3" />
-              </div>
-              <div class="form-col">
-                <label class="lable-title">Ставка</label>
-                <q-input v-model="text3" class="my-input bg-grey-3" />
-              </div>
-            </div>
-            <q-uploader
-              url="http://localhost:8080/upload"
-              style="max-width: 300px"
-            />
-          </div>
-        </q-card-section>
-      </q-card-section> -->
 
       <q-card-section class="form-section">
         <label class="lable-title">Файл</label>
@@ -322,26 +299,45 @@ export default ({
       })
     }
     const formData = ref({
-      file: null
+      file: null,
+      offer1: '',
+      offer2: '',
+      offer3: '',
+      val: '',
+      val1: '',
+      val2: '',
+      val3: '',
+      val31: '',
+      val32: '',
+      val4: '',
+      val5: '',
+      text: '',
+      text2: '',
+      text3: '',
+      text4: 15,
+      customer1: '',
+      customer2: '',
+      customer3: '',
+      customer4: '',
+      customer5: '',
+      textarea: '',
+      stavka: '',
+      proizvoditel: '',
+      color: '',
     })
 
-    const offer1 = ref('')
-    const offer2 = ref('')
-    const offer3 = ref('')
     const offerActive = ref(false)
-
-    const val = ref('')
-    const val1 = ref('')
-    const val2 = ref('')
-    const val3 = ref('')
-    const val31 = ref('')
-    const val32 = ref('')
-    const val4 = ref('')
-    const val5 = ref('')
 
     function isValid(value) {
       if (`${value}`.length > 2) return true
       else return false
+    }
+
+    function offerDisActive() {
+      formData.value.offer1 = ''
+      formData.value.offer2 = ''
+      formData.value.offer3 = ''
+      offerActive.value = false
     }
 
     return {
@@ -355,15 +351,7 @@ export default ({
           value: 1
         },
       ),
-      
-      val,
-      val1,
-      val2,
-      val3,
-      val31,
-      val32,
-      val4,
-      val5,
+      offerDisActive,
 
       addCustomer: ref(false),
       type: [
@@ -387,26 +375,8 @@ export default ({
       
       selectDropbox,
 
-      text: ref(''),
-      text2: ref(''),
       show: ref(false),
-      text3: ref(''),
-      text4: ref(15),
 
-      customer1: ref(),
-      customer2: ref(),
-      customer3: ref(),
-      customer4: ref(),
-      customer5: ref(),
-
-      whatsapp: ref(),
-      telegram: ref(),
-      instagram: ref(),
-      textarea: ref(),
-
-      offer1,
-      offer2,
-      offer3,
       offerActive,
 
       file: ref(),
@@ -420,11 +390,7 @@ export default ({
         show.value = true;
       },
       onFileChange: function(e) {
-        // let files = e.target.file;
         console.log(e.target)
-        // if (!files.length)
-        //     return;
-        // file.value = files;
       },
     }
   }

@@ -268,7 +268,6 @@ export default {
         return true
       } else if (formData.value.soc_wa.indexOf('http') === -1) {
         return formData.value.soc_wa = `https://wa.me/${formData.value.soc_wa}`.replace(/[@]/gi, '')
-        // formData.value.soc_wa.replace(/[@]/gi, '')
       } 
     }
     function checkTg() {
@@ -276,7 +275,6 @@ export default {
         return true
       } else if (formData.value.soc_tg.indexOf('http') === -1) {
         return formData.value.soc_tg = `https://t.me/${formData.value.soc_tg}`.replace(/[@]/gi, '')
-        // formData.value.soc_tg.replace(/[@]/gi, '')
       } 
     }
     function checkInst() {
@@ -284,13 +282,15 @@ export default {
         return true
       } else if (formData.value.soc_inst.indexOf('http') === -1) {
         return formData.value.soc_inst = `https://www.instagram.com/${formData.value.soc_inst}`.replace(/[@]/gi, '')
-        // formData.value.soc_inst.replace(/[@]/gi, '')
       } 
     }
 
     async function updateContractor() {
       lodingBtn.value = true
       try {
+        checkWa()
+        checkTg()
+        checkInst()
         await contractorApi.updateContractor(formData.value).then(resp => {
           formData.value = resp
           isActive.value.details = false
@@ -299,9 +299,6 @@ export default {
             message: 'Информация обновлена'
           })
         })
-        checkWa()
-        checkTg()
-        checkInst()
         emitter.emit('myevent', formData.value.name)
       } catch (err) {
         $q.notify({

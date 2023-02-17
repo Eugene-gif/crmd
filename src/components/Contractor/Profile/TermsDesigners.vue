@@ -8,21 +8,11 @@
       <div class="title">
         Условия работы с дизайнерами
       </div>
-      <q-btn
-        unelevated 
-        no-caps
-        flat
-        class="my-btn my-effect h-opacity btn-custom"
-        color="grey-5"
-        padding="0"
-        label="Изменить"
-        @click.stop="isActive.designer = !isActive.designer"
-      />
       <q-icon
         name="svguse:icons/allIcons.svg#settings"
-        size="13px"
-        class="settings-icon mb-visible"
-        @click.stop="isActive.designer = !isActive.designer"
+        size="17px"
+        class="settings-icon"
+        @click.stop="isActive.designer = true"
       />
     </template>
 
