@@ -106,6 +106,8 @@
   }
 }
 
+
+
 .my-input .q-field__marginal .q-icon {
   opacity: 1;
 }
@@ -161,6 +163,13 @@
       background: #CCCCCC;
       .q-icon {
         font-size: 19px !important;
+        color: white !important;
+        fill: white !important;
+        opacity: 1;
+        svg {
+          color: white !important;
+          fill: white !important;
+        }
       }
       &:hover {
         background: $positive !important;
@@ -176,4 +185,9 @@
       }
     }
   }
+}
+
+
+.circle-warning-26-icon-white {
+  
 }

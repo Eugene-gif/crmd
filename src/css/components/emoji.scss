@@ -27,6 +27,7 @@
     top: 70px;
     transition: all 0.3s;
     width: 100%;
+    
     &.active {
       visibility: visible;
       opacity: 1;
@@ -37,6 +38,7 @@
       width: 100%;
       padding: 8px 0;
       transition: all 0.3s;
+      margin-bottom: 0 !important;
       .head {
         display: flex;
         flex-direction: row;
@@ -54,6 +56,9 @@
           line-height: 25px;          
           color: #FFFFFF;
           cursor: pointer;
+          @media (max-width: 772px) {
+            margin-left: auto;
+          }
         }
         .left,
         .right {
@@ -120,6 +125,7 @@
       opacity: 0;
       background: #323232;
       border-radius: 10px;
+      margin-bottom: 10px !important;
       &.active {
         opacity: 1;
         height: auto;

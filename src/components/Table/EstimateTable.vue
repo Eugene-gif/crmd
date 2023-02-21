@@ -64,6 +64,7 @@
           key="id"
           :props="props"
         >
+          <div class="status-new" v-if="props.row.new"></div>
           <div class="td-content-section">
             <div class="text">
               {{props.row.id}}
@@ -184,7 +185,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{props.row.deadline}} дней
+              {{props.row.deadline}} 
             </div>
           </div>
         </q-td>
@@ -198,7 +199,7 @@
               <div :class="`circle bg-${colorStatus(props.row.status.id)}`"></div>
               <div class="desc">{{props.row.status.name}}</div>
             </div>
-            <img v-if="props.row.status.imageUrl" :src="props.row.status.imageUrl" alt="" class="status-img">
+            <!-- <img v-if="props.row.status.imageUrl" :src="props.row.status.imageUrl" alt="" class="status-img"> -->
           </div>
         </q-td>
         <q-td
@@ -208,7 +209,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{props.row.procent}}%
+              {{props.row.procent}}
             </div>
           </div>
         </q-td>
@@ -219,6 +220,51 @@
           <div class="td-content-section">
             <div class="text">
               {{props.row.agent}}
+            </div>
+          </div>
+        </q-td>
+
+        <q-td
+          key="brand"
+          :props="props"
+          class="td-brand"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{props.row.brand}}
+            </div>
+          </div>
+        </q-td>
+        <q-td
+          key="code"
+          :props="props"
+          class="td-code"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{props.row.code}}
+            </div>
+          </div>
+        </q-td>
+        <q-td
+          key="color"
+          :props="props"
+          class="td-color"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{props.row.color}}
+            </div>
+          </div>
+        </q-td>
+        <q-td
+          key="file"
+          :props="props"
+          class="td-file"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{props.row.file}}
             </div>
           </div>
         </q-td>
@@ -282,7 +328,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.deadline}} <span v-if="smeta.deadline != '—'">дней</span>
+              {{smeta.deadline}} <span v-if="smeta.deadline != '—'"></span>
             </div>
           </div>
         </q-td>
@@ -303,7 +349,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.procent}}<span class="text" v-if="smeta.procent != '—'">%</span>
+              {{smeta.procent}}<span class="text" v-if="smeta.procent != '—'"></span>
             </div>
           </div>
         </q-td>
@@ -318,6 +364,11 @@
             </div>
           </div>
         </q-td>
+        <q-td key="brand" class="td-brand"/>
+        <q-td key="code" class="td-code"/>
+        <q-td key="color" class="td-color"/>
+        <q-td key="file" class="td-file"/>
+
       </q-tr>
 
       <q-tr class="q-tr-smeta q-tr-smeta-null" v-show="props.row.smetaVal" v-if="props.row.smeta">
@@ -380,7 +431,12 @@
             </div>
           </div>
         </q-td>
+        <q-td key="brand" class="td-brand"/>
+        <q-td key="code" class="td-code"/>
+        <q-td key="color" class="td-color"/>
+        <q-td key="file" class="td-file"/>
       </q-tr>
+
       <div class="q-tr-separator"></div>
     </template>
   </q-table>

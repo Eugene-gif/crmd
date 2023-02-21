@@ -256,11 +256,7 @@
           
           &:last-child.img-section {
             margin-left: 30px;
-            height: 427px;
-            background-image: url(../assets/no-image.svg);
-            background-size: 100px 100px;
-            background-repeat: no-repeat;
-            background-position: center 116px;
+            height: 367px;
             border: 1px solid #F0F0F0;
             border-radius: 10px;
             img {
@@ -313,15 +309,29 @@
               display: flex;
               align-items: center;
               justify-content: center;
-              padding-top: 155px;
+              padding-top: 157px;
             }
             .upload-content {
               width: 100%;
-              padding-top: 50px;
               display: flex;
               justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              .circle-photo {
+                width: 100px;
+                height: 100px;
+                border-radius: 100%;
+                background: #F5F5F5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+              }
               .text {
                 margin-right: 0;
+                position: relative !important;
+                margin: 0;
+                margin-top: 18px;
               }
             }
           }
@@ -353,18 +363,35 @@
             }
             .btn-upload-2 {
               .q-uploader {
-                padding-top: 66px;
+                padding-top: 71px;
               }
               .upload-content {
-                padding-top: 66px;
+                .circle-photo {
+                  width: 60px;
+                  height: 60px;
+                  border-radius: 100%;
+                  background: #F5F5F5;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  flex-direction: column;
+                  .q-icon {
+                    font-size: 30px !important;
+                  }
+                }
                 .text {
-                  margin-right: 0;
+                  margin-top: 13px;
                   font-size: 14px;
                   line-height: 14px;
                 }
               }
             }
           }
+        }
+      }
+      .emoji {
+        .q-card {
+          padding-bottom: 0 !important;
         }
       }
     }
@@ -701,6 +728,7 @@
         }
         .btn-news {
           margin-top: auto;
+          max-width: 165px;
           span {
             font-size: 12px;
           }
@@ -1172,10 +1200,6 @@
               }
               .img-section {
                 height: 198px;
-                background-image: url(../assets/no-image.svg);
-                background-size: 60px 60px;
-                background-repeat: no-repeat;
-                background-position: center 54px;
                 border-top: 1px solid #F0F0F0;
                 img {
                   width: 100%;

@@ -383,16 +383,21 @@ const cutTitle = function(title) {
 }
 
 const columnsTable = ref([
-  { name: 'id', label: '№', sortable: true },
-  { name: 'name', label: 'Название', sortable: false },
-  { name: 'room', label: 'Помещение', sortable: false },
-  { name: 'desc', label: 'Описание', sortable: false },
-  { name: 'metrics', label: 'м2/шт', sortable: false },
-  { name: 'price', label: 'Цена', sortable: false },
-  { name: 'total', label: 'Итого', sortable: false },
-  { name: 'deadline', label: 'Сроки', sortable: false },
-  { name: 'status', label: 'Статус', sortable: false },
-  { name: 'procent', label: 'Ставка', sortable: false }
+  { name: 'id', label: '№', field: 'id', sortable: true },
+  { name: 'name', label: 'Название', field: 'name', sortable: false },
+  { name: 'room', label: 'Помещение', field: 'room', sortable: false },
+  { name: 'desc', label: 'Описание', field: 'desc', sortable: false },
+  { name: 'price', label: 'Цена, руб.', field: 'price', sortable: false },
+  { name: 'metrics', label: 'м2/шт', field: 'metrics', sortable: false },
+  { name: 'total', label: 'Итого', field: 'total', sortable: false },
+  { name: 'deadline', label: 'Срок, дн', field: 'dedline', sortable: false },
+  { name: 'status', label: 'Статус', field: 'status', sortable: false },
+  { name: 'procent', label: 'Ставка', field: 'procent', sortable: false },
+  { name: 'agent', label: 'Агентские, руб.', field: 'agent', sortable: false },
+  { name: 'brand', label: 'Производитель', field: 'brand', sortable: false },
+  { name: 'code', label: 'Артикул', field: 'code', sortable: false },
+  { name: 'color', label: 'Цвет', field: 'color', sortable: false },
+  { name: 'file', label: 'Файл', field: 'file', sortable: false },
 ])
 const rowTable = ref([
   {
@@ -414,7 +419,32 @@ const rowTable = ref([
       user: 'Иван',
       imageUrl: '/icons/stroipro.jpg'
     },
-    procent: 15
+    procent: 15,
+    agent: '3 600',
+    smetaVal: false,
+    smeta: [
+      {
+        id: 5,
+        imageUrl: '/icons/stroipro.jpg',
+        name: "ООО «СтройПро»",
+        price: "1 200",
+        metrics: 25,
+        total: "30 000",
+        deadline: 30,
+        status: {
+          id: 3,
+          name: 'Не согласовано',
+        },
+        procent: 15,
+        agent: "9 000",
+      },
+    ],
+    link: 'google.com',
+    brand: 'Kerama Marazzi',
+    code: '325-1200-333',
+    color: 'RAL 1005',
+    file: 'ZIP, 5 мб',
+    new: true,
   },
   {
     id: 2,
@@ -431,11 +461,18 @@ const rowTable = ref([
     deadline: 5,
     status: {
       id: 2,
-      name: 'Не оплачено',
+      name: 'Оплачено',
       user: '',
       imageUrl: ''
     },
-    procent: 15
+    procent: 15,
+    agent: '3 600',
+    link: '',
+    brand: 'Porcelanosa',
+    code: '325-1200-2',
+    color: 'RAL 1020',
+    file: 'PDF, 896 кб',
+    new: false,
   },
   {
     id: 3,
@@ -452,13 +489,95 @@ const rowTable = ref([
     deadline: 5,
     status: {
       id: 3,
-      name: 'Не согласовано',
+      name: 'В работе',
       user: '',
       imageUrl: ''
     },
-    procent: 15
+    procent: 15,
+    agent: '3 600',
+    link: 'https://quasar.dev/vue-components/tooltip#introduction',
+    brand: 'Porcelanosa',
+    code: '325-1200-2',
+    color: 'RAL 1020',
+    file: 'PDF, 896 кб',
+    new: true,
+  },
+  {
+    id: 4,
+    imageUrl: '/smeta.jpg',
+    name: {
+      title: 'Керамогранит',
+      imageUrl: '/smeta.jpg'
+    },
+    room: 'Спальня',
+    desc: 'KERAMA MARAZZI',
+    metrics: 20,
+    price: '1 200',
+    total: 24000,
+    deadline: 2,
+    status: {
+      id: 2,
+      name: 'Оплачено',
+      user: 'Иван',
+      imageUrl: '/icons/stroipro.jpg'
+    },
+    procent: 15,
+    agent: '3 600',
+    smetaVal: false,
+    smeta: [
+      {
+        id: 5,
+        imageUrl: '/icons/stroipro.jpg',
+        name: "ООО «СтройПро»",
+        price: "1 200",
+        metrics: 25,
+        total: "30 000",
+        deadline: 30,
+        status: {
+          id: 3,
+          name: 'Не согласовано',
+        },
+        procent: 15,
+        agent: "9 000",
+      },
+    ],
+    link: 'google.com',
+    brand: 'Kerama Marazzi',
+    code: '325-1200-333',
+    color: 'RAL 1005',
+    file: 'ZIP, 5 мб',
+    new: false,
+  },
+  {
+    id: 5,
+    imageUrl: '/smeta.jpg',
+    name: {
+      title: 'Ламинат',
+      imageUrl: ''
+    },
+    room: 'Спальня',
+    desc: '1200*200 мм ',
+    metrics: 15,
+    price: '1 200',
+    total: 18000,
+    deadline: 5,
+    status: {
+      id: 3,
+      name: 'Скомплектовано',
+      user: '',
+      imageUrl: ''
+    },
+    procent: 15,
+    agent: '3 600',
+    link: 'https://quasar.dev/vue-components/tooltip#introduction',
+    brand: 'Porcelanosa',
+    code: '325-1200-2',
+    color: 'RAL 1020',
+    file: 'PDF, 896 кб',
+    new: true,
   },
 ])
+
 
 export default {
   name: 'PageEstimates',

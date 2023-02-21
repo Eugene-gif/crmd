@@ -79,6 +79,15 @@
               :class="{ 'btn-load-grey': lodingBtn2 }"
             />
             <div class="upload-content">
+              <div class="circle-photo">
+                <q-icon
+                  size="38px"
+                  name="svguse:icons/allIcons.svg#no-photo"
+                  color="black"
+                  style="opacity: 0.1;"
+                  @click="delImage(item.id)"
+                />
+              </div>
               <label class="text">Добавить фото</label>
             </div>
           </div>
@@ -100,6 +109,7 @@
         </div>
       </q-card-section>
       <q-card-section class="img-section">
+        
         <div
           class="circle-close mini rotate" 
           v-show="formData.file"
@@ -132,6 +142,15 @@
             :class="{ 'btn-load-grey': lodingBtn2 }"
           />
           <div class="upload-content">
+            <div class="circle-photo">
+              <q-icon
+                size="38px"
+                name="svguse:icons/allIcons.svg#no-photo"
+                color="black"
+                style="opacity: 0.1;"
+                @click="delImage(item.id)"
+              />
+            </div>
             <label class="text">Добавить фото</label>
           </div>
         </div>

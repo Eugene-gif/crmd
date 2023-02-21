@@ -43,7 +43,19 @@
         }
       }
       .btn-sum {
-        margin-left: 40px;
+        &:first-child {
+          margin-left: 40px;
+        }
+        .info-pay {
+          position: absolute;
+          bottom: -4px;
+          color: rgba(68, 68, 68, 0.3);
+          background: white;
+          padding: 0 9px;
+          font-size: 11px;
+          line-height: 11px;
+          z-index: 2;
+        }
       }
       
       .list-users {

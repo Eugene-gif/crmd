@@ -195,7 +195,7 @@
               :class="`q-td-action`"
             >
               <div 
-                class="circle-warning-26 mb-19-grey" 
+                class="circle-warning-26 circle-warning-26-icon-white mb-19-grey" 
                 :class="{'circle-warning-26-active': props.row.status === 3}"
                 v-show="props.row.status === 2 || props.row.status === 3"
               >

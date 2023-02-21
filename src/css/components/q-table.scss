@@ -2860,10 +2860,12 @@
 }
 
 .estimates-table {
+  overflow-x: visible !important;
   .q-table__middle {
     border-radius: 0;
     padding-bottom: 60px;
     overflow-y: hidden !important;
+    overflow-x: visible !important;
     &::-webkit-scrollbar {
       height: 6px;
       border-radius: 3px;
@@ -2958,7 +2960,20 @@
     tbody {
       tr {
         width: 100%;
+        overflow: visible;
         td {
+          
+          .status-new {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -2.5px;
+            width: 5px;
+            height: 5px;
+            background: $negative;
+            border-radius: 100%;
+            margin: auto;
+          }
           text-align: left;
           &:first-child {
             border-left: 1px solid $grey-3;
@@ -3090,7 +3105,7 @@
         .td-desc {
 
         }
-        .td-agent {
+        .td-file {
           border-right: 1px solid #ADADAD !important;
         }
       }
