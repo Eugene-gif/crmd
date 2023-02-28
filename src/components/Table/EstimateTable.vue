@@ -201,6 +201,74 @@
             </div>
             <!-- <img v-if="props.row.status.imageUrl" :src="props.row.status.imageUrl" alt="" class="status-img"> -->
           </div>
+          <q-menu 
+            anchor="bottom middle" 
+            self="top middle" 
+            class="menu-estimate-status"
+          >
+            <div class="item item-position">
+              <div class="title">
+                Позиция
+                <q-btn flat class="circle-warning-15">
+                  <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+                  <q-menu
+                    :offset="[10, 10]"
+                    anchor="top middle" self="bottom middle"
+                    class="circle-warning-tooltip mb-visible"
+                    ref="menu"
+                    width="300px"
+                  >
+                    Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                  </q-menu>
+                  <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom lg-visible">
+                    Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                  </q-tooltip>
+                </q-btn>
+              </div>
+              <q-tabs v-model="tab" no-caps class="q-tabs-null">
+                <q-tab name="1" label="В работе" />
+                <q-tab name="2" label="Скомплектовано" />
+                <q-tab name="3" label="Куплено заказчиком" />
+                <q-tab name="4" label="Отмена" />
+              </q-tabs>
+            </div>
+            <div class="item item-deal">
+              <div class="title">
+                Сделка
+                <q-btn flat class="circle-warning-15">
+                  <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+                  <q-menu
+                    :offset="[10, 10]"
+                    anchor="top middle" self="bottom middle"
+                    class="circle-warning-tooltip mb-visible"
+                    ref="menu"
+                    width="300px"
+                  >
+                    Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                  </q-menu>
+                  <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom lg-visible">
+                    Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                  </q-tooltip>
+                </q-btn>
+                <q-btn 
+                  flat 
+                  class="text-grey-5 btn-flat btn-remove" 
+                  padding="0" 
+                  no-caps 
+                  label="отменить сделку"  
+                  v-if="tab === '5' || tab === '6' || tab === '7' || tab === '8'"
+                  @click="tab = ''"
+                />
+                <img src="~assets/stroipro.jpg" alt="" class="estimate-status__img">
+              </div>
+              <q-tabs v-model="tab" no-caps class="q-tabs-null">
+                <q-tab name="5" label="Согласовано" />
+                <q-tab name="6" label="Оплачено" />
+                <q-tab name="7" label="Готово к выдаче" />
+                <q-tab name="8" label="Выполнено" />
+              </q-tabs>
+            </div>
+          </q-menu>
         </q-td>
         <q-td
           key="procent"
@@ -453,6 +521,8 @@ export default defineComponent({
   },
   setup (props, { emit }) {
     const activeSmeta = ref()
+    const tab = ref();
+
     function colorStatus(statusId) {
       if (statusId === 1) {
         return 'positive'
@@ -484,7 +554,8 @@ export default defineComponent({
       editModal,
       openSmeta,
       chooseSmeta,
-      goToLink
+      goToLink,
+      tab,
     }
   }
 })

@@ -28,22 +28,38 @@
     <q-card-actions class="row justify-between">
       <div class="text-subtitle1">
         Ожидается еще: <span>3 450 000</span> руб. 
-        <q-btn flat class="circle-warning mb-visible">
-          <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="12px"/>
-            <q-menu
-              :offset="[10, 10]"
-              anchor="top middle" self="bottom middle"
-              class="circle-warning-tooltip"
-              ref="menu"
-              width="300px"
-            >
-              Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
-            </q-menu>
-        </q-btn>
+        <div 
+          class="circle-warning-26 circle-warning-26-icon-white mb-19-grey mb-visible"
+        >
+          <q-icon name="svguse:icons/financeTable.svg#warning" size="26px" />
+          <q-menu
+            :offset="[10, 10]"
+            anchor="top middle" self="bottom middle"
+            class="circle-warning-tooltip"
+            ref="menu"
+            width="300px"
+          >
+            Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+          </q-menu>
+          <q-tooltip max-width="300px" anchor="top middle" self="bottom middle" class="lg-visible">
+            Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+          </q-tooltip>
+        </div>
       </div>
-      <div class="circle-warning">
-        <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="12px"/>
-        <q-tooltip max-width="300px" anchor="top middle" self="bottom middle">
+      <div 
+        class="circle-warning-26 circle-warning-26-icon-white mb-19-grey lg-sibile"
+      >
+        <q-icon name="svguse:icons/financeTable.svg#warning" size="26px" />
+        <q-menu
+          :offset="[10, 10]"
+          anchor="top middle" self="bottom middle"
+          class="circle-warning-tooltip"
+          ref="menu"
+          width="300px"
+        >
+          Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
+        </q-menu>
+        <q-tooltip max-width="300px" anchor="top middle" self="bottom middle" class="lg-visible">
           Тултип шириной 300 px, где мы расскажем о том, что в работе три проекта и по ним ожидается еще суммарно 3 450 000 руб.
         </q-tooltip>
       </div>
