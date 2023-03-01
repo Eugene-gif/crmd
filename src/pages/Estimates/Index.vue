@@ -152,7 +152,7 @@
         class="estimates-expansion"
       >
         <template v-slot:header>
-          <div class="title">
+          <div class="title" @click.stop="true">
             Название сметы, например, освещение
           </div>
           
@@ -162,12 +162,14 @@
             class="my-checkbox flat"
             color="black"
             label="Вкл"
+            @click.stop="true"
           />
           <ActionBtn
             propsEl="1"
             :offsetYX="[55, -258]"
+            @click.stop="true"
           />
-          <div class="item">
+          <div class="item" @click.stop="true">
             <q-btn
               outline
               rounded

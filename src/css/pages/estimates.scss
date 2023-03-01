@@ -75,6 +75,11 @@
   .estimates-table-container {
     padding-top: 19px;
     margin-bottom: 62px;
+    margin-top: 24px;
+    .q-expansion-item__container .q-item {
+      border-top: 1px solid #F0F0F0;
+      padding-top: 23px;
+    }
     .q-table {
       padding-left: 2.5px;
     }
