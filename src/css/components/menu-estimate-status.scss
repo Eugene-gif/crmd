@@ -26,6 +26,16 @@
           opacity: 0.4;
           font-weight: 400;
         }
+        &:hover {
+          .block {
+            opacity: 0.9;
+          }
+        }
+        &:active {
+          .block {
+            opacity: 0.2;
+          }
+        }
       }
       .estimate-status__img {
         width: 25px;
@@ -55,6 +65,16 @@
           }
           .q-tab__indicator {
             display: none;
+          }
+          &:hover {
+            background: #F0F0F0;
+          }
+          &:active {
+            background: #FFFFFF;
+            border: 2px solid #CCCCCC;
+            .q-tab__label {
+              opacity: 1;
+            }
           }
           &--active {
             .q-tab__label {

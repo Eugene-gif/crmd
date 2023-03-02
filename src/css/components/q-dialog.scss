@@ -181,13 +181,13 @@
           font-size: 16px;
           height: 16px;
           overflow: hidden;
-          color: #CCCCCC;
+          color: #444444;
           margin-right: 8px;
-          transition: all 0.25s;
+          transition: opacity 0.25s;
+          opacity: 0.2;
         }
         &:hover {
-          .block,
-          .q-icon {
+          .block {
             opacity: 1;
           }
           .q-icon {

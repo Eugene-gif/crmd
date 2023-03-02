@@ -405,3 +405,7 @@ input[type='number'] {
 .q-btn.disabled.btn-disable {
   opacity: 0.1 !important;
 }
+
+.q-icon {
+  transform: translate3d(0,0,0) !important;
+}

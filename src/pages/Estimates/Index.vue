@@ -269,6 +269,131 @@
         />
       </q-expansion-item>
       
+      <q-expansion-item
+        switch-toggle-side
+        expand-separator
+        default-opened
+        label="Wifi settings"
+        class="estimates-expansion"
+      >
+        <template v-slot:header>
+          <div class="title" @click.stop="true">
+            Название сметы, например, освещение
+          </div>
+          
+          <q-checkbox
+            v-model="val"
+            checked-icon="svguse:icons/allIcons.svg#check"
+            class="my-checkbox flat"
+            color="black"
+            label="Вкл"
+            @click.stop="true"
+          />
+          <ActionBtn
+            propsEl="1"
+            :offsetYX="[55, -258]"
+            @click.stop="true"
+          />
+          <div class="item" @click.stop="true">
+            <q-btn
+              outline
+              rounded
+              unelevated
+              no-caps
+              padding="7.5px 18px"
+              class="btn-sum my-btn my-btn-14 no-cursor"
+              color="grey-3"
+            >
+              <span class="block text-grey-5">2 290 000 руб.</span>
+              <span class="info-pay">итого</span>
+            </q-btn>
+            <q-btn
+              outline
+              rounded
+              unelevated
+              no-caps
+              padding="7.5px 18px"
+              class="btn-sum my-btn my-btn-14 no-cursor q-ml-sm"
+              color="grey-3"
+            >
+              <span class="block text-grey-5">2 290 000 руб.</span>
+              <span class="info-pay">агентские</span>
+            </q-btn>
+            
+            <q-list class="list-users">
+              <q-item>
+                <img src="~assets/anton.jpg" alt="">
+              </q-item>
+              <q-item>
+                <img src="~assets/stroipro.jpg" alt="">
+              </q-item>
+            </q-list>
+            <div class="estimates-action-btns">
+              <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="q-mr-xs my-btn my-effect my-btn--outline q-btn-info"
+                padding="5.5px 0"
+              >
+                <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="11px" class="q-mr-sm">
+                  <sup>
+                    3
+                  </sup>
+                </q-icon>
+                <q-icon name="svguse:icons/btnIcons.svg#link" color="grey-8" size="14px" class="q-mr-sm link-icon">
+                  <div class="circle"></div>
+                </q-icon>
+                <div class="block text-grey-5">Настройки доступа</div>
+              </q-btn>
+              <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="my-btn my-effect my-btn--outline"
+                padding="5.5px 0"
+                @click.stop="dialogPosition = true"
+              >
+                <q-icon name="svguse:icons/allIcons.svg#plus" color="grey-8" size="12px" class="q-mr-sm" />
+                <div class="block text-grey-5">Добавить позицию</div>
+              </q-btn>
+              <!-- <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="my-btn my-effect my-btn--outline"
+                padding="5.5px 0"
+                @click.stop="dialogPosition = true"
+              >
+                <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="12px" class="q-mr-sm" />
+                <div class="block text-grey-5">Редактировать</div>
+              </q-btn>
+              <q-btn
+                rounded
+                no-caps
+                flat
+                color="grey-3"
+                class="my-btn my-effect my-btn--outline"
+                padding="5.5px 0"
+              >
+                <q-icon name="svguse:icons/btnIcons.svg#export" color="grey-8" size="11px" class="q-mr-sm" />
+                <div class="block text-grey-5">Экспорт</div>
+              </q-btn> -->
+            </div>
+          </div>
+        </template>
+        <EstimateTable
+          :columns="columnsTable"
+          :rows="rowTable"
+          @editModal="startEditModal"
+          @openSmeta="onOpenSmeta"
+          @chooseSmeta="onChooseSmeta"
+        />
+      </q-expansion-item>
+      
     </div>
 
     <q-item class="smeta-section">
