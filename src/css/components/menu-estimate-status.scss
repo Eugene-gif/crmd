@@ -60,8 +60,22 @@
           margin-bottom: 5px;
           .q-tab__label {
             color: #444444;
-            opacity: 0.3;
+            // opacity: 0.3;
             font-weight: 400;
+          }
+          .q-tab__content {
+            flex-direction: row;
+            width: 100%;
+            justify-content: flex-start;
+            .q-btn {
+              margin-left: auto;
+              margin-right: 41px;
+            }
+          }
+          &.disabled {
+            .q-tab__label {
+              opacity: 0.3 !important;
+            }
           }
           .q-tab__indicator {
             display: none;
@@ -76,6 +90,7 @@
               opacity: 1;
             }
           }
+          
           &--active {
             .q-tab__label {
               opacity: 1;
@@ -92,6 +107,7 @@
           .q-tab { 
             &--active {
               border: 2px solid #CCCCCC;
+              background: #FFFFFF;
             }
           }
         }
@@ -105,8 +121,12 @@
         .q-tabs__content {
           .q-tab {
             position: relative;
+            .q-btn {
+              display: none;
+            }
+            &--subactive,
             &--active {
-              border: 2px solid #73C949;
+              border: 2px solid #CCCCCC;
               &:after {
                 content: '';
                 width: 14px;
@@ -116,12 +136,42 @@
                 background-repeat: no-repeat;
                 background-position: center center;
                 position: absolute;
-                background-color: $positive;
+                background-color: #CCCCCC;
                 top: 0;
                 bottom: 0;
                 right: 7px;
                 margin: auto;
               }
+              .q-btn {
+                cursor: pointer;
+              }
+            }
+            &--active {
+              border: 2px solid #73C949 !important;
+              background: #FFFFFF !important;
+              &:after {
+                background-color: $positive !important;
+              }
+              .q-btn {
+                display: none !important;
+              }
+            }
+            &--subactive {
+              .q-btn {
+                display: flex;
+              }
+              &:before {
+                content: '';
+                width: 1px;
+                height: 100%;
+                background: #ECECEC;
+                display: block;
+                position: absolute;
+                right: 30px;
+              }
+            }
+            &.active {
+              background-color: #CCCCCC;
             }
           }
         }

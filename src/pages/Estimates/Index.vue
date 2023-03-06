@@ -278,7 +278,7 @@
       >
         <template v-slot:header>
           <div class="title" @click.stop="true">
-            Название сметы, например, освещение
+            Название сметы, например, освещение 2
           </div>
           
           <q-checkbox

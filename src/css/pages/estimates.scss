@@ -84,6 +84,17 @@
       padding-left: 2.5px;
     }
   }
+  .q-expansion-item--collapsed {
+    .q-expansion-item__container {
+      .q-item {
+        .q-item__section--avatar {
+          .q-icon {
+            transform: rotate(180deg) !important;
+          }
+        }
+      }
+    }
+  }
   .prev-list {
     margin-top: 60px;
   }

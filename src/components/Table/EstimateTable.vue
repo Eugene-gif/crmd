@@ -261,11 +261,34 @@
                 />
                 <img src="~assets/stroipro.jpg" alt="" class="estimate-status__img">
               </div>
-              <q-tabs v-model="tab" no-caps class="q-tabs-null">
-                <q-tab name="5" label="Согласовано" />
-                <q-tab name="6" label="Оплачено" />
-                <q-tab name="7" label="Готово к выдаче" />
-                <q-tab name="8" label="Выполнено" />
+              <q-tabs 
+                v-model="tab" 
+                no-caps 
+                class="q-tabs-null"
+              >
+                <q-tab 
+                  v-for="el in optionstab"
+                  :key="el"
+                  :name="el.name" 
+                  :label="el.label" 
+                  :disable="!el.active"
+                  @click.prevent="subTab = el.value"
+                  :class="[
+                    {'q-tab--subactive': el.value === subTab},
+                    {'q-tab--active': el.value === tab} 
+                  ]"
+                >
+                  <q-btn
+                    rounded
+                    unelevated
+                    no-caps
+                    padding="4px 18px"
+                    class="bg-positive my-btn my-btn-14 no-cursor q-ml-xs btn-flat"
+                    @click.stop="selectTab(el.value)"
+                  >
+                    <span class="block text-white">подтвердить</span>
+                  </q-btn>
+                </q-tab>
               </q-tabs>
             </div>
           </q-menu>
@@ -512,6 +535,7 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   name: 'EstimateTable',
@@ -520,8 +544,40 @@ export default defineComponent({
     rows: Array
   },
   setup (props, { emit }) {
+    const { $refs } = useQuasar()
+    
     const activeSmeta = ref()
-    const tab = ref()
+    const tab = ref('')
+    const tabs = ref()
+    const subTab = ref()
+
+    const optionstab = ref([
+      {
+        value: '5',
+        label: 'Согласовано',
+        active: true,
+      },
+      {
+        value: '6',
+        label: 'Оплачено',
+        active: true,
+      },
+      {
+        value: '7',
+        label: 'Готово к выдаче',
+        active: true,
+      },
+      {
+        value: '8',
+        label: 'Выполнено',
+        active: true,
+      },
+    ])
+
+    const selectTab = (value) => {
+      subTab.value = ''
+      tab.value = value
+    }
 
     function colorStatus(statusId) {
       if (statusId === 1) {
@@ -556,6 +612,10 @@ export default defineComponent({
       chooseSmeta,
       goToLink,
       tab,
+      optionstab,
+      selectTab,
+      subTab,
+      tabs,
     }
   }
 })
