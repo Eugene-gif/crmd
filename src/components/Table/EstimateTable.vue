@@ -59,10 +59,13 @@
     <template #body="props">
       <q-tr
         :props="props"
+        @contextmenu.native.prevent="showContextMenu($event, props.row)"
+        @touchstart.prevent="isMobile() && showContextMenu($event, props.row)"
       >
         <q-td
           key="id"
           :props="props"
+          
         >
           <div class="status-new" v-if="props.row.new"></div>
           <div class="td-content-section">
@@ -531,10 +534,34 @@
       <div class="q-tr-separator"></div>
     </template>
   </q-table>
+
+  <q-menu 
+    ref="contextMenu" 
+    :style="menuStyle" 
+    class="q-menu-edit"
+  >
+    <q-list>
+      <q-item v-close-popup>
+        <q-item-section>
+          <q-item-label>Изменить</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item v-close-popup>
+        <q-item-section>
+          <q-item-label>Дублировать</q-item-label>
+        </q-item-section>
+      </q-item>
+      <q-item v-close-popup>
+        <q-item-section>
+          <q-item-label>Удалить</q-item-label>
+        </q-item-section>
+      </q-item>
+    </q-list>
+  </q-menu>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useQuasar } from 'quasar'
 
 export default defineComponent({
@@ -549,8 +576,8 @@ export default defineComponent({
     const activeSmeta = ref()
     const tab = ref('')
     const tabs = ref()
-    const subTab = ref()
 
+    const subTab = ref()
     const optionstab = ref([
       {
         value: '5',
@@ -573,6 +600,28 @@ export default defineComponent({
         active: true,
       },
     ])
+    
+    const contextMenu = ref(null);
+    const showContextMenu = (event, row) => {
+      event.preventDefault();
+      mouseX.value = event.clientX 
+      mouseY.value = event.clientY
+      contextMenu.value.show(event, { row });
+    };
+
+    const menuStyle = computed(() => {
+      return {
+        transform: `translateX(${mouseX.value}px) translateY(${mouseY.value}px)`
+      }
+    })
+
+    const isMobile = () => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      return /iphone|ipod|ipad|android/.test(userAgent);
+    };
+
+    const mouseX = ref(0)
+    const mouseY = ref(0)
 
     const selectTab = (value) => {
       subTab.value = ''
@@ -616,6 +665,12 @@ export default defineComponent({
       selectTab,
       subTab,
       tabs,
+      contextMenu,
+      showContextMenu,
+      menuStyle,
+      mouseX,
+      mouseY,
+      isMobile,
     }
   }
 })
