@@ -69,21 +69,21 @@
           v-if="addCustomer === true"
         >
           <q-card-section class="form-section">
-            <label class="lable-title">Фамилия</label>
-            <q-input
-              v-model="formOrderers.last_name"
-              class="my-input bg-grey-3"
-              placeholder="Введите фамилию"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
-            />
-          </q-card-section>
-          <q-card-section class="form-section">
             <label class="lable-title">Имя</label>
             <q-input
               v-model="formOrderers.first_name"
               class="my-input bg-grey-3"
               placeholder="Введите имя"
+              lazy-rules
+              :rules="[(val) => (val && val.length > 0) || '']"
+            />
+          </q-card-section>
+          <q-card-section class="form-section">
+            <label class="lable-title">Фамилия</label>
+            <q-input
+              v-model="formOrderers.last_name"
+              class="my-input bg-grey-3"
+              placeholder="Введите фамилию"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || '']"
             />

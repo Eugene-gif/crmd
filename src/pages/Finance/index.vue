@@ -75,7 +75,7 @@
             <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
             <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
           </div>
-          <q-btn
+          <!-- <q-btn
             rounded
             unelevated
             outline
@@ -83,7 +83,7 @@
             class="bg-white text-grey-5 my-btn btn-effect my-effect h-dark"
             label="Фильтр"
             icon="svguse:icons/allIcons.svg#filter-icon"
-          />
+          /> -->
         </div>
         
       </div>

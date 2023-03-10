@@ -268,7 +268,7 @@
   >
     <template v-slot:header>
       <div class="title">
-        Работает с дизайнерами
+        Работа с дизайнерами
       </div>
     </template>
 
@@ -281,10 +281,10 @@
           <div class="subtitle">
             Антон Глуханько
           </div>
-          <ActionBtn
+          <!-- <ActionBtn
             :propsEl="1"
             :offsetYX="[55, -258]"
-          />
+          /> -->
         </q-item-section>
       </q-item>
       <q-item>
@@ -295,10 +295,10 @@
           <div class="subtitle">
             СтройПро
           </div>
-          <ActionBtn
+          <!-- <ActionBtn
             :propsEl="1"
             :offsetYX="[55, -258]"
-          />
+          /> -->
         </q-item-section>
       </q-item>
       <q-item>
@@ -309,10 +309,10 @@
           <div class="subtitle">
             Антон Глуханько
           </div>
-          <ActionBtn
+          <!-- <ActionBtn
             :propsEl="1"
             :offsetYX="[55, -258]"
-          />
+          /> -->
         </q-item-section>
       </q-item>
     </q-list>
