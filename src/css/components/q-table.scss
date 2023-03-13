@@ -2876,7 +2876,9 @@
       border-radius: 3px;
     }
   }
-  
+  .q-table__top {
+    border-bottom: 1px solid #F0F0F0;
+  }
   .q-table {
     border: 1px solid $grey-3;
     border-left: none;

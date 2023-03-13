@@ -83,6 +83,26 @@
     .q-table {
       padding-left: 2.5px;
     }
+    .q-expansion-item {
+      .q-item {
+        .item {
+          transition: all 0.25s;
+          height: auto;
+          opacity: 1;
+        }
+      }
+      &--collapsed {
+        .q-item {
+          .item {
+            overflow: hidden;
+            height: 0;
+            padding: 0;
+            opacity: 0;
+          }
+        }
+      }
+    }
+
   }
   .q-expansion-item--collapsed {
     .q-expansion-item__container {

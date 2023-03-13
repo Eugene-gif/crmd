@@ -59,8 +59,9 @@
     <template #body="props">
       <q-tr
         :props="props"
-        @contextmenu.native.prevent="showContextMenu($event, props.row)"
-        @touchstart.prevent="isMobile() && showContextMenu($event, props.row)"
+        @contextmenu.prevent="showContextMenu($event, props.row)"
+        @touchstart.prevent="isMobile() && handleTouchStart($event, props.row)"
+        @click.stop=""
       >
         <q-td
           key="id"
@@ -570,9 +571,7 @@ export default defineComponent({
     columns: Array,
     rows: Array
   },
-  setup (props, { emit }) {
-    const { $refs } = useQuasar()
-    
+  setup (props, { emit }) {    
     const activeSmeta = ref()
     const tab = ref('')
     const tabs = ref()
@@ -602,11 +601,18 @@ export default defineComponent({
     ])
     
     const contextMenu = ref(null);
+    const touchStartTimeout = ref(null);
     const showContextMenu = (event, row) => {
       event.preventDefault();
       mouseX.value = event.clientX 
       mouseY.value = event.clientY
       contextMenu.value.show(event, { row });
+    };
+    const handleTouchStart = (event, row) => {
+      clearTimeout(touchStartTimeout.value);
+      touchStartTimeout.value = setTimeout(() => {
+        showContextMenu(event, row);
+      }, 500);
     };
 
     const menuStyle = computed(() => {
@@ -618,7 +624,7 @@ export default defineComponent({
     const isMobile = () => {
       const userAgent = navigator.userAgent.toLowerCase();
       return /iphone|ipod|ipad|android/.test(userAgent);
-    };
+    }
 
     const mouseX = ref(0)
     const mouseY = ref(0)
@@ -667,6 +673,7 @@ export default defineComponent({
       tabs,
       contextMenu,
       showContextMenu,
+      handleTouchStart,
       menuStyle,
       mouseX,
       mouseY,
