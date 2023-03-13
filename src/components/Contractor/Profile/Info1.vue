@@ -20,50 +20,11 @@
         </div>
       </div>
       <div class="item">
-        <!-- <div class="title">Дизайнеры на связи</div>
-        <div class="designers">
+        <div class="title">Дизайнеры на связи</div>
+        <div class="null-text">Пока не добавлены</div>
+        <!-- <div class="designers">
           <q-item class="q-item-null">
             <img src="~assets/anton.jpg" alt="">
-            <CardInfo 
-              :anchor="['bottom', 'middle']" 
-              :self="['top', 'right']" 
-              :translateY="`-25px`"
-            />
-          </q-item>
-          <q-item class="q-item-null">
-            <img src="~assets/stroipro.jpg" alt="">
-            <CardInfo 
-              :anchor="['bottom', 'middle']" 
-              :self="['top', 'right']" 
-              :translateY="`-25px`"
-            />
-          </q-item>
-          <q-item class="q-item-null">
-            <img src="~assets/anton.jpg" alt="">
-            <CardInfo 
-              :anchor="['bottom', 'middle']" 
-              :self="['top', 'right']" 
-              :translateY="`-25px`"
-            />
-          </q-item>
-          <q-item class="q-item-null">
-            <img src="~assets/stroipro.jpg" alt="">
-            <CardInfo 
-              :anchor="['bottom', 'middle']" 
-              :self="['top', 'right']" 
-              :translateY="`-25px`"
-            />
-          </q-item>
-          <q-item class="q-item-null">
-            <img src="~assets/anton.jpg" alt="">
-            <CardInfo 
-              :anchor="['bottom', 'middle']" 
-              :self="['top', 'right']" 
-              :translateY="`-25px`"
-            />
-          </q-item>
-          <q-item class="q-item-null">
-            <img src="~assets/stroipro.jpg" alt="">
             <CardInfo 
               :anchor="['bottom', 'middle']" 
               :self="['top', 'right']" 
@@ -72,7 +33,9 @@
           </q-item>
         </div> -->
       </div>
-
+      <div class="item">
+        <q-btn class="btn-base btn-flat" flat no-caps label="База дизайнеров" padding="0" />
+      </div>
     </div>
   </div>
 </template>
