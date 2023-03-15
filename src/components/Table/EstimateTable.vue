@@ -63,13 +63,11 @@
         @touchstart="handleTouchStart($event, props.row)"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
-        @touchcancel="handleTouchCancel"
         @click.stop=""
       >
         <q-td
           key="id"
           :props="props"
-          
         >
           <div class="status-new" v-if="props.row.new"></div>
           <div class="td-content-section">
@@ -603,60 +601,53 @@ export default defineComponent({
       },
     ])
     
-    const contextMenu = ref(null);
+    const contextMenu = ref(null)
 
-    const touchStartTimestamp = ref(null);
-    const touchMoveTimestamp = ref(null);
-    const touchStartTimeout = ref(null);
-    const touchMoveTimeout = ref(null);
-    const touchEndTimeout = ref(null);
-    const touchCancelTimeout = ref(null);
-    const menuRef = ref(null);
+    const touchStartTimestamp = ref(null)
+    const touchMoveTimestamp = ref(null)
+    const touchStartTimeout = ref(null)
+    const touchMoveTimeout = ref(null)
+    const touchEndTimeout = ref(null)
+    const touchCancelTimeout = ref(null)
     
     const showContextMenu = (event, row) => {
-      event.preventDefault();
+      event.preventDefault()
       mouseX.value = event.clientX 
       mouseY.value = event.clientY
       contextMenu.value.show(event, { row });
     };
     
     const handleTouchStart = (event, row) => {
-      touchStartTimeout.value = Date.now();
-      mouseX.value = event.touches[0].clientX;
-      mouseY.value = event.touches[0].clientY;
+      touchStartTimeout.value = Date.now()
+      mouseX.value = event.touches[0].clientX
+      mouseY.value = event.touches[0].clientY
       touchMoveTimeout.value = setTimeout(() => {
         contextMenu.value.show(event, { row });
-      }, 500);
+      }, 500);  
     };
 
     const handleTouchMove = () => {
-      touchMoveTimestamp.value = Date.now();
-      clearTimeout(touchStartTimeout.value);
-      clearTimeout(touchMoveTimeout.value);
-      touchMoveTimeout.value = setTimeout(() => {
-        touchStartTimestamp.value = touchMoveTimestamp.value;
-      }, 50);
+      contextMenu.value.hide()
     };
 
     const handleTouchEnd = () => {
-      clearTimeout(touchStartTimeout.value);
-      clearTimeout(touchMoveTimeout.value);
+      clearTimeout(touchStartTimeout.value)
+      clearTimeout(touchMoveTimeout.value)
       touchEndTimeout.value = setTimeout(() => {
-        touchStartTimestamp.value = null;
-        touchMoveTimestamp.value = null;
+        touchStartTimestamp.value = null
+        touchMoveTimestamp.value = null
       }, 100);
     };
 
     const handleTouchCancel = () => {
-      clearTimeout(touchStartTimeout.value);
-      clearTimeout(touchMoveTimeout.value);
-      clearTimeout(touchEndTimeout.value);
+      clearTimeout(touchStartTimeout.value)
+      clearTimeout(touchMoveTimeout.value)
+      clearTimeout(touchEndTimeout.value)
       touchCancelTimeout.value = setTimeout(() => {
-        touchStartTimestamp.value = null;
-        touchMoveTimestamp.value = null;
+        touchStartTimestamp.value = null
+        touchMoveTimestamp.value = null
       }, 100);
     };
-
     const mouseX = ref(0)
     const mouseY = ref(0)
 
@@ -667,8 +658,8 @@ export default defineComponent({
     })
 
     const isMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      return /iphone|ipod|ipad|android/.test(userAgent);
+      const userAgent = navigator.userAgent.toLowerCase()
+      return /iphone|ipod|ipad|android/.test(userAgent)
     }
 
 
@@ -691,6 +682,7 @@ export default defineComponent({
     function openSmeta(val) {
       activeSmeta.value = val
       emit('openSmeta', val)
+      contextMenu.value.hide()
     }
     function editModal(val, field) {
       emit('editModal', val, field)
@@ -702,6 +694,8 @@ export default defineComponent({
     function goToLink(link) {
       window.open(link, '_blank');
     }
+
+
     return {
       activeSmeta,
       colorStatus,
@@ -720,12 +714,11 @@ export default defineComponent({
       menuStyle,
       mouseX,
       mouseY,
-      menuRef,
       handleTouchStart,
       handleTouchMove,
       handleTouchEnd,
       handleTouchCancel,
-      isMobile
+      isMobile,
     }
   }
 })
