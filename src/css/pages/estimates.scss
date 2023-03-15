@@ -181,6 +181,13 @@
     .estimates-table-container {
       padding-top: 19px;
       margin-bottom: 32px;
+      table {
+        tr {
+          * {
+            user-select: none !important;
+          }
+        }
+      }
     }
     .prev-list {
       margin-top: 0px;

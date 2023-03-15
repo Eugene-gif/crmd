@@ -59,8 +59,11 @@
     <template #body="props">
       <q-tr
         :props="props"
-        @contextmenu.prevent="showContextMenu($event, props.row)"
-        @touchstart.prevent="isMobile() && handleTouchStart($event, props.row)"
+        @contextmenu.prevent="!isMobile() && showContextMenu($event, props.row)"
+        @touchstart="handleTouchStart($event, props.row)"
+        @touchmove="handleTouchMove"
+        @touchend="handleTouchEnd"
+        @touchcancel="handleTouchCancel"
         @click.stop=""
       >
         <q-td
@@ -601,19 +604,61 @@ export default defineComponent({
     ])
     
     const contextMenu = ref(null);
+
+    const touchStartTimestamp = ref(null);
+    const touchMoveTimestamp = ref(null);
     const touchStartTimeout = ref(null);
+    const touchMoveTimeout = ref(null);
+    const touchEndTimeout = ref(null);
+    const touchCancelTimeout = ref(null);
+    const menuRef = ref(null);
+    
     const showContextMenu = (event, row) => {
       event.preventDefault();
       mouseX.value = event.clientX 
       mouseY.value = event.clientY
       contextMenu.value.show(event, { row });
     };
+    
     const handleTouchStart = (event, row) => {
-      clearTimeout(touchStartTimeout.value);
-      touchStartTimeout.value = setTimeout(() => {
-        showContextMenu(event, row);
+      touchStartTimeout.value = Date.now();
+      mouseX.value = event.touches[0].clientX;
+      mouseY.value = event.touches[0].clientY;
+      touchMoveTimeout.value = setTimeout(() => {
+        contextMenu.value.show(event, { row });
       }, 500);
     };
+
+    const handleTouchMove = () => {
+      touchMoveTimestamp.value = Date.now();
+      clearTimeout(touchStartTimeout.value);
+      clearTimeout(touchMoveTimeout.value);
+      touchMoveTimeout.value = setTimeout(() => {
+        touchStartTimestamp.value = touchMoveTimestamp.value;
+      }, 50);
+    };
+
+    const handleTouchEnd = () => {
+      clearTimeout(touchStartTimeout.value);
+      clearTimeout(touchMoveTimeout.value);
+      touchEndTimeout.value = setTimeout(() => {
+        touchStartTimestamp.value = null;
+        touchMoveTimestamp.value = null;
+      }, 100);
+    };
+
+    const handleTouchCancel = () => {
+      clearTimeout(touchStartTimeout.value);
+      clearTimeout(touchMoveTimeout.value);
+      clearTimeout(touchEndTimeout.value);
+      touchCancelTimeout.value = setTimeout(() => {
+        touchStartTimestamp.value = null;
+        touchMoveTimestamp.value = null;
+      }, 100);
+    };
+
+    const mouseX = ref(0)
+    const mouseY = ref(0)
 
     const menuStyle = computed(() => {
       return {
@@ -626,8 +671,6 @@ export default defineComponent({
       return /iphone|ipod|ipad|android/.test(userAgent);
     }
 
-    const mouseX = ref(0)
-    const mouseY = ref(0)
 
     const selectTab = (value) => {
       subTab.value = ''
@@ -677,7 +720,12 @@ export default defineComponent({
       menuStyle,
       mouseX,
       mouseY,
-      isMobile,
+      menuRef,
+      handleTouchStart,
+      handleTouchMove,
+      handleTouchEnd,
+      handleTouchCancel,
+      isMobile
     }
   }
 })

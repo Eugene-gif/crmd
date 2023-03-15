@@ -337,15 +337,8 @@
     }
   }
   @media (max-width: 772px) {
-    border-radius: 0;
-    left: 0 !important;
-    bottom: 0 !important;
-    top: inherit !important;
-    padding: 24px 17px;
-    min-width: 105vw !important;
-    margin-left: 0 !important;
-    margin-top: 10px0 !important;
-    transform: translateX(0) translateY(0) !important;
+    width: 240px;
+    margin-left: -120px !important;
     .q-list {
       .q-item {
         .q-item__label {
