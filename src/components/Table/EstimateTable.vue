@@ -60,14 +60,38 @@
       <q-tr
         :props="props"
         @contextmenu.prevent="!isMobile() && showContextMenu($event, props.row)"
-        @touchstart="handleTouchStart($event, props.row)"
+        @touchstart="isMobile() && handleTouchStart($event, props.row)"
         @touchmove="handleTouchMove"
         @touchend="handleTouchEnd"
         @click.stop=""
       >
+        <q-menu 
+          ref="contextMenu" 
+          :style="menuStyle" 
+          class="q-menu-edit"
+        >
+          <q-list>
+            <q-item v-close-popup>
+              <q-item-section>
+                <q-item-label>Изменить</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-close-popup>
+              <q-item-section>
+                <q-item-label>Дублировать</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item v-close-popup>
+              <q-item-section>
+                <q-item-label>Удалить</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
         <q-td
           key="id"
           :props="props"
+          @click.stop=""
         >
           <div class="status-new" v-if="props.row.new"></div>
           <div class="td-content-section">
@@ -80,6 +104,7 @@
           key="name"
           :props="props"
           @dblclick="editModal(props.row, 'title')"
+          @click.stop=""
         >
           <div class="td-content-section td-content-name">
             <q-icon
@@ -126,6 +151,7 @@
           key="room"
           :props="props"
           @dblclick="editModal(props.row, 'room')"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -137,6 +163,7 @@
           key="desc"
           :props="props"
           @dblclick="editModal(props.row, 'desc')"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -148,6 +175,7 @@
           key="metrics"
           :props="props"
           @dblclick="editModal(props.row, 'metrics')"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -159,6 +187,7 @@
           key="price"
           :props="props"
           @dblclick="editModal(props.row, 'price')"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -187,10 +216,11 @@
           key="deadline"
           :props="props"
           @dblclick="editModal(props.row, 'deadline')"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
-              {{props.row.deadline}} 
+              {{props.row.deadline}}
             </div>
           </div>
         </q-td>
@@ -198,6 +228,7 @@
           key="status"
           :props="props"
           @dblclick="editModal(props.row, 'status')"
+          @click.stop=""
         >
           <div class="td-content-section td-content-status">
             <div class="status">
@@ -302,6 +333,7 @@
           key="procent"
           :props="props"
           @dblclick="editModal(props.row, 'procent')"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -312,6 +344,7 @@
         <q-td
           key="agent"
           :props="props"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -324,6 +357,7 @@
           key="brand"
           :props="props"
           class="td-brand"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -335,6 +369,7 @@
           key="code"
           :props="props"
           class="td-code"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -346,6 +381,7 @@
           key="color"
           :props="props"
           class="td-color"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -357,6 +393,7 @@
           key="file"
           :props="props"
           class="td-file"
+          @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
@@ -467,7 +504,11 @@
 
       </q-tr>
 
-      <q-tr class="q-tr-smeta q-tr-smeta-null" v-show="props.row.smetaVal" v-if="props.row.smeta">
+      <q-tr 
+        class="q-tr-smeta q-tr-smeta-null" 
+        v-show="props.row.smetaVal"
+        v-if="props.row.smeta"
+      >
         <q-td key="id" class="td-id"/>
         <q-td class="td-name">
           <div class="td-content-section">
@@ -537,29 +578,7 @@
     </template>
   </q-table>
 
-  <q-menu 
-    ref="contextMenu" 
-    :style="menuStyle" 
-    class="q-menu-edit"
-  >
-    <q-list>
-      <q-item v-close-popup>
-        <q-item-section>
-          <q-item-label>Изменить</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item v-close-popup>
-        <q-item-section>
-          <q-item-label>Дублировать</q-item-label>
-        </q-item-section>
-      </q-item>
-      <q-item v-close-popup>
-        <q-item-section>
-          <q-item-label>Удалить</q-item-label>
-        </q-item-section>
-      </q-item>
-    </q-list>
-  </q-menu>
+  
 </template>
 
 <script>
@@ -611,6 +630,7 @@ export default defineComponent({
     const touchCancelTimeout = ref(null)
     
     const showContextMenu = (event, row) => {
+      contextMenu.value.hide()
       event.preventDefault()
       mouseX.value = event.clientX 
       mouseY.value = event.clientY
@@ -618,6 +638,7 @@ export default defineComponent({
     };
     
     const handleTouchStart = (event, row) => {
+      contextMenu.value.hide()
       touchStartTimeout.value = Date.now()
       mouseX.value = event.touches[0].clientX
       mouseY.value = event.touches[0].clientY

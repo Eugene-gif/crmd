@@ -17,6 +17,20 @@
       }
     }
   }
+  .choise-category {
+    margin-top: 37px;
+    .sec-check {
+      .q-checkbox {
+        margin-left: 5px;
+        margin-bottom: 5px;
+        .q-checkbox__label {
+          .q-icon {
+            margin-left: 12px;
+          }
+        }
+      }
+    }
+  }
 
   @media (max-width: 772px) {
     .sectiobn-btns {
@@ -2325,6 +2339,7 @@
                 font-weight: 500;
                 font-size: 55px;
                 line-height: 55px;
+                margin-top: 3px;
               }
               .new {
                 font-weight: 500;

@@ -87,6 +87,21 @@
       </div>   
     </div>
 
+    <div class="choise-category">
+      <div class="sec-check">
+        <q-checkbox
+          v-for="check in tabs"
+          :key="check"
+          v-model="checkActive"
+          :label="check.name"
+          class="q-checkbox-choice no-shadow"
+          aria-checked="true"
+        >
+          <q-icon name="svguse:icons/allIcons.svg#close-checkbox" size="12px" />
+        </q-checkbox>
+      </div>
+    </div>
+
     <div class="sorted">
       <div class="sorted-section mb-visible">
         <div class="title">Сортировка: </div>
@@ -538,8 +553,25 @@ export default {
       },
     ])
 
+    const checkActive = ref(null)
+    const tabs = ref([
+      { 
+        "id": 1, 
+        "name": "Проектирование и строительство", 
+      },
+      { 
+        "id": 2, 
+        "name": "Благоустройство территории", 
+      },
+      { 
+        "id": 3, 
+        "name": "Мебель на заказ", 
+      },
+    ])
 
     return {
+      checkActive,
+      tabs,
       model: ref('Любой'),
       model2: ref('Любой'),
       options: [
