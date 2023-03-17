@@ -232,7 +232,6 @@
   .q-item {
     padding: 0;
     flex-direction: column;
-    
     .q-focus-helper {
       display: none; 
     }
@@ -294,6 +293,103 @@
         text-align: right;
         color: #FFFFFF;
         text-decoration: none;
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    max-width: 230px !important;
+    max-height: max-content !important;
+    .q-item {
+      padding: 0;
+      flex-direction: column;
+      position: relative;
+      .q-focus-helper {
+        display: none; 
+      }
+      .head {
+        flex: 0 0 100%;
+        padding: 20px;
+        border-bottom: 0;
+        justify-content: flex-start;
+        .name {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          flex-wrap: nowrap;
+          flex: 0 0 max-content;
+          img {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+          }
+          .q-item__label {
+            margin-left: 10px;
+            .name-user {
+              font-weight: 500;
+              font-size: 16px;
+              line-height: 16px;
+            }
+            .email-user {
+              font-size: 12px;
+              line-height: 12px;
+              margin-top: 0;
+              position: absolute;
+              border-top: 1px solid rgba(240, 240, 240, 0.3);
+              border-bottom: 1px solid rgba(240, 240, 240, 0.3);
+              padding: 10px 20px;
+              top: 80px;
+              left: 0;
+              min-width: 230px;
+            }
+          }
+        }
+        .reviews {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          margin-left: 0;
+          padding-left: 22px;
+          padding-right: 20px;
+          padding-bottom: 15px;
+          border-top: 1px solid rgba(240, 240, 240, 0.3);
+          padding-top: 10px;
+          .q-item__label {
+            margin-top: 4px;
+            font-size: 12px;
+            line-height: 12px;
+          }
+        }
+      }
+      .foot {
+        margin-left: 0;
+        padding: 74px 18px 61px 20px;
+        flex-direction: row;
+        .q-list-user-info {
+          .q-item {
+            &:first-child {
+              margin-right: auto;
+            }
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+        .foot__tel {
+          font-size: 12px;
+          line-height: 12px;
+          margin-top: 0;
+          position: absolute;
+          border-bottom: 1px solid rgba(240, 240, 240, 0.3);
+          padding: 10px 20px;
+          top: 113px;
+          left: 0;
+          min-width: 230px;
+          text-align: left;
+        }
       }
     }
   }

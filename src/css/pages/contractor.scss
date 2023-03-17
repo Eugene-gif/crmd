@@ -21,11 +21,36 @@
     margin-top: 37px;
     .sec-check {
       .q-checkbox {
-        margin-left: 5px;
+        margin-right: 5px;
         margin-bottom: 5px;
         .q-checkbox__label {
           .q-icon {
             margin-left: 12px;
+          }
+        }
+      }
+    }
+    @media (max-width: 772px) {
+      margin-top: 20px;
+      .sec-check {
+        .q-checkbox {
+          margin-right: 4px;
+          margin-bottom: 4px;
+          padding: 6.5px 12px;
+          padding-right: 30px;
+          position: relative;
+          border-radius: 4px;
+          .q-checkbox__label {
+            font-size: 16px;
+            line-height: 16px;
+            .q-icon {
+              margin-left: 12px;
+              position: absolute;
+              right: 11px;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+            }
           }
         }
       }
@@ -46,6 +71,9 @@
     }
     .head {
       padding-top: 37px;
+      position: relative;
+      left: -15px;
+      width: calc(100% + 30px);
       .q-btn {
         width: 100%;
         border-radius: 0;
@@ -59,6 +87,8 @@
         }
         .q-btn__content {
           flex-direction: row-reverse;
+          padding-left: 15px;
+          padding-right: 15px;
           .block {
             margin: 0;
             font-size: 18px;
@@ -76,6 +106,8 @@
         padding-bottom: 7px;
         width: 100%;
         border-bottom: 1px solid $grey-3;
+        padding-left: 15px;
+        padding-right: 15px;
         &:nth-child(2) {
           margin-left: 0;
         }

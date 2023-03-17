@@ -73,18 +73,6 @@
           popup-content-class="tooltip-project tooltip-project-contractor"
         />
       </div>
-      <div class="select-section row">
-        <label>Проект: </label>
-        <q-select
-          borderless
-          v-model="model2"
-          :options="options2"
-          behavior="menu"
-          popup-content-class="tooltip-project tooltip-project-contractor"
-          anchor="bottom left" self="top right"
-          dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
-        />
-      </div>   
     </div>
 
     <div class="choise-category">
@@ -565,7 +553,15 @@ export default {
       },
       { 
         "id": 3, 
+        "name": "Внутренняя отделка и ремонт", 
+      },
+      { 
+        "id": 4, 
         "name": "Мебель на заказ", 
+      },
+      { 
+        "id": 5, 
+        "name": "Кухонные гарнитуры", 
       },
     ])
 
