@@ -1,5 +1,18 @@
 <template>
   <q-dialog
+    v-model="dialogChange"
+    :maximized="maximizedToggle"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog projects-dialog clients-dialog"
+  >
+    <DialogChange
+      @modalFalse="modalFalse"
+      @updateData="getAll"
+      :formData="formOrderer"
+    />
+  </q-dialog>
+  <q-dialog
     v-model="dialog"
     transition-show="fade"
     transition-hide="fade" 
@@ -12,7 +25,7 @@
   <q-expansion-item
     expand-separator
     default-opened
-    class="q-expansion-my q-expansion-my-npi foto-gallery"
+    class="q-expansion-my q-expansion-my-npi foto-gallery foto-gallery-with-desc"
   >
     <template v-slot:header>
       <div class="title">Общая информация</div>
@@ -118,6 +131,7 @@
       class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="0"
       style="max-width: 157px;"
+      @click="dialogChange = true"
     >
       <span class="block text-grey-5">Изменить</span>
     </q-btn>
@@ -131,17 +145,20 @@ import { useQuasar } from 'quasar'
 import { useStore } from 'vuex';
 
 import DialogDelite from 'components/dialog/DialogDelite'
+import DialogChange from 'pages/Сlients/DialogChange.vue'
 
 export default {
   name: 'ProfileDetilInfo',
   components: {
     DialogDelite,
+    DialogChange,
   },
   setup() {
     const $q = useQuasar()
     const store = useStore()
 
     const dialog = ref(false)
+    const dialogChange = ref(false)
     const lodingBtn = ref(false)
     const dialogName = ref()
 
@@ -209,6 +226,21 @@ export default {
         systemImage.value = true
       } 
     }
+
+    const formOrderer = ref({
+      id: 5005,
+      first_name: 'Дмитрий',
+      second_name: 'Александрович',
+      last_name: 'Андикаловский',
+      birth_date: '25.05.1998',
+      phone: '89996335522',
+      email: 'example@gmail.com',
+      soc_inst: 'https://link.com',
+      soc_wa: 'https://link.com',
+      soc_tg: 'https://link.com',
+      photo: 'http://crmd.crookedweb.ru/public/upload/2023_03_20/230/sticker-thumb.jpg',
+      personal_info: 'информация'
+    })
     
     onMounted(() => {
       getUserImage()
@@ -216,6 +248,7 @@ export default {
 
     return {
       dialog,
+      dialogChange,
       userImage,
       systemImage,
       lodingBtn,
@@ -225,6 +258,11 @@ export default {
       onFileChange,
       onRejected,
       modalFalse,
+      formOrderer,
+      modalFalse() {
+        dialogChange.value = false
+        dialog.value = false
+      },
     }
   },
 }

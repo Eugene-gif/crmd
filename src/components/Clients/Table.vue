@@ -153,7 +153,16 @@
         </q-tr>
       </template>
     </q-table>
-
+    <q-btn
+      unelevated 
+      no-caps
+      class="my-btn-custom-big my-btn-custom-big-add bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
+      padding="5px 25px"
+      @click="dialog = true"
+    >
+      <span class="block text-grey-5">Добавить проект</span>
+      <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" style="margin-left: auto;" />
+    </q-btn>
   </q-expansion-item>
   
 </template>

@@ -39,6 +39,7 @@
       <Info />
       <PhotoGallery />
       <Table />
+      <Documents />
 
     </div>
   </q-page>
@@ -49,12 +50,14 @@ import { ref, onMounted, computed } from "vue";
 import Info from "components/Clients/Info";
 import PhotoGallery from "components/Clients/PhotoGallery";
 import Table from "components/Clients/Table";
+import Documents from "components/Clients/Documents";
 
 export default {
   components: {
     Info,
     PhotoGallery,
     Table,
+    Documents,
   },
   setup() {
     
