@@ -86,16 +86,12 @@ export const projectsApi = {
   createProject(formData) {
     try {
       return httpClient.post(`${url}/create`, {
-        project: {
-          data: {
-            name: formData.name,
-            address: formData.adress,
-            square: formData.square,
-            project_type_id: formData.project_type_id,
-            orderer: formData.orderer,
-            emoji: formData.emoji
-          }
-        }
+        name: formData.name,
+        address: formData.adress,
+        square: formData.square,
+        project_type_id: formData.project_type_id,
+        orderer_id: '987b210f-289f-4264-ae81-ae3bf093109c',
+        emoji: formData.emoji
       }).then(({ data }) => {
         return data
       })

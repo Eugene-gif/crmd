@@ -243,6 +243,26 @@
       }
     }
   }
+  &.q-expansion-item--collapsed {
+    .q-expansion-item__container {
+      & > .q-item {
+        .q-item__section--side {
+          .q-icon {
+            transform: rotate(180deg) !important;
+          }
+        }
+      } 
+    }
+  }
+  &.q-expansion-my-npi {
+    .q-expansion-item__container {
+      & > .q-item {
+        .q-item__section--side {
+          margin-left: 29px;
+        }
+      }
+    }
+  }
   @media (max-width: 772px ) {
     .q-expansion-item__container {
       .q-card {
@@ -268,6 +288,15 @@
             height: auto;
             background: none;
             margin-left: 10px;
+          }
+        }
+      }
+    }
+    &.q-expansion-my-npi {
+      .q-expansion-item__container {
+        & > .q-item {
+          .q-item__section--side {
+            margin-left: 0px;
           }
         }
       }

@@ -81,6 +81,10 @@ const routes = [
         component: () => import('src/pages/Сlients/Index.vue') 
       },
       { 
+        path: '/clients/:id',
+        component: () => import('src/pages/Сlients/Id.vue') 
+      },
+      { 
         path: '/estimates/:id',
         component: () => import('src/pages/Estimates/Id.vue') 
       },

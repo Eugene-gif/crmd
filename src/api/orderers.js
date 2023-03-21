@@ -1,7 +1,7 @@
 import httpClient from "./httpClient.js";
 
 const url = 'orderers'
-const photoUrl = 
+
 
 function getMyDate(time) {
   let respDate = new Date(time)
@@ -116,20 +116,20 @@ export const orderersApi = {
   createOrderers(data) {
     const formData = new FormData()
     // formData.append("orderer[data][user_id]", data.user_id)
-    formData.append("orderer[data][first_name]", data.first_name)
-    formData.append("orderer[data][second_name]", data.second_name)
-    formData.append("orderer[data][last_name]", data.last_name)
-    formData.append("orderer[data][birth_date]", data.birth_date)
-    formData.append("orderer[data][phone]", data.phone)
-    formData.append("orderer[data][email]", data.email)
-    formData.append("orderer[data][soc_inst]", data.soc_inst)
-    formData.append("orderer[data][soc_wa]", data.soc_wa)
-    formData.append("orderer[data][soc_tg]", data.soc_tg)
+    formData.append("first_name", data.first_name)
+    formData.append("second_name", data.second_name)
+    formData.append("last_name", data.last_name)
+    formData.append("birth_date", data.birth_date)
+    formData.append("phone", data.phone)
+    formData.append("email", data.email)
+    formData.append("soc_inst", data.soc_inst)
+    formData.append("soc_wa", data.soc_wa)
+    formData.append("soc_tg", data.soc_tg)
     if (data.photo) {
-      formData.append("orderer[data][photo]", data.photo)
+      formData.append("photo", data.photo)
     }
-    formData.append("orderer[data][personal_info]", data.personal_info)
-    formData.append("orderer[data][second_name]", data.second_name)
+    formData.append("personal_info", data.personal_info)
+    formData.append("second_name", data.second_name)
     try {
       return httpClient({
         method: "post",

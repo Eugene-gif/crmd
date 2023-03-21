@@ -38,3 +38,38 @@
     }
   }
 }
+
+.page-clients-single {
+  .head {
+    .sectiobn-btns {
+      margin-top: 39px;
+    }
+    .info-2 {
+      margin-top: 50px;
+      margin-bottom: 60px;
+    }
+  }
+  .foto-gallery {
+    .my-btn-custom-big {
+      margin-top: 40px;
+    }
+  }
+  .projects {
+    .q-expansion-item__container > .q-item {
+      padding: 35px 0 21px 0;
+    }
+    .q-table__container {
+      padding-top: 10px;
+      .q-table__middle {
+        overflow: hidden;
+      }
+      .q-table {
+        padding-top: 0;
+        thead {
+          display: none;
+        }
+      }
+    }
+  }
+
+}
