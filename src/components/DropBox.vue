@@ -37,7 +37,8 @@
         <q-icon
           class="bg-grey-3"
           name="svguse:icons/FinanceTable.svg#warning"
-          style="border-radius: 5px;"
+          size="14px"
+          style="border-radius: 100%;"
           @click.stop
         >
           <q-menu class="q-menu-userinfo">

@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="item">
-        <div class="title">
+        <div class="title" style="display: block;">
           Ожидается гонорар
         </div>
         <div class="number">

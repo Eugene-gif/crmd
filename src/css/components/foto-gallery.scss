@@ -153,6 +153,9 @@
             flex: 1 1 max-content;
             display: flex;
             flex-direction: column;
+            @media (min-width: 772px) {
+              min-width: 336px;
+            }
             .sec {
               display: flex;
               align-items: center;
@@ -195,6 +198,11 @@
             margin-right: 28px;
             img {
               margin-right: 10px;
+            }
+            .block {
+              font-size: 16px;
+              color: #444444;
+              font-weight: 400;
             }
           }
         }

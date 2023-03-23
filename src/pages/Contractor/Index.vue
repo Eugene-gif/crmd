@@ -73,22 +73,23 @@
           popup-content-class="tooltip-project tooltip-project-contractor"
         />
       </div>
-    </div>
-
-    <div class="choise-category">
-      <div class="sec-check">
-        <q-checkbox
-          v-for="check in tabs"
-          :key="check"
-          v-model="checkActive"
-          :label="check.name"
-          class="q-checkbox-choice no-shadow"
-          aria-checked="true"
-        >
-          <q-icon name="svguse:icons/allIcons.svg#close-checkbox" size="12px" />
-        </q-checkbox>
+      <div class="choise-category">
+        <div class="sec-check">
+          <q-checkbox
+            v-for="check in tabs"
+            :key="check"
+            v-model="checkActive"
+            :label="check.name"
+            class="q-checkbox-choice no-shadow"
+            aria-checked="true"
+          >
+            <q-icon name="svguse:icons/allIcons.svg#close-checkbox" size="12px" />
+          </q-checkbox>
+        </div>
       </div>
     </div>
+
+    
 
     <div class="sorted">
       <div class="sorted-section mb-visible">

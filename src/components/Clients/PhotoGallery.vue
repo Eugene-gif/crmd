@@ -66,7 +66,8 @@
           <q-btn
             unelevated 
             no-caps
-            class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom btn-custom-del mb-visible"
+            class="bg-grey-3 my-btn my-effect h-opacity btn-custom btn-custom-del mb-visible"
+            style="width: 100%;"
             padding="0"
             @click="callDelDialog('delAvatar')"
           >
