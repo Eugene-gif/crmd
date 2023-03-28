@@ -1,35 +1,29 @@
 <template>
   <div class="info-1">
     <div class="continer">
-      <div class="item">
-        <div class="title">Проектов доступно</div>
-        <div class="number">
-          <span>0</span>
-          <!-- <div class="new">
-            0 новых
-          </div> -->
+      <div class="item item-mb-nowrap">
+        <div class="title title-mowrap">
+          Мои заказчики
+          <div class="circle-plus bg-positive">
+            <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" color="white" />
+          </div>
         </div>
-      </div>
-      <div class="item">
-        <div class="title">Смет доступно</div>
-        <div class="number">
-          <span>0</span>
-          <!-- <div class="new">
-            0 новых
-          </div> -->
-        </div>
-      </div>
-      <div class="item">
-        <div class="title">Дизайнеры на связи</div>
-        <!-- <div class="null-text">Пока не добавлены</div> -->
         <UsersOnline :list="listUsers" />
       </div>
       <div class="item">
+       
+      </div>
+      <div class="item">
+        <div class="title">Мои подрядчики</div>
+        <!-- <div class="null-text">Пока не добавлены</div> -->
+        <UsersOnline :list="listUsers" />
+      </div>
+      <div class="item mb-no-mt">
         <q-btn 
           class="btn-base btn-flat" 
           flat 
           no-caps 
-          label="База дизайнеров" 
+          label="База подрядчиков" 
           padding="0" 
         />
       </div>
@@ -38,7 +32,7 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
+import { ref } from 'vue'
 import CardInfo from 'components/CardInfo'
 import UsersOnline from 'components/Contractor/Profile/UsersOnline'
 

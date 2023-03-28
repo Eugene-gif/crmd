@@ -307,10 +307,13 @@ a.q-btn.lg-visible {
 @import 'pages/contractor';
 @import 'pages/clients';
 @import 'pages/estimates';
+@import 'pages/profile';
 
 // modile
-.mb-visible {
-  display: none;
+@media (min-width: 772px) {
+  .mb-visible {
+    display: none !important;
+  }
 }
 .lg-visible {
   display: initial;
@@ -410,4 +413,10 @@ input[type='number'] {
 
 .q-icon {
   transform: translate3d(0,0,0) !important;
+}
+
+@media (max-width: 772px) {
+  .mb-no-mt {
+    margin-top: 0 !important; 
+  }
 }

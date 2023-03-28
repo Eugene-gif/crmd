@@ -3259,3 +3259,126 @@
   }
     
 }
+
+.table-castom-head {
+  .q-table {
+    thead {
+      transform: translateY(0);
+      tr {
+        th {
+          border-bottom: 0;
+          opacity: 1;
+          padding-bottom: 9px;
+          span {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 18px;
+            color: #000000;
+          }
+          &:nth-child(2) {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+.designer-prifle-table {
+  .q-table {
+    padding-top: 0;
+    tbody {
+      tr {
+        height: 67px;
+      }
+    }
+  }
+  .q-table__bottom {
+    min-height: 30px;
+  }
+}
+
+@media(max-width: 772px) {
+  .designer-prifle-table {
+    .q-table {
+      border-spacing: 0 6px;
+      padding-top: 0;
+      tbody {
+        tr {
+          height: max-content;
+          display: flex;
+          flex-wrap: wrap;
+          border: 1px solid #F0F0F0;
+          border-radius: 8px;
+          align-items: center;
+          padding: 18px 0 0 0;
+          margin-bottom: 5px;
+          
+          td {
+            border: none;
+            flex: 0 0 100%;
+            width: 100%;
+            padding: 0 20px !important;
+            border: none !important;
+            height: max-content;
+            margin-bottom: 6px !important;
+            .content {
+              padding-bottom: 0;
+            }
+            .btn-sec {
+              display: flex;
+              justify-content: flex-start;
+            }
+            &.q-td-name {
+              margin-bottom: 14px !important;
+              .content {
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                .circle-warning-26 {
+                  min-width: 15px;
+                  height: 15px;
+                  .q-icon {
+                    font-size: 15px !important;
+                  }
+                }
+              }
+            }
+            &:nth-child(2) {
+              .content {
+                &:before {
+                  content: 'Стоимость: ';
+                }
+              }
+            }
+            &:nth-child(3) {
+              .content {
+                &:before {
+                  content: 'Срок: ';
+                }
+              }
+            }
+            &.q-td-action {
+              margin-bottom: 0;
+              border-top: 1px solid #F0F0F0 !important;
+              padding-top: 11px !important;
+              border-radius: 0;
+              margin-top: 12px;
+              margin-bottom: 15px !important;
+              .btn-sec {
+                justify-content: center;
+              }
+            }
+          }
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+    .q-table__bottom {
+      display: none;
+    }
+  }
+  
+}

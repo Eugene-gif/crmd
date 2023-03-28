@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page-contractor-single page-profile">
+  <q-page class="page-contractor-single page-profile designer-profile">
     <div class="row justify-between items-center">
       <div class="text-h2">{{companyName}}</div>
       <q-icon
@@ -15,17 +15,11 @@
         <Info1 />
         <Info2 />
         <DetailInfo />
-
-        <div class="branch-managers">
-          <Fillials />
-        </div>
-
-        <ActivityCategory />
-        <TermsDesigners />
+        <Services />
+        <TermsContractors />
         <RequisitesDocuments />
-        <TwoThreeD />
+        <MyFiles />
         <ProfilePhotos />
-        <ProfileReviews />
 
       </div>
     </div>
@@ -36,16 +30,17 @@
 import { ref, onMounted } from 'vue'
 import { inject } from 'vue'
 import CardInfo from 'components/CardInfo'
-import Info1 from 'components/Contractor/Profile/Info1'
-import Info2 from 'components/Contractor/Profile/Info2'
+import Info1 from 'components/Designer/Info'
+import Info2 from 'components/Designer/Info2'
+
 import DetailInfo from 'components/Contractor/Profile/DetailInfo'
+import Services from 'components/Designer/Services'
 import Fillials from 'components/Contractor/Profile/Fillials'
 import ActivityCategory from 'components/Contractor/Profile/ActivityCategory'
-import TermsDesigners from 'components/Contractor/Profile/TermsDesigners'
+import TermsContractors from 'components/Designer/TermsContractors'
 import RequisitesDocuments from 'components/Contractor/Profile/RequisitesDocuments'
-import TwoThreeD from 'components/Contractor/Profile/TwoThreeD'
-import ProfilePhotos from 'components/Contractor/Profile/ProfilePhotos'
-import ProfileReviews from 'components/Contractor/Profile/ProfileReviews'
+import MyFiles from 'components/Designer/MyFiles'
+import ProfilePhotos from 'components/Designer/ProfilePhotos'
 
 export default {
   name: 'ProfileСontractor',
@@ -54,13 +49,13 @@ export default {
     Info1,
     Info2,
     DetailInfo,
+    Services,
     Fillials,
     ActivityCategory,
-    TermsDesigners,
+    TermsContractors,
     RequisitesDocuments,
-    TwoThreeD,
+    MyFiles,
     ProfilePhotos,
-    ProfileReviews
   },
 
   setup () {

@@ -77,6 +77,10 @@ const routes = [
         component: () => import('src/pages/Contractor/Profile.vue') 
       },
       { 
+        path: '/designer/profile/:id',
+        component: () => import('src/pages/Designer/Profile.vue') 
+      },
+      { 
         path: '/clients',
         component: () => import('src/pages/Сlients/Index.vue') 
       },
