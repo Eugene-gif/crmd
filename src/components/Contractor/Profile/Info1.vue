@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="item">
-        <div class="title">Дизайнеры на связи</div>
+        <div class="title">Дизайнеры <br class="lg-visible">на связи</div>
         <!-- <div class="null-text">Пока не добавлены</div> -->
         <UsersOnline :list="listUsers" />
       </div>

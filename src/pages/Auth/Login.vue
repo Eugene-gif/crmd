@@ -185,9 +185,6 @@ export default {
                 window.location.href = '/#/role'
               }, 500)
             } 
-            
-              
-            
           }
         }
       },

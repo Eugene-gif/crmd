@@ -30,7 +30,7 @@
         letter-spacing: -0.02em;
         color: #444444;
         min-height: 26px;
-        display: flex;
+        display: flex !important;
         align-items: center;
         .circle-plus {
           margin-left: 12px;

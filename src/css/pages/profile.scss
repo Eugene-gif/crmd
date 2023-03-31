@@ -59,6 +59,9 @@
                   margin-left: 12px;
                 }
               }
+              @media (min-width: 772px) {
+                min-height: 26px;
+              }
             }
             .number {
               display: flex;

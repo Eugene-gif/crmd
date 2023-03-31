@@ -16,16 +16,16 @@
       />
     </template>
 
-    <div class="no-data" v-show="!isActive.designer &&  term_bid === 0">
+    <div class="no-data" v-show="!isActive.designer &&  rate === 0">
       <div class="text">Условия пока не указаны вами</div>
     </div>
     
 
     <div v-show="!isActive.designer">
-      <div class="desc-sec desc-sec-design bg-grey-9" v-show="term_bid !== 0">
+      <div class="desc-sec desc-sec-design bg-grey-9" v-show="rate !== 0">
         <div class="information">
           <div class="number">
-            {{term_bid}}%
+            {{rate}}%
           </div>
           <div class="subtext">
             Вознаграждение<br>
@@ -33,10 +33,10 @@
           </div>
         </div>
         <div class="text lg-visible">
-          {{term_text}}
+          {{text}}
         </div>
         <div class="text mb-visible">
-          {{term_text}}
+          {{text}}
         </div>
       </div>
       <q-btn
@@ -55,16 +55,16 @@
         <q-list>
           <q-item class="q-item-textarea">
             <div class="title">Условия выплаты</div>
-            <q-input type="textarea" v-model="term_text" class="my-input bg-grey-3 my-textarea" placeholder="Опишите условия" />
+            <q-input type="textarea" v-model="text" class="my-input bg-grey-3 my-textarea" placeholder="Опишите условия" />
           </q-item>
         </q-list>
         <q-list>
           <q-item class="q-item-reward">
             <div class="title">Вознаграждение</div>
             <q-input
-              v-model="term_bid" type="number"
+              v-model="rate" type="number"
               class="my-input bg-grey-3 q-field__no-append"
-              :error="isValid(term_bid)"
+              :error="isValid(rate)"
               placeholder="Введите значение"
             >
               <span class="procent">%</span>
@@ -120,14 +120,14 @@ export default {
       else return false
     }
 
-    const term_bid = ref()
-    const term_text = ref('')
+    const rate = ref()
+    const text = ref('')
 
     async function getData() {
       try {
         await contractorApi.getSetTerms().then(resp => {
-          term_bid.value = resp.term_bid
-          term_text.value = resp.term_text
+          rate.value = resp.rate
+          text.value = resp.text
         })
       } catch (err) {
         $q.notify({
@@ -139,19 +139,19 @@ export default {
     }
 
     async function updateData() {
-      if (isValid(term_bid.value)) {
+      if (isValid(rate.value)) {
         return false
       } else {
         lodingBtn.value = true
         isActive.value.designer = !isActive.value.designer
         let obj = {
-          term_bid: term_bid.value,
-          term_text: term_text.value
+          rate: rate.value,
+          text: text.value
         }
         try {
           await contractorApi.updateSetTerms(obj).then(resp => {
-            term_bid.value = resp.term_bid
-            term_text.value = resp.term_text
+            rate.value = resp.rate
+            text.value = resp.text
             $q.notify({
               color: 'positive',
               message: 'Данные обновлены'
@@ -175,8 +175,8 @@ export default {
 
     return {
       isActive,
-      term_bid,
-      term_text,
+      rate,
+      text,
       lodingBtn,
       start,
       updateData,
