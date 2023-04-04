@@ -27,7 +27,7 @@
           dense
           class="q-tabs-null q-tabs-role"
         >
-          <q-tab name="mails">
+          <q-tab name="2">
             <div class="title">Дизайнер</div>
             <div class="text">
               Добавьте информацию <br>
@@ -35,7 +35,7 @@
               и проектах. Ведите сметы, выдавайте доступ к ним подрядчикам, чтобы получить их предложения цены и условия агентских вознаграждений.
             </div>
           </q-tab>
-          <q-tab name="alarms">
+          <q-tab name="3">
             <div class="title">Подрядчик</div>
             <div class="text">
               Укажите свои услуги 
@@ -68,11 +68,8 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-import { useStore } from 'vuex';
-import { useQuasar } from 'quasar'
+import { ref} from 'vue'
 import { userApi } from 'src/api/user';
-import { contractorApi } from 'src/api/contractor'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
@@ -83,7 +80,7 @@ export default {
     LoaderDate
   },
   setup () {
-    const tab = ref('mails')
+    const tab = ref()
 
     async function onSubmit() {
       try {
@@ -91,7 +88,7 @@ export default {
           let user = localStorage.getItem('userInfo')
           let userObj = JSON.parse(user)
           userObj.email_verified_at = true
-          userObj.role.id = 3
+          userObj.role.id = tab.value
 
           let userInfo = JSON.stringify(userObj)
           localStorage.setItem('userInfo', userInfo)

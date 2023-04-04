@@ -43,58 +43,103 @@ const routes = [
   },
   {
     path: '/',
-    meta: {
-      requireLogin: true
-    },
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { 
         path: '',
-        component: () => import('pages/Index.vue') 
+        component: () => import('pages/Index.vue'),
+        meta: {
+          requireLogin: true,
+          role: [2,3]
+        }
       },
       { 
         path: '/finance',
-        component: () => import('pages/Finance/index.vue') 
+        component: () => import('pages/Finance/index.vue'),
+        meta: {
+          requireLogin: true,
+          role: [2,3]
+        }
       },
       { 
         path: '/projects',
-        component: () => import('src/pages/Project/List.vue') 
+        component: () => import('src/pages/Project/List.vue'),
+        meta: {
+          requireLogin: true,
+          role: [2,3]
+        }
       },
       { 
         path: '/id',
-        component: () => import('src/pages/Project/Id.vue') 
+        component: () => import('src/pages/Project/Id.vue'),
+        meta: {
+          requireLogin: true,
+          role: [2,3]
+        }
       },
       { 
         path: '/contractor',
-        component: () => import('src/pages/Contractor/Index.vue') 
+        component: () => import('src/pages/Contractor/Index.vue'),
+        meta: {
+          requireLogin: true,
+          role: 3
+        }
       },
       { 
         path: '/contractor/:id',
-        component: () => import('src/pages/Contractor/Id.vue') 
+        component: () => import('src/pages/Contractor/Id.vue'),
+        meta: {
+          requireLogin: true,
+          role: 3
+        }
       },
       { 
         path: '/contractor/profile/:id',
-        component: () => import('src/pages/Contractor/Profile.vue') 
+        component: () => import('src/pages/Contractor/Profile.vue'),
+        meta: {
+          requireLogin: true,
+          role: 3
+        }
       },
       { 
         path: '/designer/profile/:id',
-        component: () => import('src/pages/Designer/Profile.vue') 
+        component: () => import('src/pages/Designer/Profile.vue'),
+        meta: {
+          requireLogin: true,
+          role: 2
+        }
       },
       { 
         path: '/clients',
-        component: () => import('src/pages/Сlients/Index.vue') 
+        component: () => import('src/pages/Сlients/Index.vue'),
+        meta: {
+          requireLogin: true,
+          role: 2
+        }
       },
       { 
         path: '/clients/:id',
-        component: () => import('src/pages/Сlients/Id.vue') 
+        component: () => import('src/pages/Сlients/Id.vue'),
+        meta: {
+          requireLogin: true,
+          role: 2
+        }
       },
       { 
         path: '/estimates/:id',
-        component: () => import('src/pages/Estimates/Id.vue') 
+        component: () => import('src/pages/Estimates/Id.vue'),
+        meta: {
+          requireLogin: true,
+          role: [2,3]
+        }
       },
       { 
         path: '/estimates',
-        component: () => import('src/pages/Estimates/Index.vue') 
+        component: () => import('src/pages/Estimates/Index.vue'),
+        meta: {
+          requireLogin: true,
+          role: [2,3]
+        }
       },
     ]
   },

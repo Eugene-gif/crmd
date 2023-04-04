@@ -38,7 +38,7 @@
             val => val !== null && val !== '' || ''
           ]"
         >
-          <template v-slot:after @click="passEye1">
+          <template v-slot:after>
             <q-icon
               @click="passEye1 = !passEye1"
               v-show="!passEye1"
@@ -133,6 +133,7 @@ export default {
       async onSubmit () {
         loading.value = true
         if (accept.value !== true) {
+          localStorage.clear()
           try {
             await authApi.doLogin(form.value).then(resp => {
               let token = resp.data.data.token

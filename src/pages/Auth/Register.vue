@@ -83,7 +83,7 @@
             val => val.length > 6, val !== null, val !== '' || ''
           ]"
         >
-          <template v-slot:after @click="passEye1">
+          <template v-slot:after>
             <q-icon
               @click="passEye1 = !passEye1"
               v-show="!passEye1"
@@ -106,9 +106,9 @@
           lazy-rules
           :rules="[
             val => val.length > 6, val !== null, val !== '' || ''
-          ]"
-        >
-          <template v-slot:after @click="passEye1">
+          ]" 
+        > 
+          <template v-slot:after>
             <q-icon
               @click="passEye2 = !passEye2"
               v-show="!passEye2"
@@ -197,6 +197,7 @@ export default {
     async function onSubmit () {
       loading.value = true
       if (isValidPass.value) {
+        
         try {
           await authApi.doRegister(form.value).then(resp => {
             const token = resp.data.data.token

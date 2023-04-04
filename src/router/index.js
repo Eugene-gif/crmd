@@ -16,11 +16,28 @@ export default route(function ({ store, ssrContext }) {
   })
 
   Router.beforeEach((to, from, next) => {
+    // const auth = store.state.auth
+    // if (to.matched.some(record => record.meta.requireLogin) && !auth.isAuthenticated) {
+    //   next({path: '/login'})
+    // } else {
+    //   next()
+    // }
+
     const auth = store.state.auth
-    if (to.matched.some(record => record.meta.requireLogin) && !auth.isAuthenticated) {
-      next({path: '/login'})
+    const role = store.state.auth.me.role.id
+
+    if (to.meta.requireLogin && !auth.isAuthenticated) {
+      next({ path: '/login' })
     } else {
-      next()
+      const requiredRole = to.meta.role
+
+      if (requiredRole === 2 && role !== 2) {
+        next({ path: '/' })
+      } else if (requiredRole === 3 && role !== 3) {
+        next({ path: '/' })
+      } else {
+        next()
+      }
     }
   })
 

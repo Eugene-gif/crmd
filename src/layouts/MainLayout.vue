@@ -267,39 +267,6 @@ import EssentialLink from 'components/EssentialLink.vue'
 import Notifications from 'components/MainLayout/Notifications.vue'
 import { useRouter } from 'vue-router';
 
-const linksList = [
-  {
-    title: 'Проекты',
-    link: '/projects',
-    number: 6
-  },
-  {
-    title: 'Сметы',
-    link: '/estimates',
-    number: 43
-  },
-  {
-    title: 'Финансы',
-    link: '/finance',
-    number: null
-  },
-  {
-    title: 'Заказчики',
-    link: '/clients',
-    number: 2
-  },
-  {
-    title: 'Подрядчики',
-    link: '/contractor',
-    number: 150
-  },
-  {
-    title: 'Документы',
-    link: '/documents',
-    number: null
-  }
-];
-
 const links = [
   {
     title: 'О проекте',
@@ -406,12 +373,16 @@ export default ({
     const qCardHeaderMenu = ref()
     const InputSerachMobile = ref()
     const mobIconOpenSearch = ref()
+    const essentialLinks = ref([])
+
 
     const router = useRouter();
     const store = useStore()
     
     const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)
     const me = computed(() => store.state['auth'].me)
+    const linki = computed(() => store.getters["auth/getLinks"]);
+
 
     const userNikeName = computed(() => {
       let name = userInfo.value.user_name
@@ -423,11 +394,6 @@ export default ({
       return name+lastName
     })
 
-    onMounted(() => {
-      window.addEventListener('click', dropdown)
-      window.addEventListener('click', dropdownMob)
-      // getUser()
-    })
     
     function dropdown(e){
       let el = qCardHeaderMenu.value.$el
@@ -459,27 +425,22 @@ export default ({
     })   
     
     onMounted(() => {
-      let user = localStorage.getItem('userInfo')
-      let userObj = JSON.parse(user)
+      window.addEventListener('click', dropdown)
+      window.addEventListener('click', dropdownMob)
 
-      // console.log(user)
-      if (userObj.role === '') {
-        window.location.href = '/#/role'
-      }
-      if (userObj.email_verified_at === null) {
-        window.location.href = '/#/setemail'
-      }
+      essentialLinks.value  = linki.value
       
     })
     return {
       userInfo, 
       me,
+      linki,
       // getUser,
       userNikeName,
 
       showing,
       showingMob,
-      essentialLinks: linksList,
+      essentialLinks,
       links,
       serchBox,
       headerMenu,

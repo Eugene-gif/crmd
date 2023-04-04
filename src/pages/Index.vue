@@ -11,7 +11,13 @@ export default defineComponent({
   name: 'PageIndex',
   setup() {
     onMounted(() => {
-      window.location.href = '#/contractor/profile/2'
+      let user = JSON.parse(localStorage.getItem('userInfo'))
+      if (user.role.id === 2) {
+        window.location.href = '#/designer/profile/2'
+      } if (user.role.id === 3) {
+        window.location.href = '#/contractor/profile/2'
+      }
+      
     })
     return {
 
