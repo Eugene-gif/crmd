@@ -24,20 +24,21 @@ export default route(function ({ store, ssrContext }) {
     // }
 
     const auth = store.state.auth
-    const role = store.state.auth.me.role.id
+    const role = store.state.auth.me ? store.state.auth.me.role.id : undefined
 
     if (to.meta.requireLogin && !auth.isAuthenticated) {
       next({ path: '/login' })
     } else {
       const requiredRole = to.meta.role
 
-      if (requiredRole === 2 && role !== 2) {
+      if (requiredRole === 2 && role !== undefined && role !== 2) {
         next({ path: '/' })
-      } else if (requiredRole === 3 && role !== 3) {
+      } else if (requiredRole === 3 && role !== undefined && role !== 3) {
         next({ path: '/' })
       } else {
         next()
       }
+      
     }
   })
 
