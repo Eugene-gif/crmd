@@ -68,8 +68,9 @@
 </template>
 
 <script>
-import { ref} from 'vue'
+import { onMounted, ref } from 'vue'
 import { userApi } from 'src/api/user';
+import { projectsApi } from 'src/api/projects'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
@@ -84,11 +85,11 @@ export default {
 
     async function onSubmit() {
       try {
-        await userApi.setRoleForUser().then(resp => {
+        await userApi.setRoleForUser(Number(tab.value)).then(resp => {
           let user = localStorage.getItem('userInfo')
           let userObj = JSON.parse(user)
           userObj.email_verified_at = true
-          userObj.role.id = tab.value
+          userObj.role.id = Number(tab.value)
 
           let userInfo = JSON.stringify(userObj)
           localStorage.setItem('userInfo', userInfo)
@@ -100,9 +101,29 @@ export default {
       }
     }
 
+    async function checkUser() {
+      try {
+        await projectsApi.getAll()
+      } catch (err) {
+        console.log(err)
+
+        if (err.response.status === 403) {
+          console.log()
+          if (err.response.data.data === 'EMAIL_NOT_VERIFIED') {
+            window.location.href = '/#/setemail'
+          }
+        } 
+      }
+    }
+
+    onMounted(() => {
+      checkUser()
+    })
+
     return {
       tab,
-      onSubmit
+      onSubmit,
+      checkUser
     }
   }
 }

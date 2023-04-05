@@ -47,30 +47,35 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-// import { userApi } from 'src/api/user'
+import { userApi } from 'src/api/user'
 import { authApi } from 'src/api/auth'
+import { projectsApi } from 'src/api/projects'
 
 export default {
   setup () {   
     const user = ref(JSON.parse(localStorage.getItem('userInfo')) || '')
 
     async function getRoleForUser() {
+      let user = localStorage.getItem('userInfo')
+      let userObj = JSON.parse(user)
+     
       try {
-        await authApi.getEmailVerified().then(resp => {
-          window.location.href = '/#/setemail'
-        })
+        await projectsApi.getAll()   
       } catch (err) {
         console.log(err)
-        if (err.response.status === 400) {
-          let user = localStorage.getItem('userInfo')
-          let userObj = JSON.parse(user)
-          userObj.email_verified_at = true
 
-          let userInfo = JSON.stringify(userObj)
-          localStorage.setItem('userInfo', userInfo)
-
-          window.location.href = '/#/role'
-        }
+        if (err.response.status === 403) {
+          console.log()
+          if (err.response.data.data === 'EMAIL_NOT_VERIFIED') {
+            window.location.href = '/#/setemail'
+          }
+          if (err.response.data.data === 'ROLE_NOT_SET') {
+            userObj.email_verified_at = true
+            let userInfo = JSON.stringify(userObj)
+            localStorage.setItem('userInfo', userInfo)
+            window.location.href = '/#/role'
+          }
+        } 
       }
     }
 

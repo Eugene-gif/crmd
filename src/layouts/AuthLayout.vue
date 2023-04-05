@@ -29,8 +29,7 @@ export default defineComponent({
       if (user) {
         let userObj = JSON.parse(user)
 
-        console.log(user)
-        if (userObj.role === '') {
+        if (userObj.role.id === '') {
           window.location.href = '/#/role'
         }
         if (userObj.email_verified_at === null) {

@@ -197,7 +197,7 @@ export default {
     async function onSubmit () {
       loading.value = true
       if (isValidPass.value) {
-        
+        localStorage.clear()
         try {
           await authApi.doRegister(form.value).then(resp => {
             const token = resp.data.data.token
@@ -205,13 +205,16 @@ export default {
             let userInfo = JSON.stringify(resp.data.data.user)
             localStorage.setItem('userInfo', userInfo)
             
+            authApi.getEmailVerified()
+
             if (resp.data.data.user.email_verified_at === null) {
-              setTimeout(() => {
-                window.location.href = '/#/setemail'
-              }, 500)
+              window.location.href = '/#/setemail'
+            } else if (resp.data.data.user.role.id === '') {
+              window.location.href = '/#/role'
             } else {
               window.location.href = '/'
             }
+            // window.location.href = '/#/setemail'
             
           })
           loading.value = false

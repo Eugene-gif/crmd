@@ -428,7 +428,7 @@ export default ({
       window.addEventListener('click', dropdown)
       window.addEventListener('click', dropdownMob)
 
-      essentialLinks.value  = linki.value
+      essentialLinks.value = linki.value
       
     })
     return {

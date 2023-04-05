@@ -17,7 +17,6 @@ export default defineComponent({
       } if (user.role.id === 3) {
         window.location.href = '/#/contractor/profile/2'
       }
-      
     })
     return {
 
