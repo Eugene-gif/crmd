@@ -103,7 +103,7 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import DialogUploadFiles from 'src/pages/Contractor/DialogUploadFiles'
+import DialogUploadFiles from 'components/Profile/DialogUploadFiles'
 import DialogDelite from 'components/dialog/DialogDelite'
 import { filesApi } from 'src/api/files'
 import { useQuasar } from 'quasar'

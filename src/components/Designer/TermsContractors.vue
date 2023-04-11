@@ -101,7 +101,7 @@
 import { start } from 'repl'
 import { ref, onMounted, computed } from 'vue'
 import { useQuasar } from 'quasar'
-import { contractorApi } from 'src/api/contractor'
+import { designerApi } from 'src/api/designer'
 
 export default {
   name: 'ProfileTermsDesigners',
@@ -125,7 +125,7 @@ export default {
 
     async function getData() {
       try {
-        await contractorApi.getSetTerms().then(resp => {
+        await designerApi.getSetTerms().then(resp => {
           rate.value = resp.rate
           text.value = resp.text
         })
@@ -149,7 +149,7 @@ export default {
           text: text.value
         }
         try {
-          await contractorApi.updateSetTerms(obj).then(resp => {
+          await designerApi.updateSetTerms(obj).then(resp => {
             rate.value = resp.rate
             text.value = resp.text
             $q.notify({

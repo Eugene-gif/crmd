@@ -43,8 +43,9 @@ import Fillials from 'components/Contractor/Profile/Fillials'
 import ActivityCategory from 'components/Contractor/Profile/ActivityCategory'
 import TermsDesigners from 'components/Contractor/Profile/TermsDesigners'
 import RequisitesDocuments from 'components/Contractor/Profile/RequisitesDocuments'
-import TwoThreeD from 'components/Contractor/Profile/TwoThreeD'
-import ProfilePhotos from 'components/Contractor/Profile/ProfilePhotos'
+
+import TwoThreeD from 'components/Profile/MyFiles'
+import ProfilePhotos from 'components/Profile/ProfilePhotos'
 import ProfileReviews from 'components/Contractor/Profile/ProfileReviews'
 
 export default {

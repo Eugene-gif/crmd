@@ -55,6 +55,14 @@ export function getLinks (state) {
         link: '/finance',
       },
       {
+        title: 'Заказчики',
+        link: '/clients',
+      },
+      {
+        title: 'Дизайнеры',
+        link: '/designers',
+      },
+      {
         title: 'Документы',
         link: '/documents',
       },

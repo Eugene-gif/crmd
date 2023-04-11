@@ -11,6 +11,16 @@
       :data="rowData"
     />
   </q-dialog>
+  <q-dialog
+    v-model="dialogDelModal"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite 
+      @modalFalse="modalOpenDel"
+    />
+  </q-dialog>
   <q-expansion-item
     expand-separator
     default-opened
@@ -28,6 +38,7 @@
       :columns="columns"
       row-key="id"
       hide-pagination
+      :pagination="pagination"
       class="my-table project-table table-castom-head designer-prifle-table"
     >
       <template v-slot:header-cell-id="props">
@@ -111,7 +122,7 @@
                 flat
                 class="my-btn my-effect h-opacity q-mr-md"
                 padding="0"
-                @click="openDialog(props.row)"
+                @click="openDialog(props.row, true)"
               >
                 <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="16px" class="q-mr-sm" />
                 <span class="block text-grey-5 mb-visible">Редактировать</span>
@@ -122,6 +133,7 @@
                 flat
                 class="my-btn my-effect h-opacity "
                 padding="0"
+                @click="callDelDialog('delFile', props.row.id)"
               >
                 <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
                 <span class="block text-grey-5 mb-visible">Удалить</span>
@@ -151,7 +163,7 @@
       no-caps
       class="my-btn-custom-big bg-grey-3 my-btn my-effect h-opacity btn-custom br-10"
       padding="5px 25px"
-      @click="dialog = true"
+      @click="openDialog({}, false)"
     >
       <span class="block text-grey-5">Добавить</span>
       <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" style="margin-left: auto;" />
@@ -161,89 +173,115 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import DialogDelite from 'components/dialog/DialogDelite'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import Dialog from 'pages/Designer/Dialog.vue'
+import { useQuasar } from 'quasar'
+import { designerApi } from 'src/api/designer'
 
 export default {
   components: {
     ActionBtn,
     Dialog,
+    DialogDelite
   },
   setup() {
-    const pagination = ref({
-      sortBy: '',
-      rowsPerPage: 0,
-      descending: false
-    })
+    const $q = useQuasar()
     const dialog = ref(false)
     const updateActive = ref(false)
     const rowData = ref({})
+    const dialogDelModal = ref(false)
 
     const columns = ref([
       { name: 'id', label: '', field: 'id', align: 'left' },
-      { name: 'name', label: 'Наименование услуги', field: 'name', align: 'left', sortable: true },
-      { name: 'price', label: 'Стоимость', field: 'price', align: 'left', sortable: true },
-      { name: 'deadline', label: 'Срок', field: 'deadline', align: 'left', sortable: true },
-      { name: 'pricename', label: '', field: 'pricename', align: 'left', sortable: true },
-      { name: 'action', label: '', field: 'action', align: 'right', sortable: true },
-    ])
-    const rows = ref([
-      {
-        id: 1,
-        name: 'Планировочное решение',
-        price: '200 руб.',
-        deadline: '12 дн.',
-        pricename: 'за кв. м.',
-      },
-      {
-        id: 2,
-        name: '3D-визуализация',
-        price: '1000 руб.',
-        deadline: '35 дн.',
-        pricename: 'за кв. м.',
-      },
-      {
-        id: 3,
-        name: 'Рабочая документация',
-        price: '600 руб.',
-        deadline: '25 дн.',
-        pricename: 'за кв. м.',
-      },
-      {
-        id: 4,
-        name: 'Авторское сопровождение',
-        price: '15000 руб.',
-        deadline: '30 дн.',
-        pricename: 'за услугу',
-      },
-      {
-        id: 5,
-        name: 'Комплектация объекта',
-        price: '25000 руб.',
-        deadline: '30 дн.',
-        pricename: 'за услугу',
-      },
+      { name: 'name', label: 'Наименование услуги', field: 'name', align: 'left', sortable: false },
+      { name: 'price', label: 'Стоимость', field: 'price', align: 'left', sortable: false },
+      { name: 'deadline', label: 'Срок', field: 'deadline', align: 'left', sortable: false },
+      { name: 'pricename', label: '', field: 'pricename', align: 'left', sortable: false },
+      { name: 'action', label: '', field: 'action', align: 'right', sortable: false },
     ])
     
-    function openDialog(data) {
-      updateActive.value = true
-      rowData.value = data
+    const rows = ref([])
+    
+    const dialogName = ref()
+    const delFileId = ref()
+
+    function openDialog(data, bool) {
+      if (bool) {
+        rowData.value = data
+      }
+      updateActive.value = bool
       dialog.value = true
     }
+
+    function modalOpenDel(val) {
+      dialogDelModal.value = false
+      if (dialogName.value === 'delFile' && val) delService(delFileId.value)
+      delFileId.value = null
+    }
+    function callDelDialog(modal, id) {
+      dialogName.value = modal
+      dialogDelModal.value = true
+      delFileId.value = id
+    }
+
+    async function getServices() {
+      try {
+        await designerApi.getServices().then(resp => {
+          rows.value = resp
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+    
+    async function delService(id) {
+      try {
+        await designerApi.delService(id).then(resp => {
+          getServices()
+          $q.notify({
+            color: 'positive',
+            message: 'Услуга удалена'
+          })
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+
+    onMounted(() => {
+      getServices()
+    })
 
     return {
       columns,
       rows,
-      pagination,
       updateActive,
       rowData,
       dialog,
+      dialogName,
+      modalOpenDel,
+      dialogDelModal,
       openDialog,
+      getServices,
+      delFileId,
+      callDelDialog,
+      delService,
       modalFalse() {
         dialog.value = false
-        updateActive.value = false
-        rowData.value = {}
+        getServices()
+      },
+      pagination: {
+        rowsPerPage: -1
       },
     }
   },

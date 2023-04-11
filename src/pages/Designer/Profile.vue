@@ -33,14 +33,14 @@ import CardInfo from 'components/CardInfo'
 import Info1 from 'components/Designer/Info'
 import Info2 from 'components/Designer/Info2'
 
-import DetailInfo from 'components/Contractor/Profile/DetailInfo'
+import DetailInfo from 'components/Designer/DetailInfo'
 import Services from 'components/Designer/Services'
-import Fillials from 'components/Contractor/Profile/Fillials'
-import ActivityCategory from 'components/Contractor/Profile/ActivityCategory'
+
 import TermsContractors from 'components/Designer/TermsContractors'
 import RequisitesDocuments from 'components/Contractor/Profile/RequisitesDocuments'
-import MyFiles from 'components/Designer/MyFiles'
-import ProfilePhotos from 'components/Designer/ProfilePhotos'
+
+import MyFiles from 'components/Profile/MyFiles'
+import ProfilePhotos from 'components/Profile/ProfilePhotos'
 
 export default {
   name: 'ProfileСontractor',
@@ -50,8 +50,6 @@ export default {
     Info2,
     DetailInfo,
     Services,
-    Fillials,
-    ActivityCategory,
     TermsContractors,
     RequisitesDocuments,
     MyFiles,

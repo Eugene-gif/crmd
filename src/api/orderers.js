@@ -95,6 +95,7 @@ export const orderersApi = {
     formData.append("orderer[data][soc_inst]", data.soc_inst)
     formData.append("orderer[data][soc_wa]", data.soc_wa)
     formData.append("orderer[data][soc_tg]", data.soc_tg)
+    
     if (data.photo) {
       formData.append("orderer[data][photo]", data.photo)
     }

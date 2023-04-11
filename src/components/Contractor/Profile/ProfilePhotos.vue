@@ -107,8 +107,8 @@
 <script>
 import { ref, onMounted } from 'vue'
 import VisualSlider from 'components/projects/VisualSlider'
-import DialogUploadImg from 'src/pages/Contractor/DialogUploadImg.vue'
-import DialogUpdateAlbum from 'src/pages/Contractor/DialogUpdateAlbum.vue'
+import DialogUploadImg from 'src/components/Profile/DialogUploadImg.vue'
+import DialogUpdateAlbum from 'src/components/Profile/DialogUpdateAlbum.vue'
 import DialogDelite from 'components/dialog/DialogDelite'
 import { useQuasar } from 'quasar'
 import { albumsApi } from 'src/api/albums'
