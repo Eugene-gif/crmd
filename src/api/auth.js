@@ -17,7 +17,7 @@ export const authApi = {
         return response
       })
     } catch (err) {
-      console.log(err)
+      throw err
     }
   },
   resetPass(mail) {
@@ -34,6 +34,7 @@ export const authApi = {
 
   doRegister(data) {
     const formData = new FormData();
+
     formData.append("email", data.email)
     formData.append("name", data.email)
     formData.append("password", data.password)
@@ -51,11 +52,11 @@ export const authApi = {
         url: `${url}/register`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
-      }).then(response => {
-        return response
+      }).then(({data}) => {
+        return data
       })
     } catch (err) {
-      console.log(err)
+      throw err
     }
   },
 

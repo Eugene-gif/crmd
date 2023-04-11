@@ -31,9 +31,9 @@ export default route(function ({ store, ssrContext }) {
     } else {
       const requiredRole = to.meta.role
 
-      if (requiredRole === 2 && role !== undefined && role !== 2) {
+      if (requiredRole === 'designer' && role !== undefined && role !== 'designer') {
         next({ path: '/' })
-      } else if (requiredRole === 3 && role !== undefined && role !== 3) {
+      } else if (requiredRole === 'contractor' && role !== undefined && role !== 'contractor') {
         next({ path: '/' })
       } else {
         next()

@@ -6,7 +6,6 @@
     <!-- @reset="onReset" -->
     <q-form
       @submit="onSubmit"
-      
       class="q-gutter-md"
     >
       <div class="form-section">
@@ -182,9 +181,10 @@ export default {
       confirmPassword: '',
       image: null,
       role: {
-        id: 2
+        name: ''
       }
     })   
+    const val = ref()
     const isValidPass = computed(() => {
       return form.value.password == form.value.confirmPassword
     })    
@@ -199,24 +199,25 @@ export default {
       if (isValidPass.value) {
         localStorage.clear()
         try {
-          await authApi.doRegister(form.value).then(resp => {
-            const token = resp.data.data.token
-            store.commit('auth/setToken', token)
-            let userInfo = JSON.stringify(resp.data.data.user)
-            localStorage.setItem('userInfo', userInfo)
-            
-            authApi.getEmailVerified()
+          const resp = await authApi.doRegister(form.value)
+          
+          const token = resp.data.token
+          store.commit('auth/setToken', token)
+          let userInfo = JSON.stringify(resp.data.user)
+          localStorage.setItem('userInfo', userInfo)
+          
+          authApi.getEmailVerified()
 
-            if (resp.data.data.user.email_verified_at === null) {
-              window.location.href = '/#/setemail'
-            } else if (resp.data.data.user.role.id === '') {
-              window.location.href = '/#/role'
-            } else {
-              window.location.href = '/'
-            }
-            // window.location.href = '/#/setemail'
-            
-          })
+          if (resp.data.user.email_verified_at === null) {
+            window.location.href = '/#/setemail'
+          }
+          if (resp.data.user.role.name === '') {
+            window.location.href = '/#/role'
+          } else {
+            window.location.href = '/'
+          }
+          window.location.href = '/#/setemail'
+
           loading.value = false
         } catch (err) {
           console.log(err)
@@ -268,9 +269,8 @@ export default {
       form,
       isValidPass,
       policy,
-
       loading,
-
+      val,
       passEye1,
       passEye2,
 

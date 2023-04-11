@@ -4,7 +4,7 @@ export function getMe (state) {
 
 export function getLinks (state) {
   let user = JSON.parse(localStorage.getItem('userInfo'))
-  if (user.role.id === 2) {
+  if (user.role.name === 'contractor') {
     return [
       {
         title: 'Профиль',
@@ -36,7 +36,7 @@ export function getLinks (state) {
       },
     ]
   } 
-  if (user.role.id === 3) {
+  if (user.role.name === 'designer') {
     return [
       {
         title: 'Профиль',

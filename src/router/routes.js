@@ -50,7 +50,7 @@ const routes = [
         component: () => import('pages/Index.vue'),
         meta: {
           requireLogin: true,
-          role: [2,3]
+          role: ['designer','contractor']
         }
       },
       { 
@@ -58,7 +58,7 @@ const routes = [
         component: () => import('pages/Finance/index.vue'),
         meta: {
           requireLogin: true,
-          role: [2,3]
+          role: ['designer','contractor']
         }
       },
       { 
@@ -66,7 +66,7 @@ const routes = [
         component: () => import('src/pages/Project/List.vue'),
         meta: {
           requireLogin: true,
-          role: [2,3]
+          role: ['designer','contractor']
         }
       },
       { 
@@ -74,7 +74,7 @@ const routes = [
         component: () => import('src/pages/Project/Id.vue'),
         meta: {
           requireLogin: true,
-          role: [2,3]
+          role: ['designer','contractor']
         }
       },
       { 
@@ -82,7 +82,7 @@ const routes = [
         component: () => import('src/pages/Contractor/Index.vue'),
         meta: {
           requireLogin: true,
-          role: 3
+          role: 'contractor'
         }
       },
       { 
@@ -90,7 +90,7 @@ const routes = [
         component: () => import('src/pages/Contractor/Id.vue'),
         meta: {
           requireLogin: true,
-          role: 3
+          role: 'contractor'
         }
       },
       { 
@@ -98,7 +98,7 @@ const routes = [
         component: () => import('src/pages/Contractor/Profile.vue'),
         meta: {
           requireLogin: true,
-          role: 3
+          role: 'contractor'
         }
       },
       { 
@@ -106,7 +106,7 @@ const routes = [
         component: () => import('src/pages/Designer/Profile.vue'),
         meta: {
           requireLogin: true,
-          role: 2
+          role: 'designer'
         }
       },
       { 
@@ -114,7 +114,7 @@ const routes = [
         component: () => import('src/pages/Сlients/Index.vue'),
         meta: {
           requireLogin: true,
-          role: 2
+          role: 'designer'
         }
       },
       { 
@@ -122,7 +122,7 @@ const routes = [
         component: () => import('src/pages/Сlients/Id.vue'),
         meta: {
           requireLogin: true,
-          role: 2
+          role: 'designer'
         }
       },
       { 
@@ -130,7 +130,7 @@ const routes = [
         component: () => import('src/pages/Estimates/Id.vue'),
         meta: {
           requireLogin: true,
-          role: [2,3]
+          role: ['designer','contractor']
         }
       },
       { 
@@ -138,7 +138,7 @@ const routes = [
         component: () => import('src/pages/Estimates/Index.vue'),
         meta: {
           requireLogin: true,
-          role: [2,3]
+          role: ['designer','contractor']
         }
       },
     ]
