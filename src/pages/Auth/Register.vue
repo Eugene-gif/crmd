@@ -180,9 +180,6 @@ export default {
       password: '',
       confirmPassword: '',
       image: null,
-      role: {
-        name: ''
-      }
     })   
     const val = ref()
     const isValidPass = computed(() => {
@@ -203,15 +200,16 @@ export default {
           
           const token = resp.data.token
           store.commit('auth/setToken', token)
+          
           let userInfo = JSON.stringify(resp.data.user)
           localStorage.setItem('userInfo', userInfo)
           
-          authApi.getEmailVerified()
+          // authApi.getEmailVerified()
 
           if (resp.data.user.email_verified_at === null) {
             window.location.href = '/#/setemail'
           }
-          if (resp.data.user.role.name === '') {
+          if (resp.data.user.role.code === '') {
             window.location.href = '/#/role'
           } else {
             window.location.href = '/'

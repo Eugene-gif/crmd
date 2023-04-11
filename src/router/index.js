@@ -24,20 +24,23 @@ export default route(function ({ store, ssrContext }) {
     // }
 
     const auth = store.state.auth
-    const role = store.state.auth.me ? store.state.auth.me.role.id : undefined
+    const role = store.state.auth.me ? store.state.auth.me.role : undefined
 
     if (to.meta.requireLogin && !auth.isAuthenticated) {
       next({ path: '/login' })
     } else {
       const requiredRole = to.meta.role
 
-      if (requiredRole === 'designer' && role !== undefined && role !== 'designer') {
-        next({ path: '/' })
-      } else if (requiredRole === 'contractor' && role !== undefined && role !== 'contractor') {
-        next({ path: '/' })
-      } else {
-        next()
-      }
+      console.log(requiredRole)
+      next()
+      
+      // if (requiredRole === 'designer' && role !== undefined) {
+      //   next({ path: '/' })
+      // } else if (requiredRole === 'contractor' && role !== undefined) {
+      //   next({ path: '/' })
+      // } else {
+      //   next()
+      // }
       
     }
   })

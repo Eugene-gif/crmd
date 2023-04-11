@@ -65,8 +65,8 @@ export default defineComponent({
     data: Object
   },
   setup (props, { emit }) {
+
     const formData = ref({
-      id: '',
       address: '',
       info: '',
       name: ''
@@ -74,6 +74,7 @@ export default defineComponent({
 
     async function addAffiliate() {
       formData.value.name = formData.value.address
+
       if (props.modalCustom === true) {
         try {
           await contractorApi.updateAffiliate(formData.value).then(resp => {
@@ -99,6 +100,7 @@ export default defineComponent({
           console.log(err)
         }
       }
+
     }
     function modalFalse(val) {
       emit('modalFalse', val)

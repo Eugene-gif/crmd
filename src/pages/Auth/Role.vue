@@ -89,7 +89,7 @@ export default {
           let user = localStorage.getItem('userInfo')
           let userObj = JSON.parse(user)
           userObj.email_verified_at = true
-          userObj.role.name = tab.value
+          userObj.role.code = tab.value
 
           let userInfo = JSON.stringify(userObj)
           localStorage.setItem('userInfo', userInfo)

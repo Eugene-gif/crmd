@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { ref, defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted } from 'vue'
 
 export default defineComponent({
   name: 'AuthLayout',
@@ -29,12 +29,13 @@ export default defineComponent({
       if (user) {
         let userObj = JSON.parse(user)
 
-        if (userObj.role.id === '') {
-          window.location.href = '/#/role'
-        }
         if (userObj.email_verified_at === null) {
           window.location.href = '/#/setemail'
         }
+        if (userObj.role.code === '') {
+          window.location.href = '/#/role'
+        }
+        
       }
       
     })

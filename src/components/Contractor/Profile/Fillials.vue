@@ -193,11 +193,15 @@ export default {
           fillials.value = resp
         })
       } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
+        if (!err.response.status === 404) {
+          $q.notify({
+            color: 'negative',
+            message: 'произошла ошибка'
+          })
+          console.log(err)
+        } else {
+          fillials.value = []
+        }
       }
     }
     function editAffiliate(object) {
@@ -208,7 +212,6 @@ export default {
     async function delAffiliate(id) {
       try {
         await contractorApi.delAffiliate(id).then(resp => {
-          getAllAffiliate()
           $q.notify({
             color: 'positive',
             message: 'Филиал удален'
@@ -223,9 +226,6 @@ export default {
       }
     }
 
-
-    
-    
     const managers = ref([])
     const editDataManager = ref({})
   
@@ -235,11 +235,15 @@ export default {
           managers.value = resp
         })
       } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
+        if (!err.response.status === 404) {
+          $q.notify({
+            color: 'negative',
+            message: 'произошла ошибка'
+          })
+          console.log(err)
+        } else {
+          managers.value = []
+        }
       }
     }
     

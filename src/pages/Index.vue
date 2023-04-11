@@ -12,9 +12,11 @@ export default defineComponent({
   setup() {
     onMounted(() => {
       let user = JSON.parse(localStorage.getItem('userInfo'))
-      if (user.role.id === 2) {
+      let userRole = user.role.code ? user.role.code : user.role_info.code 
+      
+      if (userRole === 'designer') {
         window.location.href = '/#/designer/profile/2'
-      } if (user.role.id === 3) {
+      } if (userRole === 'contractor') {
         window.location.href = '/#/contractor/profile/2'
       }
     })

@@ -3,57 +3,58 @@
   <div class="details" v-show="!isActive.details">
     <div class="item">
       <div class="cell">Название</div>
-      <div class="cell" v-if="formData.name != ''">{{formData.name}}</div>
+      <div class="cell" v-if="formData.name != '' && formData.name != null">{{formData.name}}</div>
+      <div class="cell" v-else-if="formData.name === null">—</div>
       <div v-else>—</div> 
     </div>
     <div class="item">
       <div class="cell">Город</div>
-      <div class="cell" v-if="formData.city != ''">{{formData.city}}</div>
+      <div class="cell" v-if="formData.city != '' && formData.city != null">{{formData.city}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Область работы</div>
-      <div class="cell" v-if="formData.region != ''">{{formData.region}}</div>
+      <div class="cell" v-if="formData.region != '' && formData.region != null">{{formData.region}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Адрес</div>
-      <div class="cell" v-if="formData.public_address != ''">{{formData.public_address}}</div>
+      <div class="cell" v-if="formData.public_address != '' && formData.public_address != null">{{formData.public_address}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Телефон</div>
-      <div class="cell" v-if="formData.public_phone != ''">{{formData.public_phone}}</div>
+      <div class="cell" v-if="formData.public_phone != '' && formData.public_phone != null">{{formData.public_phone}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">E-mail</div>
-      <div class="cell" v-if="formData.public_email != ''">{{formData.public_email}}</div>
+      <div class="cell" v-if="formData.public_email != '' && formData.public_email != null">{{formData.public_email}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Сайт</div>
-      <div class="cell" v-if="formData.url != ''">{{formData.url}}</div>
+      <div class="cell" v-if="formData.url != '' && formData.url != null">{{formData.url}}</div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">WhatsApp</div>
-      <div class="cell" v-if="formData.soc_wa != ''"><a :href="formData.soc_wa" target="_blank" class="link">{{formData.soc_wa}}</a></div>
+      <div class="cell" v-if="formData.soc_wa != '' && formData.soc_wa != null"><a :href="formData.soc_wa" target="_blank" class="link">{{formData.soc_wa}}</a></div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Telegram</div>
-      <div class="cell" v-if="formData.soc_tg != ''"><a :href="formData.soc_tg" target="_blank" class="link">{{formData.soc_tg}}</a></div>
+      <div class="cell" v-if="formData.soc_tg != '' && formData.soc_tg != null"><a :href="formData.soc_tg" target="_blank" class="link">{{formData.soc_tg}}</a></div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Instagram</div>
-      <div class="cell" v-if="formData.soc_inst != ''"><a :href="formData.soc_inst" target="_blank" class="link">{{formData.soc_inst}}</a></div>
+      <div class="cell" v-if="formData.soc_inst != '' && formData.soc_inst != null"><a :href="formData.soc_inst" target="_blank" class="link">{{formData.soc_inst}}</a></div>
       <div v-else>—</div>
     </div>
     <div class="item">
       <div class="cell">Описание</div>
-      <div class="cell" v-if="formData.description != ''">{{formData.description}}</div>
+      <div class="cell" v-if="formData.description != '' && formData.description != null">{{formData.description}}</div>
       <div v-else>—</div>
     </div>
     <q-btn
@@ -264,21 +265,21 @@ export default {
     })  
 
     function checkWa() {
-      if (formData.value.soc_wa === '') {
+      if (formData.value.soc_wa === '' || formData.value.soc_wa === null) {
         return true
       } else if (formData.value.soc_wa.indexOf('http') === -1) {
         return formData.value.soc_wa = `https://wa.me/${formData.value.soc_wa}`.replace(/[@]/gi, '')
       } 
     }
     function checkTg() {
-      if (formData.value.soc_tg === '') {
+      if (formData.value.soc_tg === '' || formData.value.soc_tg === null) {
         return true
       } else if (formData.value.soc_tg.indexOf('http') === -1) {
         return formData.value.soc_tg = `https://t.me/${formData.value.soc_tg}`.replace(/[@]/gi, '')
       } 
     }
     function checkInst() {
-      if (formData.value.soc_inst === '') {
+      if (formData.value.soc_inst === '' || formData.value.soc_inst === null) {
         return true
       } else if (formData.value.soc_inst.indexOf('http') === -1) {
         return formData.value.soc_inst = `https://www.instagram.com/${formData.value.soc_inst}`.replace(/[@]/gi, '')
@@ -369,10 +370,10 @@ export default {
     onMounted( async () => {
       await getInfoContractor()
       let bool = formData.value.name !== '' && 
-      formData.value.city !== '' && 
-      formData.value.region !== '' && 
-      formData.value.public_email !== '' && 
-      formData.value.public_phone !== ''
+      formData.value.city !== '' && formData.value.city !== null  && 
+      formData.value.region !== '' && formData.value.region !== null  && 
+      formData.value.public_email !== '' && formData.value.public_email !== null  && 
+      formData.value.public_phone !== '' && formData.value.public_phone !== null 
 
       if (!bool) {
         isActive.value.details = true

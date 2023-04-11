@@ -53,7 +53,12 @@ export const contractorApi = {
     formData.append("name", data.name)
     formData.append("city", data.city)
     formData.append("region", data.region)
-    formData.append("public_email", data.public_email)
+    if (data.public_email === null) {
+      formData.append("public_email", '')
+    } else {
+      formData.append("public_email", data.public_email)
+    }
+    
     formData.append("public_phone", data.public_phone)
     formData.append("public_address", data.public_address)
     formData.append("url", data.url)
@@ -90,9 +95,8 @@ export const contractorApi = {
   getAllAffiliate() {
     try {
       return httpClient.post(`${url}/info/getAffiliate`)
-      .then(( response ) => {
-        console.log(response.data.data)
-        return response = response.data.data.map(el => {
+      .then(( {data} ) => {
+        return data = data.data.map(el => {
           return {
             id: el.id,
             title: el.name,
@@ -101,7 +105,7 @@ export const contractorApi = {
         })
       })
     } catch(err) {
-      console.log(err)
+      throw err
     }
   },
   AddAffiliate(formData) {
@@ -143,9 +147,9 @@ export const contractorApi = {
   getAllManagers() {
     try {
       return httpClient.post(`${url}/info/getManager`)
-      .then(( response ) => {
+      .then(( {data} ) => {
         // return response.data.data.managers
-        return response = response.data.data.map(el => {
+        return data = data.data.map(el => {
           return {
             id: el.id,
             title: el.name,
@@ -156,7 +160,7 @@ export const contractorApi = {
         })
       })
     } catch(err) {
-      console.log(err)
+      throw err
     }
   },
   AddManager(formData) {

@@ -4,11 +4,12 @@ export function getMe (state) {
 
 export function getLinks (state) {
   let user = JSON.parse(localStorage.getItem('userInfo'))
-  if (user.role.name === 'contractor') {
+  let userRole = user.role.code ? user.role.code : user.role_info.code 
+  if (userRole === 'contractor') {
     return [
       {
         title: 'Профиль',
-        link: '/designer/profile/2',
+        link: '/contractor/profile/2',
       },
       {
         title: 'Проекты',
@@ -36,11 +37,11 @@ export function getLinks (state) {
       },
     ]
   } 
-  if (user.role.name === 'designer') {
+  if (userRole === 'designer') {
     return [
       {
         title: 'Профиль',
-        link: '/contractor/profile/2',
+        link: '/designer/profile/2',
       },
       {
         title: 'Проекты',
