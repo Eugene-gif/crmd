@@ -28,8 +28,8 @@ export function getLinks (state) {
         link: '/clients',
       },
       {
-        title: 'Подрядчики',
-        link: '/contractor',
+        title: 'Дизайнеры',
+        link: '/designers',
       },
       {
         title: 'Документы',
@@ -60,8 +60,8 @@ export function getLinks (state) {
         link: '/clients',
       },
       {
-        title: 'Дизайнеры',
-        link: '/designers',
+        title: 'Подрядчики',
+        link: '/contractor',
       },
       {
         title: 'Документы',
