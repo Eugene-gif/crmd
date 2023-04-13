@@ -1671,6 +1671,13 @@
         .rotate {
           opacity: 0.3;
         }
+        .close {
+          position: absolute;
+          right: 40px;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+        }
       }
       .choise-category {
         padding: 40px 30px 110px 40px;
@@ -1686,6 +1693,40 @@
           padding: 0;
           &:before {
             display: none;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    .q-card {
+      .dialog-check-category {
+        padding: 0;
+        .head {
+          padding: 21px 20px 20px 20px;
+          .title {
+            font-size: 16px;
+            line-height: 16px;
+          }
+          .close {
+            right: 20px;
+          }
+        }
+        .choise-category {
+          padding: 29px 16px 29px 20px;
+          min-height: max-content;
+          .choice-place {
+            border: none;
+            box-shadow: none;
+            border-radius: 0;
+            width: 100%;
+            position: relative;
+            right: 0;
+            top: 0;
+            padding: 0;
+            &:before {
+              display: none;
+            }
           }
         }
       }
@@ -1749,6 +1790,39 @@
           }
           * {
             background: #fff !important;
+          }
+        }
+      }
+    }
+    @media (max-width: 772px) {
+      .section-check-city {
+        padding: 0;
+        min-height: 534px;
+        .q-card__section {
+          padding-left: 0;
+          padding-right: 0;
+          .q-icon {
+            right: 20px;
+            font-size: 12px;
+          }
+        }
+        .vue-dadata {
+          .vue-dadata__input {
+            padding: 23px 20px 20px 20px;
+            &::placeholder {
+              font-size: 16px;
+              line-height: 16px;
+            }
+          }
+  
+          .vue-dadata__suggestions {
+            margin-top: 10px;
+            padding-top: 4px;
+            border: none;
+          }
+          .vue-dadata__suggestions-item {
+            padding: 0 20px;
+            margin-bottom: 16px;
           }
         }
       }

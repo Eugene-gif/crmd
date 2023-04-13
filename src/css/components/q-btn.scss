@@ -251,3 +251,17 @@
 	}
 }
 
+.btn-close-arrow {
+  width: 35px;
+  height: 35px;
+  min-height: 35px;
+  background: #F0F0F0;
+  border-radius: 100%;
+  @media (max-width: 772px) {
+    min-width: 26px;
+    max-width: 26px;
+    min-height: 26px;
+    height: 26px;
+    padding: 0;
+  }
+}

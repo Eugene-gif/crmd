@@ -81,6 +81,8 @@
       .q-icon {
         width: 18px;
         font-size: 18px;
+        color: black !important;
+        opacity: 0.15;
       }
       .q-tab__label {
         line-height: 1;
@@ -88,6 +90,11 @@
         font-size: 16px;
         line-height: 16px;
         margin-left: 7px;
+      }
+      &:hover {
+        .q-icon {
+          opacity: 0.25;
+        }
       }
     }
     .q-tab__indicator,
@@ -98,6 +105,28 @@
       .q-tab__content {
         .q-icon {
           color: $positive;
+        }
+      }
+      &:first-child {
+        .q-tab__content {
+          .q-icon {
+            color: $positive !important;
+            opacity: 1;
+            &:hover {
+              color: #66B836 !important;
+            }
+          }
+        }
+      }
+      &:last-child {
+        .q-tab__content {
+          .q-icon {
+            color: $negative !important;
+            opacity: 1;
+            &:hover {
+              color: #EE5A30 !important;
+            }
+          }
         }
       }
     }

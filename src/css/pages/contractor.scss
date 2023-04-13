@@ -19,6 +19,8 @@
   }
   .choise-category {
     margin-top: 37px;
+    order: 3;
+    flex: 0 0 100%;
     .sec-check {
       .q-checkbox {
         margin-right: 5px;
@@ -32,7 +34,10 @@
     }
     @media (max-width: 772px) {
       margin-top: 20px;
+      order: 2;
       padding-left: 15px;
+      border-bottom: 1px solid #F0F0F0;
+      padding-bottom: 16px;
       .sec-check {
         .q-checkbox {
           margin-right: 4px;
@@ -63,6 +68,7 @@
       display: flex;
       flex-direction: column-reverse;
       padding-top: 28px;
+      flex: 0 0 100%;
       .q-btn {
         max-width: max-content;
         &:first-child {
@@ -104,14 +110,12 @@
       }
 
       .select-section {
-        padding-top: 7px;
+        padding-top: 0;
         padding-bottom: 7px;
-        margin-top: 16px;
+        margin-top: 0;
         width: 100%;
-        border-bottom: 1px solid $grey-3;
-        border-top: 1px solid $grey-3;
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 0;
+        padding-right: 0;
         order: 3;
         &:nth-child(2) {
           margin-left: 0;
@@ -123,6 +127,15 @@
           flex: 1;
           .q-icon {
             margin-right: 6px;
+          }
+        }
+        .q-btn {
+          padding-top: 6px;
+          &:before {
+            border-top: none;
+          }
+          .q-btn__content {
+            flex-direction: row;
           }
         }
       }

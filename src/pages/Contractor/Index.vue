@@ -79,6 +79,22 @@
         </q-icon>
         <div class="block text-grey-5">Выбрать категорию</div>
       </q-btn>
+
+      <div class="choise-category" v-if="checklistActiveEl.length > 0">
+        <div class="sec-check">
+          <q-checkbox
+            v-for="check in checklistActiveEl"
+            :key="check.id"
+            v-model="check.value"
+            :label="check.name"
+            class="q-checkbox-choice no-shadow"
+            aria-checked="true"
+            v-show="check.value"
+          >
+            <q-icon name="svguse:icons/allIcons.svg#close-checkbox" size="12px" />
+          </q-checkbox>
+        </div>
+      </div>
       <div class="select-section row">
         <q-btn
           flat
@@ -96,22 +112,6 @@
             class="q-ml-md"
           />
         </q-btn>
-      </div>
-    </div>
-
-    <div class="choise-category">
-      <div class="sec-check">
-        <q-checkbox
-          v-for="check in checklist"
-          :key="check.id"
-          v-model="check.value"
-          :label="check.name"
-          class="q-checkbox-choice no-shadow"
-          aria-checked="true"
-          v-show="check.value"
-        >
-          <q-icon name="svguse:icons/allIcons.svg#close-checkbox" size="12px" />
-        </q-checkbox>
       </div>
     </div>
 
@@ -291,7 +291,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { contractorApi } from 'src/api/contractor'
 import DialogShare from 'pages/Contractor/DialogShare.vue'
 import DialogStatus from 'pages/Contractor/DialogStatus.vue'
@@ -359,7 +359,12 @@ export default {
       rowsPerPage: 0
     })
     const rows = ref([])
+
     const checklist = ref([])
+
+    const checklistActiveEl = computed(() => {
+      return checklist.value.flatMap((item) => item.tags.filter((tag) => tag.value === true)) || checklist
+    })
 
     function openContactor(id) {
       loading.value = true
@@ -372,6 +377,7 @@ export default {
       try {
         const resp = await contractorApi.getListContractors()
         rows.value = resp
+        console.log(resp)
       } catch (err) {
         throw err
       }
@@ -380,13 +386,7 @@ export default {
     async function getListTags() {
       try {
         await contractorApi.getListTags().then(resp => {
-          checklist.value = resp.map(el => {
-            return {
-              id: el.id,
-              name: el.name,
-              description: el.description,
-            }
-          });
+          checklist.value = resp
         })
       } catch (err) {
         $q.notify({
@@ -398,7 +398,6 @@ export default {
     }
 
     
-
     onMounted(() => {
       getAll()
       getListTags()
@@ -408,6 +407,7 @@ export default {
       getAll,
       checkActive,
       checklist,
+      checklistActiveEl,
       city,
       model: ref('Любой'),
       model2: ref('Любой'),

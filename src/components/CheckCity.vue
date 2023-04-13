@@ -1,13 +1,13 @@
 <template>
   <q-card>
-    <div class="q-card-background" @click="modalFalse"></div>
+    <div class="q-card-background" @click="modalFalseClear"></div>
     <div class="dialog-section section-check-city">
       <q-card-section>
         <q-icon 
           class="close rotate" 
           size="13px" 
           v-close-popup name="svguse:icons/allIcons.svg#close-modal" 
-          @click="modalFalse"
+          @click="modalFalseClear"
         />
         <vue-dadata
           v-model="query"
@@ -84,9 +84,14 @@ export default defineComponent({
       }
     }
 
+    async function modalFalseClear() {
+      emit('modalFalse', '')
+    }
+
 
     return {
       modalFalse,
+      modalFalseClear,
       checkAdress,
       query,
       arrActive,

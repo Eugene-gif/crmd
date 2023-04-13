@@ -1874,7 +1874,7 @@
         margin-bottom: 10px;
 
         &:hover {
-          background: #F7F7F7;
+          background: #F0F0F0;
           .projects-section {
             background: #F7F7F7 !important;
           }
@@ -2035,6 +2035,7 @@
                 .q-chip {
                   margin-right: 5px;
                   height: 26px;
+                  color: $grey-5;
                   &:last-child {
                     margin-right: 0;
                   }
@@ -2324,7 +2325,6 @@
                 margin-left: 20px;
               }
               .status {
-                margin-left: 0;
                 flex: 0 0 100%;
                 max-width: calc(100% - 40px);
                 order: 12;
@@ -2337,6 +2337,7 @@
                 min-height: 43px;
                 margin: auto;
                 margin-top: 10px;
+                margin-left: 20px;
                 margin-bottom: 10px;
                 .circle {
                   background: red;

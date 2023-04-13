@@ -8,10 +8,11 @@ export const contractorApi = {
     try {
       return httpClient.post(`/contractors/getAll`)
       .then(( {data} ) => {
+        console.log(data.data)
         return data = data.data.map(el => {
           return {
             id: el.id,
-            image: el.image.image ? el.image.image : el.image.placeholder,
+            image: el.image.thumbnail ? el.image.thumbnail : el.image.placeholder,
             name: el.name,
             status: 1,
             statusName: el.status,
@@ -21,7 +22,7 @@ export const contractorApi = {
             reviews: 12,
             documents: 2,
             pay: true,
-            bid: 13,
+            bid: el.rate,
             city: el.city ? el.city : 'Нет города',
             email: el.public_email,
             sait: el.url,
