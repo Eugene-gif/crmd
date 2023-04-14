@@ -16,6 +16,7 @@
           placeholder="Введите город"
           :token="token"
           @change="modalFalse"
+          ref="vuedata"
         />
       </q-card-section>   
     </div>
@@ -23,7 +24,7 @@
 </template>
 
 <script>
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, onMounted } from 'vue'
 import { VueDadata } from 'vue-dadata'
 import { useQuasar } from 'quasar'
 
@@ -37,8 +38,9 @@ export default defineComponent({
   setup(props, { emit }) {
     const $q = useQuasar()
     const query = ref(null)
-    const suggestion = ref(undefined);
+    const suggestion = ref(undefined)
     const arrActive = ref(false)
+    const vuedata = ref(null)
 
     async function checkAdress() {
       let url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/address";
@@ -88,8 +90,16 @@ export default defineComponent({
       emit('modalFalse', '')
     }
 
+    onMounted(() => {
+      console.log(vuedata.value)
+      const input = vuedata.value.$el.querySelector('input');
+      if (input) {
+        input.focus();
+      }
+    });
 
     return {
+      vuedata,
       modalFalse,
       modalFalseClear,
       checkAdress,
