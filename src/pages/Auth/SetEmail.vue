@@ -24,8 +24,8 @@
           {{user.email}}
         </div>
         <div class="info-text">
-          Мы отправили на указанную вами почту запрос&nbsp;
-          на подтверждение. В письме будет ссылка, перейдите&nbsp;
+          Мы отправили на указанную вами почту запрос
+          на подтверждение. В письме будет ссылка, перейдите
           по ней, чтобы завершить процесс регистрации и выбрать свою роль на проекте: дизайнер или подрядчик.
         </div>
         
@@ -47,8 +47,6 @@
 
 <script>
 import { ref, onMounted } from 'vue'
-import { userApi } from 'src/api/user'
-import { authApi } from 'src/api/auth'
 import { projectsApi } from 'src/api/projects'
 
 export default {

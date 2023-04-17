@@ -34,7 +34,7 @@
     transition-hide="fade" 
     class="my-dialog dialog-check-city"
   >
-    <CheckCity @modalFalse="modalFalse4" />
+    <CheckCity @modalFalse="modalFalse4" :cityVal="city" />
   </q-dialog>
   
   <q-page class="page-contractor">
@@ -286,6 +286,8 @@
         <!-- q-th__share -->
       </template>
     </q-table>
+
+
     
   </q-page>
 </template>
@@ -374,6 +376,7 @@ export default {
     }
 
     async function getAll() {
+      loading.value = true
       try {
         const resp = await contractorApi.getListContractors()
         rows.value = resp
@@ -381,6 +384,7 @@ export default {
       } catch (err) {
         throw err
       }
+      loading.value = false
     }
     
     async function getListTags() {
@@ -441,6 +445,7 @@ export default {
       modalFalse4(val) {
         dialog4.value = false
         city.value = val
+        console.log(city.value)
       },
       actionfunc,
       loading,

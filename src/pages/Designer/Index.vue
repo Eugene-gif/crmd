@@ -18,10 +18,19 @@
     transition-hide="fade" 
     class="my-dialog contractor-dialog-status"
   >
-    <DialogStatus @modalFalse="modalFalse2"  />
+    <DialogStatus @modalFalse="modalFalse2" />
+  </q-dialog>
+
+  <q-dialog
+    v-model="dialog4"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog dialog-check-city"
+  >
+    <CheckCity @modalFalse="modalFalse4" :cityVal="city" />
   </q-dialog>
   
-  <q-page class="page-contractor">
+  <q-page class="page-contractor page-designers">
     <div class="row justify-between items-center">
       <div class="text-h2">Подрядчики</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -44,52 +53,26 @@
         />
       </div>
     </div>
-    <div class="head row">
-      <q-btn
-        rounded
-        no-caps
-        outline
-        color="grey-3"
-        class="q-mr-xs my-btn my-effect my-btn--outline"
-      >
-        <q-icon
-          name="svguse:icons/allIcons.svg#filter-icon"
-          color="grey-8"
-          size="15px"
-          class="q-mr-md link-icon"
-        >
-          <div class="circle"></div>
-        </q-icon>
-        <div class="block text-grey-5">Выбрать категорию</div>
-      </q-btn>
+    <div class="head row">      
       <div class="select-section row">
-        <label>Город: </label>
-        <q-select
-          borderless
-          v-model="model"
-          :options="options"
-          behavior="menu"
-          dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
-          popup-content-class="tooltip-project tooltip-project-contractor"
-        />
-      </div>
-      <div class="choise-category">
-        <div class="sec-check">
-          <q-checkbox
-            v-for="check in tabs"
-            :key="check"
-            v-model="checkActive"
-            :label="check.name"
-            class="q-checkbox-choice no-shadow"
-            aria-checked="true"
-          >
-            <q-icon name="svguse:icons/allIcons.svg#close-checkbox" size="12px" />
-          </q-checkbox>
-        </div>
+        <q-btn
+          flat
+          rounded
+          no-caps
+          outline
+          color="grey-5"
+          class="q-mr-xs my-btn my-effect my-btn--outline"
+          :label="city ? city : 'Выбрать город'"
+          @click="dialog4 = true"
+        >
+          <q-icon
+            name="svguse:icons/allIcons.svg#select-arrow"
+            size="12px"
+            class="q-ml-md"
+          />
+        </q-btn>
       </div>
     </div>
-
-    
 
     <div class="sorted">
       <div class="sorted-section mb-visible">
@@ -219,6 +202,7 @@
               <q-item
                 class="link-mail"
                 link
+                v-show="props.row.email !== '' && props.row.email !== null && props.row.email !== 'null'"
                 :href="`mailto:${props.row.email}`"
                 style="background: #f0f0f0;"
               >
@@ -227,6 +211,7 @@
               <q-item
                 class="link-whatsap"
                 link
+                v-show="props.row.whatsapp !== '' && props.row.whatsapp !== null && props.row.whatsapp !== 'null'"
                 :href="`mailto:${props.row.whatsapp}`"
               >
                 <img src="~assets/whatsapp.svg" alt="">
@@ -234,6 +219,7 @@
               <q-item
                 class="link-telegram"
                 link
+                v-show="props.row.telegram !== '' && props.row.telegram !== null && props.row.telegram !== 'null'"
                 :href="`${props.row.telegram}`"
               >
                 <img src="~assets/telegram.svg" alt="">
@@ -241,6 +227,7 @@
               <q-item
                 class="link-insta"
                 link
+                v-show="props.row.instagram !== '' && props.row.instagram !== null && props.row.instagram !== 'null'"
                 :href="`${props.row.instagram}`"
               >
                 <img src="~assets/instagram.svg" alt="">
@@ -250,20 +237,26 @@
               {{props.row.sait}}
             </div>
             <div class="email item">{{props.row.email}}</div>
-            <div class="phone item">{{props.row.tel}}</div>
+            <div class="phone item" v-if="props.row.tel !== '' && props.row.tel !== 'null' && props.row.tel !== null">
+              {{props.row.tel}}
+            </div> 
           </q-td>
         </q-tr>
         <!-- q-th__share -->
       </template>
     </q-table>
+
+
     
   </q-page>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
+import { designerApi } from 'src/api/designer'
 import DialogShare from 'pages/Contractor/DialogShare.vue'
 import DialogStatus from 'pages/Contractor/DialogStatus.vue'
+import CheckCity from 'components/CheckCity.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
 
@@ -277,224 +270,6 @@ const columns = [
   { name: 'bid', label: 'Ставка', field: 'bid', align: 'left', sortable: true },
   { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
 ]
-const rows = ref([
-  {
-    id: 1,
-    image: '/icons/anton.jpg',
-    name: 'Антон Глуханько длинное и название',
-    status: 1,
-    statusName: 'Нет статуса',
-    tab: '',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    documents: 2,
-    pay: false,
-    bid: 13,
-    projects: [
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'натяжные потолки',
-        link: ''
-      },
-      {
-        name: 'ремонт под ключ',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'натяжные потолки',
-        link: ''
-      },
-      {
-        name: 'ремонт под ключ',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-    ],
-    city: 'Краснодар',
-    email: 'stroypro@mail.ru',
-    sait: 'stroypro.ru',
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    show: false
-  },
-  {
-    id: 2,
-    image: '/icons/anton.jpg',
-    name: 'Антон Глуханько длинное и название',
-    status: 1,
-    statusName: 'Нет статуса',
-    tab: '',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    documents: 0,
-    pay: null,
-    bid: 13,
-    projects: [
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'натяжные потолки',
-        link: ''
-      },
-      {
-        name: 'ремонт под ключ',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'натяжные потолки',
-        link: ''
-      },
-      {
-        name: 'ремонт под ключ',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-    ],
-    city: 'Краснодар',
-    email: 'stroypro@mail.ru',
-    sait: 'stroypro.ru',
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    show: false
-  },
-  {
-    id: 3,
-    image: '/icons/anton.jpg',
-    name: 'Антон Глуханько длинное и название',
-    status: 1,
-    statusName: 'Нет статуса',
-    tab: '',
-    like: 25,
-    dislike: 2,
-    reviews: 12,
-    documents: 3,
-    pay: true,
-    bid: 13,
-    projects: [
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'натяжные потолки',
-        link: ''
-      },
-      {
-        name: 'ремонт под ключ',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'натяжные потолки',
-        link: ''
-      },
-      {
-        name: 'ремонт под ключ',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-      {
-        name: 'освещение',
-        link: ''
-      },
-    ],
-    city: 'Краснодар',
-    email: 'stroypro@mail.ru',
-    sait: 'stroypro.ru',
-    whatsapp: 79184550216,
-    tel: '+7 (918) 455-02-16',
-    telegram: '',
-    instagram: '',
-    show: true
-  },
-])
 
 export default {
   name: 'PageFinance',
@@ -502,22 +277,16 @@ export default {
     DialogShare,
     DialogStatus,
     ActionBtn,
+    CheckCity,
     LoaderDate
   },
   setup () {
     const loading = ref(false)
     const dialog = ref(false)
     const dialog2 = ref(false)
-    const pagination = ref({
-      sortBy: 'id',
-      rowsPerPage: 0
-    })
-    function openContactor(id) {
-      loading.value = true
-      setTimeout(() => {
-        window.location.href = `${window.location.href}/${id}`
-      }, 100)      
-    }
+    const dialog4 = ref(false)
+
+    const city = ref('')
 
     const actionfunc = ref([
       {
@@ -541,34 +310,43 @@ export default {
         emmit: 'actionAddBlack'
       },
     ])
-
     const checkActive = ref(null)
-    const tabs = ref([
-      { 
-        "id": 1, 
-        "name": "Проектирование и строительство", 
-      },
-      { 
-        "id": 2, 
-        "name": "Благоустройство территории", 
-      },
-      { 
-        "id": 3, 
-        "name": "Внутренняя отделка и ремонт", 
-      },
-      { 
-        "id": 4, 
-        "name": "Мебель на заказ", 
-      },
-      { 
-        "id": 5, 
-        "name": "Кухонные гарнитуры", 
-      },
-    ])
+
+    const pagination = ref({
+      sortBy: 'id',
+      rowsPerPage: 0
+    })
+    const rows = ref([])
+
+    function openContactor(id) {
+      loading.value = true
+      setTimeout(() => {
+        window.location.href = `${window.location.href}/${id}`
+      }, 100)      
+    }
+
+    async function getAll() {
+      loading.value = true
+      try {
+        const resp = await designerApi.getListDesigners()
+        rows.value = resp
+        console.log(resp)
+      } catch (err) {
+        throw err
+      }
+      loading.value = false
+    }
+
+    
+    onMounted(() => {
+      getAll()
+
+    })
 
     return {
+      getAll,
       checkActive,
-      tabs,
+      city,
       model: ref('Любой'),
       model2: ref('Любой'),
       options: [
@@ -583,6 +361,7 @@ export default {
       pagination,
       dialog,
       dialog2,
+      dialog4,
       maximizedToggle: ref(true),
       maximizedToggle2: ref(true),
       openContactor,
@@ -593,10 +372,15 @@ export default {
       modalFalse2() {
         dialog2.value = false
       },
+      modalFalse4(val) {
+        dialog4.value = false
+        city.value = val
+        console.log(city.value)
+      },
       actionfunc,
-      loading
+      loading,
+
     }
   }
 }
 </script>
- 

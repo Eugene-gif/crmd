@@ -4,6 +4,43 @@ const url = 'designers'
 
 export const designerApi = {
 
+  getListDesigners() {
+    try {
+      return httpClient.post(`${url}/getAll`)
+      .then(( {data} ) => {
+        console.log(data.data)
+        return data = data.data.map(el => {
+          return {
+            id: el.id,
+            image: el.image.thumbnail ? el.image.thumbnail : el.image.placeholder,
+            name: el.name,
+            status: 1,
+            statusName: el.status,
+            tab: '',
+            like: 7,
+            dislike: 5,
+            reviews: 12,
+            documents: 2,
+            pay: true,
+            bid: el.rate,
+            city: el.city ? el.city : 'Нет города',
+            email: el.public_email,
+            sait: el.url,
+            whatsapp: el.soc_wa,
+            tel: el.public_phone,
+            telegram: el.soc_tg,
+            instagram: el.soc_inst,
+            show: false,
+            projects: el.work_category_tags
+          }
+        })
+      })
+      
+    } catch(err) {
+      throw err
+    }
+  },
+
   // info
   getBankingInfo(formData) {
     if (typeof formData.company_type_id === 'object') {

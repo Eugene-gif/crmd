@@ -102,6 +102,14 @@ const routes = [
         }
       },
       { 
+        path: '/designer/',
+        component: () => import('src/pages/Designer/Index.vue'),
+        meta: {
+          requireLogin: true,
+          role: 'designer'
+        }
+      },
+      { 
         path: '/designer/profile/:id',
         component: () => import('src/pages/Designer/Profile.vue'),
         meta: {

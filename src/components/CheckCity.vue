@@ -1,6 +1,6 @@
 <template>
   <q-card>
-    <div class="q-card-background" @click="modalFalseClear"></div>
+    <div class="q-card-background" @click="modalFalse"></div>
     <div class="dialog-section section-check-city">
       <q-card-section>
         <q-icon 
@@ -31,13 +31,14 @@ import { useQuasar } from 'quasar'
 export default defineComponent({
   props: {
     list: Array,
+    cityVal: String
   },
   components: {
     VueDadata
   },
   setup(props, { emit }) {
     const $q = useQuasar()
-    const query = ref(null)
+    const query = ref('')
     const suggestion = ref(undefined)
     const arrActive = ref(false)
     const vuedata = ref(null)
@@ -73,17 +74,17 @@ export default defineComponent({
         })
     }
     
-    async function modalFalse() {
-      await checkAdress()
-
-      if(arrActive.value === true) {
-        emit('modalFalse', query.value)
-      } else {
-        $q.notify({
-          color: 'negative',
-          message: 'Выберите город из списка!'
-        })
-      }
+    function modalFalse() {
+      checkAdress().then(() => {
+        if(arrActive.value === true) {
+          emit('modalFalse', query.value)
+        } else {
+          $q.notify({
+            color: 'negative',
+            message: 'Выберите город из списка!'
+          })
+        }
+      })
     }
 
     async function modalFalseClear() {
@@ -91,7 +92,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      console.log(vuedata.value)
+      query.value = props.cityVal
       const input = vuedata.value.$el.querySelector('input');
       if (input) {
         input.focus();
