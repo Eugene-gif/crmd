@@ -9,7 +9,7 @@ export function getLinks (state) {
     return [
       {
         title: 'Профиль',
-        link: '/contractor/profile/2',
+        link: '/contractor/profile',
       },
       {
         title: 'Проекты',
@@ -41,7 +41,7 @@ export function getLinks (state) {
     return [
       {
         title: 'Профиль',
-        link: '/designer/profile/2',
+        link: '/designer/profile',
       },
       {
         title: 'Проекты',

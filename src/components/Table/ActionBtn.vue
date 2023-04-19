@@ -37,7 +37,7 @@ import { ref, onMounted } from 'vue'
 export default ({
   name: 'ActionBtn',
   props: {
-    propsEl: Number,
+    propsEl: String,
     offsetYX: Array,
     actionfunc: Array
   },

@@ -1884,12 +1884,12 @@
             }
           }
           &:active {
-            background: #f0f0f0;
+            background: #F7F7F7;
             .projects-section {
-              background: #f0f0f0 !important;
+              background: #F7F7F7 !important;
             }
             .city:before {
-              background: linear-gradient(90deg, rgba(247, 247, 247, 0) 0%, #f0f0f0 13.67%) !important;
+              background: linear-gradient(90deg, rgba(247, 247, 247, 0) 0%, #F7F7F7 13.67%) !important;
             }
           }
         }
@@ -2172,8 +2172,9 @@
           transition: max-height 0.3s; 
           overflow: hidden;
           &.visibility {
-            max-height: 100%;
+            min-height: 360px;
             overflow: visible;
+            max-height: max-content;
           }
           td {
             &.q-td-content {

@@ -32,7 +32,7 @@
   
   <q-page class="page-contractor page-designers">
     <div class="row justify-between items-center">
-      <div class="text-h2">Подрядчики</div>
+      <div class="text-h2">Дизайнеры</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
       <div class="sectiobn-btns">
         <q-btn

@@ -129,7 +129,7 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на WhatsApp"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
+              
             >
               <template v-slot:after>
                 <img src="~assets/whatsapp.svg" alt="" class="q-mr-md" />
@@ -142,7 +142,7 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Telegram"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
+              
             >
               <template v-slot:after>
                 <img src="~assets/telegram.svg" alt="" class="q-mr-md" />
@@ -155,7 +155,7 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Instagram"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
+              
             >
               <template v-slot:after>
                 <img src="~assets/instagram.svg" alt="" class="q-mr-md" />
@@ -184,25 +184,20 @@
 
         <q-card-actions>
           <div class="text-subtitle1">Какие услуги оказываем:</div>
+
           <q-list class="q-list-options">
-            <q-item>
+            <q-item 
+              v-for="check in services"
+              :key="check.id"
+            >
               <q-checkbox
-                v-model="val"
+                v-model="check.value"
                 checked-icon="svguse:icons/allIcons.svg#check"
                 class="my-checkbox flat"
                 color="black"
-                label="Планировочное решение"
+                :label="check.name"
               />
-            </q-item>
-            <q-item>
-              <q-checkbox
-                v-model="val1"
-                checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat"
-                color="black"
-                label="Дизайн-концепция"
-              />
-              <div class="circle-warning">
+              <div class="circle-warning" v-if="check.price > 200">
                 <q-icon
                   name="svguse:icons/allIcons.svg#tooltip"
                   color="white"
@@ -217,58 +212,10 @@
                 </q-tooltip>
               </div>
             </q-item>
-            <q-item>
-              <q-checkbox
-                v-model="val2"
-                checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat"
-                color="black"
-                label="Визуальная подача"
-              />
-              <div class="circle-warning">
-                <q-icon
-                  name="svguse:icons/allIcons.svg#tooltip"
-                  color="white"
-                  size="7px"
-                />
-                <q-tooltip
-                  max-width="256px"
-                  anchor="top middle"
-                  self="bottom middle"
-                >
-                  Дизайн-концепция
-                </q-tooltip>
-              </div>
-            </q-item>
-            <q-item>
-              <q-checkbox
-                v-model="val3"
-                checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat"
-                color="black"
-                label="Рабочая документация"
-              />
-            </q-item>
-            <q-item>
-              <q-checkbox
-                v-model="val4"
-                checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat"
-                color="black"
-                label="Авторское сопровождение"
-              />
-            </q-item>
-            <q-item>
-              <q-checkbox
-                v-model="val5"
-                checked-icon="svguse:icons/allIcons.svg#check"
-                class="my-checkbox flat"
-                color="black"
-                label="Комплектация"
-              />
-            </q-item>
+
           </q-list>
         </q-card-actions>
+
         <q-card-section class="form-section form-section-fee">
           <label class="lable-title">Стоимость дизайн-проекта</label>
           <q-input
@@ -306,13 +253,14 @@
 </template>
 
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 import BtnDate from "components/BtnDate";
 import DropBox from "components/DropBox";
 import SelectType from "components/projects/SelectType";
 import Emoji from "components/Emoji";
 import { projectsApi } from "src/api/projects";
 import { orderersApi } from "src/api/orderers";
+import { designerApi } from 'src/api/designer'
 import { useQuasar } from "quasar";
 
 export default defineComponent({
@@ -329,6 +277,7 @@ export default defineComponent({
 
     const addCustomer = ref(false);
     const selectDropbox = ref();
+    const services = ref([])
 
     const formData = ref({
       name: "",
@@ -336,7 +285,9 @@ export default defineComponent({
       adress: "",
       square: "",
       project_type_id: 1,
-      orderer: "",
+      orderer: null,
+      orderer_id: null,
+      services: [],
       price: '',
     });
     const formOrderers = ref({
@@ -350,7 +301,7 @@ export default defineComponent({
       soc_inst: "",
       soc_wa: "",
       soc_tg: "",
-      photo: "",
+      image: "",
       personal_info: " ",
       second_name: " ",
     });
@@ -381,6 +332,11 @@ export default defineComponent({
     }
 
     async function addProject() {
+      services.value.filter((el) => {
+        if (el.value === true) {
+          formData.value.services.push(`${el.id}`)
+        }
+      })
       try {
         await projectsApi.createProject(formData.value).then((resp) => {
           updateData();
@@ -435,18 +391,40 @@ export default defineComponent({
       formData.value.emoji = data.emojiIcon.value;
     }
     function ongetOrderer(select) {
-      formData.value.orderer = select.value.user_id;
+      formData.value.orderer = select.orderer;
+      formData.value.orderer_id = select.orderer_id;
     }
     function ongetTime(time) {
       formOrderers.value.birth_date = time;
     }
     function onFileChange(file) {
-      formOrderers.value.photo = file[0];
+      formOrderers.value.image = file[0];
     }
     function getSelectType(data) {
-      formData.value.project_type_id = data.value;
+      formData.value.project_type_id = data.id;
       console.log(formData.value.project_type_id);
     }
+
+    async function getServices() {
+      try {
+        await designerApi.getServices().then(resp => {
+          services.value = resp
+          // console.log(resp)
+        })
+      } catch (err) {
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка'
+        })
+        console.log(err)
+      }
+    }
+
+    onMounted(() => {
+      const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+      if (userInfo.role === 'designer') getServices()
+      // console.log(JSON.parse(localStorage.getItem('userInfo')))
+    }) 
 
     return {
       ongetOrderer,
@@ -456,19 +434,12 @@ export default defineComponent({
       getSelectType,
       formData,
       formOrderers,
+      services,
 
-      val: ref(false),
-      val1: ref(false),
-      val2: ref(true),
-      val3: ref(false),
-      val4: ref(false),
-      val5: ref(false),
       addCustomer,
-
       selectDropbox,
 
       show: ref(false),
-      text4: ref(15),
 
       ongetTime,
       onFileChange,

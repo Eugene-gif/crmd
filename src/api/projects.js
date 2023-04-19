@@ -16,13 +16,12 @@ export const projectsApi = {
       return httpClient.post(`${url}/getAll`, {})
       .then(({ data }) => {
         return data = data.data.map(el => {
-          console.log(data.data)
           return {
             id: el.id,
             status: 1,
             iconName: el.emoji,
             name: el.name,
-            type: el.project_type_id,
+            type: el.project_type,
             typeName: el.project_type.name,
             address: el.address,
             square: el.square,
@@ -67,16 +66,13 @@ export const projectsApi = {
     }
   },
 
+
+
   getTypes() {
     try {
       return httpClient.post(`${url}/types/get`, {})
       .then(({ data }) => {
-        return data = data.data.map(el => {
-          return {
-            label: el.name,
-            value: el.id
-          }
-        })
+        return data.data
       })
     } catch(err) {
       console.log(err)
@@ -85,13 +81,39 @@ export const projectsApi = {
 
   createProject(formData) {
     try {
+      let data = {
+        name: formData.name,
+        address: formData.adress,
+        square: formData.square,
+        project_type_id: formData.project_type_id,
+        orderer_id: formData.orderer_id,
+        orderer: formData.orderer,
+        emoji: formData.emoji,
+        cost: 1
+      };
+      
+      if (formData.services.length > 0) {
+        data.services = formData.services;
+      }
+      return httpClient.post(`${url}/create`, data).then(({ data }) => {
+        return data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  cloneProject(formData) {
+    try {
       return httpClient.post(`${url}/create`, {
         name: formData.name,
         address: formData.adress,
         square: formData.square,
         project_type_id: formData.project_type_id,
-        orderer_id: '987b210f-289f-4264-ae81-ae3bf093109c',
-        emoji: formData.emoji
+        orderer_id: formData.orderer_id,
+        orderer: formData.orderer,
+        emoji: formData.emoji,
+        cost: 2
       }).then(({ data }) => {
         return data
       })
@@ -103,7 +125,7 @@ export const projectsApi = {
   delProject(id) {
     try {
       return httpClient.post(`${url}/delete`, {
-        id: id 
+        project_id: id 
       }).then(({ data }) => {
         return data
       })

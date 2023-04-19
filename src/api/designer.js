@@ -135,6 +135,7 @@ export const designerApi = {
             price: el.service_price == null ? el.unit_price : el.service_price,
             deadline: el.service_term == null ? el.unit_term : el.service_term,
             pricename: el.type.text,
+            value: false,
             type: el.service_term == null ? 'unit' : 'service'
           }
         })

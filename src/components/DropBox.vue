@@ -25,7 +25,7 @@
     <template v-slot:option="scope">
       <q-item v-if="!scope.opt.group"
         v-bind="scope.itemProps"
-        @click="sendData"
+        @click="getOrderer"
       >      
         <q-item-section avatar>
           <img :src="scope.opt.icon" alt="">
@@ -110,6 +110,7 @@
       </q-item>
     </template>
   </q-select>
+  
 </template>
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
@@ -120,23 +121,24 @@ export default defineComponent({
   props: {
     disableSelect: Boolean
   },
+  emits: ['getOrderer'],
   setup (props, { emit }) {
     const stringOptions = ref([
-      {
-        label: 'Антон Глуханько ',
-        value: 'Антон Глуханько ',
-        icon: '/icons/anton.jpg',
-        email: 'stroypro@mail.ru',
-        like: 25,
-        dislike: 2,
-        reviews: 12,
-        whatsapp: 79184550216,
-        tel: '+7 (918) 455-02-16',
-        telegram: '',
-        instagram: '',
-        tab: '',
-        user_id: 4
-      }
+      // {
+      //   label: 'Антон Глуханько ',
+      //   value: 'Антон Глуханько ',
+      //   icon: '/icons/anton.jpg',
+      //   email: 'stroypro@mail.ru',
+      //   like: 25,
+      //   dislike: 2,
+      //   reviews: 12,
+      //   whatsapp: 79184550216,
+      //   tel: '+7 (918) 455-02-16',
+      //   telegram: '',
+      //   instagram: '',
+      //   tab: '',
+      //   user_id: 4
+      // }
     ])
     const options = ref()
     
@@ -146,8 +148,8 @@ export default defineComponent({
       value: null
     })
 
-    function sendData() {
-      emit('getOrderer', select)
+    function getOrderer() {
+      emit('getOrderer', select.value)
     }
 
     async function getforuser() {
@@ -167,7 +169,7 @@ export default defineComponent({
 
     return {
       select,
-      sendData,
+      getOrderer,
       getforuser,
 
       stringOptions,

@@ -357,16 +357,17 @@ export default {
             name: item.name,
             adress: item.address,
             square: item.square,
-            project_type_id: item.type,
+            project_type_id: item.type.id,
             orderer: item.orderer.id,
+            orderer_id: item.orderer.id,
             emoji: item.iconName
           }
         }
       })
+
       try {
-        await projectsApi.createProject(element)
+        await projectsApi.cloneProject(element)
         .then(resp => {
-          console.log(resp)
           start()
           setTimeout(() => {
             $q.notify({
@@ -390,7 +391,6 @@ export default {
       loading.value = true
       try {
         await projectsApi.delProject(id).then(resp => {
-          console.log(resp)
           start()
           setTimeout(() => {
             $q.notify({

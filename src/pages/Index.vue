@@ -15,9 +15,9 @@ export default defineComponent({
       let userRole = user.role.code ? user.role.code : user.role_info.code 
       
       if (userRole === 'designer') {
-        window.location.href = '/#/designer/profile/2'
+        window.location.href = '/#/designer/profile'
       } if (userRole === 'contractor') {
-        window.location.href = '/#/contractor/profile/2'
+        window.location.href = '/#/contractor/profile'
       }
     })
     return {

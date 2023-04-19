@@ -12,6 +12,8 @@
     @update:model-value="onGetData"
     popup-content-class="my-select-menu"
     :label="select1 ? undefined : 'Выбрать'"
+    option-value="id"
+    option-label="name"
   />
 </template>
 

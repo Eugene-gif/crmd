@@ -10,6 +10,7 @@ function getMyDate(time) {
   let mounth = respDate.getMonth()
   return `${year} ${date} ${mounth}`
 }
+let user = JSON.parse(localStorage.getItem('userInfo'))
 
 export const orderersApi = {
 
@@ -17,13 +18,14 @@ export const orderersApi = {
     try {
       return httpClient({
         method: "post",
-        url: `${url}/get`
-      }).then(response => {
-        return response = response.data.map(el => {
+        url: `${url}/getAllForUser`,
+      })
+      .then(({data}) => {
+        return data = data.data.map(el => {
           return {
             label: `${el.first_name} ${el.last_name}`,
             value: `${el.first_name} ${el.last_name}`,
-            icon: `http://crmd.crookedweb.ru/${el.photo}`,
+            icon: el.image.thumbnail || null,
             email: el.email,
             like: 25,
             dislike: 2,
@@ -33,7 +35,10 @@ export const orderersApi = {
             telegram: `//${el.soc_tg}`,
             instagram: `//${el.soc_inst}`,
             tab: '',
-            user_id: el.id
+            tab: '',
+            id: el.id,
+            orderer: el.id,
+            orderer_id: el.id,            
           }
         })
       })
@@ -53,7 +58,7 @@ export const orderersApi = {
           arr.push({
             id: el.id,
             status: 1,
-            image: `/${el.photo}`,
+            image: image.thumbnail || null,
             name: `${el.first_name} ${el.last_name}`,
             city: 'города нет в апи',
             tel: el.phone,
@@ -96,8 +101,8 @@ export const orderersApi = {
     formData.append("orderer[data][soc_wa]", data.soc_wa)
     formData.append("orderer[data][soc_tg]", data.soc_tg)
     
-    if (data.photo) {
-      formData.append("orderer[data][photo]", data.photo)
+    if (data.image) {
+      formData.append("orderer[data][image]", data.image)
     }
     formData.append("orderer[data][personal_info]", data.personal_info)
     formData.append("orderer[data][second_name]", data.second_name)
@@ -126,8 +131,8 @@ export const orderersApi = {
     formData.append("soc_inst", data.soc_inst)
     formData.append("soc_wa", data.soc_wa)
     formData.append("soc_tg", data.soc_tg)
-    if (data.photo) {
-      formData.append("photo", data.photo)
+    if (data.image) {
+      formData.append("image", data.image)
     }
     formData.append("personal_info", data.personal_info)
     formData.append("second_name", data.second_name)

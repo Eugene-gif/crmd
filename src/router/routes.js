@@ -94,7 +94,7 @@ const routes = [
         }
       },
       { 
-        path: '/contractor/profile/:id',
+        path: '/contractor/profile',
         component: () => import('src/pages/Contractor/Profile.vue'),
         meta: {
           requireLogin: true,
@@ -110,7 +110,7 @@ const routes = [
         }
       },
       { 
-        path: '/designer/profile/:id',
+        path: '/designer/profile',
         component: () => import('src/pages/Designer/Profile.vue'),
         meta: {
           requireLogin: true,
