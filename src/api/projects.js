@@ -10,12 +10,28 @@ function getMyDate(time) {
   return `${year} ${date} ${mounth}`
 }
 
+
 export const projectsApi = {
   getAll() {
     try {
       return httpClient.post(`${url}/getAll`, {})
       .then(({ data }) => {
         return data = data.data.map(el => {
+          let readiness = 0
+          if (el.services.length) {
+            readiness = el.services.reduce(function(total, obj) {
+              return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term;
+            }, 0);    
+          }
+          
+          // if (readiness > 1 && readiness < 100) {
+          //   const projectDueDate = new Date(Date.parse(el.created_at))
+          //   const daysToCompleteProject = 30;
+
+            
+          // }
+          
+          
           return {
             id: el.id,
             status: 1,
@@ -25,13 +41,13 @@ export const projectsApi = {
             typeName: el.project_type.name,
             address: el.address,
             square: el.square,
-            customer: `${el.orderersecond_namee}`,
+            customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
             changed: getMyDate(el.created_at),
             created: getMyDate(el.updated_at),
             timing: 50,
             orderer: el.orderer,
             payment: 80,
-            readiness: 40,
+            readiness: readiness,
             share: [
               {
                 icon: '/icons/anton.jpg',
@@ -89,7 +105,7 @@ export const projectsApi = {
         orderer_id: formData.orderer_id,
         orderer: formData.orderer,
         emoji: formData.emoji,
-        cost: 1
+        cost: formData.price
       };
       
       if (formData.services.length > 0) {
