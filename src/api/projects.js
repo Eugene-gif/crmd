@@ -16,21 +16,36 @@ export const projectsApi = {
     try {
       return httpClient.post(`${url}/getAll`, {})
       .then(({ data }) => {
+        const currentDate = new Date()
         return data = data.data.map(el => {
+
           let readiness = 0
           if (el.services.length) {
             readiness = el.services.reduce(function(total, obj) {
-              return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term;
-            }, 0);    
+              return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term
+            }, 0)
           }
           
-          // if (readiness > 1 && readiness < 100) {
-          //   const projectDueDate = new Date(Date.parse(el.created_at))
-          //   const daysToCompleteProject = 30;
+          const projectDueDate = new Date(Date.parse(el.created_at))
+          let projectCompletionDate = new Date(projectDueDate)
+          projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
+          const timeElapsedInMilliseconds = currentDate.getTime() - projectDueDate.getTime()
+          const projectTimeInMilliseconds = projectCompletionDate.getTime() - projectDueDate.getTime()
+          let projectCompletionPercentage = Math.round((timeElapsedInMilliseconds / projectTimeInMilliseconds) * 100)
 
-            
-          // }
-          
+          const totalDaysForProject = readiness
+          const daysElapsed = Math.floor(timeElapsedInMilliseconds / (1000 * 60 * 60 * 24))
+          let daysRemaining = totalDaysForProject - daysElapsed
+
+          if (projectCompletionPercentage === Infinity) {
+            projectCompletionPercentage = 0
+          } else if (projectCompletionPercentage < 1) {
+            projectCompletionPercentage = 1
+          } else if (projectCompletionPercentage > 100) {
+            projectCompletionPercentage = 100
+          }
+
+          if (daysRemaining < 0) daysRemaining = 0
           
           return {
             id: el.id,
@@ -44,10 +59,10 @@ export const projectsApi = {
             customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
             changed: getMyDate(el.created_at),
             created: getMyDate(el.updated_at),
-            timing: 50,
+            timing: daysRemaining,
             orderer: el.orderer,
             payment: 80,
-            readiness: readiness,
+            readiness: projectCompletionPercentage,
             share: [
               {
                 icon: '/icons/anton.jpg',
@@ -129,7 +144,7 @@ export const projectsApi = {
         orderer_id: formData.orderer_id,
         orderer: formData.orderer,
         emoji: formData.emoji,
-        cost: 2
+        cost: formData.price
       }).then(({ data }) => {
         return data
       })

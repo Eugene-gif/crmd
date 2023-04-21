@@ -70,7 +70,7 @@ const routes = [
         }
       },
       { 
-        path: '/id',
+        path: '/projects/:id',
         component: () => import('src/pages/Project/Id.vue'),
         meta: {
           requireLogin: true,

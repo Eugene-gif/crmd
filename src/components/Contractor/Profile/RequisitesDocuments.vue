@@ -226,7 +226,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import { contractorApi } from 'src/api/contractor';
 import { useQuasar } from 'quasar'
 

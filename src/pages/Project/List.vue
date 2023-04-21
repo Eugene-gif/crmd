@@ -124,13 +124,13 @@
             :props="props"
             class="q-tr-tiles"
           >
-            <q-item to="id" class="q-tr-tiles__link" />
+            <q-item :to="`/projects/${props.row.id}`" class="q-tr-tiles__link" />
             <q-td
               key="image"
               :props="props"
               class="q-td-image"
             >
-              <q-item to="/id">
+              <q-item :to="`/projects/${props.row.id}`">
                 <img v-show="props.row.image" :src="props.row.image" alt="">
               </q-item>
             </q-td>
