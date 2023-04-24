@@ -253,15 +253,15 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, computed, watchEffect } from "vue";
-import BtnDate from "components/BtnDate";
-import DropBox from "components/DropBox";
-import SelectType from "components/projects/SelectType";
-import Emoji from "components/Emoji";
-import { projectsApi } from "src/api/projects";
-import { orderersApi } from "src/api/orderers";
+import { defineComponent, ref, onMounted, watchEffect } from "vue"
+import BtnDate from "components/BtnDate"
+import DropBox from "components/DropBox"
+import SelectType from "components/projects/SelectType"
+import Emoji from "components/Emoji"
+import { projectsApi } from "src/api/projects"
+import { orderersApi } from "src/api/orderers"
 import { designerApi } from 'src/api/designer'
-import { useQuasar } from "quasar";
+import { useQuasar } from "quasar"
 
 export default defineComponent({
   name: "FinanceDialog",
@@ -306,17 +306,11 @@ export default defineComponent({
       second_name: " ",
     })
 
-    const servicesPrice = computed(() => {
-      return services.value.reduce((accumulator, current) => {
-        return formData.value.price = current.value === true ? accumulator + current.price : accumulator + 0
-      }, 0)
-    })
-
-    // watchEffect(() => {
-    //   if (formData.value.price < servicesPrice.value) {
-    //     formData.value.price = servicesPrice.value;
-    //   }
-    // })
+    watchEffect(() => {
+      formData.value.price = services.value.reduce((accumulator, current) => {
+        return current.value === true ? accumulator + current.price : accumulator;
+      }, 0);
+    });
 
     // addCustomer
 
@@ -376,6 +370,7 @@ export default defineComponent({
       try {
         await orderersApi.createOrderers(formOrderers.value).then((resp) => {
           formData.value.orderer = resp.data.id;
+          formData.value.orderer_id = resp.data.id;
           addProject();
           updateData();
           setTimeout(() => {
@@ -404,7 +399,7 @@ export default defineComponent({
     }
     function ongetOrderer(select) {
       formData.value.orderer = select.orderer;
-      formData.value.orderer_id = select.orderer_id;
+      formData.value.orderer_id = select.orderer;
     }
     function ongetTime(time) {
       formOrderers.value.birth_date = time;
@@ -447,7 +442,6 @@ export default defineComponent({
       formData,
       formOrderers,
       services,
-      servicesPrice,
 
       addCustomer,
       selectDropbox,

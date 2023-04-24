@@ -25,7 +25,7 @@ export const orderersApi = {
           return {
             label: `${el.first_name} ${el.last_name}`,
             value: `${el.first_name} ${el.last_name}`,
-            icon: el.image.thumbnail || null,
+            icon: el.image.thumbnail !== '' ? el.image.thumbnail : el.image.placeholder,
             email: el.email,
             like: 25,
             dislike: 2,
