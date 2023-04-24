@@ -197,7 +197,7 @@
                 color="black"
                 :label="check.name"
               />
-              <div class="circle-warning" v-if="check.price > 200">
+              <!-- <div class="circle-warning" v-if="check.price > 200">
                 <q-icon
                   name="svguse:icons/allIcons.svg#tooltip"
                   color="white"
@@ -210,7 +210,7 @@
                 >
                   Дизайн-концепция
                 </q-tooltip>
-              </div>
+              </div> -->
             </q-item>
 
           </q-list>
@@ -223,7 +223,7 @@
             class="my-input bg-grey-3"
             placeholder="Укажите общий гонорар"
             type="number"
-            :rules="[(val) => (val && val.length > 0) || '']"
+            :rules="[(val) => (val && val.length > 0) || 0]"
           >
             <template v-slot:append>
               <div class="text">руб.</div>
@@ -253,7 +253,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed, watchEffect } from "vue";
 import BtnDate from "components/BtnDate";
 import DropBox from "components/DropBox";
 import SelectType from "components/projects/SelectType";
@@ -288,8 +288,8 @@ export default defineComponent({
       orderer: null,
       orderer_id: null,
       services: [],
-      price: '',
-    });
+      price: 0,
+    })
     const formOrderers = ref({
       // user_id: '',
       first_name: "",
@@ -304,7 +304,19 @@ export default defineComponent({
       image: "",
       personal_info: " ",
       second_name: " ",
-    });
+    })
+
+    const servicesPrice = computed(() => {
+      return services.value.reduce((accumulator, current) => {
+        return formData.value.price = current.value === true ? accumulator + current.price : accumulator + 0
+      }, 0)
+    })
+
+    // watchEffect(() => {
+    //   if (formData.value.price < servicesPrice.value) {
+    //     formData.value.price = servicesPrice.value;
+    //   }
+    // })
 
     // addCustomer
 
@@ -435,6 +447,7 @@ export default defineComponent({
       formData,
       formOrderers,
       services,
+      servicesPrice,
 
       addCustomer,
       selectDropbox,
