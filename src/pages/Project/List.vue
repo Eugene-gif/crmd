@@ -261,7 +261,7 @@ import Dialog from 'pages/Project/dialog.vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import SortedMobile from 'components/Table/SortedMobile.vue'
 import { ref, onMounted } from 'vue'
-import { projectsApi } from 'src/api/projects';
+import { projectsApi } from 'src/api/projects'
 import LoaderDate from 'src/components/LoaderDate.vue'
 import NoDate from 'src/components/NoDate.vue'
 import { useQuasar } from 'quasar'

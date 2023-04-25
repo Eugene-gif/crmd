@@ -19,13 +19,15 @@
         <div class="section">
           <q-item class="square">
             <div class="title">Площадь</div>
-            <div class="number">115 м<sup>2</sup></div>
+            <div class="number">{{info.square}} м<sup>2</sup></div>
           </q-item>
           <q-item class="info">
-            <p class="adres">Адрес: г. Краснодар, ул. Ленина, д. 15</p>
+            <p class="adres">{{info.address}}</p>
             <div class="row">
+              
               <img src="~assets/stroipro.jpg" alt="" class="avatar" />
-              <p class="type">Дмитрий Андикаловский</p>
+              
+              <p class="type">{{orderer?.data?.first_name}} {{orderer?.data?.last_name}}</p>
               <q-btn flat class="circle-warning-15 mb-visible">
                 <q-icon
                   name="svguse:icons/allIcons.svg#tooltip"
@@ -109,7 +111,6 @@
         </div>
       </q-card-section>
       <q-card-section class="img-section">
-        
         <div
           class="circle-close mini rotate" 
           v-show="formData.file"
@@ -156,6 +157,9 @@
         </div>
       </q-card-section>
     </q-card>
+
+
+    
     <q-card class="q-card-dashboard-option" v-show="dashboardActive">
       <div class="row">
         <div class="col-12 col-md-6">
@@ -299,7 +303,12 @@ export default defineComponent({
   components: {
     Emoji,
   },
-  setup() {
+  props: {
+    info: Object,
+    orderer: Object
+  },
+  setup(props, {emit}) {
+    const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
     const dashboardActive = ref(false);
     const formData = ref({
@@ -318,6 +327,7 @@ export default defineComponent({
       },
       file: null,
     })
+
     const type = ref([
       {
         label: 'Квартира',
@@ -336,11 +346,18 @@ export default defineComponent({
         value: 4
       }
     ])
+    
     function ongetEmojik(data) {
       formData.value.name = data.text.value;
       formData.value.emoji = data.emojiIcon.value;
     }
 
+    function onRejected() {
+      $q.notify({
+        type: 'negative',
+        message: 'Ошибка загрузки'
+      })
+    }
 
     async function uploadProfilePhoto(file) {
       lodingBtn2.value = true
@@ -357,12 +374,14 @@ export default defineComponent({
     }
 
     return {
+      lodingBtn,
       lodingBtn2,
       formData,
       dashboardActive,
       ongetEmojik,
       type,
       uploadProfilePhoto,
+      onRejected,
     }
   },
 });

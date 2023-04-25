@@ -17,6 +17,27 @@ export const projectsApi = {
       return httpClient.post(`${url}/getAll`, {})
       .then(({ data }) => {
         const currentDate = new Date()
+        function parseCustomDate(dateStr) {
+          const timeAndDate = dateStr.split(' ');
+          const [hours, minutes, seconds] = timeAndDate[0].split(':').map(Number);
+          const [day, month, year] = timeAndDate[1].split('/').map(Number);
+        
+          return new Date(year, month - 1, day, hours, minutes, seconds);
+        }
+        function formatDateTime(inputDateStr) {
+          const [timeStr, dateStr] = inputDateStr.split(' ');
+          const [day, month, year] = dateStr.split('/').map(Number);
+          const inputDate = new Date(year, month - 1, day);
+          const today = new Date();
+          const isSameDate = inputDate.getDate() === today.getDate()
+                             && inputDate.getMonth() === today.getMonth()
+                             && inputDate.getFullYear() === today.getFullYear();
+          if (isSameDate) {
+            return timeStr;
+          }
+          return inputDateStr;
+        }
+
         return data = data.data.map(el => {
 
           let readiness = 0
@@ -26,7 +47,7 @@ export const projectsApi = {
             }, 0)
           }
           
-          const projectDueDate = new Date(Date.parse(el.created_at))
+          const projectDueDate = parseCustomDate(el.created_at);
           let projectCompletionDate = new Date(projectDueDate)
           projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
           const timeElapsedInMilliseconds = currentDate.getTime() - projectDueDate.getTime()
@@ -57,37 +78,37 @@ export const projectsApi = {
             address: el.address,
             square: el.square,
             customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
-            changed: getMyDate(el.created_at),
-            created: getMyDate(el.updated_at),
+            changed: formatDateTime(el.updated_at),
+            created: formatDateTime(el.created_at),
             timing: daysRemaining,
             orderer: el.orderer,
             payment: 80,
             readiness: projectCompletionPercentage,
             share: [
-              {
-                icon: '/icons/anton.jpg',
-                link: 's'
-              },
-              {
-                icon: '/icons/stroipro.jpg',
-                link: ''
-              },
-              {
-                icon: '/icons/anton.jpg',
-                link: ''
-              },
-              {
-                icon: '/icons/anton.jpg',
-                link: ''
-              },
-              {
-                icon: '/icons/stroipro.jpg',
-                link: ''
-              },
-              {
-                icon: '/icons/stroipro.jpg',
-                link: ''
-              }
+              // {
+              //   icon: '/icons/anton.jpg',
+              //   link: 's'
+              // },
+              // {
+              //   icon: '/icons/stroipro.jpg',
+              //   link: ''
+              // },
+              // {
+              //   icon: '/icons/anton.jpg',
+              //   link: ''
+              // },
+              // {
+              //   icon: '/icons/anton.jpg',
+              //   link: ''
+              // },
+              // {
+              //   icon: '/icons/stroipro.jpg',
+              //   link: ''
+              // },
+              // {
+              //   icon: '/icons/stroipro.jpg',
+              //   link: ''
+              // }
             ]   
           }
         })
@@ -97,7 +118,18 @@ export const projectsApi = {
     }
   },
 
-
+  getById(id) {
+    try {
+      return httpClient.post(`${url}/get/`, {
+        project_id: id
+      })
+      .then(({ data }) => {
+        return data.data
+      })
+    } catch(err) {
+      throw err
+    }
+  },
 
   getTypes() {
     try {

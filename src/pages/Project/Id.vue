@@ -10,8 +10,13 @@
   </q-dialog>
   
   <q-page class="page-project">
+
+    <LoaderDate
+      v-show="loading"
+    />
+
     <div class="row justify-between items-center head">
-      <div class="text-h2">Название проекта</div>
+      <div class="text-h2">{{generalInfo.name}}</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
       <div class="head-btns">
         <q-btn
@@ -24,6 +29,7 @@
         />
       </div>
     </div>
+
     <div class="row items-center header-btns">
       <q-btn
         rounded
@@ -61,6 +67,7 @@
         label="Финансы"
       />
     </div>
+    
     <div class="row items-center header-btns-2">
       <q-btn
         rounded
@@ -103,9 +110,12 @@
     </div>
 
     <q-list class="project-sections">
-      <DashboardComp />
+      <DashboardComp 
+        :info="generalInfo"
+        :orderer="data.orderer"
+      />
 
-      <q-expansion-item
+      <!-- <q-expansion-item
         expand-separator
         default-opened
         class="graffic"
@@ -612,7 +622,7 @@
                 </q-item>
               </q-list>
             </div>
-            <!-- action -->
+            
           </q-card-section>
           <q-card-section class="q-card-btn">
             <q-btn
@@ -684,7 +694,7 @@
                 </q-item>
               </q-list>
             </div>
-            <!-- action -->
+            
           </q-card-section>
           <q-card-section class="q-card-add">
             <q-btn
@@ -844,7 +854,7 @@
           <div class="block text-grey-5">Назад к списку проектов</div>
           <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
         </q-btn>
-      </div>
+      </div> -->
 
     </q-list>
   </q-page>
@@ -856,9 +866,11 @@ import ActionBtn from 'components/Table/ActionBtn.vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
 import GraficGant from 'components/GraficGant.vue'
 import BtnDate from 'components/BtnDate.vue'
+import LoaderDate from 'src/components/LoaderDate.vue'
 import DashboardComp from "components/projects/id/DashboardComp"
-
-import { ref } from 'vue'
+import { projectsApi } from 'src/api/projects'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router';
 
 const columns = ref([
   { name: 'id', label: '', field: 'id', align: 'left' },
@@ -934,9 +946,14 @@ export default {
     GraficGant,
     BtnDate,
     DashboardComp,
+    LoaderDate,
   },
   setup () {
+    const route = useRoute()
+    const projectId = ref(route.params.id)
+    const loading = ref(false)
     const dialog = ref(false)
+
     const estimates = ref([
       {
         id: 1,
@@ -1203,9 +1220,7 @@ export default {
         news: null,
       },
     ])
-
     const grafficActive = ref(false)
-
     const visual = ref([
       {
         id: 1,
@@ -1395,7 +1410,39 @@ export default {
       },
     ])
 
+    const generalInfo = ref({})
+    const data = ref({})
+
+    async function getProject() {
+      loading.value = true
+      try {
+        const resp = await projectsApi.getById(projectId.value)
+        data.value = resp
+        generalInfo.value = {
+          project_type_id: resp.project_type_id,
+          orderer_id: resp.orderer_id,
+          name: resp.name,
+          address: resp.address,
+          square: resp.square,
+          emoji: resp.emoji,
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      loading.value = false
+    }
+
+    onMounted( async() => {
+      await getProject()
+    })
+
     return {
+      generalInfo,
+      loading,
+      data,
+      route,
+      projectId,
+      getProject,
       columns,
       rows,
       columns2,
@@ -1472,3 +1519,4 @@ export default {
   }
 }
 </script>
+

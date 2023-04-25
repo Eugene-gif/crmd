@@ -145,11 +145,11 @@
 
 <script>
 import { ref, onMounted, computed } from 'vue'
-import { albumsApi } from 'src/api/albums';
-import { imagesApi } from 'src/api/images';
-import { userApi } from 'src/api/user';
+import { albumsApi } from 'src/api/albums'
+import { imagesApi } from 'src/api/images'
+import { userApi } from 'src/api/user'
 import { useQuasar } from 'quasar'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 import PhotoGallery from 'components/Designer/PhotoGallery'
 import DialogDelite from 'components/dialog/DialogDelite'
@@ -183,12 +183,13 @@ export default {
     const systemImage = ref(true)
 
     function getUserImage() {
-      if (me.value.image.url == null) {
+      if (me.value.image.url === null || me.value.image.url === '') {
         userImage.value = me.value.image.placeholder
       } else { 
         userImage.value = me.value.image.url
         systemImage.value = false
       }  
+      console.log(me.value)
     }
 
     function checkFileSize (files) {
