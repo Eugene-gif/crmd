@@ -10,6 +10,7 @@
             v-show="!emojiIcon"
           />
           {{emojiIcon}}
+          
         </div>
       </template>
     </q-input>
@@ -144,14 +145,18 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 
 export default defineComponent ({
   emits: ['getEmojik'],
+  props: {
+    name: String,
+    icon: String
+  },
   setup(props, { emit }) {
     
     const info = ref(null)
-    const emojiIcon = ref()
+    const emojiIcon = ref('')
     const tab = ref('Символы')
     const openTabs = ref(false)
     const openModal = ref(false)
@@ -188,6 +193,11 @@ export default defineComponent ({
     function sendData() {
       emit('getEmojik', {text, emojiIcon})
     }
+
+    onMounted(() => {
+      text.value = props.name
+      emojiIcon.value = props.icon
+    })
 
     return {
       emojiIcon,

@@ -14,7 +14,7 @@
         @click.stop="dashboardActive = !dashboardActive"
       />
     </template>
-{{info}}
+{{formData}}
     <q-card v-show="!dashboardActive">
       <q-card-section>
         <div class="section">
@@ -171,13 +171,18 @@
           <q-card-section>
             <q-item>
               <div class="title">Название</div>
-              <Emoji @getEmojik="ongetEmojik" />
+              <Emoji 
+                @getEmojik="ongetEmojik" 
+                :name="formData.name"
+                :icon="formData.emoji"
+                v-if="formData.name !== null"
+              />
             </q-item>
 
             <q-item>
               <div class="title">Адрес</div>
               <q-input
-                v-model="formData.adress"
+                v-model="formData.address"
                 class="my-input bg-grey-3"
                 placeholder="Введите адрес"
               />
@@ -263,7 +268,7 @@
               <div class="title">Тип</div>
               <q-select
                 filled
-                v-model="formData.type"
+                v-model="formData.project_type"
                 :options="type"
                 stack-label
                 placeholder="Выбрать"
@@ -272,6 +277,8 @@
                 behavior="menu"
                 ref="selectDropbox"
                 popup-content-class="my-select-menu"
+                option-value="id"
+                option-label="name"
               />
             </q-item>
           </q-card-section>
@@ -301,7 +308,7 @@
 </template>
 
 <script>
-import { ref, defineComponent, computed, onMounted } from "vue";
+import { ref, defineComponent, computed, onMounted, onBeforeMount } from "vue";
 import Emoji from "components/Emoji"
 
 export default defineComponent({
@@ -313,38 +320,38 @@ export default defineComponent({
     orderer: Object
   },
   setup(props, {emit}) {
+    const loding = ref(false)
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
     const dashboardActive = ref(false);
 
     const formData = ref({
-      name: "",
-      emoji: "",
-      adress: "",
-      square: "",
-      type: '',
-      project_type_id: 1,
-      orderer: "",
-      price: "",
+      name: null,
+      emoji: null,
+      address: null,
+      square: null,
+      project_type: null,
+      orderer: null,
+      price: null,
       file: null,
     })
 
     const type = ref([
       {
-        label: 'Квартира',
-        value: 1
+        name: 'Квартира',
+        id: 1
       },
       {
-        label: 'Офис',
-        value: 2
+        name: 'Офис',
+        id: 2
       },
       {
-        label: 'Коттедж',
-        value: 3
+        name: 'Коттедж',
+        id: 3
       },
       {
-        label: 'Бар',
-        value: 4
+        name: 'Бар',
+        id: 4
       }
     ])
     
@@ -387,10 +394,17 @@ export default defineComponent({
     })
 
     onMounted(() => {
-      
+      if (props.info.name) {
+        formData.value.name = props.info.name || '';
+        formData.value.emoji = props.info.emoji || '';
+        formData.value.address = props.info.address || '';
+        formData.value.square = props.info.square || '';
+        formData.value.project_type = props.info.project_type || '';
+      }
     })
 
     return {
+      loding,
       lodingBtn,
       lodingBtn2,
       formData,

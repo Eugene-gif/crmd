@@ -109,7 +109,7 @@
       </q-btn>
     </div>
 
-    <q-list class="project-sections">
+    <q-list class="project-sections" v-if="!loading">
       <DashboardComp 
         :info="generalInfo"
         :orderer="data.orderer"
@@ -1426,7 +1426,8 @@ export default {
           square: resp.square,
           emoji: resp.emoji,
           readiness: resp.readiness,
-          image: resp.image
+          image: resp.image,
+          project_type: resp.project_type
         }
       } catch (err) {
         console.log(err)
