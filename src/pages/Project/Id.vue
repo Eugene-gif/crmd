@@ -1425,6 +1425,8 @@ export default {
           address: resp.address,
           square: resp.square,
           emoji: resp.emoji,
+          readiness: resp.readiness,
+          image: resp.image
         }
       } catch (err) {
         console.log(err)

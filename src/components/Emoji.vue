@@ -1,6 +1,7 @@
 <template>
   <div class="emoji">
-    <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите название" @change="sendData" :rules="[ val => val && val.length > 0 || '']" >
+    <q-input v-model="text" class="my-input bg-grey-3" placeholder="Введите название" 
+    @change="sendData" :rules="[ val => val && val.length > 0 || '']" >
       <template v-slot:after>
         <div class="q-mr-md q-pr-xs emoji-div" @click="openModal = !openModal">
           <q-icon

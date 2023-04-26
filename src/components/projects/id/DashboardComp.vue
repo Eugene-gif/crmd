@@ -14,6 +14,7 @@
         @click.stop="dashboardActive = !dashboardActive"
       />
     </template>
+{{info}}
     <q-card v-show="!dashboardActive">
       <q-card-section>
         <div class="section">
@@ -25,9 +26,12 @@
             <p class="adres">{{info.address}}</p>
             <div class="row">
               
-              <img src="~assets/stroipro.jpg" alt="" class="avatar" />
-              
-              <p class="type">{{orderer?.data?.first_name}} {{orderer?.data?.last_name}}</p>
+              <img 
+                :src="customer.image"
+                alt="" 
+                class="avatar" 
+               />
+              <p class="type">{{customer.name}}</p>
               <q-btn flat class="circle-warning-15 mb-visible">
                 <q-icon
                   name="svguse:icons/allIcons.svg#tooltip"
@@ -42,12 +46,13 @@
                   ref="menu"
                   width="300px"
                 >
-                  {{ formData.customer.tooltip }}
+                  {{ customer.tooltip }}
                 </q-menu>
               </q-btn>
             </div>
           </q-item>
         </div>
+        
         <div class="img-section mb-visible">
           <div 
             class="circle-close mini rotate"
@@ -97,9 +102,9 @@
 
         <div class="q-item section-toolbar">
           <div class="item">
-            <div class="title">Прогресс проекта <span>40%</span></div>
+            <div class="title">Прогресс проекта <span>{{info.readiness}}%</span></div>
             <div class="flex toolbar">
-              <div class="toolbar-procent bg-primary" style="width: 40%"></div>
+              <div class="toolbar-procent bg-primary" :style="`width: ${info.readiness}%`"></div>
             </div>
           </div>
           <div class="item">
@@ -110,6 +115,7 @@
           </div>
         </div>
       </q-card-section>
+
       <q-card-section class="img-section">
         <div
           class="circle-close mini rotate" 
@@ -156,9 +162,8 @@
           </div>
         </div>
       </q-card-section>
+
     </q-card>
-
-
     
     <q-card class="q-card-dashboard-option" v-show="dashboardActive">
       <div class="row">
@@ -201,10 +206,10 @@
                 class="my-input bg-grey-3 my-input__customer"
                 placeholder="Введите адрес"
                 :disable="true"
-                v-model="formData.customer.name"
+                v-model="customer.name"
               >
                 <template v-slot:prepend>
-                  <img :src="formData.customer.image" alt="" />
+                  <img :src="customer.image" alt="" />
                 </template>
                 <template v-slot:append>
                   <q-btn flat class="circle-warning-15 mb-visible">
@@ -221,7 +226,7 @@
                       ref="menu"
                       width="300px"
                     >
-                      {{ formData.customer.tooltip }}
+                      {{ customer.tooltip }}
                     </q-menu>
                   </q-btn>
                   <div
@@ -238,7 +243,7 @@
                       anchor="bottom middle"
                       self="top middle"
                     >
-                      {{ formData.customer.tooltip }}
+                      {{ customer.tooltip }}
                     </q-tooltip>
                   </div>
                 </template>
@@ -296,7 +301,7 @@
 </template>
 
 <script>
-import { ref, defineComponent } from "vue";
+import { ref, defineComponent, computed, onMounted } from "vue";
 import Emoji from "components/Emoji"
 
 export default defineComponent({
@@ -311,6 +316,7 @@ export default defineComponent({
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
     const dashboardActive = ref(false);
+
     const formData = ref({
       name: "",
       emoji: "",
@@ -320,11 +326,6 @@ export default defineComponent({
       project_type_id: 1,
       orderer: "",
       price: "",
-      customer: {
-        name: "СтройПро",
-        image: "/icons/stroipro.jpg",
-        tooltip: "Подсказка",
-      },
       file: null,
     })
 
@@ -373,16 +374,33 @@ export default defineComponent({
       lodingBtn2.value = false
     }
 
+    const customer = computed(() => {
+      if (props.orderer && props.orderer.data) {
+        const name = `${props.orderer.data.first_name || ''} ${props.orderer.data.last_name || ''}`.trim() || null;
+        const image = props.orderer.data.image?.thumbnail ? props.orderer.data.image.thumbnail : props.orderer.data.image?.placeholder;
+        const tooltip = 'Подсказка';
+
+        return { name, image, tooltip };
+      } else {
+        return { name: null, image: null, tooltip: null };
+      }
+    })
+
+    onMounted(() => {
+      
+    })
+
     return {
       lodingBtn,
       lodingBtn2,
       formData,
       dashboardActive,
       ongetEmojik,
+      customer,
       type,
       uploadProfilePhoto,
       onRejected,
     }
   },
-});
+})
 </script>

@@ -10,64 +10,89 @@ function getMyDate(time) {
   return `${year} ${date} ${mounth}`
 }
 
+const currentDate = new Date()
+function parseCustomDate(dateStr) {
+  const timeAndDate = dateStr.split(' ');
+  const [hours, minutes, seconds] = timeAndDate[0].split(':').map(Number);
+  const [day, month, year] = timeAndDate[1].split('/').map(Number);
+
+  return new Date(year, month - 1, day, hours, minutes, seconds);
+}
+function formatDateTime(inputDateStr) {
+  const [timeStr, dateStr] = inputDateStr.split(' ');
+  const [day, month, year] = dateStr.split('/').map(Number);
+  const inputDate = new Date(year, month - 1, day);
+  const today = new Date();
+  const isSameDate = inputDate.getDate() === today.getDate()
+                      && inputDate.getMonth() === today.getMonth()
+                      && inputDate.getFullYear() === today.getFullYear();
+  if (isSameDate) {
+    return timeStr;
+  }
+  return inputDateStr;
+}
+
+function getProgress(created_at, services) {
+  let readiness = 0
+  if (services.length) {
+    readiness = services.reduce(function(total, obj) {
+      return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term
+    }, 0)
+  }
+  
+  const projectDueDate = parseCustomDate(created_at);
+  let projectCompletionDate = new Date(projectDueDate)
+  projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
+
+  const timeElapsedInMilliseconds = currentDate.getTime() - projectDueDate.getTime()
+  const projectTimeInMilliseconds = projectCompletionDate.getTime() - projectDueDate.getTime()
+  let projectCompletionPercentage = Math.round((timeElapsedInMilliseconds / projectTimeInMilliseconds) * 100)
+
+  if (projectCompletionPercentage === Infinity) {
+    projectCompletionPercentage = 0
+  } else if (projectCompletionPercentage < 1) {
+    projectCompletionPercentage = 1
+  } else if (projectCompletionPercentage > 100) {
+    projectCompletionPercentage = 100
+  }
+
+  return projectCompletionPercentage
+}
+
+function getTiming(created_at, services) {
+  let readiness = 0
+  if (services.length) {
+    readiness = services.reduce(function(total, obj) {
+      return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term
+    }, 0)
+  }
+
+  const projectDueDate = parseCustomDate(created_at);
+  let projectCompletionDate = new Date(projectDueDate)
+  projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
+
+  const timeElapsedInMilliseconds = currentDate.getTime() - projectDueDate.getTime()
+
+  const totalDaysForProject = readiness
+  const daysElapsed = Math.floor(timeElapsedInMilliseconds / (1000 * 60 * 60 * 24))
+  let daysRemaining = totalDaysForProject - daysElapsed
+
+  if (daysRemaining < 0) daysRemaining = 0
+
+  return daysRemaining
+}
+
+
+
 
 export const projectsApi = {
   getAll() {
     try {
       return httpClient.post(`${url}/getAll`, {})
       .then(({ data }) => {
-        const currentDate = new Date()
-        function parseCustomDate(dateStr) {
-          const timeAndDate = dateStr.split(' ');
-          const [hours, minutes, seconds] = timeAndDate[0].split(':').map(Number);
-          const [day, month, year] = timeAndDate[1].split('/').map(Number);
         
-          return new Date(year, month - 1, day, hours, minutes, seconds);
-        }
-        function formatDateTime(inputDateStr) {
-          const [timeStr, dateStr] = inputDateStr.split(' ');
-          const [day, month, year] = dateStr.split('/').map(Number);
-          const inputDate = new Date(year, month - 1, day);
-          const today = new Date();
-          const isSameDate = inputDate.getDate() === today.getDate()
-                             && inputDate.getMonth() === today.getMonth()
-                             && inputDate.getFullYear() === today.getFullYear();
-          if (isSameDate) {
-            return timeStr;
-          }
-          return inputDateStr;
-        }
-
         return data = data.data.map(el => {
 
-          let readiness = 0
-          if (el.services.length) {
-            readiness = el.services.reduce(function(total, obj) {
-              return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term
-            }, 0)
-          }
-          
-          const projectDueDate = parseCustomDate(el.created_at);
-          let projectCompletionDate = new Date(projectDueDate)
-          projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
-          const timeElapsedInMilliseconds = currentDate.getTime() - projectDueDate.getTime()
-          const projectTimeInMilliseconds = projectCompletionDate.getTime() - projectDueDate.getTime()
-          let projectCompletionPercentage = Math.round((timeElapsedInMilliseconds / projectTimeInMilliseconds) * 100)
-
-          const totalDaysForProject = readiness
-          const daysElapsed = Math.floor(timeElapsedInMilliseconds / (1000 * 60 * 60 * 24))
-          let daysRemaining = totalDaysForProject - daysElapsed
-
-          if (projectCompletionPercentage === Infinity) {
-            projectCompletionPercentage = 0
-          } else if (projectCompletionPercentage < 1) {
-            projectCompletionPercentage = 1
-          } else if (projectCompletionPercentage > 100) {
-            projectCompletionPercentage = 100
-          }
-
-          if (daysRemaining < 0) daysRemaining = 0
-          
           return {
             id: el.id,
             status: 1,
@@ -80,10 +105,10 @@ export const projectsApi = {
             customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
             changed: formatDateTime(el.updated_at),
             created: formatDateTime(el.created_at),
-            timing: daysRemaining,
+            timing: getTiming(el.created_at, el.services),
             orderer: el.orderer,
             payment: 80,
-            readiness: projectCompletionPercentage,
+            readiness: getProgress(el.created_at, el.services),
             share: [
               // {
               //   icon: '/icons/anton.jpg',
@@ -118,12 +143,13 @@ export const projectsApi = {
     }
   },
 
-  getById(id) {
+  getById(id) {    
     try {
       return httpClient.post(`${url}/get/`, {
         project_id: id
       })
       .then(({ data }) => {
+        data.data.readiness = getProgress(data.data.created_at, data.data.services)
         return data.data
       })
     } catch(err) {
