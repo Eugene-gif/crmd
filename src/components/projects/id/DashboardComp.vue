@@ -318,6 +318,7 @@ export default defineComponent({
   },
   props: {
     info: Object,
+    type: Array,
     orderer: Object
   },
   setup(props, {emit}) {
@@ -338,8 +339,6 @@ export default defineComponent({
       uploadFile: null,
       image: null,
     })
-
-    const type = ref([])
     
     function ongetEmojik(data) {
       formData.value.name = data.text.value
@@ -387,8 +386,6 @@ export default defineComponent({
         dashboardActive.value = false
       } catch (err) {
         console.log(err)
-      } finally {
-        
       }
     }
 
@@ -403,22 +400,12 @@ export default defineComponent({
         return { name: null, image: null, tooltip: null }
       }
     })
-    async function getType() {
-      try {
-        await projectsApi.getTypes()
-        .then(resp => {
-          type.value = resp
-        })
-      } catch (err) {
-        console.log(err)
-      }      
-    }
+    
     onMounted(() => {
       if (props.info.name) {
         formData.value = props.info 
         formData.value.file = null
       }
-      getType()
     })
 
     return {
@@ -429,11 +416,9 @@ export default defineComponent({
       dashboardActive,
       ongetEmojik,
       customer,
-      type,
       uploadProfilePhoto,
       onRejected,
       updateInfo,
-      getType,
     }
   },
 })

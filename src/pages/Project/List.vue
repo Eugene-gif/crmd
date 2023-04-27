@@ -131,9 +131,10 @@
               class="q-td-image"
             >
               <q-item :to="`/projects/${props.row.id}`">
-                <img v-show="props.row.image" :src="props.row.image" alt="">
+                <img v-show="props.row.image.url" :src="props.row.image.url" alt="">
               </q-item>
             </q-td>
+            
             <q-td
               key="name"
               :props="props"
@@ -252,6 +253,7 @@
           <!-- q-th__share -->
         </template>
       </q-table>
+      
     </div>
   </q-page>
 </template>
@@ -349,43 +351,7 @@ export default {
       
     }
     async function onActionCopy(id) {
-      // loading.value = true
-      // let element 
-      // rows2.value.map((item) => {
-      //   if (item.id === id) {
-      //     return element = {
-      //       name: item.name,
-      //       adress: item.address,
-      //       square: item.square,
-      //       project_type_id: item.type.id,
-      //       orderer: item.orderer.id,
-      //       orderer_id: item.orderer.id,
-      //       emoji: item.iconName
-      //     }
-      //   }
-      // })
 
-      // try {
-      //   await projectsApi.cloneProject(element)
-      //   .then(resp => {
-      //     start()
-      //     setTimeout(() => {
-      //       $q.notify({
-      //         color: 'positive',
-      //         message: 'Проект скопирован'
-      //       })
-      //     }, 0)
-      //   })
-      // } catch (err) {
-      //   setTimeout(() => {
-      //     $q.notify({
-      //       color: 'red',
-      //       message: 'Произошла ошибка, попробуйте позже'
-      //     })
-      //   }, 0)
-      //   console.log(err)
-      // }
-      // loading.value = false
     }
     async function onActionDel(id) {
       loading.value = true

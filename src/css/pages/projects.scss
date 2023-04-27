@@ -747,6 +747,10 @@
           line-height: 16px;
           color: $grey-5;
           margin-top: 20px;
+          span {
+            padding-top: 6px;
+            display: block;
+          }
         }
         .access {
           display: flex;

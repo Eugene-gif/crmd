@@ -110,6 +110,7 @@ export const projectsApi = {
             orderer: el.orderer,
             payment: 80,
             readiness: getProgress(el.created_at, el.services),
+            image: el.image,
             share: [
               // {
               //   icon: '/icons/anton.jpg',
@@ -146,7 +147,7 @@ export const projectsApi = {
 
   getById(id) {    
     try {
-      return httpClient.post(`${url}/get/`, {
+      return httpClient.post(`${url}/get`, {
         project_id: id
       })
       .then(({ data }) => {
