@@ -14,7 +14,7 @@
         @click.stop="dashboardActive = !dashboardActive"
       />
     </template>
-{{formData}}
+
     <q-card v-show="!dashboardActive">
       <q-card-section>
         <div class="section">
@@ -56,19 +56,19 @@
         <div class="img-section mb-visible">
           <div 
             class="circle-close mini rotate"
-            v-show="formData.file"
-            @click="formData.file = null"
+            v-show="formData.image?.url"
+            @click="uploadProfilePhoto([''])"
            >
             <q-icon
               size="12px"
               name="svguse:icons/allIcons.svg#close-modal"
               color="black"
               style="opacity: 0.3;"
-              @click="delImage(item.id)"
+
             />
           </div>
-          <img :src="formData.file" alt="" v-show="formData.file">
-          <div class="btn-upload" v-show="formData.file">
+          <img :src="formData.image?.url" alt="" v-show="formData.image?.url">
+          <div class="btn-upload" v-show="formData.image?.url">
             <q-uploader
               @added="uploadProfilePhoto"
               accept=".jpg, image/*"
@@ -92,7 +92,7 @@
                   name="svguse:icons/allIcons.svg#no-photo"
                   color="black"
                   style="opacity: 0.1;"
-                  @click="delImage(item.id)"
+                  
                 />
               </div>
               <label class="text">Добавить фото</label>
@@ -119,19 +119,18 @@
       <q-card-section class="img-section">
         <div
           class="circle-close mini rotate" 
-          v-show="formData.file"
-          @click="formData.file = null"
+          v-show="formData.image?.url"
+          @click="uploadProfilePhoto([''])"
         >
           <q-icon
             size="12px"
             name="svguse:icons/allIcons.svg#close-modal"
             color="black"
             style="opacity: 0.3;"
-            @click="delImage(item.id)"
           />
         </div>
-        <img :src="formData.file" alt="" v-show="formData.file">
-        <div class="btn-upload" v-show="formData.file">
+        <img :src="formData.image?.url" alt="" v-show="formData.image?.url">
+        <div class="btn-upload" v-show="formData.image?.url">
           <q-uploader
             @added="uploadProfilePhoto"
             accept=".jpg, image/*"
@@ -155,7 +154,7 @@
                 name="svguse:icons/allIcons.svg#no-photo"
                 color="black"
                 style="opacity: 0.1;"
-                @click="delImage(item.id)"
+                
               />
             </div>
             <label class="text">Добавить фото</label>
@@ -191,7 +190,7 @@
             <q-item>
               <div class="title">Гонорар дизайнера</div>
               <q-input
-                v-model="formData.price"
+                v-model="formData.cost"
                 class="my-input bg-grey-3 q-field-procent"
                 placeholder="Укажите общий гонорар"
               >
@@ -302,14 +301,16 @@
       color="positive"
       label="Сохранить изменения"
       v-show="dashboardActive"
-      @click="dashboardActive = false"
+      @click="updateInfo"
     />
   </q-expansion-item>
 </template>
 
 <script>
-import { ref, defineComponent, computed, onMounted, onBeforeMount } from "vue";
+import { ref, defineComponent, computed, onMounted } from "vue";
 import Emoji from "components/Emoji"
+import { projectsApi } from 'src/api/projects'
+import { useQuasar } from 'quasar'
 
 export default defineComponent({
   components: {
@@ -320,6 +321,7 @@ export default defineComponent({
     orderer: Object
   },
   setup(props, {emit}) {
+    const $q = useQuasar()
     const loding = ref(false)
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
@@ -331,76 +333,92 @@ export default defineComponent({
       address: null,
       square: null,
       project_type: null,
-      orderer: null,
-      price: null,
+      cost: null,
       file: null,
+      uploadFile: null,
+      image: null,
     })
 
-    const type = ref([
-      {
-        name: 'Квартира',
-        id: 1
-      },
-      {
-        name: 'Офис',
-        id: 2
-      },
-      {
-        name: 'Коттедж',
-        id: 3
-      },
-      {
-        name: 'Бар',
-        id: 4
-      }
-    ])
+    const type = ref([])
     
     function ongetEmojik(data) {
-      formData.value.name = data.text.value;
-      formData.value.emoji = data.emojiIcon.value;
+      formData.value.name = data.text.value
+      formData.value.emoji = data.emojiIcon.value
     }
-
     function onRejected() {
       $q.notify({
         type: 'negative',
         message: 'Ошибка загрузки'
       })
     }
-
     async function uploadProfilePhoto(file) {
       lodingBtn2.value = true
 
-      // formData.value.file = file[0]
-
-      const reader = new FileReader()
-      reader.onload = () => {
-        formData.value.file = reader.result
+      formData.value.uploadFile = file[0]
+      try {
+        const resp = await projectsApi.updateImage(formData.value)
+        
+        if (file[0] === '') {
+          $q.notify({
+            color: 'positive',
+            message: 'Картинка удалена'
+          })
+        } else {
+          $q.notify({
+            color: 'positive',
+            message: 'Картинка обновлена'
+          })
+        }
+        formData.value.image = resp.image
+      } catch (err) {
+        console.log(err)
       }
-      reader.readAsDataURL(file[0])
-
+      
       lodingBtn2.value = false
+    }
+
+    async function updateInfo() {
+      try {
+        await projectsApi.updateInfo(formData.value)
+        $q.notify({
+          color: 'positive',
+          message: 'Данные обновлены'
+        })
+        dashboardActive.value = false
+      } catch (err) {
+        console.log(err)
+      } finally {
+        
+      }
     }
 
     const customer = computed(() => {
       if (props.orderer && props.orderer.data) {
-        const name = `${props.orderer.data.first_name || ''} ${props.orderer.data.last_name || ''}`.trim() || null;
-        const image = props.orderer.data.image?.thumbnail ? props.orderer.data.image.thumbnail : props.orderer.data.image?.placeholder;
-        const tooltip = 'Подсказка';
+        const name = `${props.orderer.data.first_name || ''} ${props.orderer.data.last_name || ''}`.trim() || null
+        const image = props.orderer.data.image?.thumbnail ? props.orderer.data.image.thumbnail : props.orderer.data.image?.placeholder
+        const tooltip = 'Подсказка'
 
-        return { name, image, tooltip };
+        return { name, image, tooltip }
       } else {
-        return { name: null, image: null, tooltip: null };
+        return { name: null, image: null, tooltip: null }
       }
     })
-
+    async function getType() {
+      try {
+        await projectsApi.getTypes()
+        .then(resp => {
+          type.value = resp
+        })
+      } catch (err) {
+        console.log(err)
+      }      
+    }
     onMounted(() => {
       if (props.info.name) {
-        formData.value.name = props.info.name || '';
-        formData.value.emoji = props.info.emoji || '';
-        formData.value.address = props.info.address || '';
-        formData.value.square = props.info.square || '';
-        formData.value.project_type = props.info.project_type || '';
+        formData.value = props.info 
+        formData.value.file = null
       }
+      getType()
     })
 
     return {
@@ -414,6 +432,8 @@ export default defineComponent({
       type,
       uploadProfilePhoto,
       onRejected,
+      updateInfo,
+      getType,
     }
   },
 })

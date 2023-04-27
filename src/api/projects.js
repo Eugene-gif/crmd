@@ -18,6 +18,7 @@ function parseCustomDate(dateStr) {
 
   return new Date(year, month - 1, day, hours, minutes, seconds);
 }
+
 function formatDateTime(inputDateStr) {
   const [timeStr, dateStr] = inputDateStr.split(' ');
   const [day, month, year] = dateStr.split('/').map(Number);
@@ -81,7 +82,7 @@ function getTiming(created_at, services) {
 
   return daysRemaining
 }
-
+ 
 
 
 
@@ -167,6 +168,57 @@ export const projectsApi = {
       console.log(err)
     }
   },
+
+  updateInfo(data) {
+    const formData = new FormData()
+    formData.append("id", data.id)
+    formData.append("project_type_id", data.project_type.id)
+    formData.append("name", data.name)
+    formData.append("address", data.address)
+    formData.append("square", data.square)
+    formData.append("emoji", data.emoji)
+    
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  updateImage(data) {
+    const formData = new FormData()
+    formData.append("id", data.id)
+    formData.append("image", data.uploadFile)
+
+    try {
+      return httpClient({
+        method: "post",
+        url: `${url}/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      }).then(({data}) => {
+        return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+//   id
+// project_type_id
+// orderer_id
+// name
+// address
+// square
+// emoji
+// image
 
   createProject(formData) {
     try {

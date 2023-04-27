@@ -113,9 +113,10 @@
       <DashboardComp 
         :info="generalInfo"
         :orderer="data.orderer"
+        v-if="generalInfo"
       />
 
-      <!-- <q-expansion-item
+      <q-expansion-item
         expand-separator
         default-opened
         class="graffic"
@@ -854,7 +855,7 @@
           <div class="block text-grey-5">Назад к списку проектов</div>
           <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
         </q-btn>
-      </div> -->
+      </div>
 
     </q-list>
   </q-page>
@@ -1419,6 +1420,7 @@ export default {
         const resp = await projectsApi.getById(projectId.value)
         data.value = resp
         generalInfo.value = {
+          id: projectId.value,
           project_type_id: resp.project_type_id,
           orderer_id: resp.orderer_id,
           name: resp.name,
@@ -1427,7 +1429,8 @@ export default {
           emoji: resp.emoji,
           readiness: resp.readiness,
           image: resp.image,
-          project_type: resp.project_type
+          project_type: resp.project_type,
+          cost: resp.cost,
         }
       } catch (err) {
         console.log(err)
