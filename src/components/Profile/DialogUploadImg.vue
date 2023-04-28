@@ -83,7 +83,7 @@ import { useQuasar } from 'quasar'
 export default defineComponent({
   name: 'DialogUploadImg',
   props: {
-    
+    project_id: String
   },
   setup (props, { emit }) {
     const $q = useQuasar()
@@ -123,7 +123,7 @@ export default defineComponent({
       lodingBtn.value = true
       if (formData.value.images.length > 0) {
         try {
-          await albumsApi.createAlbum(formData.value).then(resp => {
+          await albumsApi.createAlbum(props.project_id, formData.value).then(resp => {
             modalFalse(resp)
             $q.notify({
               color: 'positive',

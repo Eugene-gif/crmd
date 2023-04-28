@@ -1,13 +1,11 @@
 import httpClient from "./httpClient.js";
-import axios from "axios";
-import store from '../store';
 
 // const store = useStore(); 
 const url = 'albums'
 
 export const albumsApi = {
 
-  createAlbum(data) {
+  createAlbum(idProdect, data) {
     const formData = new FormData();
     formData.append("name", data.name)
     formData.append("description", data.description)
@@ -15,6 +13,8 @@ export const albumsApi = {
       let file = data.images[i];
       formData.append(`images[]`, file);
     }
+
+    if (idProdect) formData.append("project_id", idProdect)
 
     try {
       return httpClient({

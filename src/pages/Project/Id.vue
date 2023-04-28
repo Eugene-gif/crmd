@@ -119,10 +119,25 @@
 
       <DiagramGant />
       <DocumentsProject />
-      <ExplicationsProject :type="type" />
-      <EstimatesProject :data="data.estimates" v-if="data.estimates" />
-      <AlbumsProject :data="data.albums" v-if="data.albums" />
-      <FilesProject :data="data.files" v-if="data.files" />      
+      <ExplicationsProject 
+        :type="type" 
+        :id="projectId" 
+        :data="data.explications" 
+        v-if="data.explications"
+      />
+      <EstimatesProject 
+        :data="data.estimates"
+        v-if="data.estimates"
+      />
+      <AlbumsProject 
+        :data="data.albums" 
+        :project_id="projectId" 
+        v-if="data.albums" 
+      />
+      <FilesProject 
+        :data="data.files" 
+        v-if="data.files" 
+      />      
 
       <div class="q-card-prev">
         <q-btn

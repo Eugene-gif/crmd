@@ -103,7 +103,7 @@
                 <div class="row items-center">
                   <div class="content">{{props.row.size}}</div>
                   <ActionBtn 
-                    :propsEl="props.key"
+                    :propsEl="props.row.id"
                     :offsetYX="[55, -258]"
                   />
                 </div>

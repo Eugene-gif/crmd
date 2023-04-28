@@ -11,7 +11,7 @@
     <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
   </template>
     <q-card>
-      <q-card-section class="q-card-head">
+      <!-- <q-card-section class="q-card-head">
         <q-item>
           <div class="title">Адрес</div>
           <q-input v-model="text" class="my-input bg-grey-3" />
@@ -35,7 +35,7 @@
             popup-content-class="my-select-menu"
           />
         </q-item>
-      </q-card-section>
+      </q-card-section> -->
       <q-card-section class="q-card-titles">
         <q-item>
           <div class="title">Помещения</div>
@@ -45,21 +45,50 @@
         </q-item>
       </q-card-section>
       <q-card-section 
-        v-for="premis in premises"
+        v-for="premis in data"
         :key="premis"
         class="q-card-content q-card-room"
       >
         <q-item>
-          <q-input v-model="premis.input" class="my-input bg-grey-3" placeholder="Введите название">
+          <q-input v-model="premis.name" class="my-input bg-grey-3" placeholder="Введите название">
             <template v-slot:append>
-              <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" />
+              <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" @click.stop="delExplication()" />
             </template>
           </q-input>
         </q-item>
         <q-item>
-          <q-input v-model="premis.s" class="my-input bg-grey-3" />
+          <q-input v-model="premis.square" class="my-input bg-grey-3" />
         </q-item>
       </q-card-section>
+
+      <q-card-section 
+        class="q-card-content q-card-room"
+        v-show="openNewExplication"
+      >
+        <q-item>
+          <q-input 
+            v-model="FormData.name" 
+            class="my-input bg-grey-3" 
+            placeholder="Введите название"
+            :rules="[ val => val && val.length > 0 || '']"
+            @blur="addExplication"
+          >
+            <template v-slot:append>
+              <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" @click.stop="openNewExplication = false" />
+            </template>
+          </q-input>
+        </q-item>
+        <q-item>
+          <q-input 
+            v-model="FormData.square"
+            class="my-input bg-grey-3" 
+            type="number" 
+            :rules="[ val => val && val !== '']"
+            @blur="addExplication"
+          />
+        </q-item>
+      </q-card-section>
+
       <q-card-section 
         class="q-card-add"
       >
@@ -71,6 +100,7 @@
             class="bg-white text-grey-3 my-btn my-effect my-btn--outline"
             style="border-radius: 10px;"
             padding="24px 24px 24px 19px"
+            @click="openNewExplication = true"
           >
             <div class="block text-grey-5">Добавить</div>
             <q-icon
@@ -88,6 +118,7 @@
 
 <script>
 import { ref, defineComponent, onMounted } from "vue";
+import { explicationsApi } from 'src/api/explications'
 import { useQuasar } from 'quasar'
 
 export default defineComponent({
@@ -95,51 +126,65 @@ export default defineComponent({
 
   },
   props: {
-    type: Object
+    type: Object,
+    data: Array,
+    id: String,
   },
   setup(props, {emit}) {
     const $q = useQuasar()
 
-    const select1 = ref(
-      {
-        label: 'Квартира',
-        value: 1
-      },
-    )
+    const openNewExplication = ref(false)
+    const FormData = ref({
+      name: null,
+      square: 0
+    })
 
-    const premises = ref([
-      {
-        input: 'Кухня',
-        s: 115
-      },
-      {
-        input: 'Прихожая',
-        s: 5
-      },
-      {
-        input: 'Спальня',
-        s: 13
-      },
-      {
-        input: '',
-        s: 0
-      },
-    ])
+    async function addExplication() {
+      if (FormData.value.name !== null && FormData.value.square !== null) {
+        try {
+          const resp = await explicationsApi.create(props.id, FormData.value)
+          props.data.push(resp.data.data)
+          FormData.value.name = null
+          FormData.value.square = 0
+          openNewExplication.value = false
+          $q.notify({
+            type: 'positive',
+            message: 'Экспликация добавлена'
+          })
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        // $q.notify({
+        //   type: 'negative',
+        //   message: 'Не все поля заполнены'
+        // })
+      }
+    }
 
-    const text4 = ref('')
-    const text2 = ref('115')
-    const text = ref('г. Краснодар, ул. Ленина, д. 15')
+    async function delExplication(id) {
+      try {
+        const resp = await explicationsApi.del(id)
+        
+        $q.notify({
+          type: 'positive',
+          message: 'Экспликация удалена'
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
     onMounted(() => {
       
     })
 
     return {
-      select1,
-      premises,
-      text4,
-      text2,
-      text,
+      // select1,
+      openNewExplication,
+      addExplication,
+      delExplication,
+      FormData,
     }
   },
 })

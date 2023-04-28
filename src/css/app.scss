@@ -420,3 +420,7 @@ input[type='number'] {
     margin-top: 0 !important; 
   }
 }
+
+.q-expansion-item__toggle-icon--rotated {
+  transform: rotate(180deg) !important;
+}
