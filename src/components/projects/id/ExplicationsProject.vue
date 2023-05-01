@@ -1,4 +1,13 @@
 <template>
+  <q-dialog
+    v-model="dialogDelite"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite @modalFalse="handleModalClose" />
+  </q-dialog>
+
   <q-expansion-item
     expand-separator
     default-opened
@@ -52,7 +61,11 @@
         <q-item>
           <q-input v-model="premis.name" class="my-input bg-grey-3" placeholder="Введите название">
             <template v-slot:append>
-              <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" @click.stop="delExplication()" />
+              <q-icon 
+                name="svguse:icons/btnIcons.svg#delete" 
+                size="16px" 
+                @click.stop="onActionDel('delExp', premis.id)" 
+              />
             </template>
           </q-input>
         </q-item>
@@ -74,7 +87,11 @@
             @blur="addExplication"
           >
             <template v-slot:append>
-              <q-icon name="svguse:icons/btnIcons.svg#delete" size="16px" @click.stop="openNewExplication = false" />
+              <q-icon 
+                name="svguse:icons/btnIcons.svg#delete" 
+                size="16px" 
+                @click.stop="openNewExplication = false" 
+              />
             </template>
           </q-input>
         </q-item>
@@ -116,76 +133,92 @@
   </q-expansion-item>
 </template>
 
-<script>
-import { ref, defineComponent, onMounted } from "vue";
-import { explicationsApi } from 'src/api/explications'
-import { useQuasar } from 'quasar'
+<script setup>
+  import { ref, defineComponent, onMounted } from "vue"
+  import { explicationsApi } from 'src/api/explications'
+  import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  components: {
+  import DialogDelite from 'src/components/dialog/DialogDelite'
+  import useDialogDel from 'src/composable/useDialogDel'
 
-  },
-  props: {
+  const props = defineProps({
     type: Object,
     data: Array,
     id: String,
-  },
-  setup(props, {emit}) {
-    const $q = useQuasar()
+  })
 
-    const openNewExplication = ref(false)
-    const FormData = ref({
-      name: null,
-      square: 0
-    })
+  const emit = defineEmits([
+    'update',
+  ])
+  
+  // инициализация функционала окна удаления
+  const actionHandlers = {
+    delExp: delExplication,
+  }
+  const { 
+    dialogDelite, 
+    dialogDelId, 
+    dialogDelName, 
+    onActionDel, 
+    modalCloseDel, 
+    handleModalClose 
+  } = useDialogDel(actionHandlers)
 
-    async function addExplication() {
-      if (FormData.value.name !== null && FormData.value.square !== null) {
-        try {
-          const resp = await explicationsApi.create(props.id, FormData.value)
-          props.data.push(resp.data.data)
-          FormData.value.name = null
-          FormData.value.square = 0
-          openNewExplication.value = false
-          $q.notify({
-            type: 'positive',
-            message: 'Экспликация добавлена'
-          })
-        } catch (err) {
-          console.log(err)
-        }
-      } else {
-        // $q.notify({
-        //   type: 'negative',
-        //   message: 'Не все поля заполнены'
-        // })
-      }
-    }
+  const $q = useQuasar()
 
-    async function delExplication(id) {
+  const openNewExplication = ref(false)
+  const FormData = ref({
+    name: null,
+    square: 0
+  })
+
+  async function addExplication() {
+    if (FormData.value.name !== null && FormData.value.square !== null) {
       try {
-        const resp = await explicationsApi.del(id)
-        
+        const resp = await explicationsApi.create(props.id, FormData.value)
+        props.data.push(resp.data.data)
+
+        FormData.value.name = null
+        FormData.value.square = 0
+        openNewExplication.value = false
+
         $q.notify({
           type: 'positive',
-          message: 'Экспликация удалена'
+          message: 'Экспликация добавлена'
         })
       } catch (err) {
         console.log(err)
       }
+    } else {
+      // $q.notify({
+      //   type: 'negative',
+      //   message: 'Не все поля заполнены'
+      // })
     }
+  }
 
-    onMounted(() => {
-      
-    })
+  async function delExplication(id) {
+    try {
+      await explicationsApi.del(id)
+      const newList = props.data.filter((item) => item.id !== id)
+      emit('update', newList)
 
-    return {
-      // select1,
-      openNewExplication,
-      addExplication,
-      delExplication,
-      FormData,
+      $q.notify({
+        type: 'positive',
+        message: 'Экспликация удалена'
+      })
+    } catch (err) {
+      console.log(err)
+      $q.notify({
+        type: 'negative',
+        message: 'Произошла ошибка, попробуйте позже'
+      })
     }
-  },
-})
+  }
+
+  onMounted(() => {
+    
+  })
+
+
 </script>

@@ -122,6 +122,7 @@
         :type="type" 
         :id="projectId" 
         :data="data.explications" 
+        @update="onUpdateExplication"
         v-if="data.explications"
       />
       <EstimatesProject 
@@ -219,6 +220,9 @@ import { useRoute } from 'vue-router'
 
   function onUpdateAlbums(array) {
     data.value.albums = array
+  }
+  function onUpdateExplication(array) {
+    data.value.explications = array
   }
 
   onMounted( async() => {

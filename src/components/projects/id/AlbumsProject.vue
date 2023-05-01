@@ -140,7 +140,14 @@ const emit = defineEmits([
 const actionHandlers = {
   delAlbums: onActionAlbumDel,
 }
-const { dialogDelite, dialogDelId, dialogDelName, onActionDel, modalCloseDel, handleModalClose } = useDialogDel(actionHandlers)
+const { 
+  dialogDelite, 
+  dialogDelId, 
+  dialogDelName, 
+  onActionDel, 
+  modalCloseDel, 
+  handleModalClose 
+} = useDialogDel(actionHandlers)
 
 const $q = useQuasar()
 const dialog = ref(false)
