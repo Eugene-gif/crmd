@@ -1,5 +1,4 @@
 <template>
-  
   <q-card class="q-card-delite">
     <div class="q-card-background" @click="modalFalse(false)"></div>
     <div class="dialog-section">
@@ -34,25 +33,12 @@
       </div>
     </div>
   </q-card>
-
-
 </template>
 
-<script>
-import { defineComponent} from 'vue'
+<script setup>
+const emit = defineEmits(['modalFalse']);
 
-export default defineComponent({
-  name: 'DialogDelite',
-
-  setup(props, { emit }) {
-
-    function modalFalse(val) {
-      emit('modalFalse', val)
-    }
-
-    return {
-      modalFalse
-    }
-  },
-})
+function modalFalse(val) {
+  emit('modalFalse', val);
+}
 </script>

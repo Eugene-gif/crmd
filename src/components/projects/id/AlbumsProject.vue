@@ -6,7 +6,7 @@
     class="my-dialog contractor-dialog-share"
   >
     <DialogUploadImg 
-      @modalFalse="modalFalse"
+      @modalFalse="modalCloseCreateAlbum"
       :project_id="project_id"
       v-if="project_id"
     />
@@ -25,15 +25,14 @@
   </q-dialog>
 
   <q-dialog
-    v-model="dialogDelModal"
+    v-model="dialogDelite"
     transition-show="fade"
     transition-hide="fade" 
     class="my-dialog"
   >
-    <DialogDelite 
-      @modalFalse="modaCloseDel"
-    />
+    <DialogDelite @modalFalse="handleModalClose" />
   </q-dialog>
+  
 
   <q-expansion-item
     expand-separator
@@ -50,7 +49,7 @@
     <q-card>
       <q-card-section
         v-for="item in data"
-        :key="item.id"
+        :key="item"
       >
         <VisualSlider
           :images="item.images"
@@ -61,11 +60,13 @@
             :propsEl="item.id"
             :offsetYX="[55, -256]"
             :actionfunc="actionfunc"
-            @actionOpen="onActionOpen"
             @actionEdit="onActionEdit(item)"
-            @actionSecurity="onActionSecurity"
             @actionDel="onActionDel('delAlbums', item.id)"
           />
+          <!-- 
+            @actionOpen="onActionOpen"
+@actionSecurity="onActionSecurity"
+           -->
         </div>
         <div class="row security">
           <q-btn
@@ -116,11 +117,14 @@
 
 <script setup>
 import { ref } from 'vue'
-import ActionBtn from 'components/Table/ActionBtn.vue'
-import VisualSlider from 'components/projects/VisualSlider.vue'
+import ActionBtn from 'src/components/Table/ActionBtn.vue'
+import VisualSlider from 'src/components/projects/VisualSlider.vue'
 import DialogUploadImg from 'src/components/Profile/DialogUploadImg.vue'
 import DialogUpdateAlbum from 'src/components/Profile/DialogUpdateAlbum.vue'
-import DialogDelite from 'components/dialog/DialogDelite'
+
+import DialogDelite from 'src/components/dialog/DialogDelite'
+import useDialogDel from 'src/composable/useDialogDel'
+
 import { albumsApi } from 'src/api/albums'
 import { useQuasar } from 'quasar'
 
@@ -130,21 +134,18 @@ const props = defineProps({
 })
 
 const emit = defineEmits([
-  'actionOpen',
-  'actionEdit',
-  'actionSecurity',
-  'delAlbums',
   'updateAlbums',
 ])
+
+const actionHandlers = {
+  delAlbums: onActionAlbumDel,
+}
+const { dialogDelite, dialogDelId, dialogDelName, onActionDel, modalCloseDel, handleModalClose } = useDialogDel(actionHandlers)
 
 const $q = useQuasar()
 const dialog = ref(false)
 const dialogUpadte = ref(false)
-const dialogDelModal = ref(false)
-const dialogDelId = ref()
-const dialogName = ref('')
 const modalUpdateData = ref({})
-const visual = ref([])
 
 const actionfunc = ref([
   {
@@ -165,21 +166,12 @@ const actionfunc = ref([
   },
 ])
 
-function onActionDel(value, id) {
-  dialogName.value = value
-  dialogDelId.value = id
-  dialogDelModal.value = true
-}
-
-async function modaCloseDel(val) {
-  dialogDelModal.value = false
-  if (dialogName.value === 'delAlbums' && val) await onActionAlbumDel(dialogDelId.value)
-}
-
+// удаление альбома
 async function onActionAlbumDel(id) {
   try {
     await albumsApi.delAlbum(id).then((resp) => {
-      emit('delAlbums', id)
+      const newList = props.data.filter((item) => item.id !== id)
+      emit('updateAlbums', newList)
       setTimeout(() => {
         $q.notify({
           color: 'positive',
@@ -197,29 +189,34 @@ async function onActionAlbumDel(id) {
     }, 0)
   }
 }
+
+// функция при нажатии именения альбома
 async function onActionEdit(obj) {
   modalUpdateData.value = obj
   dialogUpadte.value = true
 }
 
-function modalFalse(val) {
+// функция после создания альбома
+function modalCloseCreateAlbum(val) {
   dialog.value = false
-  props.data.push(val)
+  if (val) props.data.push(val)
 }
 
-// emit функции при обновлении альбома
+// emit функции при обновлении фото альбома
 function modalFalseUpdatePhotos(val) {
-  console.log('popka')
-  const newList = props.data.map((element) => {
-    if (element.id === val.id) {
-      return val
-    }
-    return element
-  })
-  emit('updateAlbums', newList)
+  if (val) {
+    const newList = props.data.map((element) => {
+      if (element.id === val.id) {
+        return val
+      }
+      return element
+    })
+    emit('updateAlbums', newList)
+  }
 }
+// функция после изменения данных альбома
 function modalUpdateFalse(val) {
+  modalFalseUpdatePhotos(val)
   dialogUpadte.value = false
-  console.log(val)
 }
 </script>

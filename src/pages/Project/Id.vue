@@ -1,12 +1,11 @@
 <template>
   <q-dialog
     v-model="dialog"
-    :maximized="maximizedToggle"
     transition-show="fade"
     transition-hide="fade" 
     class="my-dialog projects-dialog projects-dialog-create"
   >
-    <Dialog @modalFalse="modalFalse" />
+    <Dialog @modalFalse="dialog = false" />
   </q-dialog>
   
   <q-page class="page-project">
@@ -132,7 +131,7 @@
       <AlbumsProject 
         :data="data.albums" 
         :project_id="projectId" 
-        @delAlbums="onDelAlbums"
+        
         @updateAlbums="onUpdateAlbums"
         v-if="data.albums" 
       />
@@ -159,7 +158,7 @@
   </q-page>
 </template>
 
-<script>
+<script setup>
 import Dialog from 'pages/Project/dialog-create.vue'
 import LoaderDate from 'src/components/LoaderDate.vue'
 
@@ -175,95 +174,57 @@ import { projectsApi } from 'src/api/projects'
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 
+  const route = useRoute()
+  const projectId = ref(route.params.id)
+  const loading = ref(false)
+  const dialog = ref(false)
 
-export default {
-  name: 'PageFinance',
-  components: {
-    Dialog,
-    DashboardComp,
-    LoaderDate,
-    DiagramGant,
-    DocumentsProject,
-    ExplicationsProject,
-    EstimatesProject,
-    AlbumsProject,
-    FilesProject,
-  },
-  setup () {
-    const route = useRoute()
-    const projectId = ref(route.params.id)
-    const loading = ref(false)
-    const dialog = ref(false)
-
-
-    const generalInfo = ref({})
-    const data = ref({})
-    async function getProject() {
-      loading.value = true
-      try {
-        const resp = await projectsApi.getById(projectId.value)
-        data.value = resp
-        generalInfo.value = {
-          id: projectId.value,
-          project_type_id: resp.project_type_id,
-          orderer_id: resp.orderer_id,
-          name: resp.name,
-          address: resp.address,
-          square: resp.square,
-          emoji: resp.emoji,
-          readiness: resp.readiness,
-          image: resp.image,
-          project_type: resp.project_type,
-          cost: resp.cost,
-        }
-      } catch (err) {
-        console.log(err)
+  const generalInfo = ref({})
+  const data = ref({})
+  async function getProject() {
+    loading.value = true
+    try {
+      const resp = await projectsApi.getById(projectId.value)
+      data.value = resp
+      generalInfo.value = {
+        id: projectId.value,
+        project_type_id: resp.project_type_id,
+        orderer_id: resp.orderer_id,
+        name: resp.name,
+        address: resp.address,
+        square: resp.square,
+        emoji: resp.emoji,
+        readiness: resp.readiness,
+        image: resp.image,
+        project_type: resp.project_type,
+        cost: resp.cost,
       }
-      loading.value = false
+    } catch (err) {
+      console.log(err)
     }
-
-    const type = ref([])
-    async function getType() {
-      try {
-        await projectsApi.getTypes()
-        .then(resp => {
-          type.value = resp
-        })
-      } catch (err) {
-        console.log(err)
-      }      
-    }
-
-    function onDelAlbums(id) {
-      data.value.albums = data.value.albums.filter((item) => item.id !== id)
-    }
-    function onUpdateAlbums(array) {
-      data.value.albums = array
-    }
-
-    onMounted( async() => {
-      await getType()
-      await getProject()
-    })
-
-    return {
-      generalInfo,
-      loading,
-      data,
-      route,
-      projectId,
-      getProject,
-      onDelAlbums,
-      onUpdateAlbums,
-      dialog,
-      type,
-      getType,
-      maximizedToggle: ref(true),
-      modalFalse() {
-        dialog.value = false
-      }
-    }
+    loading.value = false
   }
-}
+
+  const type = ref([])
+  async function getType() {
+    try {
+      await projectsApi.getTypes()
+      .then(resp => {
+        type.value = resp
+      })
+    } catch (err) {
+      console.log(err)
+    }      
+  }
+
+  function onUpdateAlbums(array) {
+    data.value.albums = array
+  }
+
+  onMounted( async() => {
+    await getType()
+    await getProject()
+  })
+
 </script>
 
