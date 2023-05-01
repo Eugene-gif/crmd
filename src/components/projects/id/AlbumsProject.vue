@@ -11,6 +11,18 @@
       v-if="project_id"
     />
   </q-dialog>
+  <q-dialog
+    v-model="dialogUpadte"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogUpdateAlbum 
+      @modalFalseUpdate="modalUpdateFalse"
+      @modalFalseUpdatePhotos="modalFalseUpdatePhotos"
+      :data="modalUpdateData"
+    />
+  </q-dialog>
 
   <q-dialog
     v-model="dialogDelModal"
@@ -19,7 +31,7 @@
     class="my-dialog"
   >
     <DialogDelite 
-      @modalFalse="modalOpenDel"
+      @modalFalse="modaCloseDel"
     />
   </q-dialog>
 
@@ -49,10 +61,10 @@
             :propsEl="item.id"
             :offsetYX="[55, -256]"
             :actionfunc="actionfunc"
-            @actionOpen="onActionEdit"
-            @actionEdit="onActionEdit"
+            @actionOpen="onActionOpen"
+            @actionEdit="onActionEdit(item)"
             @actionSecurity="onActionSecurity"
-            @actionDel="onActionAlbumDel(item.id)"
+            @actionDel="onActionDel('delAlbums', item.id)"
           />
         </div>
         <div class="row security">
@@ -102,252 +114,112 @@
   </q-expansion-item>
 </template>
 
-<script>
-import { ref, defineComponent, onMounted } from "vue";
+<script setup>
+import { ref } from 'vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 import VisualSlider from 'components/projects/VisualSlider.vue'
 import DialogUploadImg from 'src/components/Profile/DialogUploadImg.vue'
+import DialogUpdateAlbum from 'src/components/Profile/DialogUpdateAlbum.vue'
 import DialogDelite from 'components/dialog/DialogDelite'
 import { albumsApi } from 'src/api/albums'
 import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  components: {
-    ActionBtn,
-    VisualSlider,
-    DialogUploadImg,
-    DialogDelite,
-  },
-  props: {
-    data: Array,
-    project_id: String
-  },
-  setup(props, {emit}) {
-
-    const dialog = ref(false)
-    const dialogDelModal = ref(false)
-    const visual = ref([
-      {
-        id: '1',
-        images: [
-          {
-            thumbnail: '/project-1.jpg'
-          },
-          {
-            thumbnail: '/project-2.jpg'
-          },
-          {
-            thumbnail: '/project-3.jpg'
-          },
-        ],
-        name: 'Планы, чертежи, схемы',
-        share: [
-          {
-            icon: '/icons/anton.jpg',
-            link: 's'
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          }
-        ]
-      },
-      {
-        id: '2',
-        images: [
-          {
-            thumbnail: '/project-1.jpg'
-          },
-          {
-            thumbnail: '/project-2.jpg'
-          },
-          {
-            thumbnail: '/project-3.jpg'
-          },
-        ],
-        name: 'Планы, чертежи, схемы',
-        share: [
-          {
-            icon: '/icons/anton.jpg',
-            link: 's'
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          }
-        ]
-      },
-      {
-        id: '3',
-        images: [
-          {
-            thumbnail: '/project-1.jpg'
-          },
-          {
-            thumbnail: '/project-2.jpg'
-          },
-          {
-            thumbnail: '/project-3.jpg'
-          },
-        ],
-        name: 'Планы, чертежи, схемы',
-        share: [
-          {
-            icon: '/icons/anton.jpg',
-            link: 's'
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          }
-        ]
-      },
-      {
-        id: '4',
-        images: [
-          {
-            thumbnail: '/project-1.jpg'
-          },
-          {
-            thumbnail: '/project-2.jpg'
-          },
-          {
-            thumbnail: '/project-3.jpg'
-          },
-        ],
-        name: 'Планы, чертежи, схемы',
-        share: [
-          {
-            icon: '/icons/anton.jpg',
-            link: 's'
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/anton.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          },
-          {
-            icon: '/icons/stroipro.jpg',
-            link: ''
-          }
-        ]
-      },
-    ])
-
-    const actionfunc = ref([
-      {
-        title: 'Открыть',
-        emmit: 'actionOpen'
-      },
-      {
-        title: 'Редактировать',
-        emmit: 'actionEdit'
-      },
-      {
-        title: 'Настройки доступа',
-        emmit: 'actionSecurity'
-      },
-      {
-        title: 'Удалить',
-        emmit: 'actionDel'
-      },
-    ])
-
-    async function onActionAlbumDel(id) {
-      try {
-        await albumsApi.delAlbum(id).then(resp => {
-          console.log(resp)
-          visual.value = visual.value.filter((item) => item.id !== id)
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              message: 'Альбом удален'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-    }
-
-    function modalFalse(val) {
-      dialog.value = false
-      props.data.push(val)
-    }
-    
-    return {
-      visual,
-      dialog,
-      dialogDelModal,
-      actionfunc,
-      modalFalse,
-      onActionAlbumDel,
-    }
-  },
+const props = defineProps({
+  data: Array,
+  project_id: String,
 })
+
+const emit = defineEmits([
+  'actionOpen',
+  'actionEdit',
+  'actionSecurity',
+  'delAlbums',
+  'updateAlbums',
+])
+
+const $q = useQuasar()
+const dialog = ref(false)
+const dialogUpadte = ref(false)
+const dialogDelModal = ref(false)
+const dialogDelId = ref()
+const dialogName = ref('')
+const modalUpdateData = ref({})
+const visual = ref([])
+
+const actionfunc = ref([
+  {
+    title: 'Открыть',
+    emmit: 'actionOpen',
+  },
+  {
+    title: 'Редактировать',
+    emmit: 'actionEdit',
+  },
+  {
+    title: 'Настройки доступа',
+    emmit: 'actionSecurity',
+  },
+  {
+    title: 'Удалить',
+    emmit: 'actionDel',
+  },
+])
+
+function onActionDel(value, id) {
+  dialogName.value = value
+  dialogDelId.value = id
+  dialogDelModal.value = true
+}
+
+async function modaCloseDel(val) {
+  dialogDelModal.value = false
+  if (dialogName.value === 'delAlbums' && val) await onActionAlbumDel(dialogDelId.value)
+}
+
+async function onActionAlbumDel(id) {
+  try {
+    await albumsApi.delAlbum(id).then((resp) => {
+      emit('delAlbums', id)
+      setTimeout(() => {
+        $q.notify({
+          color: 'positive',
+          message: 'Альбом удален',
+        })
+      }, 0)
+    })
+  } catch (err) {
+    console.log(err)
+    setTimeout(() => {
+      $q.notify({
+        color: 'red',
+        message: 'Произошла ошибка, попробуйте позже',
+      })
+    }, 0)
+  }
+}
+async function onActionEdit(obj) {
+  modalUpdateData.value = obj
+  dialogUpadte.value = true
+}
+
+function modalFalse(val) {
+  dialog.value = false
+  props.data.push(val)
+}
+
+// emit функции при обновлении альбома
+function modalFalseUpdatePhotos(val) {
+  console.log('popka')
+  const newList = props.data.map((element) => {
+    if (element.id === val.id) {
+      return val
+    }
+    return element
+  })
+  emit('updateAlbums', newList)
+}
+function modalUpdateFalse(val) {
+  dialogUpadte.value = false
+  console.log(val)
+}
 </script>

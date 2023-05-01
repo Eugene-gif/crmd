@@ -1,4 +1,5 @@
 <template>
+  
   <q-card class="q-card-delite">
     <div class="q-card-background" @click="modalFalse(false)"></div>
     <div class="dialog-section">
@@ -33,6 +34,8 @@
       </div>
     </div>
   </q-card>
+
+
 </template>
 
 <script>

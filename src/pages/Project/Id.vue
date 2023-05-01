@@ -132,6 +132,8 @@
       <AlbumsProject 
         :data="data.albums" 
         :project_id="projectId" 
+        @delAlbums="onDelAlbums"
+        @updateAlbums="onUpdateAlbums"
         v-if="data.albums" 
       />
       <FilesProject 
@@ -232,6 +234,13 @@ export default {
       }      
     }
 
+    function onDelAlbums(id) {
+      data.value.albums = data.value.albums.filter((item) => item.id !== id)
+    }
+    function onUpdateAlbums(array) {
+      data.value.albums = array
+    }
+
     onMounted( async() => {
       await getType()
       await getProject()
@@ -244,14 +253,12 @@ export default {
       route,
       projectId,
       getProject,
-
+      onDelAlbums,
+      onUpdateAlbums,
       dialog,
-      
       type,
       getType,
-
       maximizedToggle: ref(true),
-      
       modalFalse() {
         dialog.value = false
       }

@@ -42,66 +42,54 @@
   
 </template>
 
-<script>
+<script setup>
 import { onMounted, ref } from 'vue'
 
-export default {
-  props: {
-    images: Array
-  },
-  setup(props) {
-    const tab = ref(props.images[0].thumbnail)
-    const openTabs = ref(false)
-    const openModal = ref(false)
-    const tabList = ref([])
-    
-    function nextTab(val) {
-      const lengthTabs = tabList.value.length - 1
-      const currentTab = tab.value
-      const indexCurrent = tabList.value.indexOf(currentTab)
-      let nextSlideIndex = 0
+const props = defineProps({
+  images: Array,
+})
 
-      if (val === 'prev') {
-        nextSlideIndex = indexCurrent - 1
-        if (nextSlideIndex < 0) {
-          nextSlideIndex = lengthTabs
-        }
-      }
-      if (val === 'next') {
-        nextSlideIndex = indexCurrent + 1
-        if (nextSlideIndex > lengthTabs) {
-          nextSlideIndex = 0
-        }
-      }
-      tab.value = tabList.value[nextSlideIndex]
-    }
+const tab = ref(props.images.length ? props.images[0].thumbnail : '')
+const openTabs = ref(false)
+const openModal = ref(false)
+const tabList = ref([])
 
-    function start() {
-      tabList.value = props.images.map(el => {
-        return el.thumbnail
-      })
-      
-    }
+function nextTab(val) {
+  const lengthTabs = tabList.value.length - 1
+  const currentTab = tab.value
+  const indexCurrent = tabList.value.indexOf(currentTab)
+  let nextSlideIndex = 0
 
-    onMounted( async () => {
-      await start()
-    })
-
-    return {
-      openModal,
-      openTabs,
-      text: ref(),
-      tab,
-      tabList,
-      nextTab,
-      start,
-      handleSwipeNext ({ evt, ...newInfo }) {
-        nextTab('next')
-      },
-      handleSwipePrev ({ evt, ...newInfo }) {
-        nextTab('prev')
-      },
+  if (val === 'prev') {
+    nextSlideIndex = indexCurrent - 1
+    if (nextSlideIndex < 0) {
+      nextSlideIndex = lengthTabs
     }
   }
+  if (val === 'next') {
+    nextSlideIndex = indexCurrent + 1
+    if (nextSlideIndex > lengthTabs) {
+      nextSlideIndex = 0
+    }
+  }
+  tab.value = tabList.value[nextSlideIndex]
+}
+
+function start() {
+  tabList.value = props.images.map((el) => {
+    return el.thumbnail
+  })
+}
+
+onMounted(async () => {
+  await start()
+})
+
+const handleSwipeNext = ({ evt, ...newInfo }) => {
+  nextTab('next')
+}
+
+const handleSwipePrev = ({ evt, ...newInfo }) => {
+  nextTab('prev')
 }
 </script>
