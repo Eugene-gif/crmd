@@ -14,7 +14,11 @@
 
         <q-card-section class="form-section">
           <label class="lable-title">Название</label>
-          <Emoji @getEmojik="ongetEmojik" />
+          <Emoji 
+            @getEmojik="ongetEmojik"
+            :name="formData.name"
+            :icon="formData.emoji"
+          />
         </q-card-section>
 
         <q-card-section class="form-section">

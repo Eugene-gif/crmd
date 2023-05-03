@@ -20,31 +20,7 @@
     <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
   </template>
     <q-card>
-      <!-- <q-card-section class="q-card-head">
-        <q-item>
-          <div class="title">Адрес</div>
-          <q-input v-model="text" class="my-input bg-grey-3" />
-        </q-item>
-        <q-item>
-          <div class="title">Площадь, м2</div>
-          <q-input v-model="text2" class="my-input bg-grey-3" />
-        </q-item>
-        <q-item>
-          <div class="title">Тип</div>
-          <q-select
-            filled
-            v-model="select1"
-            :options="type"
-            stack-label
-            placeholder="Выбрать"
-            dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
-            class="my-select"
-            behavior="menu"
-            ref="selectDropbox"
-            popup-content-class="my-select-menu"
-          />
-        </q-item>
-      </q-card-section> -->
+      <!-- <q-card-section class="q-card-head"> -->
       <q-card-section class="q-card-titles">
         <q-item>
           <div class="title">Помещения</div>
@@ -59,7 +35,13 @@
         class="q-card-content q-card-room"
       >
         <q-item>
-          <q-input v-model="premis.name" class="my-input bg-grey-3" placeholder="Введите название">
+          <q-input 
+            v-model="premis.name" 
+            class="my-input bg-grey-3" 
+            placeholder="Введите название"
+            @blur="updateExplication(premis)"
+            :rules="[ val => val && val.length > 0]"
+          >
             <template v-slot:append>
               <q-icon 
                 name="svguse:icons/btnIcons.svg#delete" 
@@ -70,20 +52,25 @@
           </q-input>
         </q-item>
         <q-item>
-          <q-input v-model="premis.square" class="my-input bg-grey-3" />
+          <q-input 
+            v-model="premis.square" 
+            class="my-input bg-grey-3" 
+            @blur="updateExplication(premis)"
+            :rules="[ val => val && val.length > 0]"
+          />
         </q-item>
       </q-card-section>
 
       <q-card-section 
         class="q-card-content q-card-room"
-        v-show="openNewExplication"
+        v-if="openNewExplication"
       >
         <q-item>
           <q-input 
             v-model="FormData.name" 
             class="my-input bg-grey-3" 
             placeholder="Введите название"
-            :rules="[ val => val && val.length > 0 || '']"
+            :rules="[ val => val && val.length > 0]"
             @blur="addExplication"
           >
             <template v-slot:append>
@@ -167,6 +154,7 @@
   const $q = useQuasar()
 
   const openNewExplication = ref(false)
+
   const FormData = ref({
     name: null,
     square: 0
@@ -178,8 +166,10 @@
         const resp = await explicationsApi.create(props.id, FormData.value)
         props.data.push(resp.data.data)
 
-        FormData.value.name = null
-        FormData.value.square = 0
+        FormData.value = {
+          name: null,
+          square: 0
+        }
         openNewExplication.value = false
 
         $q.notify({
@@ -188,12 +178,29 @@
         })
       } catch (err) {
         console.log(err)
+        $q.notify({
+          type: 'negative',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
       }
-    } else {
-      // $q.notify({
-      //   type: 'negative',
-      //   message: 'Не все поля заполнены'
-      // })
+    }
+  }
+
+  async function updateExplication(obj) {
+    if (obj.name !== '' && obj.square !== '') {
+      try {
+        const resp = await explicationsApi.update(obj)
+        $q.notify({
+          type: 'positive',
+          message: 'Экспликация обновлена'
+        })
+      } catch (err) {
+        console.log(err)
+        $q.notify({
+          type: 'negative',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }
     }
   }
 

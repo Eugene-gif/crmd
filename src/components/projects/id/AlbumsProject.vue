@@ -37,14 +37,13 @@
   <q-expansion-item
     expand-separator
     default-opened
-    class="visual"
+    class="visual hidden-settings-icon"
   >
   <!-- visual-2 -->
   <template v-slot:header>
     <div class="title">
       Визуал
     </div>
-    <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
   </template>
     <q-card>
       <q-card-section

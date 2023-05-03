@@ -745,6 +745,7 @@
             height: 100%;
             border-radius: 10px 10px 0 0;
             overflow: hidden !important;  
+            position: relative;
             .q-focus-helper {
               display: none;
             }
@@ -755,6 +756,7 @@
             border-radius: 10px 10px 0 0;
             object-fit: cover;
             transition: all 0.3s;
+            position: relative;
           }
         }
         &:hover {
@@ -782,6 +784,7 @@
             line-height: 25px;
             color: #000000;
             white-space: pre-wrap;
+            cursor: pointer;
             .name-ico {
               @media (min-width: 772px) {
                 margin-right: 4px;

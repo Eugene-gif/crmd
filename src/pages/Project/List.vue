@@ -1,7 +1,6 @@
 <template>
   <q-dialog
     v-model="dialog"
-    :maximized="maximizedToggle"
     transition-show="fade"
     transition-hide="fade" 
     class="my-dialog projects-dialog"
@@ -10,6 +9,15 @@
       @modalFalse="modalFalse"
       @updateData="start"
     />
+  </q-dialog>
+
+  <q-dialog
+    v-model="dialogDelite"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite @modalFalse="handleModalClose" />
   </q-dialog>
   
   <q-page class="page-projects">
@@ -124,14 +132,19 @@
             :props="props"
             class="q-tr-tiles"
           >
-            <q-item :to="`/projects/${props.row.id}`" class="q-tr-tiles__link" />
+            <!-- <q-item :to="`/projects/${props.row.id}`" class="q-tr-tiles__link" /> -->
             <q-td
               key="image"
               :props="props"
               class="q-td-image"
             >
               <q-item :to="`/projects/${props.row.id}`">
-                <img v-show="props.row.image.url" :src="props.row.image.url" alt="">
+                <img 
+                  v-show="props.row.image.url" 
+                  :src="props.row.image.url" 
+                  alt="" 
+                  @click.stop="onActionOpen(props.row.id)"
+                >
               </q-item>
             </q-td>
             
@@ -140,7 +153,7 @@
               :props="props"
               class="q-td-name"
             >
-              <div class="text-h3">
+              <div class="text-h3" @click.stop="onActionOpen(props.row.id)">
                 <span class="name-ico">{{props.row.iconName}}</span>{{props.row.name}}
               </div>
             </q-td>
@@ -153,9 +166,9 @@
                 :propsEl="props.row.id"
                 :offsetYX="[55, -258]"
                 :actionfunc="actionfunc"
-                @actionUpdate="onActionUpdate"
+                @actionOpen="onActionOpen(props.row.id)"
                 @actionCopy="onActionCopy"
-                @actionDel="onActionDel"
+                @actionDel="onActionDel('delProject', props.row.id)"
               />
             </q-td>
             <q-td
@@ -258,152 +271,140 @@
   </q-page>
 </template>
 
-<script>
-import Dialog from 'pages/Project/dialog.vue'
-import ActionBtn from 'components/Table/ActionBtn.vue'
-import SortedMobile from 'components/Table/SortedMobile.vue'
-import { ref, onMounted } from 'vue'
-import { projectsApi } from 'src/api/projects'
-import LoaderDate from 'src/components/LoaderDate.vue'
-import NoDate from 'src/components/NoDate.vue'
-import { useQuasar } from 'quasar'
-
-const columns = [
-  { name: 'image', label: '', field: 'image', align: 'left' },
-  { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
-  { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
-  { name: 'type', label: 'Тип', field: 'type', align: 'left', sortable: true },
-  { name: 'square', label: 'Площадь', field: 'square', align: 'left', sortable: true },
-  { name: 'customer', label: 'Заказчик', field: 'customer', align: 'left', sortable: true },
-  { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
-  { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
-  { name: 'timing', label: 'Сроки', field: 'timing', align: 'left', sortable: true },
-  { name: 'payment', label: 'Оплата', field: 'payment', align: 'left', sortable: true },
-  { name: 'readiness', label: 'Готовность', field: 'readiness', align: 'left', sortable: true },
-  { name: 'view', label: '', field: 'view', align: 'right' },
-  { name: 'action', label: '', field: 'action', align: 'left' },
-  { name: 'share', label: '', field: 'share', align: 'left' },
-  { name: 'address', label: '', field: 'address', align: 'left' }
-]
-
-const rows2 = ref([])
-
-export default {
-  name: 'PageFinance',
-  components: {
-    Dialog,
-    ActionBtn,
-    LoaderDate,
-    NoDate,
-    SortedMobile
-  },
+<script setup>
   
-  setup () {
-    const $q = useQuasar()
-    const dialog = ref(false)
-    const pagination = ref({
-      sortBy: 'id',
-      rowsPerPage: 0,
-      descending: false
-    })
+  import { ref, onMounted } from 'vue'
+  import { projectsApi } from 'src/api/projects'
+  import { useQuasar } from 'quasar'
+  import { useRouter } from 'vue-router';
 
-    const actionfunc = ref([
-      {
-        title: 'Подробнее',
-        emmit: 'actionUpdate'
-      },
-      {
-        title: 'Настройки доступа',
-        emmit: 'actionCopy'
-      },
-      {
-        title: 'Удалить проект',
-        emmit: 'actionDel'
-      },
-    ])
+  import LoaderDate from 'src/components/LoaderDate.vue'
+  import NoDate from 'src/components/NoDate.vue'
+  import Dialog from 'pages/Project/dialog.vue'
+  import ActionBtn from 'components/Table/ActionBtn.vue'
+  import SortedMobile from 'components/Table/SortedMobile.vue'
 
-    const loading = ref(false)
-    const nodate = ref(true)
+  import DialogDelite from 'src/components/dialog/DialogDelite'
+  import useDialogDel from 'src/composable/useDialogDel'
 
-    async function start() {
-      loading.value = true
-      try {
-        await projectsApi.getAll().then(resp => {
-          rows2.value = resp
-        })
-      } catch (err) {
-        console.log(err)
-      }
-      loading.value = false
-      if (rows2.value == '') {
-        nodate.value = true
-      } else {
-        nodate.value = false
-      }
-    }
+  const $q = useQuasar()
+  const loading = ref(false)
+  const nodate = ref(true)
+  const router = useRouter()
 
-    async function onUpdateRows(name, descending) {
-      pagination.value.sortBy = name
-      pagination.value.descending = descending
-    }
+  const columns = ref([
+    { name: 'image', label: '', field: 'image', align: 'left' },
+    { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
+    { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
+    { name: 'type', label: 'Тип', field: 'type', align: 'left', sortable: true },
+    { name: 'square', label: 'Площадь', field: 'square', align: 'left', sortable: true },
+    { name: 'customer', label: 'Заказчик', field: 'customer', align: 'left', sortable: true },
+    { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
+    { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
+    { name: 'timing', label: 'Сроки', field: 'timing', align: 'left', sortable: true },
+    { name: 'payment', label: 'Оплата', field: 'payment', align: 'left', sortable: true },
+    { name: 'readiness', label: 'Готовность', field: 'readiness', align: 'left', sortable: true },
+    { name: 'view', label: '', field: 'view', align: 'right' },
+    { name: 'action', label: '', field: 'action', align: 'left' },
+    { name: 'share', label: '', field: 'share', align: 'left' },
+    { name: 'address', label: '', field: 'address', align: 'left' }
+  ])
+  const rows2 = ref([])
+  const pagination = ref({
+    sortBy: 'id',
+    rowsPerPage: 0,
+    descending: false
+  })
 
-    async function onActionUpdate(id) {
-      
-    }
-    async function onActionCopy(id) {
+  const dialog = ref(false)
+  function modalFalse() {
+    dialog.value = false
+  }
 
-    }
-    async function onActionDel(id) {
-      loading.value = true
-      try {
-        await projectsApi.delProject(id).then(resp => {
-          start()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              message: 'Проект удален'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
+  const actionfunc = ref([
+    {
+      title: 'Подробнее',
+      emmit: 'actionOpen'
+    },
+    {
+      title: 'Настройки доступа',
+      emmit: 'actionCopy'
+    },
+    {
+      title: 'Удалить проект',
+      emmit: 'actionDel'
+    },
+  ])
+
+  // инициализация функционала окна удаления
+  const actionHandlers = {
+    delProject: onActionProjectDel,
+  }
+  const { 
+    dialogDelite, 
+    dialogDelId, 
+    dialogDelName, 
+    onActionDel, 
+    modalCloseDel, 
+    handleModalClose 
+  } = useDialogDel(actionHandlers)
+
+  // управление проектами
+  async function onUpdateRows(name, descending) {
+    pagination.value.sortBy = name
+    pagination.value.descending = descending
+  }
+  function onActionOpen(id) {
+    router.push(`/projects/${id}`)
+  }
+  async function onActionCopy(id) {
+
+  }
+  async function onActionProjectDel(id) {
+    loading.value = true
+    try {
+      await projectsApi.delProject(id).then(resp => {
+        start()
         setTimeout(() => {
           $q.notify({
-            color: 'red',
-            message: 'Произошла ошибка, попробуйте позже'
+            color: 'positive',
+            message: 'Проект удален'
           })
         }, 0)
-      }
-      loading.value = false
+      })
+    } catch (err) {
+      console.log(err)
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }, 0)
     }
+    loading.value = false
+  }
 
-    onMounted(() => {
-      start()
-    })
-
-    return {
-      rows2,
-      actionfunc,
-      model: ref('Имя'),
-      tab: ref('tiles'),
-      columns,
-      start,
-      pagination,
-      dialog,
-      maximizedToggle: ref(true),
-
-      onActionUpdate,
-      onActionCopy,
-      onActionDel,
-
-      loading,
-      nodate,
-
-      modalFalse() {
-        dialog.value = false
-      },
-      onUpdateRows
+  // старт при загрузке страницы
+  async function start() {
+    loading.value = true
+    try {
+      await projectsApi.getAll().then(resp => {
+        rows2.value = resp
+      })
+    } catch (err) {
+      console.log(err)
+    }
+    loading.value = false
+    if (rows2.value == '') {
+      nodate.value = true
+    } else {
+      nodate.value = false
     }
   }
-}
+  onMounted(() => {
+    start()
+  })
+
+  const tab = ref('tiles')
+
 </script>

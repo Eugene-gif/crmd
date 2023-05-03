@@ -389,3 +389,10 @@
   }
 }
 
+.q-expansion-item.hidden-settings-icon {
+  .q-expansion-item__container {
+    .title {
+      margin-right: auto;
+    }
+  }
+}

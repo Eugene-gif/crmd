@@ -4,6 +4,7 @@
     default-opened
     label="Wifi settings"
     class="dashboard"
+    :class="{'hidden-settings-icon': dashboardActive}"
   >
     <template v-slot:header>
       <div class="title">Данные объекта</div>
@@ -11,6 +12,7 @@
         name="svguse:icons/allIcons.svg#settings"
         size="17px"
         class="settings-icon"
+        v-if="!dashboardActive"
         @click.stop="dashboardActive = !dashboardActive"
       />
     </template>
@@ -77,12 +79,13 @@
             />
             <label class="text text-white">Заменить фото</label>
           </div>
-          <div class="btn-upload-2">
+          <div class="btn-upload-2" @click="triggerFilePicker">
             <q-uploader
               @added="uploadProfilePhoto"
               multiple
               accept=".jpg, image/*"
               @rejected="onRejected"
+              ref="uploader"
               :class="{ 'btn-load-grey': lodingBtn2 }"
             />
             <div class="upload-content">
@@ -139,7 +142,7 @@
           />
           <label class="text text-white">Заменить фото</label>
         </div>
-        <div class="btn-upload-2">
+        <div class="btn-upload-2" @click="triggerFilePicker">
           <q-uploader
             @added="uploadProfilePhoto"
             multiple
@@ -326,7 +329,13 @@ export default defineComponent({
     const loding = ref(false)
     const lodingBtn = ref(false)
     const lodingBtn2 = ref(false)
-    const dashboardActive = ref(false);
+    const dashboardActive = ref(false)
+    const uploader = ref(null)
+    const triggerFilePicker = () => {
+      if (uploader.value) {
+        uploader.value.pickFiles();
+      }
+    }
 
     const formData = ref({
       name: null,
@@ -350,6 +359,8 @@ export default defineComponent({
         message: 'Ошибка загрузки'
       })
     }
+
+
     async function uploadProfilePhoto(file) {
       lodingBtn2.value = true
 
@@ -378,7 +389,8 @@ export default defineComponent({
 
     async function updateInfo() {
       try {
-        await projectsApi.updateInfo(formData.value)
+        const resp = await projectsApi.updateInfo(formData.value)
+        console.log(resp)
         $q.notify({
           color: 'positive',
           message: 'Данные обновлены'
@@ -386,6 +398,10 @@ export default defineComponent({
         dashboardActive.value = false
       } catch (err) {
         console.log(err)
+        $q.notify({
+          color: 'negative',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
       }
     }
 
@@ -419,6 +435,8 @@ export default defineComponent({
       uploadProfilePhoto,
       onRejected,
       updateInfo,
+      uploader,
+      triggerFilePicker
     }
   },
 })
