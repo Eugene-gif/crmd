@@ -103,142 +103,122 @@
   
 </template>
 
-<script>
-import { defineComponent, ref, onMounted , computed} from 'vue'
-import { filesApi } from 'src/api/files';
-import { useQuasar } from 'quasar'
+<script setup>
+  import { ref, onMounted } from 'vue'
+  import { filesApi } from 'src/api/files'
+  import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  name: 'DialogUploadImg',
-  props: {
-    updateObject: Array,
-    updateActivated: Boolean
-  },
-  setup (props, { emit }) {
-    const $q = useQuasar()
-    const lodingBtn = ref(false)
+  const props = defineProps({
+    updateObject: Object,
+    updateActivated: Boolean,
+    projectId: String
+  })
 
-    const formData = ref({
-      name: '',
-      link: '',
-      files: []
+  const emit = defineEmits(['modalFalse', 'modalFalseUp'])
+
+  const $q = useQuasar()
+  const lodingBtn = ref(false)
+
+  const formData = ref({
+    name: '',
+    link: '',
+    files: [],
+  })
+  const propsFile = ref('')
+
+  async function onFileChange(file) {
+    formData.value.files = file
+  }
+  function checkFileSize(files) {
+    return files.filter(file => file.size > 2048)
+  }
+  function onRejected() {
+    $q.notify({
+      type: 'negative',
+      message: 'Файл не соответствуeт расширению',
     })
-    const propsFile = ref('')
+  }
 
-    async function onFileChange(file) {
-      formData.value.files = file
-    }
-    function checkFileSize (files) {
-      return files.filter(file => file.size > 2048)
-    }
-    function onRejected () {
-      $q.notify({
-        type: 'negative',
-        message: 'Файл не соответствуeт расширению'
-      })
-    }
-
-    function delFilesUploader() {
-      
-    }
-
-    function branchFile() {
-      if (props.updateActivated === true) {
-        updateFiles()
-      } else {
-        uploadFiles()
-      }
-    }
-
-    async function uploadFiles() {
-      lodingBtn.value = true
-      if (formData.value.link.length > 0 || formData.value.files.length > 0) {
-        try {
-          await filesApi.uploadFiles(formData.value).then(resp => {
-            modalFalse(resp)
-            $q.notify({
-              color: 'positive',
-              message: 'файл загружен'
-            })
-          })
-        } catch (err) {
-          $q.notify({
-            color: 'negative',
-            message: 'произошла ошибка'
-          })
-          console.log(err)
-        }
-      } else {
-        $q.notify({
-          color: 'negative',
-          message: 'Загрузите пожалуйста файл'
-        })
-      }
-      lodingBtn.value = false
-    }
-
-    async function updateFiles() {
-      lodingBtn.value = true
-      try {
-        await filesApi.updateFiles(formData.value).then(resp => {
-          modalFalseUp(resp)
-          $q.notify({
-            color: 'positive',
-            message: 'файл обновлен'
-          })
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
-      }
-      lodingBtn.value = false
-    } 
-
-    function modalFalse(val) {
-      emit('modalFalse', val)
-    }
-    function modalFalseUp(val) {
-      emit('modalFalseUp', val)
-    }
-  
-    onMounted(() => {
-      if (props.updateActivated === true) {
-        if (props.updateObject.size) {
-          formData.value.id = props.updateObject.id
-          formData.value.name = props.updateObject.name
-          propsFile.value = props.updateObject.file_name
-        } else {
-          formData.value.link = props.updateObject.file
-          formData.value.id = props.updateObject.id
-          formData.value.name = props.updateObject.name
-        }
-      } else {
-        formData.value = {
-          name: '',
-          link: '',
-          files: []
-        }
-        propsFile.value = ''
-      }
-    })
-
-    return {     
-      formData,
-      modalFalse,
-      modalFalseUp,
-      onFileChange,
-      onRejected,
-      uploadFiles,
-      checkFileSize,
-      branchFile,
-      updateFiles,
-      delFilesUploader,
-      lodingBtn,
-      propsFile
+  function branchFile() {
+    if (props.updateActivated === true) {
+      updateFiles()
+    } else {
+      uploadFiles()
     }
   }
-})
+
+  async function uploadFiles() {
+    lodingBtn.value = true
+    if (formData.value.link.length > 0 || formData.value.files.length > 0) {
+      try {
+        const resp = await filesApi.uploadFiles(formData.value, props.projectId)
+        
+        modalFalse(resp)
+        $q.notify({
+          color: 'positive',
+          message: 'файл загружен',
+        })
+      } catch (err) {
+        console.log(err)
+        $q.notify({
+          color: 'negative',
+          message: 'произошла ошибка',
+        })
+      }
+    } else {
+      $q.notify({
+        color: 'negative',
+        message: 'Загрузите пожалуйста файл',
+      })
+    }
+    lodingBtn.value = false
+  }
+
+  async function updateFiles() {
+    lodingBtn.value = true
+    try {
+      await filesApi.updateFiles(formData.value).then(resp => {
+        modalFalseUp(resp)
+        $q.notify({
+          color: 'positive',
+          message: 'файл обновлен',
+        })
+      })
+    } catch (err) {
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка',
+      })
+      console.log(err)
+    }
+    lodingBtn.value = false
+  }
+
+  function modalFalse(val) {
+    emit('modalFalse', val)
+  }
+  function modalFalseUp(val) {
+    emit('modalFalseUp', val)
+  }
+
+  onMounted(() => {
+    if (props.updateActivated === true) {
+      if (props.updateObject.size) {
+        formData.value.id = props.updateObject.id
+        formData.value.name = props.updateObject.name
+        propsFile.value = props.updateObject.file_name
+      } else {
+        formData.value.link = props.updateObject.file
+        formData.value.id = props.updateObject.id
+        formData.value.name = props.updateObject.name
+      }
+    } else {
+      formData.value = {
+        name: '',
+        link: '',
+        files: [],
+      }
+      propsFile.value = ''
+    }
+  })
 </script>

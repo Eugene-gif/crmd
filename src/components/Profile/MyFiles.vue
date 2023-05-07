@@ -13,15 +13,15 @@
     />
   </q-dialog>
   <q-dialog
-    v-model="dialogDelModal"
+    v-model="dialogDelite"
     transition-show="fade"
     transition-hide="fade" 
     class="my-dialog"
   >
-    <DialogDelite 
-      @modalFalse="modalOpenDel"
-    />
+    <DialogDelite @modalFalse="handleModalClose" />
   </q-dialog>
+
+
   <q-expansion-item
     expand-separator
     default-opened
@@ -71,7 +71,7 @@
               flat
               class="my-btn my-effect h-opacity btn-add"
               padding="0"
-              @click="callDelDialog('delFile', file.id)"
+              @click="onActionDel('del', file.id)"
             >
               <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
               <span class="block text-grey-5">Удалить</span>
@@ -101,128 +101,64 @@
   </q-expansion-item>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue'
-import DialogUploadFiles from 'components/Profile/DialogUploadFiles'
-import DialogDelite from 'components/dialog/DialogDelite'
-import { filesApi } from 'src/api/files'
-import { useQuasar } from 'quasar'
+<script setup>
+  import { ref, onMounted } from 'vue'
+  import { filesApi } from 'src/api/files'
+  import { useQuasar } from 'quasar'
 
-export default {
-  name: 'ProfileTwoThreeD',
-  components: {
-    DialogUploadFiles,
-    DialogDelite
-  },
-  setup() {
-    const dialog = ref(false)
-    const files = ref([])
-    const dialogName = ref()
-    const delFileId = ref()
-    const dialogDelModal = ref(false)
-    const $q = useQuasar()
-    const updateActive = ref(false)
-    const updateObj = ref({})
+  import ActionBtn from 'components/Table/ActionBtn.vue'
+  import DialogUploadFiles from 'components/Profile/DialogUploadFiles'
+  import DialogDelite from 'src/components/dialog/DialogDelite'
+  import useDialogDel from 'src/composable/useDialogDel'
+  import useFiles from 'src/composable/useFiles'
+  
+  const $q = useQuasar()
 
-    async function getAllFiles() {
-      try {
-        await filesApi.getAllFiles().then(resp => {
-          files.value = resp
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
-      }
+  // получние файлов при старте
+  const startFiles = ref([])
+  async function getAllFiles() {
+    try {
+      const resp = await filesApi.getAllFiles()
+      startFiles.value = resp
+    } catch (err) {
+      console.log(err)
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка',
+      })
     }
+  }
 
-    function updateFile(file) {
-      updateActive.value = true
-      dialog.value = true
-      updateObj.value = file
-    }
+  // инициализация управления файлами
+  const {
+    dialog,
+    files,
+    updateActive,
+    updateObj,
+    modalFalse,
+    modalFalseUp,
+    delFile,
+    updateFile,
+    openLink
+  } = useFiles(startFiles)
 
-    function callDelDialog(modal, id) {
-      dialogName.value = modal
-      dialogDelModal.value = true
-      delFileId.value = id
-    }
-    function modalOpenDel(val) {
-      dialogDelModal.value = false
-      if (dialogName.value === 'delFile' && val) delFile(delFileId.value)
-      delFileId.value = null
-    }
+  // функции удаления
+  const actionHandlers = {
+    del: delFile,
+  }
 
-    async function delFile(id) {
-      try {
-        await filesApi.delFile(id).then(resp => {
-          files.value = files.value.filter((item) => item.id !== id)
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              message: 'Файл удален'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-    }
+  // инициализация удаления файла
+  const { 
+    dialogDelite, 
+    dialogDelId, 
+    dialogDelName, 
+    onActionDel, 
+    modalCloseDel, 
+    handleModalClose 
+  } = useDialogDel(actionHandlers)
 
-    function openLink(link) {
-      window.open(link, '_blank');
-    }
-    function modalFalseUp(obj) {
-      dialog.value = false
-      if (obj) {
-        console.log(obj)
-        let arr = []
-        files.value.filter((el) => {
-          if (el.id === obj.id) {
-            el = obj
-          } 
-          arr.push(el)
-        })
-        files.value = arr
-      }
-      updateActive.value = false
-    }
+  onMounted(() => {
+    getAllFiles()
+  })
 
-    onMounted(() => {
-      getAllFiles()
-    })
-
-    return {
-      dialog,
-      files,
-      updateActive,
-      updateObj,
-      dialogName,
-      openLink,
-      getAllFiles,
-      delFile,
-      modalOpenDel,
-      callDelDialog,
-      dialogDelModal,
-      delFileId,
-      updateFile,
-      modalFalse(obj) {
-        dialog.value = false
-        if (obj) {
-          files.value.push(obj[0])
-        }
-        updateActive.value = false
-      },
-      modalFalseUp
-    }
-  },
-}
 </script>

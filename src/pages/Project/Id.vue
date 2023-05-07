@@ -127,17 +127,18 @@
       />
       <EstimatesProject 
         :data="data.estimates"
+        :project_id="projectId"
         v-if="data.estimates"
       />
       <AlbumsProject 
         :data="data.albums" 
         :project_id="projectId" 
-        
         @updateAlbums="onUpdateAlbums"
         v-if="data.albums" 
       />
       <FilesProject 
         :data="data.files" 
+        :project_id="projectId" 
         v-if="data.files" 
       />      
 
@@ -177,7 +178,7 @@ import { useRoute } from 'vue-router'
 
   const route = useRoute()
   const projectId = ref(route.params.id)
-  const loading = ref(false)
+  const loading = ref(true)
   const dialog = ref(false)
 
   const generalInfo = ref({})

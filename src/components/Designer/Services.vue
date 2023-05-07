@@ -115,7 +115,7 @@
             :props="props"
             class="q-td-action"
           >
-            <div class="btn-sec ">
+            <div class="btn-sec">
               <q-btn
                 unelevated 
                 no-caps

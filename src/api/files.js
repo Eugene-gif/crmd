@@ -7,8 +7,10 @@ const url = 'files'
 
 export const filesApi = {
 
-  uploadFiles(data) {
-    const formData = new FormData();
+  uploadFiles(data, projectId) {
+    const formData = new FormData()
+
+    if (projectId) formData.append("project_id", projectId)
 
     if (data.link.length > 0) {
       formData.append("links[0][name]", data.name)
@@ -28,7 +30,7 @@ export const filesApi = {
         return data.data
       })
     } catch (err) {
-      console.log(err)
+      throw err
     }
   },
 

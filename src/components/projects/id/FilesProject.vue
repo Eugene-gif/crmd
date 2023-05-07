@@ -1,4 +1,28 @@
 <template>
+  <q-dialog
+    v-model="dialog"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog contractor-dialog-share"
+  >
+    <DialogUploadFiles 
+      @modalFalse="modalFalse"
+      @modalFalseUp="modalFalseUp"
+      :updateActivated="updateActive"
+      :updateObject="updateObj"
+      :projectId="project_id"
+    />
+  </q-dialog>
+
+  <q-dialog
+    v-model="dialogDelite"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite @modalFalse="handleModalClose" />
+  </q-dialog>
+
   <q-expansion-item
     expand-separator
     default-opened
@@ -12,185 +36,111 @@
     </template>
     <q-card>
       <q-card-section>
-        <div class="sorted">
-          <div class="sorted-section mb-visible">
-            <div class="title">Сортировка: </div>
-            <q-select
-              borderless
-              v-model="model"
-              :options="columns"
-              behavior="menu"
-              popup-content-class="select-menu-mobile"
-            />
-          </div>
-          <div class="sorted-btns mb-visible">
-            <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowDown" />
-            <q-icon size="7px" name="svguse:icons/allIcons.svg#tableArrowUp" />
-          </div>
-        </div>
-        <q-table
-          flat
-          :rows="rows2"
-          :columns="columns2"
-          row-key="id"
-          hide-pagination
-          class="my-table project-table"
-        >
-          <template v-slot:header-cell-id="props">
-            <q-th :props="props" class="q-th__id">
-            </q-th>
-          </template>
-          <template v-slot:header-cell-action="props">
-            <q-th :props="props" class="q-th__action">
-            </q-th>
-          </template>
-          <template v-slot:header-cell="props">
-            <q-th :props="props">
-              <span class="q-th__title">
-                {{ props.col.label }}
-              </span>
-              <i
-                class="notranslate material-icons q-icon q-table__sort-icon q-table__sort-icon--left"
-                aria-hidden="true"
-                role="presentation"
-              >
-                <q-icon size="7px" color="grey-5" name="svguse:icons/financeTable.svg#tableArrrow" />
-              </i>
-            </q-th>
-          </template>
 
-          <template #body="props">
-            <q-tr
-              :props="props"
-            >
-              <q-td
-                key="name"
-                :props="props"
-                class="q-td-name"
-              >
-                <div class="row items-center">
-                  <q-icon size="17px" name="svguse:icons/allIcons.svg#download" class="q-mr-md" />
-                  <div class="content">{{props.row.name}}</div>
-                </div>
-                
-              </q-td>
-              <q-td
-                key="created"
-                :props="props"
-                class="q-td-created"
-              >
-                <div class="content">{{props.row.created}}</div>
-              </q-td>
-              <q-td
-                key="changed"
-                :props="props"
-                class="q-td-changed"
-              >
-                <div class="content">{{props.row.changed}}</div>
-              </q-td>
-              <q-td
-                key="type"
-                :props="props"
-                class="q-td-type"
-              >
-                <div class="content">{{props.row.type}}</div>
-              </q-td>
-              <q-td
-                key="size"
-                :props="props"
-                class="q-td-status"
-              >
-                <div class="row items-center">
-                  <div class="content">{{props.row.size}}</div>
-                  <ActionBtn 
-                    :propsEl="props.row.id"
-                    :offsetYX="[55, -258]"
-                  />
-                </div>
-              </q-td>
-            </q-tr>
-          </template>
-          <template #bottom>
-            <q-tr
-              :props="props"
-            >
-              <q-btn
-                unelevated
-                no-caps
-                class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
-              >
-                <div class="block">Загрузить файл</div>
-                <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
-              </q-btn>
-            </q-tr>
-          </template>
-        </q-table>
+        <q-list class="contractor-list">
+          <q-item
+            v-for="file in files"
+            :key="file.id"
+          >
+            <q-item-section>
+              <div class="subtitle">
+                {{file.name}}
+              </div>
+              <div class="size" v-if="!file.size"><span class="lg-visible">Ссылка</span></div>
+              <span class="mb-visible format" v-if="!file.size">Ссылка</span>
+
+              <div class="size" v-if="file.size">
+                <span class="lg-visible">{{file.mime}},</span> {{file.size}}
+              </div>
+              <span class="mb-visible format" v-if="file.size">
+                {{file.format}}
+              </span>
+
+              <div class="btn-sec">
+                <q-btn
+                  unelevated 
+                  no-caps
+                  flat
+                  class="my-btn my-effect h-opacity q-mr-md"
+                  padding="0"
+                  @click="updateFile(file)"
+                >
+                  <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="16px" class="q-mr-sm" />
+                  <span class="block text-grey-5">Редактировать</span>
+                </q-btn>
+                <q-btn
+                  unelevated 
+                  no-caps
+                  flat
+                  class="my-btn my-effect h-opacity"
+                  padding="0"
+                  @click="onActionDel('del', file.id)"
+                >
+                  <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
+                  <span class="block text-grey-5">Удалить</span>
+                </q-btn>
+              </div>
+
+              <q-icon name="svguse:icons/allIcons.svg#download" size="17px" @click="openLink(file.file)" />
+            </q-item-section>
+          </q-item>
+        </q-list>
+
+        <div class="add-btn">
+          <q-btn
+            unelevated
+            no-caps
+            class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
+            @click="dialog = true"
+          >
+            <div class="block">Загрузить файл</div>
+            <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
+          </q-btn>
+        </div>
+        
       </q-card-section>
     </q-card>
   </q-expansion-item>
 </template>
 
-<script>
-import { ref, defineComponent, onMounted } from "vue";
-import ActionBtn from 'components/Table/ActionBtn.vue'
-import { useQuasar } from 'quasar'
+<script setup>
+  import ActionBtn from 'components/Table/ActionBtn.vue'
+  import DialogUploadFiles from 'components/Profile/DialogUploadFiles'
+  import DialogDelite from 'src/components/dialog/DialogDelite'
+  import useDialogDel from 'src/composable/useDialogDel'
+  import useFiles from 'src/composable/useFiles'
 
-export default defineComponent({
-  components: {
-    ActionBtn,
-  },
-  props: {
-    data: Array
-  },
-  setup(props, {emit}) {
+  const props = defineProps({
+    data: Array,
+    project_id: String
+  })
 
-    const model = ref('Название')
+  // инициализация управления файлами
+  const {
+    dialog,
+    files,
+    updateActive,
+    updateObj,
+    modalFalse,
+    modalFalseUp,
+    delFile,
+    updateFile,
+    openLink
+  } = useFiles(props.data)
 
-    const columns = ref([
-      'Имя',
-      'Тип',
-      'Площадь',
-      'Заказчик',
-      'Изменен',
-      'Создан',
-      'Сроки',
-      'Оплата',
-      'Готовность'
-    ])
+  // удаление файла
+  const actionHandlers = {
+    del: delFile,
+  }
 
-    const columns2 = ref([
-      { name: 'id', label: '', field: 'id', align: 'left' },
-      { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
-      { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
-      { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
-      { name: 'type', label: 'Тип', field: 'type', align: 'left', sortable: true },
-      { name: 'size', label: 'Размер', field: 'size', align: 'left', sortable: true }
-    ])
-    const rows2 = ref([
-      {
-        id: '1',
-        name: 'Архив с 3д-моделями столов',
-        created: 'Позавчера',
-        changed: '14:23',
-        type: 'ZIP',
-        size: '1 мб',
-      },
-      {
-        id: '2',
-        name: 'Архив с 3д-моделями стульев',
-        created: '25 / 05 / 2021',
-        changed: '25 / 05 / 2021',
-        type: 'Ссылка',
-        size: '',
-      },
-    ])
+  // инициализация удаления файла
+  const { 
+    dialogDelite, 
+    dialogDelId, 
+    dialogDelName, 
+    onActionDel, 
+    modalCloseDel, 
+    handleModalClose 
+  } = useDialogDel(actionHandlers)
 
-    return {
-      model,
-      columns,
-      columns2,
-      rows2,
-    }
-  },
-})
 </script>

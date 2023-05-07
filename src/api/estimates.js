@@ -27,23 +27,29 @@ export const estimatesApi = {
     }
   },
 
-  createEstimates(formData) {
+  async create(data) {
+    console.log(data);
+    const formData = new FormData();
+    formData.append("project_id", data.project_id);
+    formData.append("name", data.name);
+
     try {
-      return httpClient.post(`${url}/create`, {
-        project_id: '',
-        name: ''
-      }).then(({ data }) => {
-        return data
-      })
+      const resp = await httpClient({
+        method: "post",
+        url: `${url}/create`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      return resp.data.data;
     } catch (err) {
-      console.log(err)
+      throw err
     }
   },
 
-  delEstimates(id) {
+  del(id) {
     try {
       return httpClient.post(`${url}/delete`, {
-        id: id 
+        estimate_id: id 
       }).then(({ data }) => {
         return data
       })

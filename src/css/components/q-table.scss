@@ -1702,6 +1702,7 @@
   min-width: 321px !important;
   overflow: visible;
   position: absolute;
+  display: none;
   opacity: 0;
   z-index: -1;
   transition: all 0.3s;
@@ -1753,6 +1754,7 @@
     }
   }
   &.visible {
+    display: block;
     opacity: 1;
     z-index: 1999;
   }

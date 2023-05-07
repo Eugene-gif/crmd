@@ -951,6 +951,24 @@
   }
 }
 
+.estimates-dialog-create {
+  .dialog-section {
+    .q-card__actions {
+      .q-btn {        
+      }
+    }
+  }
+  @media (min-width: 772px) {
+    .dialog-section {
+      .q-card__actions {
+        .q-btn {
+          margin-top: 60px;
+        }
+      }
+    }
+  }
+}
+
 .projects-dialog {
   .q-card {
     .form-section-row {
