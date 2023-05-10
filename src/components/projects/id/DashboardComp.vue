@@ -27,7 +27,6 @@
           <q-item class="info">
             <p class="adres">{{info.address}}</p>
             <div class="row">
-              
               <img 
                 :src="customer.image"
                 alt="" 

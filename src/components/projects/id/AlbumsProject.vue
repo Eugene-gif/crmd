@@ -96,9 +96,9 @@
               <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
             </q-item>
           </q-list>
-        </div>
-        
+        </div>        
       </q-card-section>
+
       <q-card-section class="q-card-btn">
         <q-btn
           unelevated
@@ -110,6 +110,7 @@
           <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
         </q-btn>
       </q-card-section>
+
     </q-card>
   </q-expansion-item>
 </template>

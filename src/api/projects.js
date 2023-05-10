@@ -1,4 +1,5 @@
-import httpClient from "./httpClient.js";
+import httpClient from "./httpClient.js"
+import getFormatDate from 'src/composable/getFormatDate'
 
 const url = 'projects'
 
@@ -17,20 +18,6 @@ function parseCustomDate(dateStr) {
   const [day, month, year] = timeAndDate[1].split('/').map(Number);
 
   return new Date(year, month - 1, day, hours, minutes, seconds);
-}
-
-function formatDateTime(inputDateStr) {
-  const [timeStr, dateStr] = inputDateStr.split(' ');
-  const [day, month, year] = dateStr.split('/').map(Number);
-  const inputDate = new Date(year, month - 1, day);
-  const today = new Date();
-  const isSameDate = inputDate.getDate() === today.getDate()
-                      && inputDate.getMonth() === today.getMonth()
-                      && inputDate.getFullYear() === today.getFullYear();
-  if (isSameDate) {
-    return timeStr;
-  }
-  return inputDateStr;
 }
 
 function getProgress(created_at, services) {
@@ -104,8 +91,8 @@ export const projectsApi = {
             address: el.address,
             square: el.square,
             customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
-            changed: formatDateTime(el.updated_at),
-            created: formatDateTime(el.created_at),
+            changed: getFormatDate(el.updated_at),
+            created: getFormatDate(el.created_at),
             timing: getTiming(el.created_at, el.services),
             orderer: el.orderer,
             payment: 80,

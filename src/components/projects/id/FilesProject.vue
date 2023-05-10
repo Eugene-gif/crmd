@@ -26,13 +26,12 @@
   <q-expansion-item
     expand-separator
     default-opened
-    class="files"
+    class="files hidden-settings-icon"
   >
     <template v-slot:header>
       <div class="title">
         Приложенные файлы
       </div>
-      <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
     </template>
     <q-card>
       <q-card-section>

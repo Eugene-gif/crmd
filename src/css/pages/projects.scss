@@ -1755,7 +1755,11 @@
           }
         }
         .q-card-btn {
-          display: none;
+          // display: none;
+          .q-btn {
+            min-height: 43px;
+            padding: 0 20px 0 20px;
+          }
         }
       }
     }

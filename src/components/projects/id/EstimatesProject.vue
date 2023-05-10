@@ -22,13 +22,12 @@
   <q-expansion-item
     expand-separator
     default-opened
-    class="estimates"
+    class="estimates hidden-settings-icon"
   >
   <template v-slot:header>
     <div class="title">
       Сметы
     </div>
-    <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
   </template>
     <q-card>
 
@@ -145,6 +144,7 @@
   import DialogCreate from 'src/pages/Estimates/DialogCreate'
   import DialogDelite from 'src/components/dialog/DialogDelite'
   import useDialogDel from 'src/composable/useDialogDel'
+  import getFormatDate from 'src/composable/getFormatDate'
   import { useQuasar } from 'quasar'
 
   const $q = useQuasar()
@@ -197,6 +197,7 @@
     handleModalClose 
   } = useDialogDel(actionHandlers)
   
+  // useDate
 
   // создание сметы
   function modalCreate(obj) {
@@ -230,8 +231,8 @@
   onMounted(() => {
     estimates.value = props.data
     estimates.value.map((el) => {
-      if (el.created_at) el.created_at = el.created_at.split(' ')[1]
-      if (el.updated_at) el.updated_at = el.updated_at.split(' ')[1]
+      el.updated_at = getFormatDate(el.updated_at)
+      el.created_at = getFormatDate(el.created_at)
     })
   })
 

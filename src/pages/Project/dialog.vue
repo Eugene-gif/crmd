@@ -34,13 +34,14 @@
         <q-card-section class="form-section form-section-row">
           <div class="form-col">
             <label class="lable-title"
-              >Площадь, м<sup style="font-size: 10px; font-weight: bold"
+              >Площадь, м<sup style="font-size: 10px font-weight: bold"
                 >2</sup
-              ></label
-            >
+              >
+            </label>
             <q-input
               v-model="formData.square"
               class="my-input bg-grey-3"
+              type="number"
               placeholder="115"
               :rules="[(val) => (val && val.length > 0) || '']"
             />
@@ -99,7 +100,6 @@
               class="my-input bg-grey-3"
               placeholder="Введите отчество"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -108,8 +108,8 @@
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
               placeholder="+7 (999)-999-99-99"
+              type="number"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -118,8 +118,11 @@
               v-model="formOrderers.email"
               class="my-input bg-grey-3"
               placeholder="email@gmail.com"
+              type="email"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '']"
+              :rules="[
+                (val) => (val && val.length > 0 && val.includes('@')) || (val.length == 0 || 'Email должен содержать @')
+              ]"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -188,7 +191,6 @@
 
         <q-card-actions>
           <div class="text-subtitle1">Какие услуги оказываем:</div>
-
           <q-list class="q-list-options">
             <q-item 
               v-for="check in services"
@@ -276,11 +278,11 @@ export default defineComponent({
     SelectType,
   },
   setup(props, { emit }) {
-    const $q = useQuasar();
-    const loading = ref(false);
+    const $q = useQuasar()
+    const loading = ref(false)
 
-    const addCustomer = ref(false);
-    const selectDropbox = ref();
+    const addCustomer = ref(false)
+    const selectDropbox = ref()
     const services = ref([])
 
     const formData = ref({
@@ -288,7 +290,7 @@ export default defineComponent({
       emoji: "",
       adress: "",
       square: "",
-      project_type_id: 1,
+      project_type_id: null,
       orderer: null,
       orderer_id: null,
       services: [],
@@ -297,7 +299,6 @@ export default defineComponent({
     const formOrderers = ref({
       // user_id: '',
       first_name: "",
-      second_name: "",
       last_name: "",
       birth_date: "",
       phone: "",
@@ -307,38 +308,49 @@ export default defineComponent({
       soc_tg: "",
       image: "",
       personal_info: " ",
-      second_name: " ",
+      second_name: "",
     })
 
     watchEffect(() => {
       formData.value.price = services.value.reduce((accumulator, current) => {
-        return current.value === true ? accumulator + current.price : accumulator;
-      }, 0);
-    });
+        if (current.type === 'unit' && current.value === true) return accumulator + (current.price * formData.value.square)
+        else if (current.type === 'service' && current.value === true) return accumulator + current.price
+        else return accumulator
+      }, 0)
+    })
 
     // addCustomer
 
     async function onSubmit() {
       if (addCustomer.value === true) {
-        if (formOrderers.value.birth_date != "") {
-          createOrderer();
+        if (formOrderers.value.birth_date != "" && formData.value.project_type_id !== null) {
+          createOrderer()
         } else {
           setTimeout(() => {
             $q.notify({
               color: "red",
               timeout: 3000,
               message: "Необходимо заполнить все данные",
-            });
-          }, 0);
+            })
+          }, 0)
         }
       } else {
-        addProject();
+        if (formData.value.orderer && formData.value.project_type_id !== null) addProject()
+        else {
+          setTimeout(() => {
+            $q.notify({
+              color: "red",
+              timeout: 3000,
+              message: "Необходимо заполнить все данные",
+            })
+          }, 0)
+        }
       }
     }
 
     function updateData() {
-      emit("updateData");
-      emit("modalFalse");
+      emit("updateData")
+      emit("modalFalse")
     }
 
     async function addProject() {
@@ -349,71 +361,70 @@ export default defineComponent({
       })
       try {
         await projectsApi.createProject(formData.value).then((resp) => {
-          updateData();
+          updateData()
           setTimeout(() => {
             $q.notify({
               color: "positive",
               timeout: 3000,
               message: "Проект создан",
-            });
-          }, 0);
-        });
+            })
+          }, 0)
+        })
       } catch (err) {
-        console.log(err);
+        console.log(err)
         setTimeout(() => {
           $q.notify({
             color: "red",
             timeout: 3000,
             message: "Произошла ошибка, попробуйте позже",
-          });
-        }, 0);
+          })
+        }, 0)
       }
     }
 
     async function createOrderer() {
       try {
         await orderersApi.createOrderers(formOrderers.value).then((resp) => {
-          formData.value.orderer = resp.data.id;
-          formData.value.orderer_id = resp.data.id;
-          addProject();
-          updateData();
+          formData.value.orderer = resp.data.id
+          formData.value.orderer_id = resp.data.id
+          addProject()
+          updateData()
           setTimeout(() => {
             $q.notify({
               color: "positive",
               timeout: 3000,
               message: "Заказчик создан",
-            });
-          }, 0);
-        });
+            })
+          }, 0)
+        })
       } catch (err) {
-        console.log(err);
+        console.log(err)
         setTimeout(() => {
           $q.notify({
             color: "red",
             timeout: 3000,
             message: "Произошла ошибка, попробуйте позже",
-          });
-        }, 0);
+          })
+        }, 0)
       }
     }
 
     function ongetEmojik(data) {
-      formData.value.name = data.text.value;
-      formData.value.emoji = data.emojiIcon.value;
+      formData.value.name = data.text.value
+      formData.value.emoji = data.emojiIcon.value
     }
     function ongetOrderer(select) {
-      formData.value.orderer = select.orderer;
-      formData.value.orderer_id = select.orderer;
+      formData.value.orderer = select.orderer
+      formData.value.orderer_id = select.orderer
     }
     function ongetTime(time) {
-      formOrderers.value.birth_date = time;
+      formOrderers.value.birth_date = time
     }
     function onFileChange(file) {
-      formOrderers.value.image = file[0];
+      formOrderers.value.image = file[0]
     }
     function getSelectType(data) {
-      formData.value.project_type_id = data.id;
-      console.log(formData.value.project_type_id);
+      formData.value.project_type_id = data.id
     }
 
     async function getServices() {
@@ -459,14 +470,14 @@ export default defineComponent({
       file: ref(),
       focusSelect() {
         function func() {
-          selectDropbox.value.blur();
+          selectDropbox.value.blur()
         }
-        setTimeout(func, 100);
+        setTimeout(func, 100)
       },
       beforeHide() {
-        show.value = true;
+        show.value = true
       },
-    };
+    }
   },
-});
+})
 </script>

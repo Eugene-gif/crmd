@@ -20,12 +20,12 @@
       <q-icon size="18px" name="svguse:icons/allIcons.svg#field-search" @click.stop class="search-input" />
     </template>
     <template v-slot:append>
-      <q-icon name="svguse:icons/allIcons.svg#clear-field" @click.stop="select = null" class="cursor-pointer clear-input rotate" />
+      <q-icon name="svguse:icons/allIcons.svg#clear-field" @click="getOrderer(true)" class="cursor-pointer clear-input rotate" />
     </template>
     <template v-slot:option="scope">
       <q-item v-if="!scope.opt.group"
         v-bind="scope.itemProps"
-        @click="getOrderer"
+        @click="getOrderer(false)"
       >      
         <q-item-section avatar>
           <img :src="scope.opt.icon" alt="">
@@ -148,8 +148,9 @@ export default defineComponent({
       value: null
     })
 
-    function getOrderer() {
-      emit('getOrderer', select.value)
+    function getOrderer(bool) {
+      if (bool) emit('getOrderer', select.value = '')
+      else emit('getOrderer', select.value)
     }
 
     async function getforuser() {

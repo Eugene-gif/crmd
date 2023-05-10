@@ -11,7 +11,7 @@
     ref="selectDropbox"
     @update:model-value="onGetData"
     popup-content-class="my-select-menu"
-    :label="select1 ? undefined : 'Выбрать'"
+    :label="select1.id === null ? 'Выберите тип' : undefined"
     option-value="id"
     option-label="name"
   />
@@ -19,13 +19,13 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { projectsApi } from 'src/api/projects';
+import { projectsApi } from 'src/api/projects'
 
 export default defineComponent ({
   setup(props, { emit }) {
     const select1 = ref({
-      label: 'Квартира',
-      value: 1
+      id: null, 
+      name: null
     })
     const type = ref([])
 
@@ -38,7 +38,7 @@ export default defineComponent ({
         await projectsApi.getTypes()
         .then(resp => {
           type.value = resp
-          select1.value = resp[0]
+          // select1.value = resp[0]
         })
       } catch (err) {
         console.log(err)
