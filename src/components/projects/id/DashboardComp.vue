@@ -308,135 +308,116 @@
   </q-expansion-item>
 </template>
 
-<script>
-import { ref, defineComponent, computed, onMounted } from "vue";
-import Emoji from "components/Emoji"
-import { projectsApi } from 'src/api/projects'
-import { useQuasar } from 'quasar'
+<script setup>
+  import { ref, defineComponent, computed, onMounted } from "vue"
+  import Emoji from "components/Emoji"
+  import { projectsApi } from 'src/api/projects'
+  import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  components: {
-    Emoji,
-  },
-  props: {
+  const props = defineProps({
     info: Object,
     type: Array,
     orderer: Object
-  },
-  setup(props, {emit}) {
-    const $q = useQuasar()
-    const loding = ref(false)
-    const lodingBtn = ref(false)
-    const lodingBtn2 = ref(false)
-    const dashboardActive = ref(false)
-    const uploader = ref(null)
-    const triggerFilePicker = () => {
-      if (uploader.value) {
-        uploader.value.pickFiles();
-      }
-    }
+  })
 
-    const formData = ref({
-      name: null,
-      emoji: null,
-      address: null,
-      square: null,
-      project_type: null,
-      cost: null,
-      file: null,
-      uploadFile: null,
-      image: null,
+  const $q = useQuasar()
+  const loding = ref(false)
+  const lodingBtn = ref(false)
+  const lodingBtn2 = ref(false)
+  const dashboardActive = ref(false)
+  const uploader = ref(null)
+  const triggerFilePicker = () => {
+    if (uploader.value) {
+      uploader.value.pickFiles();
+    }
+  }
+
+  const formData = ref({
+    name: null,
+    emoji: null,
+    address: null,
+    square: null,
+    project_type: null,
+    cost: null,
+    file: null,
+    uploadFile: null,
+    image: null,
+  })
+  
+  function ongetEmojik(data) {
+    formData.value.name = data.text.value
+    formData.value.emoji = data.emojiIcon.value
+  }
+  function onRejected() {
+    $q.notify({
+      type: 'negative',
+      message: 'Ошибка загрузки'
     })
-    
-    function ongetEmojik(data) {
-      formData.value.name = data.text.value
-      formData.value.emoji = data.emojiIcon.value
-    }
-    function onRejected() {
-      $q.notify({
-        type: 'negative',
-        message: 'Ошибка загрузки'
-      })
-    }
+  }
 
 
-    async function uploadProfilePhoto(file) {
-      lodingBtn2.value = true
+  async function uploadProfilePhoto(file) {
+    lodingBtn2.value = true
 
-      formData.value.uploadFile = file[0]
-      try {
-        const resp = await projectsApi.updateImage(formData.value)
-        
-        if (file[0] === '') {
-          $q.notify({
-            color: 'positive',
-            message: 'Картинка удалена'
-          })
-        } else {
-          $q.notify({
-            color: 'positive',
-            message: 'Картинка обновлена'
-          })
-        }
-        formData.value.image = resp.image
-      } catch (err) {
-        console.log(err)
-      }
+    formData.value.uploadFile = file[0]
+    try {
+      const resp = await projectsApi.updateImage(formData.value)
       
-      lodingBtn2.value = false
-    }
-
-    async function updateInfo() {
-      try {
-        const resp = await projectsApi.updateInfo(formData.value)
-        console.log(resp)
+      if (file[0] === '') {
         $q.notify({
           color: 'positive',
-          message: 'Данные обновлены'
+          message: 'Картинка удалена'
         })
-        dashboardActive.value = false
-      } catch (err) {
-        console.log(err)
-        $q.notify({
-          color: 'negative',
-          message: 'Произошла ошибка, попробуйте позже'
-        })
-      }
-    }
-
-    const customer = computed(() => {
-      if (props.orderer && props.orderer.data) {
-        const name = `${props.orderer.data.first_name || ''} ${props.orderer.data.last_name || ''}`.trim() || null
-        const image = props.orderer.data.image?.thumbnail ? props.orderer.data.image.thumbnail : props.orderer.data.image?.placeholder
-        const tooltip = 'Подсказка'
-
-        return { name, image, tooltip }
       } else {
-        return { name: null, image: null, tooltip: null }
+        $q.notify({
+          color: 'positive',
+          message: 'Картинка обновлена'
+        })
       }
-    })
-    
-    onMounted(() => {
-      if (props.info.name) {
-        formData.value = props.info 
-        formData.value.file = null
-      }
-    })
-
-    return {
-      loding,
-      lodingBtn,
-      lodingBtn2,
-      formData,
-      dashboardActive,
-      ongetEmojik,
-      customer,
-      uploadProfilePhoto,
-      onRejected,
-      updateInfo,
-      uploader,
-      triggerFilePicker
+      formData.value.image = resp.image
+    } catch (err) {
+      console.log(err)
     }
-  },
-})
+    
+    lodingBtn2.value = false
+  }
+
+  async function updateInfo() {
+    try {
+      const resp = await projectsApi.updateInfo(formData.value)
+      console.log(resp)
+      $q.notify({
+        color: 'positive',
+        message: 'Данные обновлены'
+      })
+      dashboardActive.value = false
+    } catch (err) {
+      console.log(err)
+      $q.notify({
+        color: 'negative',
+        message: 'Произошла ошибка, попробуйте позже'
+      })
+    }
+  }
+
+  const customer = computed(() => {
+    if (props.orderer && props.orderer.data) {
+      const name = `${props.orderer.data.first_name || ''} ${props.orderer.data.last_name || ''}`.trim() || null
+      const image = props.orderer.data.image?.thumbnail ? props.orderer.data.image.thumbnail : props.orderer.data.image?.placeholder
+      const tooltip = 'Подсказка'
+
+      return { name, image, tooltip }
+    } else {
+      return { name: null, image: null, tooltip: null }
+    }
+  })
+  
+  onMounted(() => {
+    console.log(props.info)
+    if (props.info.name) {
+      formData.value = props.info 
+      formData.value.file = null
+    }
+  })
+
 </script>

@@ -131,6 +131,7 @@
           <q-tr
             :props="props"
             class="q-tr-tiles"
+            @dblclick.stop="onActionOpen(props.row.id)"
           >
             <!-- <q-item :to="`/projects/${props.row.id}`" class="q-tr-tiles__link" /> -->
             <q-td
@@ -138,12 +139,12 @@
               :props="props"
               class="q-td-image"
             >
-              <q-item :to="`/projects/${props.row.id}`">
+              <q-item @dblclick.stop="onActionOpen(props.row.id)">
                 <img 
                   v-show="props.row.image.url" 
                   :src="props.row.image.url" 
                   alt="" 
-                  @click.stop="onActionOpen(props.row.id)"
+                  @dblclick.stop="onActionOpen(props.row.id)"
                 >
               </q-item>
             </q-td>
@@ -153,8 +154,8 @@
               :props="props"
               class="q-td-name"
             >
-              <div class="text-h3" @click.stop="onActionOpen(props.row.id)">
-                <span class="name-ico">{{props.row.iconName}}</span>{{props.row.name}}
+              <div class="text-h3" @dblclick.stop="onActionOpen(props.row.id)">
+                <span class="name-ico" v-if="props.row.iconName">{{props.row.iconName}}</span>{{props.row.name}}
               </div>
             </q-td>
             <q-td

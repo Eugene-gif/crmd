@@ -69,6 +69,7 @@
           <q-input 
             v-model="FormData.name" 
             class="my-input bg-grey-3" 
+            ref="newiput"
             placeholder="Введите название"
             :rules="[ val => val && val.length > 0]"
             @blur="addExplication"
@@ -104,7 +105,7 @@
             class="bg-white text-grey-3 my-btn my-effect my-btn--outline"
             style="border-radius: 10px;"
             padding="24px 24px 24px 19px"
-            @click="openNewExplication = true"
+            @click="openNew"
           >
             <div class="block text-grey-5">Добавить</div>
             <q-icon
@@ -121,7 +122,7 @@
 </template>
 
 <script setup>
-  import { ref, defineComponent, onMounted } from "vue"
+  import { ref, defineComponent, onMounted, nextTick } from "vue"
   import { explicationsApi } from 'src/api/explications'
   import { useQuasar } from 'quasar'
 
@@ -159,6 +160,17 @@
     name: null,
     square: 0
   })
+
+  // вывод полей добавления 
+  const newiput = ref()
+  function openNew() {
+    openNewExplication.value = true
+    nextTick(() => {
+    if(newiput.value) {
+      newiput.value.focus()
+    }
+  })
+  }
 
   async function addExplication() {
     if (FormData.value.name !== null && FormData.value.square !== null && FormData.value.square !== 0) {

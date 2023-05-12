@@ -147,9 +147,10 @@
           unelevated
           no-caps
           outline
-          class="bg-white text-grey-3 my-btn my-effect с"
+          class="bg-white text-grey-3 my-btn my-effect"
           style="border-radius: 10px;width: 100%;"
           padding="24px 24px 24px 19px"
+          to="/projects"
         >
           <div class="block text-grey-5">Назад к списку проектов</div>
           <q-icon size="18px" name="svguse:icons/allIcons.svg#back" style="margin-left: auto;" />
