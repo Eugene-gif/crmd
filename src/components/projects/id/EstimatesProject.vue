@@ -204,8 +204,8 @@
     dialog.value = false
     
     if (obj) {
-      if (obj.created_at) obj.created_at = obj.created_at.split(' ')[1]
-      if (obj.updated_at) obj.updated_at = obj.updated_at.split(' ')[1]
+      // if (obj.created_at) obj.created_at = obj.created_at.split(' ')[1]
+      // if (obj.updated_at) obj.updated_at = obj.updated_at.split(' ')[1]
 
       estimates.value.push(obj)
       $q.notify({

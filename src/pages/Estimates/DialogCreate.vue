@@ -35,6 +35,7 @@
 <script setup>
   import { ref } from 'vue'
   import { estimatesApi } from 'src/api/estimates'
+  // import getFormatDate from 'src/composable/getFormatDate'
 
   const props = defineProps({
     project_id: String
@@ -52,7 +53,13 @@
     }
     try {
       const resp = await estimatesApi.create(data)
-      emit('add', resp)
+      
+      let obj = JSON.stringify(resp)
+      obj =  JSON.parse(obj)
+      obj.created_at = obj.created_at.split(' ')[0]
+      obj.updated_at = obj.updated_at.split(' ')[0]
+
+      emit('add', obj)
     } catch(err) {
       console.log(err)
     }

@@ -36,7 +36,7 @@
         </q-item-section>
         <q-icon
           class="bg-grey-3"
-          name="svguse:icons/FinanceTable.svg#warning"
+          name="svguse:icons/financeTable.svg#warning"
           size="14px"
           style="border-radius: 100%;"
           @click.stop

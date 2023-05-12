@@ -161,7 +161,7 @@
   })
 
   async function addExplication() {
-    if (FormData.value.name !== null && FormData.value.square !== null) {
+    if (FormData.value.name !== null && FormData.value.square !== null && FormData.value.square !== 0) {
       try {
         const resp = await explicationsApi.create(props.id, FormData.value)
         props.data.push(resp.data.data)

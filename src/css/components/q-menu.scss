@@ -235,6 +235,25 @@
     .q-focus-helper {
       display: none; 
     }
+    .q-tabs-reviews .q-tab {
+      .q-tab__content .q-icon {
+        color: white !important;
+        opacity: 1;
+      }
+      &--active {
+        &:first-child {
+          .q-tab__content .q-icon {
+            color: $positive !important;
+          }
+        }
+        &:last-child {
+          .q-tab__content .q-icon {
+            color: $negative !important;
+          }
+        }
+      }
+    }
+    
     .head {
       display: flex;
       flex-direction: row;

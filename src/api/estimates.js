@@ -39,7 +39,7 @@ export const estimatesApi = {
         url: `${url}/create`,
         data: formData,
         headers: { "Content-Type": "multipart/form-data" },
-      });
+      })
       return resp.data.data;
     } catch (err) {
       throw err

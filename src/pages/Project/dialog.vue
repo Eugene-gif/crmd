@@ -42,7 +42,7 @@
               v-model="formData.square"
               class="my-input bg-grey-3"
               type="number"
-              placeholder="115"
+              placeholder="0"
               :rules="[(val) => (val && val.length > 0) || '']"
             />
           </div>
@@ -323,7 +323,7 @@ export default defineComponent({
 
     async function onSubmit() {
       if (addCustomer.value === true) {
-        if (formOrderers.value.birth_date != "" && formData.value.project_type_id !== null) {
+        if (formData.value.project_type_id !== null) {
           createOrderer()
         } else {
           setTimeout(() => {
