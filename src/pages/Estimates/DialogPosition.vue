@@ -191,6 +191,7 @@
             class="full-width bg-positive text-white my-btn my-effect h-dark q-btn-actions"
             label="Добавить позицию"
             type="submit"
+            :class="{'btn-load-black': lodingBtn}"
           />
         </div>
 
@@ -213,6 +214,8 @@
     idEstimate: String
   })
   const emit = defineEmits(['createItem'])
+
+  const lodingBtn = ref(false)
 
   const formData = ref({
     estimate_id: props.idEstimate,
@@ -239,6 +242,7 @@
   }
 
   const onSubmit = async () => {
+    lodingBtn.value = true
     if (formData.value.room_type == null) {
       $q.notify({
         color: 'negative',
@@ -251,7 +255,7 @@
       emit('createItem', resp)
       $q.notify({
         color: 'positive',
-        message: 'Позиция меты успешно создана'
+        message: 'Позиция cметы успешно создана'
       })
     } catch(err) {
       console.log(err)
@@ -260,6 +264,7 @@
         message: 'Произошла ошибка, попробуйте позже'
       })
     }
+    lodingBtn.value = false
   }
 
   // работа с загрузкой файлов и картинок

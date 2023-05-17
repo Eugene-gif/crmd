@@ -11,14 +11,19 @@
      />
      <!-- :update="onUpdate"z -->
   </q-dialog>
+
   <q-dialog
     v-model="dialogUpdate"
     transition-show="fade"
     transition-hide="fade" 
     class="my-dialog estimates-dialog"
   >
-    <DialogUpdate @modalFalse="modalFalse" />
+    <DialogUpdate 
+      @updateItem="onUpdateItem" 
+      :idEstimate="idEstimate" 
+    />
   </q-dialog>
+
   <q-dialog
     v-model="dialogSecurity"
     transition-show="fade"
@@ -27,6 +32,7 @@
   >
     <DialogSecurity @modalFalse="modalFalse" />
   </q-dialog>
+
   <q-dialog
     v-model="dialogExport"
     transition-show="fade"
@@ -35,6 +41,7 @@
   >
     <DialogExport @modalFalse="modalFalse" />
   </q-dialog>
+  
   <q-dialog
     v-model="dialogSettings"
     transition-show="fade"
@@ -49,7 +56,6 @@
   />
   
   <q-page class="page-estimates page-estimates-single">
-     { "id": "0a338987-09d0-41b1-b225-8b4c314cefdb", "estimate_id": "99266867-c907-4b06-a5a5-c47dade953e7", "name": "название", "status": "В работе", "can_propose": true, "room_type": "Коммерция", "link": "http://localhost:8080/#/estimates/99266867-c907-4b06-a5a5-c47dade953e7", "quantity": 10, "description": "описание описание", "forecast": { "price": 10000, "term": 15, "rate": 50, "total_price": 100000, "fee": 50000 }, "article": "345345345", "color": "red", "manufacturer": "панасоник", "image": { "url": "https://crmd.crookedweb.ru/public/upload/2023_05_17/351/project-1.jpg", "thumbnail": "https://crmd.crookedweb.ru/public/upload/2023_05_17/351/project-1-thumb.jpg" }, "file": "https://crmd.crookedweb.ru/public/upload/2023_05_17/352/project-3.jpg", "selected_proposal": [], "deal": [], "new_proposals_count": 0, "proposals": [] }
     <div class="row justify-between items-center">
       <div class="text-h2">{{estimate.name}}</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -312,7 +318,7 @@
     </div>
 
     <div class="estimates-table-container">
-      <EstimateTable
+      <EstimateTable2
         :columns="columnsTable"
         :rows="estimate.items"
         v-if="estimate.items"
@@ -347,7 +353,7 @@
   import { useRoute } from 'vue-router'
   import LoaderDate from 'src/components/LoaderDate.vue'
 
-  import EstimateTable from 'components/Table/EstimateTable'
+  import EstimateTable2 from 'components/Table/EstimateTable2'
   import DialogPosition from 'src/pages/Estimates/DialogPosition'
   import DialogUpdate from 'src/pages/Estimates/DialogUpdate'
   import DialogSecurity from 'src/pages/Estimates/DialogSecurity'
@@ -378,184 +384,8 @@
     { name: 'color', label: 'Цвет', field: 'color', sortable: false },
     { name: 'file', label: 'Файл', field: 'file', sortable: false },
   ])
-  const rowTable = ref([
-    {
-      id: 1,
-      imageUrl: '/smeta.jpg',
-      name: {
-        title: 'Керамогранит',
-        imageUrl: '/smeta.jpg'
-      },
-      room: 'Спальня',
-      desc: 'KERAMA MARAZZI',
-      metrics: 20,
-      price: '1 200',
-      total: 24000,
-      deadline: 2,
-      status: {
-        id: 1,
-        name: 'Оплачено',
-        user: 'Иван',
-        imageUrl: '/icons/stroipro.jpg'
-      },
-      procent: 15,
-      agent: '3 600',
-      smetaVal: false,
-      smeta: [
-        {
-          id: 5,
-          imageUrl: '/icons/stroipro.jpg',
-          name: "ООО «СтройПро»",
-          price: "1 200",
-          metrics: 25,
-          total: "30 000",
-          deadline: 30,
-          status: {
-            id: 3,
-            name: 'Не согласовано',
-          },
-          procent: 15,
-          agent: "9 000",
-        },
-      ],
-      link: 'google.com',
-      brand: 'Kerama Marazzi',
-      code: '325-1200-333',
-      color: 'RAL 1005',
-      file: 'ZIP, 5 мб',
-      new: true,
-    },
-    {
-      id: 2,
-      imageUrl: '/smeta.jpg',
-      name: {
-        title: 'Ламинат',
-        imageUrl: ''
-      },
-      room: 'Спальня',
-      desc: '1200*200 мм ',
-      metrics: 15,
-      price: '1 200',
-      total: 18000,
-      deadline: 5,
-      status: {
-        id: 2,
-        name: 'Оплачено',
-        user: '',
-        imageUrl: ''
-      },
-      procent: 15,
-      agent: '3 600',
-      link: '',
-      brand: 'Porcelanosa',
-      code: '325-1200-2',
-      color: 'RAL 1020',
-      file: 'PDF, 896 кб',
-      new: false,
-    },
-    {
-      id: 3,
-      imageUrl: '/smeta.jpg',
-      name: {
-        title: 'Ламинат',
-        imageUrl: ''
-      },
-      room: 'Спальня',
-      desc: '1200*200 мм ',
-      metrics: 15,
-      price: '1 200',
-      total: 18000,
-      deadline: 5,
-      status: {
-        id: 3,
-        name: 'В работе',
-        user: '',
-        imageUrl: ''
-      },
-      procent: 15,
-      agent: '3 600',
-      link: 'https://quasar.dev/vue-components/tooltip#introduction',
-      brand: 'Porcelanosa',
-      code: '325-1200-2',
-      color: 'RAL 1020',
-      file: 'PDF, 896 кб',
-      new: true,
-    },
-    {
-      id: 4,
-      imageUrl: '/smeta.jpg',
-      name: {
-        title: 'Керамогранит',
-        imageUrl: '/smeta.jpg'
-      },
-      room: 'Спальня',
-      desc: 'KERAMA MARAZZI',
-      metrics: 20,
-      price: '1 200',
-      total: 24000,
-      deadline: 2,
-      status: {
-        id: 2,
-        name: 'Оплачено',
-        user: 'Иван',
-        imageUrl: '/icons/stroipro.jpg'
-      },
-      procent: 15,
-      agent: '3 600',
-      smetaVal: false,
-      smeta: [
-        {
-          id: 5,
-          imageUrl: '/icons/stroipro.jpg',
-          name: "ООО «СтройПро»",
-          price: "1 200",
-          metrics: 25,
-          total: "30 000",
-          deadline: 30,
-          status: {
-            id: 3,
-            name: 'Не согласовано',
-          },
-          procent: 15,
-          agent: "9 000",
-        },
-      ],
-      link: 'google.com',
-      brand: 'Kerama Marazzi',
-      code: '325-1200-333',
-      color: 'RAL 1005',
-      file: 'ZIP, 5 мб',
-      new: false,
-    },
-    {
-      id: 5,
-      imageUrl: '/smeta.jpg',
-      name: {
-        title: 'Ламинат',
-        imageUrl: ''
-      },
-      room: 'Спальня',
-      desc: '1200*200 мм ',
-      metrics: 15,
-      price: '1 200',
-      total: 18000,
-      deadline: 5,
-      status: {
-        id: 3,
-        name: 'Скомплектовано',
-        user: '',
-        imageUrl: ''
-      },
-      procent: 15,
-      agent: '3 600',
-      link: 'https://quasar.dev/vue-components/tooltip#introduction',
-      brand: 'Porcelanosa',
-      code: '325-1200-2',
-      color: 'RAL 1020',
-      file: 'PDF, 896 кб',
-      new: true,
-    },
-  ])
+  const estimate = ref({})
+  
 
   const toggle = ref(true)
   const tab = ref()
@@ -575,7 +405,7 @@
     },
   ])
 
-  function priceForecast(val) {
+  const priceForecast = (val) => {
     if (val === 'tab') {
       toggle.value = false
     } else {
@@ -596,8 +426,9 @@
     }
     // console.log(toggle.value)
   }
-  function onOpenSmeta(val) {
-    rowTable.value.filter((item) => {
+
+  const onOpenSmeta = (val) => {
+    estimate.value.items.filter((item) => {
       if (item.id === val) {
         item.smetaVal = !item.smetaVal
       }
@@ -608,22 +439,23 @@
   const dialogSecurity = ref(false)
   const dialogExport = ref(false)
   const dialogSettings = ref(false)
-  const dialogUpdate = ref(false)
-  function modalFalse() {
+  const modalFalse = () => {
     dialogSecurity.value = false
     dialogExport.value = false
     dialogSettings.value = false
-    dialogUpdate.value = false
   }
 
   const onCreateItem = (obj) => {
     dialogPosition.value = false
-    console.log(obj)
+    estimate.value.items.push(obj)
+  }
+  const onUpdateItem = (obj) => {
+    dialogPosition.value = false
+    estimate.value.items.push(obj)
   }
 
 
   // получение данных
-  const estimate = ref({})
   const getData = async () => {
     const resp = await estimatesApi.getById(idEstimate)
     estimate.value = resp
