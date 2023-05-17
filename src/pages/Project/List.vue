@@ -389,7 +389,7 @@
   async function start() {
     loading.value = true
     try {
-      await projectsApi.getAll().then(resp => {
+      await projectsApi.getAllMy().then(resp => {
         rows2.value = resp
       })
     } catch (err) {
@@ -402,6 +402,7 @@
       nodate.value = false
     }
   }
+  
   onMounted(() => {
     start()
   })

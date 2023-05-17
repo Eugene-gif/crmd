@@ -56,6 +56,7 @@
         </div>
       </q-th>
     </template>
+
     <template #body="props">
       <q-tr
         :props="props"
@@ -581,166 +582,141 @@
   
 </template>
 
-<script>
-import { defineComponent, ref, computed } from 'vue'
-import { useQuasar } from 'quasar'
+<script setup>
+  import { ref, computed } from 'vue'
+  import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  name: 'EstimateTable',
-  props: {
+  const props = defineProps({
     columns: Array,
     rows: Array
-  },
-  setup (props, { emit }) {    
-    const activeSmeta = ref()
-    const tab = ref('')
-    const tabs = ref()
+  })
 
-    const subTab = ref()
-    const optionstab = ref([
-      {
-        value: '5',
-        label: 'Согласовано',
-        active: true,
-      },
-      {
-        value: '6',
-        label: 'Оплачено',
-        active: true,
-      },
-      {
-        value: '7',
-        label: 'Готово к выдаче',
-        active: true,
-      },
-      {
-        value: '8',
-        label: 'Выполнено',
-        active: true,
-      },
-    ])
-    
-    const contextMenu = ref(null)
+  const emit = defineEmits(['openSmeta', 'editModal', 'chooseSmeta'])
+   
+  const activeSmeta = ref()
+  const tab = ref('')
+  const tabs = ref()
 
-    const touchStartTimestamp = ref(null)
-    const touchMoveTimestamp = ref(null)
-    const touchStartTimeout = ref(null)
-    const touchMoveTimeout = ref(null)
-    const touchEndTimeout = ref(null)
-    const touchCancelTimeout = ref(null)
-    
-    const showContextMenu = (event, row) => {
-      contextMenu.value.hide()
-      event.preventDefault()
-      mouseX.value = event.clientX 
-      mouseY.value = event.clientY
+  const pagination = ref({})
+
+  const subTab = ref()
+  const optionstab = ref([
+    {
+      value: '5',
+      label: 'Согласовано',
+      active: true,
+    },
+    {
+      value: '6',
+      label: 'Оплачено',
+      active: true,
+    },
+    {
+      value: '7',
+      label: 'Готово к выдаче',
+      active: true,
+    },
+    {
+      value: '8',
+      label: 'Выполнено',
+      active: true,
+    },
+  ])
+  
+  const contextMenu = ref(null)
+
+  const touchStartTimestamp = ref(null)
+  const touchMoveTimestamp = ref(null)
+  const touchStartTimeout = ref(null)
+  const touchMoveTimeout = ref(null)
+  const touchEndTimeout = ref(null)
+  const touchCancelTimeout = ref(null)
+  
+  const showContextMenu = (event, row) => {
+    contextMenu.value.hide()
+    event.preventDefault()
+    mouseX.value = event.clientX 
+    mouseY.value = event.clientY
+    contextMenu.value.show(event, { row });
+  };
+  
+  const handleTouchStart = (event, row) => {
+    contextMenu.value.hide()
+    touchStartTimeout.value = Date.now()
+    mouseX.value = event.touches[0].clientX
+    mouseY.value = event.touches[0].clientY
+    touchMoveTimeout.value = setTimeout(() => {
       contextMenu.value.show(event, { row });
-    };
-    
-    const handleTouchStart = (event, row) => {
-      contextMenu.value.hide()
-      touchStartTimeout.value = Date.now()
-      mouseX.value = event.touches[0].clientX
-      mouseY.value = event.touches[0].clientY
-      touchMoveTimeout.value = setTimeout(() => {
-        contextMenu.value.show(event, { row });
-      }, 500);  
-    };
+    }, 500);  
+  };
 
-    const handleTouchMove = () => {
-      contextMenu.value.hide()
-    };
+  const handleTouchMove = () => {
+    contextMenu.value.hide()
+  };
 
-    const handleTouchEnd = () => {
-      clearTimeout(touchStartTimeout.value)
-      clearTimeout(touchMoveTimeout.value)
-      touchEndTimeout.value = setTimeout(() => {
-        touchStartTimestamp.value = null
-        touchMoveTimestamp.value = null
-      }, 100);
-    };
+  const handleTouchEnd = () => {
+    clearTimeout(touchStartTimeout.value)
+    clearTimeout(touchMoveTimeout.value)
+    touchEndTimeout.value = setTimeout(() => {
+      touchStartTimestamp.value = null
+      touchMoveTimestamp.value = null
+    }, 100);
+  };
 
-    const handleTouchCancel = () => {
-      clearTimeout(touchStartTimeout.value)
-      clearTimeout(touchMoveTimeout.value)
-      clearTimeout(touchEndTimeout.value)
-      touchCancelTimeout.value = setTimeout(() => {
-        touchStartTimestamp.value = null
-        touchMoveTimestamp.value = null
-      }, 100);
-    };
-    const mouseX = ref(0)
-    const mouseY = ref(0)
+  const handleTouchCancel = () => {
+    clearTimeout(touchStartTimeout.value)
+    clearTimeout(touchMoveTimeout.value)
+    clearTimeout(touchEndTimeout.value)
+    touchCancelTimeout.value = setTimeout(() => {
+      touchStartTimestamp.value = null
+      touchMoveTimestamp.value = null
+    }, 100);
+  };
+  const mouseX = ref(0)
+  const mouseY = ref(0)
 
-    const menuStyle = computed(() => {
-      return {
-        transform: `translateX(${mouseX.value}px) translateY(${mouseY.value}px)`
-      }
-    })
-
-    const isMobile = () => {
-      const userAgent = navigator.userAgent.toLowerCase()
-      return /iphone|ipod|ipad|android/.test(userAgent)
-    }
-
-
-    const selectTab = (value) => {
-      subTab.value = ''
-      tab.value = value
-    }
-
-    function colorStatus(statusId) {
-      if (statusId === 1) {
-        return 'positive'
-      }
-      if (statusId === 2) {
-        return 'negative'
-      }
-      if (statusId === 3) {
-        return 'grey-7'
-      }
-    }
-    function openSmeta(val) {
-      activeSmeta.value = val
-      emit('openSmeta', val)
-      contextMenu.value.hide()
-    }
-    function editModal(val, field) {
-      emit('editModal', val, field)
-    }
-    function chooseSmeta(value) {
-      emit('chooseSmeta', activeSmeta.value, value)
-    }
-
-    function goToLink(link) {
-      window.open(link, '_blank');
-    }
-
-
+  const menuStyle = computed(() => {
     return {
-      activeSmeta,
-      colorStatus,
-      editModal,
-      openSmeta,
-      chooseSmeta,
-      goToLink,
-      tab,
-      optionstab,
-      selectTab,
-      subTab,
-      tabs,
-      contextMenu,
-      showContextMenu,
-      handleTouchStart,
-      menuStyle,
-      mouseX,
-      mouseY,
-      handleTouchStart,
-      handleTouchMove,
-      handleTouchEnd,
-      handleTouchCancel,
-      isMobile,
+      transform: `translateX(${mouseX.value}px) translateY(${mouseY.value}px)`
+    }
+  })
+
+  const isMobile = () => {
+    const userAgent = navigator.userAgent.toLowerCase()
+    return /iphone|ipod|ipad|android/.test(userAgent)
+  }
+
+
+  const selectTab = (value) => {
+    subTab.value = ''
+    tab.value = value
+  }
+
+  function colorStatus(statusId) {
+    if (statusId === 1) {
+      return 'positive'
+    }
+    if (statusId === 2) {
+      return 'negative'
+    }
+    if (statusId === 3) {
+      return 'grey-7'
     }
   }
-})
+  function openSmeta(val) {
+    activeSmeta.value = val
+    emit('openSmeta', val)
+    contextMenu.value.hide()
+  }
+  function editModal(val, field) {
+    emit('editModal', val, field)
+  }
+  function chooseSmeta(value) {
+    emit('chooseSmeta', activeSmeta.value, value)
+  }
+
+  function goToLink(link) {
+    window.open(link, '_blank');
+  }
+
 </script>

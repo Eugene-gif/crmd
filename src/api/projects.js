@@ -72,7 +72,6 @@ function getTiming(created_at, services) {
  
 
 
-
 export const projectsApi = {
   getAll() {
     try {
@@ -124,6 +123,39 @@ export const projectsApi = {
               //   link: ''
               // }
             ]   
+          }
+        })
+      });
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
+  getAllMy() {
+    try {
+      return httpClient.post(`${url}/getMy`, {})
+      .then(({ data }) => {
+        
+        return data = data.data.map(el => {
+
+          return {
+            id: el.id,
+            status: 1,
+            iconName: el.emoji,
+            name: el.name,
+            type: el.project_type,
+            typeName: el.project_type.name,
+            address: el.address,
+            square: el.square,
+            customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
+            changed: getFormatDate(el.updated_at),
+            created: getFormatDate(el.created_at),
+            timing: getTiming(el.created_at, el.services),
+            orderer: el.orderer,
+            payment: 80,
+            readiness: getProgress(el.created_at, el.services),
+            image: el.image,
+            share: []   
           }
         })
       });

@@ -162,20 +162,20 @@
 </template>
 
 <script setup>
-import Dialog from 'pages/Project/dialog-create.vue'
-import LoaderDate from 'src/components/LoaderDate.vue'
+  import Dialog from 'pages/Project/dialog-create.vue'
+  import LoaderDate from 'src/components/LoaderDate.vue'
 
-import DashboardComp from "components/projects/id/DashboardComp"
-import DiagramGant from "components/projects/id/DiagramGant"
-import DocumentsProject from "components/projects/id/DocumentsProject"
-import ExplicationsProject from "components/projects/id/ExplicationsProject"
-import EstimatesProject from "components/projects/id/EstimatesProject"
-import AlbumsProject from "components/projects/id/AlbumsProject"
-import FilesProject from "components/projects/id/FilesProject"
+  import DashboardComp from "components/projects/id/DashboardComp"
+  import DiagramGant from "components/projects/id/DiagramGant"
+  import DocumentsProject from "components/projects/id/DocumentsProject"
+  import ExplicationsProject from "components/projects/id/ExplicationsProject"
+  import EstimatesProject from "components/projects/id/EstimatesProject"
+  import AlbumsProject from "components/projects/id/AlbumsProject"
+  import FilesProject from "components/projects/id/FilesProject"
 
-import { projectsApi } from 'src/api/projects'
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+  import { projectsApi } from 'src/api/projects'
+  import { ref, onMounted } from 'vue'
+  import { useRoute } from 'vue-router'
 
   const route = useRoute()
   const projectId = ref(route.params.id)
