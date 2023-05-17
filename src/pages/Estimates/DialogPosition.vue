@@ -1,13 +1,13 @@
 <template>
   <q-card>
-    <div class="q-card-background" @click="$emit('modalFalse')"></div>
+    <div class="q-card-background" v-close-popup></div>
     <div class="dialog-section">
       <q-card-section class="row items-center justify-between head">
         <div class="title">Добавить позицию</div>
         <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
       </q-card-section>
 
-      <q-form>
+      <q-form @submit="onSubmit">
         <q-card-section class="form-section">
           <label class="lable-title">Название</label>
           <q-input 
@@ -43,8 +43,9 @@
             <div class="my-file-upload">
               <label class="lable-title">Изображение</label>
               <q-uploader
-                url="http://localhost:8080/upload"
                 style="max-width: 300px"
+                @added="onImageChange"
+                @removed="formData.image = null"
               />
             </div>
           </q-card-section>
@@ -61,6 +62,7 @@
               v-model="formData.quantity" 
               class="my-input bg-grey-3"
               placeholder="шт/м2" 
+              type="number"
               :rules="[(val) => (val && val.length > 0) || '']"
             />
           </div>
@@ -96,7 +98,7 @@
               type="number" 
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Цена" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 2) || '']"
+              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
           <div class="form-col-4">
@@ -106,7 +108,7 @@
               type="number" 
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Срок" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 2) || '']"
+              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
           <div class="form-col-4 q-pr-none items-end">
@@ -116,7 +118,7 @@
               type="number" 
               class="my-input bg-grey-3 q-field__no-append q-field-procent" 
               placeholder="15" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 2) || '']"
+              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             >
               <template v-slot:append>
                 %
@@ -126,24 +128,44 @@
         </q-card-section>
 
 
-
         <q-card-section class="form-section">
           <label class="lable-title">Ссылка</label>
-          <q-input v-model="formData.link" class="my-input bg-grey-3" placeholder="Укажите ссылку на товар" />
+          <q-input 
+            v-model="formData.link" 
+            class="my-input bg-grey-3"
+            placeholder="Укажите ссылку на товар"
+            :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+          />
         </q-card-section>
         <q-card-section class="form-section">
           <label class="lable-title">Производитель</label>
-          <q-input v-model="formData.manufacturer" class="my-input bg-grey-3" placeholder="Укажите производителя" />
+          <q-input 
+            v-model="formData.manufacturer"
+            class="my-input bg-grey-3"
+            placeholder="Укажите производителя"
+            :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+          />
         </q-card-section>
 
         <q-card-section class="form-section form-section-row form-section-row-behiver">
           <div class="form-col">
             <label class="lable-title">Артикул</label>
-            <q-input v-model="formData.article" class="my-input bg-grey-3" placeholder="Укажите артикул" />
+            <q-input
+              v-model="formData.article" 
+              class="my-input bg-grey-3" 
+              placeholder="Укажите артикул"
+              type="number"
+              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+            />
           </div>
           <div class="form-col">
             <label class="lable-title">Цвет</label>
-            <q-input v-model="formData.color" class="my-input bg-grey-3" placeholder="Код"  />
+            <q-input
+              v-model="formData.color" 
+              class="my-input bg-grey-3"
+              placeholder="Код" 
+              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+            />
           </div>
         </q-card-section>
 
@@ -155,10 +177,9 @@
               :filter="checkFileSize"
               :max-files="1"
               @added="onFileChange"
-              @removed="formData.files = []"
+              @removed="formData.file = null"
               @rejected="onRejected"
             />
-            <!-- accept=".doc, .pdf, .docx" -->
           </div>
         </q-card-section>
 
@@ -182,25 +203,16 @@
 
 <script setup>
   import { ref, onMounted } from 'vue'
-  import BtnDate from 'components/BtnDate'
+  import { useQuasar } from 'quasar'
+  import { estimatesApi } from 'src/api/estimates'
   import SelectType from "components/projects/SelectType"
+  
+  const $q = useQuasar()
 
   const props = defineProps({
     idEstimate: String
   })
-
-  const selectDropbox = ref()
-
-  const checkFileSize = (files) => {
-    return files.filter(file => file.size > 2048)
-  }
-
-  const onRejected = () => {
-    $q.notify({
-      type: 'negative',
-      message: 'Файл не соответствуeт расширению'
-    })
-  }
+  const emit = defineEmits(['createItem'])
 
   const formData = ref({
     estimate_id: props.idEstimate,
@@ -221,23 +233,50 @@
     file: null,
   })
 
+  // тип помещения
   function getSelectType(data) {
     formData.value.room_type = data
   }
 
-  const focusSelect = () => {
-    function func() {
-      selectDropbox.value.blur()
+  const onSubmit = async () => {
+    if (formData.value.room_type == null) {
+      $q.notify({
+        color: 'negative',
+        message: 'Выберите помещение'
+      })
+      return
+    } 
+    try {
+      const resp = await estimatesApi.createItem(formData.value)
+      emit('createItem', resp)
+      $q.notify({
+        color: 'positive',
+        message: 'Позиция меты успешно создана'
+      })
+    } catch(err) {
+      console.log(err)
+      $q.notify({
+        color: 'negative',
+        message: 'Произошла ошибка, попробуйте позже'
+      })
     }
-    setTimeout(func, 100);
   }
 
-  const show = ref(false)
-  const beforeHide = () => {
-    show.value = true;
+  // работа с загрузкой файлов и картинок
+  const onFileChange = (file) => {
+    formData.value.file = file[0]
+  }
+  const onImageChange = (file) => {
+    formData.value.image = file[0]
+  }
+  const checkFileSize = (files) => {
+    return files.filter(file => file.size > 2048)
+  }
+  const onRejected = () => {
+    $q.notify({
+      type: 'negative',
+      message: 'Файл не соответствуeт расширению'
+    })
   }
 
-  const onFileChange = (e) => {
-    console.log(e.target)
-  }
 </script>

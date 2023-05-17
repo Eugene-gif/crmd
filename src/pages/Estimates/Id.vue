@@ -5,7 +5,11 @@
     transition-hide="fade" 
     class="my-dialog estimates-dialog"
   >
-    <DialogPosition @modalFalse="modalFalse" :idEstimate="idEstimate" />
+    <DialogPosition  
+      :idEstimate="idEstimate"
+      @createItem="onCreateItem"
+     />
+     <!-- :update="onUpdate"z -->
   </q-dialog>
   <q-dialog
     v-model="dialogUpdate"
@@ -45,6 +49,7 @@
   />
   
   <q-page class="page-estimates page-estimates-single">
+     { "id": "0a338987-09d0-41b1-b225-8b4c314cefdb", "estimate_id": "99266867-c907-4b06-a5a5-c47dade953e7", "name": "название", "status": "В работе", "can_propose": true, "room_type": "Коммерция", "link": "http://localhost:8080/#/estimates/99266867-c907-4b06-a5a5-c47dade953e7", "quantity": 10, "description": "описание описание", "forecast": { "price": 10000, "term": 15, "rate": 50, "total_price": 100000, "fee": 50000 }, "article": "345345345", "color": "red", "manufacturer": "панасоник", "image": { "url": "https://crmd.crookedweb.ru/public/upload/2023_05_17/351/project-1.jpg", "thumbnail": "https://crmd.crookedweb.ru/public/upload/2023_05_17/351/project-1-thumb.jpg" }, "file": "https://crmd.crookedweb.ru/public/upload/2023_05_17/352/project-3.jpg", "selected_proposal": [], "deal": [], "new_proposals_count": 0, "proposals": [] }
     <div class="row justify-between items-center">
       <div class="text-h2">{{estimate.name}}</div>
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
@@ -309,7 +314,8 @@
     <div class="estimates-table-container">
       <EstimateTable
         :columns="columnsTable"
-        :rows="rowTable"
+        :rows="estimate.items"
+        v-if="estimate.items"
         @openSmeta="onOpenSmeta"
       />
     </div>
@@ -604,13 +610,19 @@
   const dialogSettings = ref(false)
   const dialogUpdate = ref(false)
   function modalFalse() {
-    dialogPosition.value = false
     dialogSecurity.value = false
     dialogExport.value = false
     dialogSettings.value = false
     dialogUpdate.value = false
   }
 
+  const onCreateItem = (obj) => {
+    dialogPosition.value = false
+    console.log(obj)
+  }
+
+
+  // получение данных
   const estimate = ref({})
   const getData = async () => {
     const resp = await estimatesApi.getById(idEstimate)

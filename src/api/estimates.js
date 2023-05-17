@@ -73,22 +73,25 @@ export const estimatesApi = {
 
 
   // estimates items
-  async create(idEstimate) {
+  async createItem(data) {
 
     const formData = new FormData()
-    formData.append("estimate_id", idEstimate)
+    formData.append("estimate_id", data.estimate_id)
 
     formData.append("name", data.name)
     formData.append("link", data.link)
-    formData.append("room_type", data.room_type)
+    formData.append("room_type", data.room_type.name)
     formData.append("description", data.description)
-    formData.append("quantity", data.quantity)
-    formData.append("price_forecast", data.price_forecast)
-    formData.append("term_forecast", data.term_forecast)
-    formData.append("rate_forecast", data.rate_forecast)
+    formData.append("quantity", Number(data.quantity))
+    formData.append("price_forecast", Number(data.price_forecast))
+    formData.append("term_forecast", Number(data.term_forecast))
+    formData.append("rate_forecast", Number(data.rate_forecast))
     formData.append("article", data.article)
     formData.append("color", data.color)
     formData.append("manufacturer", data.manufacturer)
+
+    if (data.image) formData.append("image", data.image)
+    if (data.file) formData.append("file", data.file)
     
     try {
       const resp = await httpClient({
