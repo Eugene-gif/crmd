@@ -93,6 +93,8 @@ export const estimatesApi = {
     }
   },
 
+
+  
   async createItem(data) {
 
     const formData = new FormData()
@@ -100,15 +102,15 @@ export const estimatesApi = {
 
     formData.append("name", data.name)
     formData.append("link", data.link)
-    formData.append("room_type", data.room_type.name)
-    formData.append("description", data.description)
+    if (data.room_type) formData.append("room_type", data.room_type)
+    if (data.description) formData.append("description", data.description)
     formData.append("quantity", Number(data.quantity))
     formData.append("price_forecast", Number(data.price_forecast))
     formData.append("term_forecast", Number(data.term_forecast))
     formData.append("rate_forecast", Number(data.rate_forecast))
-    formData.append("article", data.article)
-    formData.append("color", data.color)
-    formData.append("manufacturer", data.manufacturer)
+    if (data.article) formData.append("article", data.article)
+    if (data.color) formData.append("color", data.color)
+    if (data.manufacturer) formData.append("manufacturer", data.manufacturer)
 
     if (data.image) formData.append("image", data.image)
     if (data.file) formData.append("file", data.file)
@@ -132,15 +134,15 @@ export const estimatesApi = {
 
     formData.append("name", data.name)
     formData.append("link", data.link)
-    formData.append("room_type", data.room_type.name)
-    formData.append("description", data.description)
+    if (data.room_type) formData.append("room_type", data.room_type)
+    if (data.description) formData.append("description", data.description)
     formData.append("quantity", Number(data.quantity))
     formData.append("price_forecast", Number(data.price_forecast))
     formData.append("term_forecast", Number(data.term_forecast))
     formData.append("rate_forecast", Number(data.rate_forecast))
-    formData.append("article", data.article)
-    formData.append("color", data.color)
-    formData.append("manufacturer", data.manufacturer)
+    if (data.article) formData.append("article", data.article)
+    if (data.color) formData.append("color", data.color)
+    if (data.manufacturer) formData.append("manufacturer", data.manufacturer)
 
     // if (data.image) formData.append("image", data.image)
     // if (data.file) formData.append("file", data.file)

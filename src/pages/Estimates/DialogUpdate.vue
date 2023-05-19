@@ -57,7 +57,7 @@
           <div class="form-col">
             <label class="lable-title">Помещение</label>
             <SelectType 
-              :data="formData.room_type" 
+              :data="formData.room_type.name === null ? formData.room_type.name = '' : formData.room_type" 
               @getData="getSelectType" 
               v-if="formData.room_type"
             />
@@ -104,7 +104,6 @@
               type="number" 
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Цена" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
           <div class="form-col-4">
@@ -114,7 +113,6 @@
               type="number" 
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Срок" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
           <div class="form-col-4 q-pr-none items-end">
@@ -123,8 +121,7 @@
               v-model="formData.rate_forecast" 
               type="number" 
               class="my-input bg-grey-3 q-field__no-append q-field-procent" 
-              placeholder="15" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+              placeholder="%" 
             >
               <template v-slot:append>
                 %
@@ -204,7 +201,7 @@
                   v-model="offer.offer3" 
                   type="number" 
                   class="my-input bg-grey-3 q-field-procent q-field__no-append" 
-                  placeholder="15" 
+                  placeholder="%" 
                   :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
                 >
                   <template v-slot:append>
@@ -240,7 +237,6 @@
             v-model="formData.link" 
             class="my-input bg-grey-3"
             placeholder="Укажите ссылку на товар"
-            :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
           />
         </q-card-section>
         <q-card-section class="form-section">
@@ -249,7 +245,6 @@
             v-model="formData.manufacturer"
             class="my-input bg-grey-3"
             placeholder="Укажите производителя"
-            :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
           />
         </q-card-section>
 
@@ -260,8 +255,6 @@
               v-model="formData.article" 
               class="my-input bg-grey-3" 
               placeholder="Укажите артикул"
-              type="number"
-              :rules="[(val) => (val && val.length > 0) || '']"
             />
           </div>
           <div class="form-col">
@@ -270,7 +263,6 @@
               v-model="formData.color" 
               class="my-input bg-grey-3"
               placeholder="Код" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
         </q-card-section>
@@ -354,18 +346,18 @@
 
   // тип помещения
   function getSelectType(data) {
-    formData.value.room_type = data
+    formData.value.room_type = data.name
   }
 
   const onSubmit = async () => {
     lodingBtn.value = true
-    if (formData.value.room_type == null) {
-      $q.notify({
-        color: 'negative',
-        message: 'Выберите помещение'
-      })
-      return
-    } 
+    // if (formData.value.room_type == null) {
+    //   $q.notify({
+    //     color: 'negative',
+    //     message: 'Выберите помещение'
+    //   })
+    //   return
+    // } 
     try {
       const resp = await estimatesApi.updateItem(formData.value)
       console.log(resp)
