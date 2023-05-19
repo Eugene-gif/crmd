@@ -265,7 +265,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex';
 import EssentialLink from 'components/EssentialLink.vue'
 import Notifications from 'components/MainLayout/Notifications.vue'
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 const links = [
   {
@@ -376,7 +376,7 @@ export default ({
     const essentialLinks = ref([])
 
 
-    const router = useRouter();
+    const router = useRouter()
     const store = useStore()
     
     const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)

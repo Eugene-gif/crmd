@@ -43,7 +43,7 @@
       <q-card-section
         v-for="item in estimates" :key="item"
       >
-        <q-item to="#dsf" class="link-all"></q-item>
+        <q-item :to="`/estimates/${item.id}`" class="link-all"></q-item>
         <div class="title">{{item.name}}</div>
         <q-btn
           rounded
@@ -72,7 +72,7 @@
             Общий доступ
           </div>
           <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
-            <q-item class="link-all" to="#eee"></q-item>
+            <q-item class="link-all" :to="`/estimates/${item.id}`"></q-item>
             <div class="circle"></div>
           </q-icon>
         </div>
@@ -97,6 +97,7 @@
               :propsEl="item.id"
               :offsetYX="[55, -266]"
               :actionfunc="actionfunc"
+              @open="onActionOpen(item.id)"
               @actionDel="onActionDel('del', item.id)"
             />
           </q-item>
@@ -146,15 +147,17 @@
   import useDialogDel from 'src/composable/useDialogDel'
   import getFormatDate from 'src/composable/getFormatDate'
   import { useQuasar } from 'quasar'
+  import { useRouter } from 'vue-router'
 
   const $q = useQuasar()
   const dialog = ref(false)
   const estimates = ref()
+  const router = useRouter()
 
   const actionfunc = ref([
     {
       title: 'Открыть',
-      emmit: ''
+      emmit: 'open'
     },
     {
       title: 'Настройки доступа',
@@ -182,6 +185,10 @@
     data: Array,
     project_id: String
   })
+
+  const onActionOpen = (id) => {
+    router.push(`/estimates/${id}`)
+  }
   
 
   // инициализация функционала окна удаления

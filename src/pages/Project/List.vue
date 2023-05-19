@@ -361,6 +361,7 @@
   async function onActionCopy(id) {
 
   }
+  
   async function onActionProjectDel(id) {
     loading.value = true
     try {

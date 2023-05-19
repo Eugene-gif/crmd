@@ -438,10 +438,11 @@
         font-size: 18px;
         line-height: 15px;
         transition: all 0.25s;
+        font-weight: 500;
       }
       &:hover {
         .q-item__label {
-          color: $primary;
+          color: $positive;
         }
       }
       &:active {
