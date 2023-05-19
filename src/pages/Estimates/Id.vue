@@ -334,7 +334,7 @@
         v-if="estimate.items"
         @openSmeta="onOpenSmeta"
         @updateItem="openDialogUpdate"
-        @dubleItem="onDubleItem"
+        @dubleItem="(id) => onDubleItem(id)"
         @delItem="(id) => onActionDel('delItem', id)"
       />
     </div>
@@ -477,9 +477,27 @@
   }
   const onUpdateItem = (obj) => {
     dialogUpdate.value = false
-    estimate.value.items.push(obj)
+    estimate.value.items = estimate.value.items.map((item) => {
+      if (item.id === obj.id) {
+        return obj
+      }
+      return item
+    })
   }
 
+  // дублировать позицию сметы
+  const onDubleItem = async (id) => {
+    try {
+      const resp = await estimatesApi.duplicateItem(id)
+      estimate.value.items.push(resp)
+      $q.notify({
+        color: 'positive',
+        message: 'Позиция сметы продублирована'
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   // удаление позиции сметы
   const onDelItem = async (id) => {
@@ -510,6 +528,7 @@
     
   } 
   
+  // получить проект для сметы
   const getProject = async () => {
     try {
       const resp = await projectsApi.getById(estimate.value.project_id)

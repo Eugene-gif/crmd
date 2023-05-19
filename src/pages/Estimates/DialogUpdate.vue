@@ -368,6 +368,7 @@
     } 
     try {
       const resp = await estimatesApi.updateItem(formData.value)
+      console.log(resp)
       emit('updateItem', resp)
       $q.notify({
         color: 'positive',
