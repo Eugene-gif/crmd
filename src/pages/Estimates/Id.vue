@@ -1,5 +1,14 @@
 <template>  
   <q-dialog
+    v-model="dialogDelite"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite @modalFalse="handleModalClose" />
+  </q-dialog>
+
+  <q-dialog
     v-model="dialogPosition"
     transition-show="fade"
     transition-hide="fade" 
@@ -20,7 +29,8 @@
   >
     <DialogUpdate 
       @updateItem="onUpdateItem" 
-      :idEstimate="idEstimate" 
+      :iditem="idActiveItem" 
+      v-if="idActiveItem"
     />
   </q-dialog>
 
@@ -323,6 +333,9 @@
         :rows="estimate.items"
         v-if="estimate.items"
         @openSmeta="onOpenSmeta"
+        @updateItem="openDialogUpdate"
+        @dubleItem="onDubleItem"
+        @delItem="(id) => onActionDel('delItem', id)"
       />
     </div>
 
@@ -351,7 +364,12 @@
   import { estimatesApi } from 'src/api/estimates'
   import { projectsApi } from 'src/api/projects'
   import { useRoute } from 'vue-router'
+  import { useQuasar } from 'quasar'
+
   import LoaderDate from 'src/components/LoaderDate.vue'
+
+  import DialogDelite from 'src/components/dialog/DialogDelite'
+  import useDialogDel from 'src/composable/useDialogDel'
 
   import EstimateTable2 from 'components/Table/EstimateTable2'
   import DialogPosition from 'src/pages/Estimates/DialogPosition'
@@ -360,12 +378,13 @@
   import DialogExport from 'src/pages/Estimates/DialogExport'
   import DialogSettings from 'src/pages/Estimates/DialogSettings'
   
+  const $q = useQuasar()
   const loading = ref(false)
   const idEstimate = useRoute().params.id
   const cutTitle = (title) => {
     return String(title.substring(0,2))
   }
-
+  
 
   const columnsTable = ref([
     { name: 'id', label: '№', field: 'id', sortable: true },
@@ -385,7 +404,7 @@
     { name: 'file', label: 'Файл', field: 'file', sortable: false },
   ])
   const estimate = ref({})
-  
+  const idActiveItem = ref(null)
 
   const toggle = ref(true)
   const tab = ref()
@@ -435,7 +454,7 @@
     })
   }
 
-  const dialogPosition = ref(false)
+
   const dialogSecurity = ref(false)
   const dialogExport = ref(false)
   const dialogSettings = ref(false)
@@ -445,29 +464,83 @@
     dialogSettings.value = false
   }
 
+  const dialogPosition = ref(false)
   const onCreateItem = (obj) => {
     dialogPosition.value = false
     estimate.value.items.push(obj)
   }
+
+  const dialogUpdate = ref(false)
+  const openDialogUpdate = (id) => {
+    idActiveItem.value = id
+    dialogUpdate.value = true
+  }
   const onUpdateItem = (obj) => {
-    dialogPosition.value = false
+    dialogUpdate.value = false
     estimate.value.items.push(obj)
   }
 
 
+  // удаление позиции сметы
+  const onDelItem = async (id) => {
+    try {
+      await estimatesApi.delItem(id)
+      estimate.value.items = estimate.value.items.filter((item) => item.id !== id)
+      $q.notify({
+        color: 'positive',
+        message: 'Позиция сметы удалена'
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   // получение данных
   const getData = async () => {
-    const resp = await estimatesApi.getById(idEstimate)
-    estimate.value = resp
+    try {
+      const resp = await estimatesApi.getById(idEstimate)
+      estimate.value = resp
+    } catch (err) {
+      console.log(err)
+      $q.notify({
+        color: 'negative',
+        message: 'Произошла ошибка получения данных о смете'
+      })
+    }
+    
   } 
   
   const getProject = async () => {
-    const resp = await projectsApi.getById(estimate.value.project_id)
-    estimate.value.project = {
-      name: resp.name
+    try {
+      const resp = await projectsApi.getById(estimate.value.project_id)
+      estimate.value.project = {
+        name: resp.name
+      }
+    } catch (err) {
+      console.log(err)
+      $q.notify({
+        color: 'negative',
+        message: 'Произошла ошибка получения данных о проекте сметы'
+      })
     }
+
     loading.value = false
   } 
+
+
+
+  // плагин удаления
+  const actionHandlers = {
+    delItem: onDelItem,
+  }
+  const { 
+    dialogDelite, 
+    dialogDelId, 
+    dialogDelName, 
+    onActionDel, 
+    modalCloseDel, 
+    handleModalClose 
+  } = useDialogDel(actionHandlers)
 
   onMounted( async() => {
     loading.value = true

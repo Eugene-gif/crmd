@@ -56,7 +56,11 @@
         <q-card-section class="form-section form-section-row form-section-row-behiver">
           <div class="form-col">
             <label class="lable-title">Помещение</label>
-            <SelectType @getData="getSelectType" />
+            <SelectType 
+              :data="formData.room_type" 
+              @getData="getSelectType" 
+              v-if="formData.room_type"
+            />
           </div>
           <div class="form-col">
             <label class="lable-title">Кол-во</label>
@@ -65,7 +69,7 @@
               class="my-input bg-grey-3"
               placeholder="шт/м2" 
               type="number"
-              :rules="[(val) => (val && val.length > 0) || '']"
+              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
         </q-card-section>
@@ -129,107 +133,108 @@
           </div>
         </q-card-section>
 
-
-      <q-card-section 
-        class="form-section-row-offer"
-        :class="[
-          {'form-section-row-offer-enter': formData.offer1.length || formData.offer2.length || formData.offer3.length && !offerActive},
-          {'form-section-row-offer-activated': offerActive}
-        ]"
-      >
-        <div class="close-form rotate" @click="offerDisActive">
-          <q-icon name="svguse:icons/allIcons.svg#close-modal" size="12px"/>
-        </div>
-        
-        <div class="title">
-          <span>Подать предложение по цене</span>
-          <q-btn flat class="circle-warning-15 mb-visible">
-            <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-              <q-menu
-                :offset="[10, 10]"
-                anchor="top middle" self="bottom middle"
-                class="circle-warning-tooltip"
-                ref="menu"
-                width="300px"
-              >
-                Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
-              </q-menu>
-          </q-btn>
-          <div class="circle-warning-15 lg-visible">
-            <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-            <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
-              Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
-            </q-tooltip>
-          </div>
-        </div>
-        <q-btn 
-          flat 
-          no-caps 
-          padding="0 12px" 
-          label="Вставить" 
-          icon="svguse:icons/allIcons.svg#past" 
-          class="btn-past text-grey-5" 
-        />
-        <div class="form-section form-section-row"> 
-          <div class="form-col-4 q-pl-none items-start">
-            <label class="lable-title" style="display: flex;">
-              Цена за<br class="mb-visible"> единицу
-            </label>
-            <q-input 
-              v-model="formData.offer1" 
-              type="number" 
-              class="my-input bg-grey-3 q-field__no-append" 
-              placeholder="Цена" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+        <q-form @submit="onSubmitOffer">
+          <q-card-section 
+            class="form-section-row-offer"
+            :class="[
+              {'form-section-row-offer-enter': offer.offer1.length || offer.offer2.length || offer.offer3.length && !offerActive},
+              {'form-section-row-offer-activated': offerActive}
+            ]"
+          >
+            <div class="close-form rotate" @click="offerDisActive">
+              <q-icon name="svguse:icons/allIcons.svg#close-modal" size="12px"/>
+            </div>
+            
+            <div class="title">
+              <span>Подать предложение по цене</span>
+              <q-btn flat class="circle-warning-15 mb-visible">
+                <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+                  <q-menu
+                    :offset="[10, 10]"
+                    anchor="top middle" self="bottom middle"
+                    class="circle-warning-tooltip"
+                    ref="menu"
+                    width="300px"
+                  >
+                    Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                  </q-menu>
+              </q-btn>
+              <div class="circle-warning-15 lg-visible">
+                <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
+                <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
+                  Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                </q-tooltip>
+              </div>
+            </div>
+            <q-btn 
+              flat 
+              no-caps 
+              padding="0 12px" 
+              label="Вставить" 
+              icon="svguse:icons/allIcons.svg#past" 
+              class="btn-past text-grey-5" 
             />
-          </div>
-          <div class="form-col-4">
-            <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
-            <q-input 
-              v-model="formData.offer2" 
-              type="number" 
-              class="my-input bg-grey-3 q-field__no-append" 
-              placeholder="Срок"
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
-            />
-          </div>
-          <div class="form-col-4 q-pr-none items-end">
-            <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
-            <q-input 
-              v-model="formData.offer3" 
-              type="number" 
-              class="my-input bg-grey-3 q-field-procent q-field__no-append" 
-              placeholder="15" 
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
-            >
-              <template v-slot:append>
-                %
-              </template>
-            </q-input>
-          </div>
-        </div>
-        <div class="btns-sec">
-          <q-btn 
-            flat 
-            no-caps 
-            padding="0" 
-            label="Сделать предложение" 
-            class="text-white btn-flat" 
-            @click="offerActive = true"
-          />
-          <q-btn 
-            flat 
-            no-caps 
-            padding="0" 
-            label="Отмена" 
-            class="text-white btn-flat" 
-            @click="formData.offer1 = '', formData.offer2 = '', formData.offer3 = ''"
-          />
-        </div>
-      </q-card-section>
+            
+            <div class="form-section form-section-row"> 
+              <div class="form-col-4 q-pl-none items-start">
+                <label class="lable-title" style="display: flex;">
+                  Цена за<br class="mb-visible"> единицу
+                </label>
+                <q-input 
+                  v-model="offer.offer1" 
+                  type="number" 
+                  class="my-input bg-grey-3 q-field__no-append" 
+                  placeholder="Цена" 
+                  :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+                />
+              </div>
+              <div class="form-col-4">
+                <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
+                <q-input 
+                  v-model="offer.offer2" 
+                  type="number" 
+                  class="my-input bg-grey-3 q-field__no-append" 
+                  placeholder="Срок"
+                  :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+                />
+              </div>
+              <div class="form-col-4 q-pr-none items-end">
+                <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
+                <q-input 
+                  v-model="offer.offer3" 
+                  type="number" 
+                  class="my-input bg-grey-3 q-field-procent q-field__no-append" 
+                  placeholder="15" 
+                  :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+                >
+                  <template v-slot:append>
+                    %
+                  </template>
+                </q-input>
+              </div>
+            </div>
+            <div class="btns-sec">
+              <q-btn 
+                flat 
+                no-caps 
+                padding="0" 
+                label="Сделать предложение" 
+                class="text-white btn-flat" 
+                type="submit"
+              />
+              <q-btn 
+                flat 
+                no-caps 
+                padding="0" 
+                label="Отмена" 
+                class="text-white btn-flat" 
+                @click="offer.offer1 = '', offer.offer2 = '', offer.offer3 = ''"
+              />
+            </div>
+          </q-card-section>
+        </q-form>
 
-
-      <q-card-section class="form-section">
+        <q-card-section class="form-section">
           <label class="lable-title">Ссылка</label>
           <q-input 
             v-model="formData.link" 
@@ -256,7 +261,7 @@
               class="my-input bg-grey-3" 
               placeholder="Укажите артикул"
               type="number"
-              :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+              :rules="[(val) => (val && val.length > 0) || '']"
             />
           </div>
           <div class="form-col">
@@ -313,37 +318,39 @@
   const lodingBtn = ref(false)
 
   const props = defineProps({
-    idEstimate: String
+    iditem: String
   })
   
   const emit = defineEmits(['updateItem'])
 
-  const selectDropbox = ref()
+  const formData = ref({})
 
-  
-
-  const formData = ref({
-    estimate_id: props.idEstimate,
-
+  const offer = ref({
     offer1: '',
     offer2: '',
     offer3: '',
-
-    name: '',
-    link: '',
-    room_type: null,
-    description: '',
-    quantity: '',
-    price_forecast: '',
-    term_forecast: '',
-    rate_forecast: '',
-    article: '',
-    color: '',
-    manufacturer: '',
-
-    image: null,
-    file: null,
   })
+
+  const onSubmitOffer = () => {
+    offerActive.value = true
+    console.log(offer.value)
+  }
+
+
+  const offerActive = ref(false)
+  const offerDisActive = () => {
+    offer.value.offer1 = ''
+    offer.value.offer2 = ''
+    offer.value.offer3 = ''
+    offerActive.value = false
+  }
+
+  const show = ref(false)
+  const beforeHide = () => {
+    show.value = true;
+  }
+
+  
 
   // тип помещения
   function getSelectType(data) {
@@ -364,7 +371,7 @@
       emit('updateItem', resp)
       $q.notify({
         color: 'positive',
-        message: 'Позиция cметы успешно создана'
+        message: 'Позиция cмeты успешно создана'
       })
     } catch(err) {
       console.log(err)
@@ -376,20 +383,20 @@
     lodingBtn.value = false
   }
 
+  
 
-
-  const offerActive = ref(false)
-  const offerDisActive = () => {
-    formData.value.offer1 = ''
-    formData.value.offer2 = ''
-    formData.value.offer3 = ''
-    offerActive.value = false
+  const getItem = async () => {
+    try {
+      formData.value = await estimatesApi.getItemById(props.iditem)
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const show = ref(false)
-  const beforeHide = () => {
-    show.value = true;
-  }
+
+  onMounted( async () => {
+    await getItem()
+  })
 
 
   // работа с загрузкой файлов и картинок
@@ -405,7 +412,7 @@
   const onRejected = () => {
     $q.notify({
       type: 'negative',
-      message: 'Файл не соответствуeт расширению'
+      message: 'Файл не cooтвeтcтвyeт расширению'
     })
   } 
 

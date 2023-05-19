@@ -58,6 +58,30 @@
     </template>
 
     <template #body="props">
+      <q-menu 
+        ref="contextMenu" 
+        :style="menuStyle" 
+        class="q-menu-edit"
+      >
+        <q-list>
+          <q-item v-close-popup>
+            <q-item-section>
+              <q-item-label @click="$emit('updateItem', contextMenuActiveTrId)">Изменить</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item v-close-popup>
+            <q-item-section>
+              <q-item-label @click="$emit('dubleItem', contextMenuActiveTrId)">Дублировать</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-item v-close-popup>
+            <q-item-section>
+              <q-item-label @click="$emit('delItem', contextMenuActiveTrId)">Удалить</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-menu>
+
       <q-tr
         :props="props"
         @contextmenu.prevent="!isMobile() && showContextMenu($event, props.row)"
@@ -66,29 +90,6 @@
         @touchend="handleTouchEnd"
         @click.stop=""
       >
-        <q-menu 
-          ref="contextMenu" 
-          :style="menuStyle" 
-          class="q-menu-edit"
-        >
-          <q-list>
-            <q-item v-close-popup>
-              <q-item-section>
-                <q-item-label>Изменить</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item v-close-popup>
-              <q-item-section>
-                <q-item-label>Дублировать</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item v-close-popup>
-              <q-item-section>
-                <q-item-label>Удалить</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-menu>
         <q-td
           key="id"
           :props="props"
@@ -599,7 +600,14 @@
     rows: Array
   })
 
-  const emit = defineEmits(['openSmeta', 'editModal', 'chooseSmeta'])
+  const emit = defineEmits([
+    'openSmeta', 
+    'editModal', 
+    'chooseSmeta',
+    'updateItem',
+    'dubleItem',
+    'delItem',
+  ])
    
   const activeSmeta = ref()
   const tab = ref('')
@@ -636,6 +644,7 @@
   ])
   
   const contextMenu = ref(null)
+  const contextMenuActiveTrId = ref(null)
 
   const touchStartTimestamp = ref(null)
   const touchMoveTimestamp = ref(null)
@@ -649,6 +658,7 @@
     event.preventDefault()
     mouseX.value = event.clientX 
     mouseY.value = event.clientY
+    contextMenuActiveTrId.value = row.id
     contextMenu.value.show(event, { row });
   };
   
@@ -657,6 +667,7 @@
     touchStartTimeout.value = Date.now()
     mouseX.value = event.touches[0].clientX
     mouseY.value = event.touches[0].clientY
+    contextMenuActiveTrId.value = row.id
     touchMoveTimeout.value = setTimeout(() => {
       contextMenu.value.show(event, { row });
     }, 500);  
@@ -715,6 +726,8 @@
       return 'grey-7'
     }
   }
+
+
   function openSmeta(val) {
     activeSmeta.value = val
     emit('openSmeta', val)

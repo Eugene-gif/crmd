@@ -17,44 +17,39 @@
   />
 </template>
 
-<script>
-import { defineComponent, ref, onMounted } from 'vue'
-import { projectsApi } from 'src/api/projects'
+<script setup>
+  import { ref, onMounted } from 'vue'
+  import { projectsApi } from 'src/api/projects'
 
-export default defineComponent ({
-  setup(props, { emit }) {
-    const select1 = ref({
-      id: null, 
-      name: null
-    })
-    const type = ref([])
+  const props = defineProps({
+    data: Object
+  })
+  const emit = defineEmits(['getData'])
 
-    function onGetData() {
-      emit('getData', select1.value)
-    }
+  const select1 = ref({
+    id: props.data?.id || null, 
+    name: props.data?.name || null
+  })
+  const type = ref([])
 
-    async function getType() {
-      try {
-        await projectsApi.getTypes()
-        .then(resp => {
-          type.value = resp
-          // select1.value = resp[0]
-        })
-      } catch (err) {
-        console.log(err)
-      }      
-    }
+  function onGetData() {
+    emit('getData', select1.value)
+  }
 
-    onMounted(() => {
-      getType()
-    })
+  async function getType() {
+    try {
+      await projectsApi.getTypes()
+      .then(resp => {
+        type.value = resp
+        // select1.value = resp[0]
+      })
+    } catch (err) {
+      console.log(err)
+    }      
+  }
 
-    return {
-      select1,
-      type,
-      onGetData,
-      getType
-    }
-  },
-})
+  onMounted(() => {
+    getType()
+  })
+
 </script>

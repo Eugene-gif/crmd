@@ -72,7 +72,27 @@ export const estimatesApi = {
   },
 
 
+
   // estimates items
+
+  getItemById(id) {
+    try {
+      return httpClient.post(`${url}/items/get`, {
+        estimate_item_id: id
+      })
+      .then(({ data }) => {
+        const resp = data.data
+        resp.price_forecast = resp.forecast.price
+        resp.term_forecast = resp.forecast.term
+        resp.rate_forecast = resp.forecast.rate
+        resp.room_type = {id: 1,name:resp.room_type}
+        return resp
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
   async createItem(data) {
 
     const formData = new FormData()
