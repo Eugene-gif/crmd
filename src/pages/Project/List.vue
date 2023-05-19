@@ -154,8 +154,9 @@
               :props="props"
               class="q-td-name"
             >
+            
               <div class="text-h3" @dblclick.stop="onActionOpen(props.row.id)">
-                <span class="name-ico" v-if="props.row.iconName">{{props.row.iconName}}</span>{{props.row.name}}
+                <span class="name-ico" v-if="props.row.emoji">{{props.row.emoji}}</span>{{props.row.name}}
               </div>
             </q-td>
             <q-td
@@ -177,7 +178,7 @@
               :props="props"
               class="q-td-square"
             >
-              <div class="text">Квартира, {{props.row.square}} м<sup>2</sup></div>
+              <div class="text">{{props.row.project_type.name}}, {{props.row.square}} м<sup>2</sup></div>
             </q-td>
             <q-td
               key="changed"
@@ -191,7 +192,7 @@
               :props="props"
               class="q-td-customer"
             >
-              <div class="text">{{props.row.customer}}</div>
+              <div class="text">{{props.row.orderer}}</div>
             </q-td>
             <q-td
               key="created"

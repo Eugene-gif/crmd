@@ -71,96 +71,54 @@ function getTiming(created_at, services) {
 }
  
 
-
 export const projectsApi = {
-  getAll() {
-    try {
-      return httpClient.post(`${url}/getAll`, {})
-      .then(({ data }) => {
-        
-        return data = data.data.map(el => {
 
-          return {
-            id: el.id,
-            status: 1,
-            iconName: el.emoji,
-            name: el.name,
-            type: el.project_type,
-            typeName: el.project_type.name,
-            address: el.address,
-            square: el.square,
-            customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
-            changed: getFormatDate(el.updated_at),
-            created: getFormatDate(el.created_at),
-            timing: getTiming(el.created_at, el.services),
-            orderer: el.orderer,
-            payment: 80,
-            readiness: getProgress(el.created_at, el.services),
-            image: el.image,
-            share: [
-              // {
-              //   icon: '/icons/anton.jpg',
-              //   link: 's'
-              // },
-              // {
-              //   icon: '/icons/stroipro.jpg',
-              //   link: ''
-              // },
-              // {
-              //   icon: '/icons/anton.jpg',
-              //   link: ''
-              // },
-              // {
-              //   icon: '/icons/anton.jpg',
-              //   link: ''
-              // },
-              // {
-              //   icon: '/icons/stroipro.jpg',
-              //   link: ''
-              // },
-              // {
+  async getAll() {
+    try {
+      let resp = await httpClient.post(`${url}/getAll`)
+      resp = resp.data.data
+      
+      resp.filter(el => {
+        el.status = 1
+        el.orderer = `${el.orderer.data.first_name} ${el.orderer.data.last_name}`
+        el.changed = getFormatDate(el.updated_at)
+        el.created = getFormatDate(el.created_at)
+        el.timing = getTiming(el.created_at, el.services)
+        el.payment = 80
+        el.readiness = getProgress(el.created_at, el.services)   
+        el.share = [
+          // {
               //   icon: '/icons/stroipro.jpg',
               //   link: ''
               // }
-            ]   
-          }
-        })
-      });
-    } catch(err) {
-      console.log(err)
+        ]
+      })
+      console.log(resp)
+      return resp
+    } catch (err) {
+      throw err
     }
   },
 
-  getAllMy() {
+  async getAllMy() {
     try {
-      return httpClient.post(`${url}/getMy`, {})
-      .then(({ data }) => {
-        
-        return data = data.data.map(el => {
-
-          return {
-            id: el.id,
-            status: 1,
-            iconName: el.emoji,
-            name: el.name,
-            type: el.project_type,
-            typeName: el.project_type.name,
-            address: el.address,
-            square: el.square,
-            customer: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
-            changed: getFormatDate(el.updated_at),
-            created: getFormatDate(el.created_at),
-            timing: getTiming(el.created_at, el.services),
-            orderer: el.orderer,
-            payment: 80,
-            readiness: getProgress(el.created_at, el.services),
-            image: el.image,
-            share: []   
-          }
-        })
-      });
-    } catch(err) {
-      console.log(err)
+      let resp = await httpClient.post(`${url}/getMy`)
+      resp = resp.data.data
+      
+      resp.filter(el => {
+        el.status = 1
+        el.orderer = `${el.orderer.data.first_name} ${el.orderer.data.last_name}`
+        el.changed = getFormatDate(el.updated_at)
+        el.created = getFormatDate(el.created_at)
+        el.timing = getTiming(el.created_at, el.services)
+        el.payment = 80
+        el.readiness = getProgress(el.created_at, el.services)   
+        el.share = []
+      })
+      console.log(resp)
+      return resp
+    } catch (err) {
+      throw err
     }
   },
 
@@ -231,14 +189,6 @@ export const projectsApi = {
     }
   },
 
-//   id
-// project_type_id
-// orderer_id
-// name
-// address
-// square
-// emoji
-// image
 
   createProject(formData) {
     try {
@@ -292,6 +242,6 @@ export const projectsApi = {
       })
     } catch (err) {
       console.log(err)
-    }
+    } 
   }
 }
