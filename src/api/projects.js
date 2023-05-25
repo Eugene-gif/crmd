@@ -189,7 +189,7 @@ export const projectsApi = {
     }
   },
 
-
+ 
   createProject(formData) {
     try {
       let data = {
@@ -242,6 +242,6 @@ export const projectsApi = {
       })
     } catch (err) {
       console.log(err)
-    } 
+    }  
   }
 }

@@ -1,4 +1,5 @@
 <template>
+
   <q-table
     flat
     :columns="columns"
@@ -98,14 +99,14 @@
           <div class="status-new" v-if="props.row.new"></div>
           <div class="td-content-section">
             <div class="text">
-              {{props.row.id}}
+              {{props.row.iterationId}}
             </div>
           </div>
         </q-td>
         <q-td
           key="name"
           :props="props"
-          @dblclick="editModal(props.row, 'title')"
+          @dblclick="editModal(props.row, 'name')"
           @click.stop=""
         >
           <div class="td-content-section td-content-name">
@@ -212,16 +213,20 @@
               {{props.row.forecast.total_price}}
             </div>
             <div class="total-img">
-              <img v-if="props.row.status.imageUrl && props.row.smeta" :src="props.row.status.imageUrl" alt="">
+              <!-- <img v-if="props.row.status.imageUrl && props.row.smeta" :src="props.row.status.imageUrl" alt=""> -->
             </div>
-            <q-icon v-if="props.row.smeta" size="12px" name="svguse:icons/financeTable.svg#miniArrowe" />
+            <q-icon 
+              v-if="props.row.proposals.length" 
+              size="12px" 
+              name="svguse:icons/financeTable.svg#miniArrowe" 
+            />
           </div>
         </q-td>
         
         <q-td
           key="deadline"
           :props="props"
-          @dblclick="editModal(props.row, 'forecast.term')"
+          @dblclick="editModal(props.row, 'term_forecast')"
           @click.stop=""
         >
           <div class="td-content-section">
@@ -414,12 +419,18 @@
       </q-tr>
 
       <q-tr
-        v-for="smeta in props.row.smeta"
+        v-for="smeta in props.row.proposals"
         :key="smeta"
         class="q-tr-smeta"
         v-show="props.row.smetaVal"
-        @click="chooseSmeta(smeta)"
+        @click.stop="chooseSmeta(smeta)"
+        @contextmenu.prevent.stop
+        @touchstart.stop
+        @touchmove.stop
+        @touchend.stop
       >
+      
+      <!-- v-show="props.row.proposals.length" -->
         <q-td key="id" class="td-id"/>
         <q-td
           key="name"
@@ -428,9 +439,13 @@
         >
           <div class="td-content-section">
             <div class="name-img">
-              <img v-if="smeta.imageUrl" :src="smeta.imageUrl" alt="">
+              <img 
+                v-if="smeta.contractor?.image?.placeholder" 
+                :src="smeta.contractor?.image?.placeholder" 
+                alt=""
+              >
             </div>
-            <div class="text">{{smeta.name}}</div>
+            <div class="text">{{smeta.contractor?.name}}</div>
           </div>
         </q-td>
         <q-td key="room" class="td-room"/>
@@ -441,7 +456,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.metrics}}
+              {{smeta.price}}
             </div>
           </div>
         </q-td>
@@ -451,7 +466,8 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.price}}
+              {{props.row.quantity}}
+              <!-- {{smeta.term}} -->
             </div>
           </div>
         </q-td>
@@ -461,7 +477,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.total}}
+              {{smeta.fee}}
             </div>
           </div>
         </q-td>
@@ -471,7 +487,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.deadline}} <span v-if="smeta.deadline != '—'"></span>
+              {{smeta.term}}
             </div>
           </div>
         </q-td>
@@ -481,8 +497,8 @@
         >
           <div class="td-content-section td-content-status">
             <div class="status">
-              <div :class="`circle bg-${colorStatus(smeta.status.id)}`"></div>
-              <div class="desc">{{smeta.status.name}}</div>
+              <!-- <div :class="`circle bg-${colorStatus(smeta.status.id)}`"></div>
+              <div class="desc">{{smeta.status.name}}</div> -->
             </div>
           </div>
         </q-td>
@@ -492,7 +508,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.procent}}<span class="text" v-if="smeta.procent != '—'"></span>
+              {{smeta.rate}}
             </div>
           </div>
         </q-td>
@@ -503,7 +519,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{smeta.agent}}
+              {{smeta.term}}
             </div>
           </div>
         </q-td>
@@ -517,7 +533,12 @@
       <q-tr 
         class="q-tr-smeta q-tr-smeta-null" 
         v-show="props.row.smetaVal"
-        v-if="props.row.smeta"
+        v-if="props.row.proposals"
+        @click.stop="chooseSmeta(smeta)"
+        @contextmenu.prevent.stop
+        @touchstart.stop
+        @touchmove.stop
+        @touchend.stop
       >
         <q-td key="id" class="td-id"/>
         <q-td class="td-name">
@@ -592,8 +613,9 @@
 </template>
 
 <script setup>
-  import { ref, computed } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useQuasar } from 'quasar'
+  import useContextMenu from 'src/composable/useContextMenu'
 
   const props = defineProps({
     columns: Array,
@@ -643,72 +665,25 @@
     },
   ])
   
-  const contextMenu = ref(null)
-  const contextMenuActiveTrId = ref(null)
-
-  const touchStartTimestamp = ref(null)
-  const touchMoveTimestamp = ref(null)
-  const touchStartTimeout = ref(null)
-  const touchMoveTimeout = ref(null)
-  const touchEndTimeout = ref(null)
-  const touchCancelTimeout = ref(null)
-  
-  const showContextMenu = (event, row) => {
-    contextMenu.value.hide()
-    event.preventDefault()
-    mouseX.value = event.clientX 
-    mouseY.value = event.clientY
-    contextMenuActiveTrId.value = row.id
-    contextMenu.value.show(event, { row });
-  };
-  
-  const handleTouchStart = (event, row) => {
-    contextMenu.value.hide()
-    touchStartTimeout.value = Date.now()
-    mouseX.value = event.touches[0].clientX
-    mouseY.value = event.touches[0].clientY
-    contextMenuActiveTrId.value = row.id
-    touchMoveTimeout.value = setTimeout(() => {
-      contextMenu.value.show(event, { row });
-    }, 500);  
-  };
-
-  const handleTouchMove = () => {
-    contextMenu.value.hide()
-  };
-
-  const handleTouchEnd = () => {
-    clearTimeout(touchStartTimeout.value)
-    clearTimeout(touchMoveTimeout.value)
-    touchEndTimeout.value = setTimeout(() => {
-      touchStartTimestamp.value = null
-      touchMoveTimestamp.value = null
-    }, 100);
-  };
-
-  const handleTouchCancel = () => {
-    clearTimeout(touchStartTimeout.value)
-    clearTimeout(touchMoveTimeout.value)
-    clearTimeout(touchEndTimeout.value)
-    touchCancelTimeout.value = setTimeout(() => {
-      touchStartTimestamp.value = null
-      touchMoveTimestamp.value = null
-    }, 100);
-  };
-  const mouseX = ref(0)
-  const mouseY = ref(0)
-
-  const menuStyle = computed(() => {
-    return {
-      transform: `translateX(${mouseX.value}px) translateY(${mouseY.value}px)`
-    }
-  })
-
-  const isMobile = () => {
-    const userAgent = navigator.userAgent.toLowerCase()
-    return /iphone|ipod|ipad|android/.test(userAgent)
-  }
-
+  const {
+    contextMenu,
+    contextMenuActiveTrId,
+    touchStartTimestamp,
+    touchMoveTimestamp,
+    touchStartTimeout,
+    touchMoveTimeout,
+    touchEndTimeout,
+    touchCancelTimeout,
+    mouseX,
+    mouseY,
+    menuStyle,
+    showContextMenu,
+    handleTouchStart,
+    handleTouchMove,
+    handleTouchEnd,
+    handleTouchCancel,
+    isMobile
+  } = useContextMenu()
 
   const selectTab = (value) => {
     subTab.value = ''
@@ -727,7 +702,6 @@
     }
   }
 
-
   function openSmeta(val) {
     activeSmeta.value = val
     emit('openSmeta', val)
@@ -741,7 +715,7 @@
   }
 
   function goToLink(link) {
-    window.open(link, '_blank');
+    window.open(link, '_blank')
   }
 
 </script>

@@ -20,10 +20,20 @@ export const estimatesApi = {
         estimate_id: id
       })
       .then(({ data }) => {
-        return data.data
+        let resp = data.data
+        resp.items = resp.items.map((row, index) => {
+          return {
+            ...row,
+            iterationId: index + 1,
+            smetaVal: row.proposals.length ? false : null
+          }
+        })
+
+        console.log(resp)
+        return resp
       })
     } catch(err) {
-      console.log(err)
+      throw err
     }
   },
 
@@ -54,6 +64,7 @@ export const estimatesApi = {
         headers: { "Content-Type": "multipart/form-data" },
       })
       return resp.data.data
+      
     } catch (err) {
       throw err
     }

@@ -14,6 +14,7 @@
           <label class="lable-title">Название</label>
           <q-input 
             v-model="formData.name" 
+            ref="name" 
             class="my-input bg-grey-3" 
             placeholder="Введите название" 
             :rules="[(val) => (val && val.length > 0) || '']"
@@ -37,6 +38,7 @@
                 filled
                 type="textarea"
                 v-model="formData.description"
+                ref="description"
                 class="my-textarea bg-grey-3"
                 placeholder="Введите примечание"
               />
@@ -111,6 +113,7 @@
             <q-input 
               v-model="formData.term_forecast" 
               type="number" 
+              ref="term_forecast"
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Срок" 
             />
@@ -134,7 +137,7 @@
           <q-card-section 
             class="form-section-row-offer"
             :class="[
-              {'form-section-row-offer-enter': offer.offer1.length || offer.offer2.length || offer.offer3.length && !offerActive},
+              {'form-section-row-offer-enter': offer.price.length || offer.term.length || offer.rate.length && !offerActive},
               {'form-section-row-offer-activated': offerActive}
             ]"
           >
@@ -178,7 +181,7 @@
                   Цена за<br class="mb-visible"> единицу
                 </label>
                 <q-input 
-                  v-model="offer.offer1" 
+                  v-model="offer.price" 
                   type="number" 
                   class="my-input bg-grey-3 q-field__no-append" 
                   placeholder="Цена" 
@@ -188,7 +191,7 @@
               <div class="form-col-4">
                 <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
                 <q-input 
-                  v-model="offer.offer2" 
+                  v-model="offer.term" 
                   type="number" 
                   class="my-input bg-grey-3 q-field__no-append" 
                   placeholder="Срок"
@@ -198,7 +201,7 @@
               <div class="form-col-4 q-pr-none items-end">
                 <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
                 <q-input 
-                  v-model="offer.offer3" 
+                  v-model="offer.rate" 
                   type="number" 
                   class="my-input bg-grey-3 q-field-procent q-field__no-append" 
                   placeholder="%" 
@@ -225,7 +228,7 @@
                 padding="0" 
                 label="Отмена" 
                 class="text-white btn-flat" 
-                @click="offer.offer1 = '', offer.offer2 = '', offer.offer3 = ''"
+                @click="offer.price = '', offer.term = '', offer.rate = ''"
               />
             </div>
           </q-card-section>
@@ -304,13 +307,16 @@
   import { ref, onMounted } from 'vue'
   import { useQuasar } from 'quasar'
   import { estimatesApi } from 'src/api/estimates'
+  import { proposalsApi } from 'src/api/proposals'
   import SelectType from "components/projects/SelectType"
   
   const $q = useQuasar()
   const lodingBtn = ref(false)
 
   const props = defineProps({
-    iditem: String
+    iditem: String,
+    editValue: Array,
+    activeField: String
   })
   
   const emit = defineEmits(['updateItem'])
@@ -318,22 +324,39 @@
   const formData = ref({})
 
   const offer = ref({
-    offer1: '',
-    offer2: '',
-    offer3: '',
+    price: '',
+    term: '',
+    rate: '',
   })
 
-  const onSubmitOffer = () => {
+  const onSubmitOffer = async () => {
     offerActive.value = true
+    const data = {
+      estimate_item_id: props.iditem,
+      price: offer.value.price,
+      term: offer.value.term,
+      rate: offer.value.rate,
+    }
+    try {
+      const resp = await proposalsApi.create(data)
+      console.log(resp)
+    } catch (error) {
+      console.log(error)
+      $q.notify({
+        color: 'negative',
+        message: 'Произошла ошибка, попробуйте позже',
+      })
+    }
+    // estimate_item_id: data.estimate_item_id,
     console.log(offer.value)
   }
 
 
   const offerActive = ref(false)
   const offerDisActive = () => {
-    offer.value.offer1 = ''
-    offer.value.offer2 = ''
-    offer.value.offer3 = ''
+    offer.value.price = ''
+    offer.value.term = ''
+    offer.value.rate = ''
     offerActive.value = false
   }
 
@@ -341,8 +364,6 @@
   const beforeHide = () => {
     show.value = true;
   }
-
-  
 
   // тип помещения
   function getSelectType(data) {
@@ -376,8 +397,6 @@
     lodingBtn.value = false
   }
 
-  
-
   const getItem = async () => {
     try {
       formData.value = await estimatesApi.getItemById(props.iditem)
@@ -387,8 +406,24 @@
   }
 
 
+  // получение полей
+  const term_forecast = ref()
+  const name = ref()
+  const description = ref()
+
   onMounted( async () => {
     await getItem()
+    switch(props.activeField) {
+      case 'term_forecast':
+        term_forecast.value.focus()
+        break
+      case 'name':
+        name.value.focus()
+        break
+      case 'description':
+        description.value.focus()
+        break
+    }
   })
 
 

@@ -155,7 +155,7 @@ export default ({
   components: {
     BtnDate
   }, 
-  setup (props) {
+  setup (props) { 
     const status = ref()
 
     const title = ref()

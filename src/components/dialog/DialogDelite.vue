@@ -36,9 +36,9 @@
 </template>
 
 <script setup>
-const emit = defineEmits(['modalFalse']);
+const emit = defineEmits(['modalFalse'])
 
 function modalFalse(val) {
-  emit('modalFalse', val);
+  emit('modalFalse', val)
 }
 </script>

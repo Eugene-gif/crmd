@@ -128,7 +128,15 @@ export const designerApi = {
     try {
       return httpClient.post(`${url}/info/services/getAll`)
       .then(( {data} ) => {
-        return data = data.data.map(el => {
+        console.log(data.data)
+        let sortedData = data.data.sort((a, b) => {
+          let dateA = new Date(a.updated_at.split(' ')[0].split('/').reverse().join('-'));
+          let dateB = new Date(b.updated_at.split(' ')[0].split('/').reverse().join('-'));
+          return dateA - dateB; // для сортировки по возрастанию, для сортировки по убыванию используйте dateB - dateA
+        })
+
+        return data = sortedData.map(el => {
+          console.log(data.data)
           return {
             id: el.id,
             name: el.name,
@@ -136,7 +144,8 @@ export const designerApi = {
             deadline: el.service_term == null ? el.unit_term : el.service_term,
             pricename: el.type.text,
             value: false,
-            type: el.service_term == null ? 'unit' : 'service'
+            type: el.service_term == null ? 'unit' : 'service',
+            updated_at: el.updated_at.split(' ')[1]
           }
         })
       })

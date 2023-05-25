@@ -26,53 +26,24 @@
   </q-page>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import { inject } from 'vue'
 import CardInfo from 'components/CardInfo'
 import Info1 from 'components/Designer/Info'
 import Info2 from 'components/Designer/Info2'
-
 import DetailInfo from 'components/Designer/DetailInfo'
 import Services from 'components/Designer/Services'
-
 import TermsContractors from 'components/Designer/TermsContractors'
 import RequisitesDocuments from 'components/Contractor/Profile/RequisitesDocuments'
-
 import MyFiles from 'components/Profile/MyFiles'
 import ProfilePhotos from 'components/Profile/ProfilePhotos'
 
-export default {
-  name: 'ProfileСontractor',
-  components: {
-    CardInfo,
-    Info1,
-    Info2,
-    DetailInfo,
-    Services,
-    TermsContractors,
-    RequisitesDocuments,
-    MyFiles,
-    ProfilePhotos,
-  },
+const companyName = ref()
 
-  setup () {
-    const companyName = ref()
+const emitter = inject('emitter')
+emitter.on('myevent', (value) => { 
+  companyName.value = value
+})
 
-    const emitter = inject('emitter')     
-    emitter.on('myevent', (value) => { 
-      companyName.value = value
-    })
-
-    function start() {
-
-    }
-    onMounted(() => {
-      
-    })
-    return {
-      companyName
-    }
-  }
-}
 </script>

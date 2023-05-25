@@ -29,7 +29,8 @@
   >
     <DialogUpdate 
       @updateItem="onUpdateItem" 
-      :iditem="idActiveItem" 
+      :iditem="idActiveItem"
+      :activeField="onActiveField" 
       v-if="idActiveItem"
     />
   </q-dialog>
@@ -328,11 +329,14 @@
     </div>
 
     <div class="estimates-table-container">
+      <!-- {{estimate.items}} -->
       <EstimateTable2
         :columns="columnsTable"
         :rows="estimate.items"
         v-if="estimate.items"
         @openSmeta="onOpenSmeta"
+        @chooseSmeta="onChooseSmeta"
+        @editModal="onEditModal"
         @updateItem="openDialogUpdate"
         @dubleItem="(id) => onDubleItem(id)"
         @delItem="(id) => onActionDel('delItem', id)"
@@ -447,8 +451,30 @@
   }
 
   const onOpenSmeta = (val) => {
-    estimate.value.items.filter((item) => {
+    estimate.value.items.forEach((item) => {
       if (item.id === val) {
+        item.smetaVal = !item.smetaVal
+      }
+    })
+  }
+
+  const onChooseSmeta = (smeta, val) => {
+    rowTable.value.filter((item) => {
+      if (item.id === smeta) {
+        item.price = val.price
+        item.metrics = val.metrics
+        item.total = val.total
+        item.deadline = val.deadline
+
+        item.status.id = val.status.id
+        item.status.name = val.status.name
+
+        item.status.user = val.name
+        // item.status.imageUrl = val.imageUrl
+        item.status.imageUrl = '/icons/anton.jpg'
+
+        item.procent = val.procent
+        item.agent = val.agent
         item.smetaVal = !item.smetaVal
       }
     })
@@ -464,17 +490,24 @@
     dialogSettings.value = false
   }
 
+  // добавление новой позиции сметы
   const dialogPosition = ref(false)
-  const onCreateItem = (obj) => {
+  const onCreateItem = async (obj) => {
     dialogPosition.value = false
-    estimate.value.items.push(obj)
+    loading.value = true
+    await getData()
+    await getProject()
+    loading.value = false
   }
 
+  // открыть модалку обновления сметы
   const dialogUpdate = ref(false)
   const openDialogUpdate = (id) => {
     idActiveItem.value = id
     dialogUpdate.value = true
   }
+
+  // обновление позиции сметы
   const onUpdateItem = (obj) => {
     dialogUpdate.value = false
     estimate.value.items = estimate.value.items.map((item) => {
@@ -483,6 +516,17 @@
       }
       return item
     })
+  }
+
+  // открыть редактирование сметы с видимым полем
+  const onActiveField = ref()
+  const dataEdit = ref([])
+  const onEditModal = (val, field) => {
+    idActiveItem.value = val.id
+    onActiveField.value = field
+    console.log(field)
+    dialogUpdate.value = true
+    dataEdit.value = val
   }
 
   // дублировать позицию сметы
@@ -542,13 +586,12 @@
         message: 'Произошла ошибка получения данных о проекте сметы'
       })
     }
-
     loading.value = false
   } 
 
 
 
-  // плагин удаления
+  // composable удаления
   const actionHandlers = {
     delItem: onDelItem,
   }

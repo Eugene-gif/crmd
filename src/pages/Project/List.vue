@@ -278,7 +278,7 @@
   import { ref, onMounted } from 'vue'
   import { projectsApi } from 'src/api/projects'
   import { useQuasar } from 'quasar'
-  import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router'
 
   import LoaderDate from 'src/components/LoaderDate.vue'
   import NoDate from 'src/components/NoDate.vue'
@@ -363,6 +363,7 @@
 
   }
   
+  // функция удаления проекта
   async function onActionProjectDel(id) {
     loading.value = true
     try {
@@ -403,6 +404,7 @@
     } else {
       nodate.value = false
     }
+    
   }
   
   onMounted(() => {

@@ -69,6 +69,7 @@
         <q-tr
           :props="props"
         >
+
           <q-td
             key="name"
             :props="props"
@@ -172,118 +173,87 @@
   </q-expansion-item>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue'
-import DialogDelite from 'components/dialog/DialogDelite'
-import ActionBtn from 'components/Table/ActionBtn.vue'
-import Dialog from 'pages/Designer/Dialog.vue'
-import { useQuasar } from 'quasar'
-import { designerApi } from 'src/api/designer'
+<script setup>
+  import { ref, onMounted } from 'vue'
+  import DialogDelite from 'components/dialog/DialogDelite'
+  import ActionBtn from 'components/Table/ActionBtn.vue'
+  import Dialog from 'pages/Designer/Dialog.vue'
+  import { useQuasar } from 'quasar'
+  import { designerApi } from 'src/api/designer'
 
-export default {
-  components: {
-    ActionBtn,
-    Dialog,
-    DialogDelite
-  },
-  setup() {
-    const $q = useQuasar()
-    const dialog = ref(false)
-    const updateActive = ref(false)
-    const rowData = ref({})
-    const dialogDelModal = ref(false)
+  const $q = useQuasar()
+  const dialog = ref(false)
+  const updateActive = ref(false)
+  const rowData = ref({})
+  const dialogDelModal = ref(false)
 
-    const columns = ref([
-      { name: 'id', label: '', field: 'id', align: 'left' },
-      { name: 'name', label: 'Наименование услуги', field: 'name', align: 'left', sortable: false },
-      { name: 'price', label: 'Стоимость', field: 'price', align: 'left', sortable: false },
-      { name: 'deadline', label: 'Срок', field: 'deadline', align: 'left', sortable: false },
-      { name: 'pricename', label: '', field: 'pricename', align: 'left', sortable: false },
-      { name: 'action', label: '', field: 'action', align: 'right', sortable: false },
-    ])
-    
-    const rows = ref([])
-    
-    const dialogName = ref()
-    const delFileId = ref()
+  const columns = ref([
+    { name: 'id', label: '', field: 'id', align: 'left' },
+    { name: 'name', label: 'Наименование услуги', field: 'name', align: 'left', sortable: false },
+    { name: 'price', label: 'Стоимость', field: 'price', align: 'left', sortable: false },
+    { name: 'deadline', label: 'Срок', field: 'deadline', align: 'left', sortable: false },
+    { name: 'pricename', label: '', field: 'pricename', align: 'left', sortable: false },
+    { name: 'action', label: '', field: 'action', align: 'right', sortable: false },
+  ])
+  
+  const rows = ref([])
+  
+  const dialogName = ref()
+  const delFileId = ref()
 
-    function openDialog(data, bool) {
-      if (bool) {
-        rowData.value = data
-      }
-      updateActive.value = bool
-      dialog.value = true
+  function openDialog(data, bool) {
+    if (bool) {
+      rowData.value = data
     }
+    updateActive.value = bool
+    dialog.value = true
+  }
 
-    function modalOpenDel(val) {
-      dialogDelModal.value = false
-      if (dialogName.value === 'delFile' && val) delService(delFileId.value)
-      delFileId.value = null
-    }
-    function callDelDialog(modal, id) {
-      dialogName.value = modal
-      dialogDelModal.value = true
-      delFileId.value = id
-    }
+  function modalOpenDel(val) {
+    dialogDelModal.value = false
+    if (dialogName.value === 'delFile' && val) delService(delFileId.value)
+    delFileId.value = null
+  }
+  function callDelDialog(modal, id) {
+    dialogName.value = modal
+    dialogDelModal.value = true
+    delFileId.value = id
+  }
 
-    async function getServices() {
-      try {
-        await designerApi.getServices().then(resp => {
-          rows.value = resp
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
-      }
+  async function getServices() {
+    try {
+      await designerApi.getServices().then(resp => {
+        rows.value = resp
+      })
+    } catch (err) {
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка'
+      })
+      console.log(err)
     }
-    
-    async function delService(id) {
-      try {
-        await designerApi.delService(id).then(resp => {
-          getServices()
-          $q.notify({
-            color: 'positive',
-            message: 'Услуга удалена'
-          })
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
-      }
-    }
-
-    onMounted(() => {
-      getServices()
-    })
-
-    return {
-      columns,
-      rows,
-      updateActive,
-      rowData,
-      dialog,
-      dialogName,
-      modalOpenDel,
-      dialogDelModal,
-      openDialog,
-      getServices,
-      delFileId,
-      callDelDialog,
-      delService,
-      modalFalse() {
-        dialog.value = false
+  }
+  
+  async function delService(id) {
+    try {
+      await designerApi.delService(id).then(resp => {
         getServices()
-      },
-      pagination: {
-        rowsPerPage: -1
-      },
+        $q.notify({
+          color: 'positive',
+          message: 'Услуга удалена'
+        })
+      })
+    } catch (err) {
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка'
+      })
+      console.log(err)
     }
-  },
-}
+  }
+
+  onMounted(() => {
+    getServices()
+  })
+
 </script>
