@@ -59,9 +59,9 @@
     </template>
 
     <template #body="props">
-      <q-menu 
-        ref="contextMenu" 
-        :style="menuStyle" 
+      <q-menu
+        ref="contextMenu"
+        :style="menuStyle"
         class="q-menu-edit"
       >
         <q-list>
@@ -174,7 +174,7 @@
             </div>
           </div>
         </q-td>
-        
+
         <q-td
           key="metrics"
           :props="props"
@@ -215,14 +215,14 @@
             <div class="total-img">
               <!-- <img v-if="props.row.status.imageUrl && props.row.smeta" :src="props.row.status.imageUrl" alt=""> -->
             </div>
-            <q-icon 
-              v-if="props.row.proposals.length" 
-              size="12px" 
-              name="svguse:icons/financeTable.svg#miniArrowe" 
+            <q-icon
+              v-if="props.row.proposals.length"
+              size="12px"
+              name="svguse:icons/financeTable.svg#miniArrowe"
             />
           </div>
         </q-td>
-        
+
         <q-td
           key="deadline"
           :props="props"
@@ -235,7 +235,7 @@
             </div>
           </div>
         </q-td>
-        
+
         <q-td
           key="status"
           :props="props"
@@ -249,9 +249,9 @@
             </div>
             <!-- <img v-if="props.row.status.imageUrl" :src="props.row.status.imageUrl" alt="" class="status-img"> -->
           </div>
-          <q-menu 
-            anchor="bottom middle" 
-            self="top middle" 
+          <q-menu
+            anchor="bottom middle"
+            self="top middle"
             class="menu-estimate-status"
           >
             <div class="item item-position">
@@ -298,32 +298,32 @@
                     Заключение сделки это фиксация договоренностей дизайнера и подрядчика по данной позиции сметы. Переход в статус «Оплачено» будет считать сумму агентских как долг подрядчика перед дизайнером.
                   </q-tooltip>
                 </q-btn>
-                <q-btn 
-                  flat 
-                  class="text-grey-5 btn-flat btn-remove" 
-                  padding="0" 
-                  no-caps 
-                  label="отменить сделку"  
+                <q-btn
+                  flat
+                  class="text-grey-5 btn-flat btn-remove"
+                  padding="0"
+                  no-caps
+                  label="отменить сделку"
                   v-if="tab === '5' || tab === '6' || tab === '7' || tab === '8'"
                   @click="tab = ''"
                 />
                 <img src="~assets/stroipro.jpg" alt="" class="estimate-status__img">
               </div>
-              <q-tabs 
-                v-model="tab" 
-                no-caps 
+              <q-tabs
+                v-model="tab"
+                no-caps
                 class="q-tabs-null"
               >
-                <q-tab 
+                <q-tab
                   v-for="el in optionstab"
                   :key="el"
-                  :name="el.name" 
-                  :label="el.label" 
+                  :name="el.name"
+                  :label="el.label"
                   :disable="!el.active"
                   @click.prevent="subTab = el.value"
                   :class="[
                     {'q-tab--subactive': el.value === subTab},
-                    {'q-tab--active': el.value === tab} 
+                    {'q-tab--active': el.value === tab}
                   ]"
                 >
                   <q-btn
@@ -410,8 +410,8 @@
           @click.stop=""
         >
           <div class="td-content-section">
-            <div class="text">
-              {{props.row.file}}
+            <div class="text" v-if="props.row.file">
+              {{props.row.file?.extension}}, {{props.row.file?.size}}
             </div>
           </div>
         </q-td>
@@ -429,7 +429,7 @@
         @touchmove.stop
         @touchend.stop
       >
-      
+
       <!-- v-show="props.row.proposals.length" -->
         <q-td key="id" class="td-id"/>
         <q-td
@@ -439,9 +439,9 @@
         >
           <div class="td-content-section">
             <div class="name-img">
-              <img 
-                v-if="smeta.contractor?.image?.placeholder" 
-                :src="smeta.contractor?.image?.placeholder" 
+              <img
+                v-if="smeta.contractor?.image?.placeholder"
+                :src="smeta.contractor?.image?.placeholder"
                 alt=""
               >
             </div>
@@ -530,8 +530,8 @@
 
       </q-tr>
 
-      <q-tr 
-        class="q-tr-smeta q-tr-smeta-null" 
+      <q-tr
+        class="q-tr-smeta q-tr-smeta-null"
         v-show="props.row.smetaVal"
         v-if="props.row.proposals"
         @click.stop="chooseSmeta(smeta)"
@@ -609,11 +609,12 @@
     </template>
   </q-table>
 
-  
+
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
+  import { useQuasar } from 'quasar'
   import useContextMenu from 'src/composable/useContextMenu'
 
   const props = defineProps({
@@ -622,14 +623,14 @@
   })
 
   const emit = defineEmits([
-    'openSmeta', 
-    'editModal', 
+    'openSmeta',
+    'editModal',
     'chooseSmeta',
     'updateItem',
     'dubleItem',
     'delItem',
   ])
-   
+
   const activeSmeta = ref()
   const tab = ref('')
   const tabs = ref()
@@ -663,7 +664,7 @@
       active: true,
     },
   ])
-  
+
   const {
     contextMenu,
     contextMenuActiveTrId,
