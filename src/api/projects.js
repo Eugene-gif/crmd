@@ -24,10 +24,10 @@ function getProgress(created_at, services) {
   let readiness = 0
   if (services.length) {
     readiness = services.reduce(function(total, obj) {
-      return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term
+      return total + obj.service_term + obj.unit_term
     }, 0)
   }
-  
+
   const projectDueDate = parseCustomDate(created_at);
   let projectCompletionDate = new Date(projectDueDate)
   projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
@@ -51,7 +51,7 @@ function getTiming(created_at, services) {
   let readiness = 0
   if (services.length) {
     readiness = services.reduce(function(total, obj) {
-      return total + obj.service_term === null || undefined ? obj.unit_term : obj.service_term
+      return total + obj.service_term + obj.unit_term
     }, 0)
   }
 
@@ -64,12 +64,12 @@ function getTiming(created_at, services) {
   const totalDaysForProject = readiness
   const daysElapsed = Math.floor(timeElapsedInMilliseconds / (1000 * 60 * 60 * 24))
   let daysRemaining = totalDaysForProject - daysElapsed
-
+  console.log(services)
   if (daysRemaining < 0) daysRemaining = 0
 
   return daysRemaining
 }
- 
+
 
 export const projectsApi = {
 
@@ -77,7 +77,7 @@ export const projectsApi = {
     try {
       let resp = await httpClient.post(`${url}/getAll`)
       resp = resp.data.data
-      
+
       resp.filter(el => {
         el.status = 1
         el.orderer = `${el.orderer.data.first_name} ${el.orderer.data.last_name}`
@@ -85,7 +85,7 @@ export const projectsApi = {
         el.created = getFormatDate(el.created_at)
         el.timing = getTiming(el.created_at, el.services)
         el.payment = 80
-        el.readiness = getProgress(el.created_at, el.services)   
+        el.readiness = getProgress(el.created_at, el.services)
         el.share = [
           // {
               //   icon: '/icons/stroipro.jpg',
@@ -104,7 +104,7 @@ export const projectsApi = {
     try {
       let resp = await httpClient.post(`${url}/getMy`)
       resp = resp.data.data
-      
+
       resp.filter(el => {
         el.status = 1
         el.orderer = `${el.orderer.data.first_name} ${el.orderer.data.last_name}`
@@ -112,7 +112,7 @@ export const projectsApi = {
         el.created = getFormatDate(el.created_at)
         el.timing = getTiming(el.created_at, el.services)
         el.payment = 80
-        el.readiness = getProgress(el.created_at, el.services)   
+        el.readiness = getProgress(el.created_at, el.services)
         el.share = []
       })
       console.log(resp)
@@ -122,7 +122,7 @@ export const projectsApi = {
     }
   },
 
-  getById(id) {    
+  getById(id) {
     try {
       return httpClient.post(`${url}/get`, {
         project_id: id
@@ -155,7 +155,7 @@ export const projectsApi = {
     formData.append("address", data.address)
     formData.append("square", data.square)
     formData.append("emoji", data.emoji)
-    
+
     try {
       return httpClient({
         method: "post",
@@ -189,7 +189,7 @@ export const projectsApi = {
     }
   },
 
- 
+
   createProject(formData) {
     try {
       let data = {
@@ -202,7 +202,7 @@ export const projectsApi = {
         emoji: formData.emoji,
         cost: formData.price
       };
-      
+
       if (formData.services.length > 0) {
         data.services = formData.services;
       }
@@ -236,12 +236,12 @@ export const projectsApi = {
   delProject(id) {
     try {
       return httpClient.post(`${url}/delete`, {
-        project_id: id 
+        project_id: id
       }).then(({ data }) => {
         return data
       })
     } catch (err) {
       console.log(err)
-    }  
+    }
   }
 }

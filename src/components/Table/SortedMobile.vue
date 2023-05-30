@@ -50,12 +50,11 @@ export default defineComponent({
             item.label = 'Статус'
           }
           arr.push(item)
-        }        
+        }
       })
       options.value = arr
 
       askDesc.value = props.pagination.descending
-      console.log(askDesc.value)
     }
 
     function onUpdateRows(bool) {
