@@ -150,9 +150,11 @@ a.q-btn.lg-visible {
   .img {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    overflow: hidden;
+    position: relative;
     img {
       width: 100%;
+      object-fit: cover;
     }
   }
 }
@@ -164,7 +166,7 @@ a.q-btn.lg-visible {
   width: 265px;
   overflow: hidden;
   padding-right: 0;
-  
+
   .text {
     flex-wrap: nowrap;
     .desc {
@@ -173,7 +175,7 @@ a.q-btn.lg-visible {
       line-height: 15px;
       letter-spacing: -0.02em;
       color: #FFFFFF;
-      
+
       white-space: nowrap; /* Текст не переносится */
       overflow: hidden; /* Обрезаем всё за пределами блока */
       text-overflow: ellipsis;
@@ -419,7 +421,7 @@ input[type='number'] {
 
 @media (max-width: 772px) {
   .mb-no-mt {
-    margin-top: 0 !important; 
+    margin-top: 0 !important;
   }
 }
 
