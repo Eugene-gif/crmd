@@ -533,7 +533,11 @@
   const onDubleItem = async (id) => {
     try {
       const resp = await estimatesApi.duplicateItem(id)
-      estimate.value.items.push(resp)
+      loading.value = true
+      await getData()
+      await getProject()
+      loading.value = false
+      //estimate.value.items.push(resp)
       $q.notify({
         color: 'positive',
         message: 'Позиция сметы продублирована'

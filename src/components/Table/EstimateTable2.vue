@@ -123,7 +123,7 @@
                 v-if="props.row.image.thumbnail"
               >
                 <div class="img">
-                  <img :src="props.row.image.thumbnail" alt="">
+                  <img :src="props.row.image.thumbnail" alt="" style="">
                 </div>
               </q-tooltip>
             </q-icon>
