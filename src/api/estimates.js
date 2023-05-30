@@ -21,6 +21,11 @@ export const estimatesApi = {
       })
       .then(({ data }) => {
         let resp = data.data
+        resp.items.sort((a, b) => {
+          const aType = a.room_type !== null ? a.room_type : "яяяя";
+          const bType = b.room_type !== null ? b.room_type : "яяяя";
+          return aType.localeCompare(bType, 'ru');
+        })
         resp.items = resp.items.map((row, index) => {
           return {
             ...row,
@@ -29,7 +34,6 @@ export const estimatesApi = {
           }
         })
 
-        console.log(resp)
         return resp
       })
     } catch(err) {
@@ -113,7 +117,7 @@ export const estimatesApi = {
 
     formData.append("name", data.name)
     formData.append("link", data.link)
-    if (data.room_type) formData.append("room_type", data.room_type)
+    if (data.room_type) formData.append("room_type", data.room_type.name)
     if (data.description) formData.append("description", data.description)
     formData.append("quantity", Number(data.quantity))
     formData.append("price_forecast", Number(data.price_forecast))
@@ -145,7 +149,7 @@ export const estimatesApi = {
 
     formData.append("name", data.name)
     formData.append("link", data.link)
-    if (data.room_type) formData.append("room_type", data.room_type)
+    if (data.room_type) formData.append("room_type", data.room_type.name)
     if (data.description) formData.append("description", data.description)
     formData.append("quantity", Number(data.quantity))
     formData.append("price_forecast", Number(data.price_forecast))

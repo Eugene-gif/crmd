@@ -54,7 +54,21 @@
         <q-card-section class="form-section form-section-row form-section-row-behiver">
           <div class="form-col">
             <label class="lable-title">Помещение</label>
-            <SelectType @getData="getSelectType" />
+            <q-select
+              filled
+              v-model="formData.room_type"
+              :options="types"
+              stack-label
+              placeholder="Выбрать"
+              dropdown-icon="svguse:icons/allIcons.svg#select-arrow"
+              class="my-select"
+              behavior="menu"
+              ref="selectDropbox"
+              popup-content-class="my-select-menu"
+              :label="formData.room_type?.name == null ? 'Выберите помещение' : undefined"
+              option-value="id"
+              option-label="name"
+            />
           </div>
           <div class="form-col">
             <label class="lable-title">Кол-во</label>
@@ -195,15 +209,15 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
   import { useQuasar } from 'quasar'
   import { estimatesApi } from 'src/api/estimates'
-  import SelectType from "components/projects/SelectType"
   
   const $q = useQuasar()
 
   const props = defineProps({
-    idEstimate: String
+    idEstimate: String,
+    types: Array
   })
   const emit = defineEmits(['createItem'])
 
@@ -227,11 +241,6 @@
     image: null,
     file: null,
   })
-
-  // тип помещения
-  function getSelectType(data) {
-    formData.value.room_type = data.name
-  }
 
   const onSubmit = async () => {
     lodingBtn.value = true

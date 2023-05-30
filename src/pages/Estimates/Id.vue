@@ -16,6 +16,7 @@
   >
     <DialogPosition  
       :idEstimate="idEstimate"
+      :types="estimate.project?.explications" 
       @createItem="onCreateItem"
      />
      <!-- :update="onUpdate"z -->
@@ -30,7 +31,8 @@
     <DialogUpdate 
       @updateItem="onUpdateItem" 
       :iditem="idActiveItem"
-      :activeField="onActiveField" 
+      :activeField="onActiveField"
+      :types="estimate.project?.explications" 
       v-if="idActiveItem"
     />
   </q-dialog>
@@ -329,7 +331,7 @@
     </div>
 
     <div class="estimates-table-container">
-      <!-- {{estimate.items}} -->
+      {{ estimate.rate }}
       <EstimateTable2
         :columns="columnsTable"
         :rows="estimate.items"
@@ -367,6 +369,7 @@
   import { ref, onMounted } from 'vue'
   import { estimatesApi } from 'src/api/estimates'
   import { projectsApi } from 'src/api/projects'
+  import { designerApi } from 'src/api/designer'
   import { useRoute } from 'vue-router'
   import { useQuasar } from 'quasar'
 
@@ -581,7 +584,8 @@
     try {
       const resp = await projectsApi.getById(estimate.value.project_id)
       estimate.value.project = {
-        name: resp.name
+        name: resp.name,
+        explications: resp.explications
       }
     } catch (err) {
       console.log(err)
@@ -592,6 +596,20 @@
     }
     loading.value = false
   } 
+  
+  async function getSetTerms() {
+    try {
+      await designerApi.getSetTerms(estimate.value.user_id).then(resp => {
+        estimate.value.rate = resp.rate
+      })
+    } catch (err) {
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка получения данных об условиях сотрудничества'
+      })
+      console.log(err)
+    }
+  }
 
 
 
@@ -612,6 +630,7 @@
     loading.value = true
     await getData()
     await getProject()
+    await getSetTerms()
     loading.value = false
   })
 

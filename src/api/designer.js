@@ -205,9 +205,9 @@ export const designerApi = {
 
   
   // условия работ с дизайнерами
-  getSetTerms() {
+  getSetTerms(userId) {
     try {
-      return httpClient.post(`${url}/info/getTerms`)
+      return httpClient.post(`${url}/info/getTerms`, {user_id: userId})
       .then(( {data} ) => {
         return data.data
       })
