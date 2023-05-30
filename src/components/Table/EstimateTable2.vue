@@ -411,7 +411,7 @@
         >
           <div class="td-content-section">
             <div class="text" v-if="props.row.file">
-              
+              {{props.row.file?.extension}}, {{props.row.file?.size}}
             </div>
           </div>
         </q-td>
