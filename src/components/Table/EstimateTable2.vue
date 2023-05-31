@@ -178,7 +178,7 @@
         <q-td
           key="metrics"
           :props="props"
-          @dblclick="editModal(props.row, 'forecast.price')"
+          @dblclick="editModal(props.row, 'forecast_price')"
           @click.stop=""
         >
           <div class="td-content-section">
@@ -370,6 +370,7 @@
           key="brand"
           :props="props"
           class="td-brand"
+          @dblclick="editModal(props.row, 'brand')"
           @click.stop=""
         >
           <div class="td-content-section">
@@ -382,6 +383,7 @@
           key="code"
           :props="props"
           class="td-code"
+          @dblclick="editModal(props.row, 'article')"
           @click.stop=""
         >
           <div class="td-content-section">
@@ -394,6 +396,7 @@
           key="color"
           :props="props"
           class="td-color"
+          @dblclick="editModal(props.row, 'color')"
           @click.stop=""
         >
           <div class="td-content-section">
@@ -613,8 +616,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, onMounted } from 'vue'
-  import { useQuasar } from 'quasar'
+  import { ref} from 'vue'
   import useContextMenu from 'src/composable/useContextMenu'
 
   const props = defineProps({
@@ -633,7 +635,6 @@
 
   const activeSmeta = ref()
   const tab = ref('')
-  const tabs = ref()
 
   const pagination = ref({
     sortBy: '',

@@ -217,7 +217,8 @@
 
   const props = defineProps({
     idEstimate: String,
-    types: Array
+    types: Array,
+    rate: Number
   })
   const emit = defineEmits(['createItem'])
 
@@ -233,7 +234,7 @@
     quantity: '',
     price_forecast: '',
     term_forecast: '',
-    rate_forecast: '',
+    rate_forecast: props.rate,
     article: '',
     color: '',
     manufacturer: '',

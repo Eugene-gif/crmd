@@ -16,6 +16,7 @@
   >
     <DialogPosition  
       :idEstimate="idEstimate"
+      :rate="estimate?.rate"
       :types="estimate.project?.explications" 
       @createItem="onCreateItem"
      />
@@ -331,7 +332,6 @@
     </div>
 
     <div class="estimates-table-container">
-      {{ estimate.rate }}
       <EstimateTable2
         :columns="columnsTable"
         :rows="estimate.items"

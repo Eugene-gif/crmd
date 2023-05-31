@@ -81,6 +81,7 @@
               class="my-input bg-grey-3"
               placeholder="шт/м2" 
               type="number"
+              ref="quantity"
               :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />
           </div>
@@ -114,6 +115,7 @@
             <q-input 
               v-model="formData.price_forecast" 
               type="number" 
+              ref="forecast_price"
               class="my-input bg-grey-3 q-field__no-append" 
               placeholder="Цена" 
             />
@@ -133,6 +135,7 @@
             <q-input 
               v-model="formData.rate_forecast" 
               type="number" 
+              ref="rate"
               class="my-input bg-grey-3 q-field__no-append q-field-procent" 
               placeholder="%" 
             >
@@ -256,6 +259,7 @@
           <label class="lable-title">Производитель</label>
           <q-input 
             v-model="formData.manufacturer"
+            ref="brand"
             class="my-input bg-grey-3"
             placeholder="Укажите производителя"
           />
@@ -266,6 +270,7 @@
             <label class="lable-title">Артикул</label>
             <q-input
               v-model="formData.article" 
+              ref="article"
               class="my-input bg-grey-3" 
               placeholder="Укажите артикул"
             />
@@ -274,6 +279,7 @@
             <label class="lable-title">Цвет</label>
             <q-input
               v-model="formData.color" 
+              ref="color"
               class="my-input bg-grey-3"
               placeholder="Код" 
             />
@@ -414,7 +420,12 @@
   // получение полей
   const term_forecast = ref()
   const name = ref()
-  const description = ref()
+  const forecast_price = ref()
+  const quantity = ref()
+  const rate = ref()
+  const brand = ref()
+  const article = ref()
+  const color = ref()
 
   onMounted( async () => {
     await getItem()
@@ -425,8 +436,20 @@
       case 'name':
         name.value.focus()
         break
-      case 'description':
-        description.value.focus()
+      case 'forecast_price':
+        forecast_price.value.focus()
+        break
+      case 'quantity':
+        quantity.value.focus()
+        break
+      case 'brand':
+        brand.value.focus()
+        break
+      case 'article':
+        article.value.focus()
+        break
+      case 'color':
+        color.value.focus()
         break
     }
   })
