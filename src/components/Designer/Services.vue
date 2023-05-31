@@ -38,7 +38,7 @@
       :columns="columns"
       row-key="id"
       hide-pagination
-      :pagination="pagination"
+      :pagination="{rowsPerPage: 0}"
       class="my-table project-table table-castom-head designer-prifle-table"
     >
       <template v-slot:header-cell-id="props">
@@ -207,6 +207,10 @@
     }
     updateActive.value = bool
     dialog.value = true
+  }
+
+  const modalFalse = () => {
+    dialog.value = false
   }
 
   function modalOpenDel(val) {

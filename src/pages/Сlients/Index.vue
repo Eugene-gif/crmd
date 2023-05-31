@@ -291,428 +291,397 @@
   </q-page>
 </template>
 
-<script>
-import { ref, onMounted } from 'vue'
-import ActionBtn from 'components/Table/ActionBtn.vue'
-import LoaderDate from 'src/components/LoaderDate.vue'
-import NoDate from 'src/components/NoDate.vue'
-import SortedMobile from 'components/Table/SortedMobile.vue'
-import Dialog from 'pages/Сlients/Dialog.vue'
-import { orderersApi } from 'src/api/orderers'
-import { useQuasar } from 'quasar'
- 
-export default {
-  name: 'PageСlients',
-  components: {
-    ActionBtn,
-    LoaderDate,
-    NoDate,
-    SortedMobile,
-    Dialog
-  },
-  setup () {
-    const $q = useQuasar()
-    const loading = ref(false)
-    const nodate = ref(true)
-    const dialog = ref(false)
+<script setup>
+  import { ref, onMounted } from 'vue'
+  import ActionBtn from 'components/Table/ActionBtn.vue'
+  import LoaderDate from 'src/components/LoaderDate.vue'
+  import NoDate from 'src/components/NoDate.vue'
+  import SortedMobile from 'components/Table/SortedMobile.vue'
+  import Dialog from 'pages/Сlients/Dialog.vue'
+  import { orderersApi } from 'src/api/orderers'
+  import { useQuasar } from 'quasar'
+  import { useRoute } from 'vue-router'
 
-    const columns = ref([
-      { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
-      { name: 'image', label: '', field: 'image', align: 'left', sortable: true },
-      { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
-      { name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
-      { name: 'projects', label: 'Проекты', field: 'projects', align: 'left', sortable: true },
-      { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
-    ])
+  const $q = useQuasar()
+  const loading = ref(false)
+  const nodate = ref(true)
+  const dialog = ref(false)
+  const route = useRoute()
 
-    const rows = ref([])
-    const sortRows = ref([])
-    const checkArray = ref([
-      {
-        number: 'а',
-        active: false
-      },
-      {
-        number: 'б',
-        active: false
-      },
-      {
-        number: 'в',
-        active: false
-      },
-      {
-        number: 'г',
-        active: false
-      },
-      {
-        number: 'д',
-        active: false
-      },
-      {
-        number: 'е',
-        active: false
-      },
-      {
-        number: 'ж',
-        active: false
-      },
-      {
-        number: 'з',
-        active: false
-      },
-      {
-        number: 'и',
-        active: false
-      },
-      {
-        number: 'к',
-        active: false
-      },
-      {
-        number: 'л',
-        active: false
-      },
-      {
-        number: 'м',
-        active: false
-      },
-      {
-        number: 'н',
-        active: false
-      },
-      {
-        number: 'о',
-        active: false
-      },
-      {
-        number: 'п',
-        active: false
-      },
-      {
-        number: 'р',
-        active: false
-      },
-      {
-        number: 'с',
-        active: false
-      },
-      {
-        number: 'т',
-        active: false
-      },
-      {
-        number: 'у',
-        active: false
-      },
-      {
-        number: 'ф',
-        active: false
-      },
-      {
-        number: 'х',
-        active: false
-      },
-      {
-        number: 'ц',
-        active: false
-      },
-      {
-        number: 'ч',
-        active: false
-      },
-      {
-        number: 'ш',
-        active: false
-      },
-      {
-        number: 'щ',
-        active: false
-      },
-      {
-        number: 'ы',
-        active: false
-      },
-      {
-        number: 'э',
-        active: false
-      },
-      {
-        number: 'ю',
-        active: false
-      },
-      {
-        number: 'я',
-        active: false
-      }
-    ])
+  const columns = ref([
+    { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
+    { name: 'image', label: '', field: 'image', align: 'left', sortable: true },
+    { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
+    { name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
+    { name: 'projects', label: 'Проекты', field: 'projects', align: 'left', sortable: true },
+    { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
+  ])
 
-    const sort = ref([])
-    const pagination = ref({
-      sortBy: '',
-      rowsPerPage: 0,
-      descending: false
-    })
-    const numberTable = ref([])
-    const sortNumber = ref()
-    const sortNumberOffset = ref()
-    const sortNumberWidth = ref()
-    const nullNumberSorted = ref(false)
-
-    const options2 = ref(['Имя', 'Город', 'Проекты'])
-
-    async function getAll() {
-      loading.value = true
-      try {
-        await orderersApi.getClients()
-        .then(resp => {
-          rows.value = resp
-          sortedTable()
-        })
-      } catch (err) {
-        console.log(err)
-      }
-      loading.value = false
-      if (rows.value == '') {
-        nodate.value = true
-      } else {
-        nodate.value = false
-      }
+  const rows = ref([])
+  const sortRows = ref([])
+  const checkArray = ref([
+    {
+      number: 'а',
+      active: false
+    },
+    {
+      number: 'б',
+      active: false
+    },
+    {
+      number: 'в',
+      active: false
+    },
+    {
+      number: 'г',
+      active: false
+    },
+    {
+      number: 'д',
+      active: false
+    },
+    {
+      number: 'е',
+      active: false
+    },
+    {
+      number: 'ж',
+      active: false
+    },
+    {
+      number: 'з',
+      active: false
+    },
+    {
+      number: 'и',
+      active: false
+    },
+    {
+      number: 'к',
+      active: false
+    },
+    {
+      number: 'л',
+      active: false
+    },
+    {
+      number: 'м',
+      active: false
+    },
+    {
+      number: 'н',
+      active: false
+    },
+    {
+      number: 'о',
+      active: false
+    },
+    {
+      number: 'п',
+      active: false
+    },
+    {
+      number: 'р',
+      active: false
+    },
+    {
+      number: 'с',
+      active: false
+    },
+    {
+      number: 'т',
+      active: false
+    },
+    {
+      number: 'у',
+      active: false
+    },
+    {
+      number: 'ф',
+      active: false
+    },
+    {
+      number: 'х',
+      active: false
+    },
+    {
+      number: 'ц',
+      active: false
+    },
+    {
+      number: 'ч',
+      active: false
+    },
+    {
+      number: 'ш',
+      active: false
+    },
+    {
+      number: 'щ',
+      active: false
+    },
+    {
+      number: 'ы',
+      active: false
+    },
+    {
+      number: 'э',
+      active: false
+    },
+    {
+      number: 'ю',
+      active: false
+    },
+    {
+      number: 'я',
+      active: false
     }
+  ])
 
-    const actionfunc = ref([
-      {
-        title: 'Редактировать',
-        emmit: 'actionUpdate'
-      },
-      {
-        title: 'Дублировать',
-        emmit: 'actionCopy'
-      },
-      {
-        title: 'Удалить',
-        emmit: 'actionDel'
-      },
-    ])
-    const formOrderer = ref()
+  const sort = ref([])
+  const pagination = ref({
+    sortBy: '',
+    rowsPerPage: 0,
+    descending: false
+  })
+  const numberTable = ref([])
+  const sortNumber = ref()
+  const sortNumberOffset = ref()
+  const sortNumberWidth = ref()
+  const nullNumberSorted = ref(false)
 
-    async function onActionUpdate(id) {
-      loading.value = true
-      sortRows.value.map((item) => {
-        if (item.id === id) {
-          let firstname = item.name.split(' ')[0]
-          let lastName = item.name.split(' ')[1]
+  const options2 = ref(['Имя', 'Город', 'Проекты'])
 
-          return formOrderer.value = {
-            id: id,
-            first_name: firstname,
-            second_name: item.name,
-            last_name: lastName,
-            birth_date: '',
-            phone: item.tel,
-            email: item.email,
-            soc_inst: item.instagram,
-            soc_wa: item.whatsapp,
-            soc_tg: item.telegram,
-            photo: item.image,
-            birth_date: item.birth_date,
-            personal_info: 'информация'
-          }
-        }
+  async function getAll() {
+    loading.value = true
+    try {
+      await orderersApi.getClients()
+      .then(resp => {
+        rows.value = resp
+        sortedTable()
       })
-      dialog.value = true
-      loading.value = false
+    } catch (err) {
+      console.log(err)
     }
-    async function onActionCopy(id) {
-      loading.value = true
-      let element 
-      sortRows.value.map((item) => {
-        if (item.id === id) {
-          let firstname = item.name.split(' ')[0]
-          let lastName = item.name.split(' ')[1]
-
-          return element = {
-            first_name: firstname,
-            second_name: item.name,
-            last_name: lastName,
-            birth_date: '',
-            phone: item.tel,
-            email: item.email,
-            soc_inst: item.instagram,
-            soc_wa: item.whatsapp,
-            soc_tg: item.telegram,
-            birth_date: item.birth_date,
-            personal_info: 'информация'
-          }
-        }
-      })
-      try {
-        await orderersApi.createOrderers(element)
-        .then(resp => {
-          getAll()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              timeout: 3000,
-              message: 'Дублирование выполнено'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            timeout: 3000,
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-      loading.value = false
-    }
-    async function onActionDel(id) {
-      loading.value = true
-      try {
-        await orderersApi.delOrderer(id).then(resp => {
-          getAll()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              message: 'Заказчик удален'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-      loading.value = false
-    }
-
-    function sortedTable() {
-      let arr = []
-      let index = 0
-      let oneLetter = ''
-      
-      rows.value.filter((item) => {
-        let letter = item.name.toLowerCase().substr(0, 1)
-        sort.value.push(letter)
-        if (checkArray.value.includes(letter)) {
-
-        }
-        checkArray.value.filter((el) => {    
-          if (el.number.toLowerCase().substr(0, 1) === letter) {
-            el.active = true
-          }
-        })
-        if (sort.value.includes(letter)) {
-          if (oneLetter != letter) {
-            oneLetter = letter
-            item.letter = oneLetter
-            item.index = index
-            index++
-          }
-          return arr.push(item)
-        }
-      })
-      sortRows.value = arr
-    }
-    function updateSorted() {
-      const variable = pagination.value.sortBy
-      if (variable === 'name' || variable === null) {
-        nullNumberSorted.value = false
-      } else {
-        nullNumberSorted.value = true
-      }
-    }
-    function scrollMeTo(ref) {
-      if (window.innerWidth > 772) {
-        window.scrollTo({
-          top: numberTable.value[ref].offsetTop,
-          behavior: 'smooth'
-        })
-      } else {
-        window.scrollTo({
-          top: numberTable.value[ref].offsetTop
-        })
-      }
-    }
-    function sortNumberScroll() {
-      if (window.pageYOffset > sortNumberOffset.value + 300) {
-        sortNumber.value.classList.add('activate')
-      } else {
-        sortNumber.value.classList.remove('activate')
-      }
-    }
-
-    async function onUpdateRows(name, descending) {
-      pagination.value.sortBy = name
-      pagination.value.descending = descending
-    }
-
-    function getTouch(e) {
-      let y = Math.trunc(e.changedTouches[0].clientY)
-      document.body.style.overflow = 'hidden'
-      let letters = sortNumber.value.querySelectorAll('.activate')
-      letters.forEach(function (el) {
-        if(el.getBoundingClientRect().top === y) {
-          el.click()
-        }
-      }) 
-    }
-    function outTouchSortNumber(e) {
-      document.body.style.overflow = 'visible';
-    }
-
-    onMounted(() => {
-      getAll()
-      window.addEventListener('scroll', sortNumberScroll)
-      sortNumberOffset.value = sortNumber.value.offsetTop 
-      if (window.innerWidth > 772) {
-        sortNumberWidth.value = sortNumber.value.offsetWidth
-      }     
-      sortNumber.value.addEventListener('touchmove', getTouch)
-      sortNumber.value.addEventListener('touchend', outTouchSortNumber)
-    })
-    
-    return {
-      loading,
-      nodate,
-
-      options2,
-      columns,
-      rows,
-      sortRows,
-      pagination,
-      checkArray,
-      sort,
-      numberTable,
-      sortNumber,
-      sortNumberOffset,
-      sortNumberWidth,
-      nullNumberSorted,
-      sortedTable,
-      scrollMeTo,
-      updateSorted,
-      getAll,
-      onUpdateRows,
-      getTouch,
-      outTouchSortNumber,
-      dialog,
-      modalFalse() {
-        dialog.value = false
-      },
-
-      onActionUpdate,
-      onActionCopy,
-      onActionDel,
-      actionfunc,
-      formOrderer
+    loading.value = false
+    if (rows.value == '') {
+      nodate.value = true
+    } else {
+      nodate.value = false
     }
   }
-}
+
+  const actionfunc = ref([
+    {
+      title: 'Редактировать',
+      emmit: 'actionUpdate'
+    },
+    {
+      title: 'Дублировать',
+      emmit: 'actionCopy'
+    },
+    {
+      title: 'Удалить',
+      emmit: 'actionDel'
+    },
+  ])
+  const formOrderer = ref()
+
+  async function onActionUpdate(id) {
+    loading.value = true
+    sortRows.value.map((item) => {
+      if (item.id === id) {
+        let firstname = item.name.split(' ')[0]
+        let lastName = item.name.split(' ')[1]
+
+        return formOrderer.value = {
+          id: id,
+          first_name: firstname,
+          second_name: item.name,
+          last_name: lastName,
+          birth_date: '',
+          phone: item.tel,
+          email: item.email,
+          soc_inst: item.instagram,
+          soc_wa: item.whatsapp,
+          soc_tg: item.telegram,
+          photo: item.image,
+          birth_date: item.birth_date,
+          personal_info: 'информация'
+        }
+      }
+    })
+    dialog.value = true
+    loading.value = false
+  }
+  async function onActionCopy(id) {
+    loading.value = true
+    let element 
+    sortRows.value.map((item) => {
+      if (item.id === id) {
+        let firstname = item.name.split(' ')[0]
+        let lastName = item.name.split(' ')[1]
+
+        return element = {
+          first_name: firstname,
+          second_name: item.name,
+          last_name: lastName,
+          birth_date: '',
+          phone: item.tel,
+          email: item.email,
+          soc_inst: item.instagram,
+          soc_wa: item.whatsapp,
+          soc_tg: item.telegram,
+          birth_date: item.birth_date,
+          personal_info: 'информация'
+        }
+      }
+    })
+    try {
+      await orderersApi.createOrderers(element)
+      .then(resp => {
+        getAll()
+        setTimeout(() => {
+          $q.notify({
+            color: 'positive',
+            timeout: 3000,
+            message: 'Дублирование выполнено'
+          })
+        }, 0)
+      })
+    } catch (err) {
+      console.log(err)
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          timeout: 3000,
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }, 0)
+    }
+    loading.value = false
+  }
+  async function onActionDel(id) {
+    loading.value = true
+    try {
+      await orderersApi.delOrderer(id).then(resp => {
+        getAll()
+        setTimeout(() => {
+          $q.notify({
+            color: 'positive',
+            message: 'Заказчик удален'
+          })
+        }, 0)
+      })
+    } catch (err) {
+      console.log(err)
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }, 0)
+    }
+    loading.value = false
+  }
+
+  function sortedTable() {
+    let arr = []
+    let index = 0
+    let oneLetter = ''
+    
+    rows.value.filter((item) => {
+      let letter = item.name.toLowerCase().substr(0, 1)
+      sort.value.push(letter)
+      if (checkArray.value.includes(letter)) {
+
+      }
+      checkArray.value.filter((el) => {    
+        if (el.number.toLowerCase().substr(0, 1) === letter) {
+          el.active = true
+        }
+      })
+      if (sort.value.includes(letter)) {
+        if (oneLetter != letter) {
+          oneLetter = letter
+          item.letter = oneLetter
+          item.index = index
+          index++
+        }
+        return arr.push(item)
+      }
+    })
+    sortRows.value = arr
+  }
+  function updateSorted() {
+    const variable = pagination.value.sortBy
+    if (variable === 'name' || variable === null) {
+      nullNumberSorted.value = false
+    } else {
+      nullNumberSorted.value = true
+    }
+  }
+  function scrollMeTo(ref) {
+    if (window.innerWidth > 772) {
+      window.scrollTo({
+        top: numberTable.value[ref].offsetTop,
+        behavior: 'smooth'
+      })
+    } else {
+      window.scrollTo({
+        top: numberTable.value[ref].offsetTop
+      })
+    }
+  }
+  function sortNumberScroll() {
+    if (window.pageYOffset > sortNumberOffset.value + 300) {
+      sortNumber.value.classList.add('activate')
+    } else {
+      sortNumber.value.classList.remove('activate')
+    }
+  }
+
+  async function onUpdateRows(name, descending) {
+    pagination.value.sortBy = name
+    pagination.value.descending = descending
+  }
+
+  function getTouch(e) {
+    let y = Math.trunc(e.changedTouches[0].clientY)
+    document.body.style.overflow = 'hidden'
+    let letters = sortNumber.value.querySelectorAll('.activate')
+    letters.forEach(function (el) {
+      if(el.getBoundingClientRect().top === y) {
+        el.click()
+      }
+    }) 
+  }
+  function outTouchSortNumber(e) {
+    document.body.style.overflow = 'visible';
+  }
+
+  onMounted(() => {
+    getAll()
+    window.addEventListener('scroll', sortNumberScroll)
+    sortNumberOffset.value = sortNumber.value.offsetTop 
+    if (window.innerWidth > 772) {
+      sortNumberWidth.value = sortNumber.value.offsetWidth
+    }     
+    sortNumber.value.addEventListener('touchmove', getTouch)
+    sortNumber.value.addEventListener('touchend', outTouchSortNumber)
+    if ('add' in route.query) {
+      dialog.value = true
+
+      const newQuery = { ...route.query }
+      delete newQuery.add
+
+      const newPath = `#/${route.path}?${new URLSearchParams(newQuery).toString()}`
+      history.replaceState({}, '', newPath)
+    }
+  })
+
+  const modalFalse = () => {
+    dialog.value = false
+  }
+ 
 </script>

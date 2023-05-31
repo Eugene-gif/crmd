@@ -18,7 +18,7 @@ export const orderersApi = {
     try {
       return httpClient({
         method: "post",
-        url: `${url}/getAllForUser`,
+        url: `${url}/getAllForUser`
       })
       .then(({data}) => {
         return data = data.data.map(el => {
@@ -51,7 +51,7 @@ export const orderersApi = {
     try {
       return httpClient({
         method: "post",
-        url: `${url}/get`
+        url: `${url}/get`,
       }).then(response => {
         let arr = []
         for (const [i, el] of response.data.entries()) {

@@ -278,7 +278,7 @@
   import { ref, onMounted } from 'vue'
   import { projectsApi } from 'src/api/projects'
   import { useQuasar } from 'quasar'
-  import { useRouter } from 'vue-router'
+  import { useRouter, useRoute } from 'vue-router'
 
   import LoaderDate from 'src/components/LoaderDate.vue'
   import NoDate from 'src/components/NoDate.vue'
@@ -293,6 +293,7 @@
   const loading = ref(false)
   const nodate = ref(true)
   const router = useRouter()
+  const route = useRoute()
 
   const columns = ref([
     { name: 'image', label: '', field: 'image', align: 'left' },
@@ -406,9 +407,17 @@
     }
     
   }
-  
   onMounted(() => {
     start()
+    if ('add' in route.query) {
+      dialog.value = true
+
+      const newQuery = { ...route.query }
+      delete newQuery.add
+
+      const newPath = `#${route.path}?${new URLSearchParams(newQuery).toString()}`
+      history.replaceState({}, '', newPath)
+    }
   })
 
   const tab = ref('tiles')

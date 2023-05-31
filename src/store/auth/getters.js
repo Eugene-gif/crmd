@@ -10,30 +10,37 @@ export function getLinks (state) {
       {
         title: 'Профиль',
         link: '/contractor/profile',
+        prefix: null
       },
       {
         title: 'Проекты',
         link: '/projects',
+        prefix: '?add=true'
       },
       {
         title: 'Сметы',
         link: '/estimates',
+        prefix: null
       },
       {
         title: 'Финансы',
         link: '/finance',
+        prefix: '?add=true'
       },
       {
         title: 'Заказчики',
         link: '/clients',
+        prefix: '?add=true'
       },
       {
         title: 'Дизайнеры',
         link: '/designers',
+        prefix: '?add=true'
       },
       {
         title: 'Документы',
         link: '/documents',
+        prefix: '?add=true'
       },
     ]
   } 
@@ -42,30 +49,37 @@ export function getLinks (state) {
       {
         title: 'Профиль',
         link: '/designer/profile',
+        prefix: null
       },
       {
         title: 'Проекты',
         link: '/projects',
+        prefix: '?add=true'
       },
       {
         title: 'Сметы',
         link: '/estimates',
+        prefix: null
       },
       {
         title: 'Финансы',
         link: '/finance',
+        prefix: '?add=true'
       },
       {
         title: 'Заказчики',
         link: '/clients',
+        prefix: '?add=true'
       },
       {
         title: 'Подрядчики',
         link: '/contractor',
+        prefix: '?add=true'
       },
       {
         title: 'Документы',
         link: '/documents',
+        prefix: '?add=true'
       },
     ]
   }
