@@ -554,7 +554,10 @@
   const onDelItem = async (id) => {
     try {
       await estimatesApi.delItem(id)
-      estimate.value.items = estimate.value.items.filter((item) => item.id !== id)
+      loading.value = true
+      await getData()
+      await getProject()
+      loading.value = false
       $q.notify({
         color: 'positive',
         message: 'Позиция сметы удалена'

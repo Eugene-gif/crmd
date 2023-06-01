@@ -300,6 +300,26 @@
           </div>
         </q-card-section>
 
+        <div
+          class="uploadedFile-section"
+          :class="{'uploadedFile-section-uploaded': formData.file?.file_name}"
+          v-show="formData.file?.file_name"
+        >
+        <!-- propsFile !== '' &&  -->
+          <div
+            class="uploadedFile row"
+          >
+            {{formData.file?.file_name}}
+            <q-icon 
+              name="svguse:icons/btnIcons.svg#delete" 
+              color="grey-8" 
+              size="16px" 
+              class="q-ml-auto"
+              style="cursor: pointer;"
+            />
+          </div>
+        </div>
+
         <div class="section-btn">
           <q-btn
             unelevated

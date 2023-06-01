@@ -177,7 +177,7 @@
     min-height: auto;
     
     .q-uploader__header {
-      border-radius: 6px;
+      border-radius: 10px;
       background: #F0F0F0;
       &:before {
         opacity: 0;
@@ -194,6 +194,7 @@
         display: none;
       }
       @media (max-width: 772px) {
+        border-radius: 6px;
         .q-uploader__title {
           font-size: 16px;
           line-height: 16px;
