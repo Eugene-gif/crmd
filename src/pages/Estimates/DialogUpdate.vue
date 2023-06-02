@@ -44,12 +44,31 @@
               />
             </div>
             
-            <div class="my-file-upload">
+            <div class="my-file-upload" :class="{'my-file-upload-no-border': formData.image?.thumbnail}">
               <label class="lable-title">Изображение</label>
+              <div 
+                class="circle-close rotate" 
+                v-if="formData.image?.thumbnail"
+                @click="formData.image = null; onSubmit(true)"
+              >
+                <q-icon
+                  size="12px"
+                  name="svguse:icons/allIcons.svg#close-modal"
+                  color="black"
+                  style="opacity: 0.3;"
+                />
+              </div>
+              <img 
+                :src="formData.image?.thumbnail" 
+                alt="" 
+                class="image-avatar"
+                v-if="formData.image?.thumbnail"
+              >
               <q-uploader
                 style="max-width: 300px"
                 @added="onImageChange"
                 @removed="formData.image = null"
+                v-if="!formData.image?.thumbnail"
               />
             </div>
           </q-card-section>
@@ -316,6 +335,7 @@
               size="16px" 
               class="q-ml-auto"
               style="cursor: pointer;"
+              @click="formData.file = null; onSubmit(true)"
             />
           </div>
         </div>
@@ -401,22 +421,15 @@
     show.value = true;
   }
 
-  const onSubmit = async () => {
+  const onSubmit = async (bool) => {
     lodingBtn.value = true
-    // if (formData.value.room_type == null) {
-    //   $q.notify({
-    //     color: 'negative',
-    //     message: 'Выберите помещение'
-    //   })
-    //   return
-    // } 
+
     try {
       const resp = await estimatesApi.updateItem(formData.value)
-      console.log(resp)
-      emit('updateItem', resp)
+      if (bool !== true) emit('updateItem', resp)
       $q.notify({
         color: 'positive',
-        message: 'Позиция cмeты успешно создана'
+        message: 'Позиция cмeты успешно обновлена'
       })
     } catch(err) {
       console.log(err)

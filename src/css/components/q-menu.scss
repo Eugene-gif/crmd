@@ -424,6 +424,9 @@
   width: 300px;
   margin-left: -150px !important;
   margin-top: 10px !important;
+  @media (min-width: 772px) {
+    min-height: 137px !important;
+  }
   .q-list {
     .q-item {
       padding: 0;

@@ -159,8 +159,8 @@ export const estimatesApi = {
     if (data.color) formData.append("color", data.color)
     if (data.manufacturer) formData.append("manufacturer", data.manufacturer)
 
-    // if (data.image) formData.append("image", data.image)
-    // if (data.file) formData.append("file", data.file)
+    if (!data.image?.thumbnail) formData.append("image", data.image)
+    if (!data.file?.file_name) formData.append("file", data.file)
     
     try {
       const resp = await httpClient({
