@@ -5,7 +5,7 @@
     <div class="dialog-section">
 
       <q-card-section class="row items-center justify-between head">
-        <div class="title">Изменить</div>
+        <div class="title">Изменить </div>
         <q-icon class="close rotate" v-close-popup name="svguse:icons/allIcons.svg#close-modal" />
       </q-card-section>
 
@@ -165,7 +165,7 @@
           </div>
         </q-card-section>
 
-        <q-form @submit="onSubmitOffer">
+        <q-form @submit="onSubmitOffer" v-if="user.role !== 'designer'">
           <q-card-section 
             class="form-section-row-offer"
             :class="[
@@ -364,9 +364,15 @@
   import { useQuasar } from 'quasar'
   import { estimatesApi } from 'src/api/estimates'
   import { proposalsApi } from 'src/api/proposals'
-  
+  import { useStore } from 'vuex'
+
+  const store = useStore()
+  const user = store.getters["auth/getUser"]
   const $q = useQuasar()
   const lodingBtn = ref(false)
+  
+  const roleUser = JSON.parse(localStorage.getItem('userInfo'))
+  const sdfsd = process.env.API_BASE_URL
 
   const props = defineProps({
     iditem: String,

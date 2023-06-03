@@ -262,7 +262,7 @@
 
 <script>
 import { ref, onMounted, computed } from 'vue'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 import EssentialLink from 'components/EssentialLink.vue'
 import Notifications from 'components/MainLayout/Notifications.vue'
 import { useRouter } from 'vue-router'

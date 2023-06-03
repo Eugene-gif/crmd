@@ -413,9 +413,9 @@
           @click.stop=""
         >
           <div class="td-content-section">
-            <div class="text" v-if="props.row.file">
+            <a :href="props.row.file?.file" target="_blank" class="text link" v-if="props.row.file">
               {{props.row.file?.extension}}, {{props.row.file?.size}}
-            </div>
+            </a>
           </div>
         </q-td>
 
@@ -432,7 +432,6 @@
         @touchmove.stop
         @touchend.stop
       >
-
       <!-- v-show="props.row.proposals.length" -->
         <q-td key="id" class="td-id"/>
         <q-td
@@ -711,8 +710,8 @@
   function editModal(val, field) {
     emit('editModal', val, field)
   }
-  function chooseSmeta(value) {
-    emit('chooseSmeta', activeSmeta.value, value)
+  function chooseSmeta(item) {
+    emit('chooseSmeta', item.estimate_item_id, item.id)
   }
 
   function goToLink(link) {

@@ -2,9 +2,13 @@ export function getMe (state) {
   return state.me
 }
 
+export function getUser () {
+  return JSON.parse(localStorage.getItem('userInfo'))
+}
+
 export function getLinks (state) {
-  let user = JSON.parse(localStorage.getItem('userInfo'))
-  let userRole = user.role.code ? user.role.code : user.role_info.code 
+  
+  let userRole = getUser().role.code ? getUser().role.code : getUser().role_info.code 
   if (userRole === 'contractor') {
     return [
       {

@@ -84,10 +84,10 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import { authApi } from 'src/api/auth';
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { authApi } from 'src/api/auth'
 import { useQuasar } from 'quasar'
 
 import AuthInformation from 'src/components/auth/AuthInformation.vue'
@@ -113,14 +113,9 @@ export default {
       password: ''
     })
     const stateToken = computed(() => store.state['auth'])    
-
     const passEye1 = ref(true)
-
     const loading = ref(false)
 
-    onMounted(() => {
-
-    })  
     return {
       accept,
       form,
@@ -137,7 +132,7 @@ export default {
           try {
             await authApi.doLogin(form.value).then(resp => {
               let token = resp.data.data.token
-
+              
               store.commit('auth/setToken', token)
 
               token = localStorage.getItem('token')

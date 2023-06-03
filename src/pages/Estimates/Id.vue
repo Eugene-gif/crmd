@@ -191,80 +191,7 @@
     
     <q-item class="smeta-section">
       <div class="title">Сумма: 90 000 руб. <span class="q-ml-lg">Агентские 18 000 руб.</span></div>
-      <!-- <q-btn
-        rounded
-        unelevated
-        no-caps
-        padding="7px 18px"
-        class="bg-positive my-btn my-btn-14 no-cursor q-ml-xs"
-      >
-        <span class="block text-white">42 000 руб.</span>
-      </q-btn>
-      <q-btn
-        rounded
-        unelevated
-        no-caps
-        padding="7px 18px"
-        class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
-      >
-        <span class="block text-white">18 000 руб.</span>
-      </q-btn>
-      <q-btn
-        rounded
-        unelevated
-        no-caps
-        padding="7px 18px"
-        class="bg-grey-3 my-btn my-btn-14 no-cursor q-ml-xs"
-      >
-        <span class="block text-grey-5">30 000 руб.</span>
-      </q-btn> -->
     </q-item>
-
-    <!-- <q-item class="smeta-section">
-      <div class="title">Агентские: 18 000 руб.</div>
-      <q-btn
-        rounded
-        unelevated
-        no-caps
-        padding="7px 18px"
-        class="bg-positive my-btn my-btn-14 no-cursor q-ml-xs"
-      >
-        <span class="block text-white">6 300 руб.</span>
-      </q-btn>
-      <q-btn
-        rounded
-        unelevated
-        no-caps
-        padding="7px 18px"
-        class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
-      >
-        <span class="block text-white">2 700 руб.</span>
-      </q-btn>
-      <q-btn
-        rounded
-        unelevated
-        no-caps
-        padding="7px 18px"
-        class="bg-grey-3 my-btn my-btn-14 no-cursor q-ml-xs"
-      >
-        <span class="block text-grey-5">9 000 руб.</span>
-      </q-btn>
-    </q-item> -->
-    <!-- <q-item class="smeta-section no-border">
-      <div class="subtitle">Обозначения:</div>
-      <div class="status">
-        <div class="circle bg-positive"></div>
-        <div class="desc">Оплачено</div>
-      </div>
-      <div class="status">
-        <div class="circle bg-negative"></div>
-        <div class="desc">Ожидается</div>
-      </div>
-      <div class="status">
-        <div class="circle bg-grey-7"></div>
-        <div class="desc">На согласовании</div>
-      </div>
-    </q-item> -->
 
     <div class="estimates-info row items-center">
       <div
@@ -461,26 +388,21 @@
     })
   }
 
-  const onChooseSmeta = (smeta, val) => {
-    rowTable.value.filter((item) => {
-      if (item.id === smeta) {
-        item.price = val.price
-        item.metrics = val.metrics
-        item.total = val.total
-        item.deadline = val.deadline
-
-        item.status.id = val.status.id
-        item.status.name = val.status.name
-
-        item.status.user = val.name
-        // item.status.imageUrl = val.imageUrl
-        item.status.imageUrl = '/icons/anton.jpg'
-
-        item.procent = val.procent
-        item.agent = val.agent
-        item.smetaVal = !item.smetaVal
-      }
-    })
+  // применение предложения
+  const onChooseSmeta = async (estimateId, proposalId) => {
+    try {
+      loading.value = true
+      await estimatesApi.setSelectedProposal(estimateId, proposalId)
+      await getData()
+      await getProject()
+      loading.value = false
+      $q.notify({
+        color: 'positive',
+        message: 'Предложение для позиции сметы применено'
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
 
@@ -523,13 +445,12 @@
 
   // открыть редактирование сметы с видимым полем
   const onActiveField = ref()
-  const dataEdit = ref([])
+  // const dataEdit = ref([])
   const onEditModal = (val, field) => {
     idActiveItem.value = val.id
     onActiveField.value = field
-    console.log(field)
     dialogUpdate.value = true
-    dataEdit.value = val
+    // dataEdit.value = val
   }
 
   // дублировать позицию сметы
@@ -540,7 +461,6 @@
       await getData()
       await getProject()
       loading.value = false
-      //estimate.value.items.push(resp)
       $q.notify({
         color: 'positive',
         message: 'Позиция сметы продублирована'
@@ -613,8 +533,6 @@
       console.log(err)
     }
   }
-
-
 
   // composable удаления
   const actionHandlers = {

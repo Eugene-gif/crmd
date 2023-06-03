@@ -27,6 +27,8 @@
       margin-top: 5px;
     }
   }
+
+  // удалено
   .smeta-section {
     display: flex;
     align-items: center;
@@ -100,6 +102,7 @@
     padding-top: 19px;
     margin-bottom: 62px;
     margin-top: 24px;
+    
     .q-expansion-item__container .q-item {
       border-top: 1px solid #F0F0F0;
       padding-top: 23px;
@@ -126,7 +129,15 @@
         }
       }
     }
-
+    @media (min-width: 1900px) {
+      width: calc(100vw - 23.3vw);
+    }
+    @media (min-width: 1439px) and (max-width: 1459px) {
+      width: calc(100vw - 23.3vw);
+    }
+    @media (min-width: 1459px) and (max-width: 1600px) {
+      width: calc(100vw - 23.3vw + 2%);
+    }
   }
   .q-expansion-item--collapsed {
     .q-expansion-item__container {
@@ -214,6 +225,7 @@
     .estimates-table-container {
       padding-top: 0;
       margin-bottom: 30px;
+        width: calc(100vw - 15px);
       table {
         tr {
           * {

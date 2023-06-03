@@ -175,6 +175,19 @@ export const estimatesApi = {
     }
   },
   
+  setSelectedProposal(estimateId, proposalId) {
+    try {
+      return httpClient.post(`${url}/items/setSelectedProposal`, {
+        estimate_item_id: estimateId,
+        proposal_id: proposalId
+      }).then(({ data }) => {
+        return data.data
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   duplicateItem(id) {
     try {
       return httpClient.post(`${url}/items/duplicate`, {
