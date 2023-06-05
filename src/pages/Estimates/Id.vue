@@ -433,14 +433,16 @@
   }
 
   // обновление позиции сметы
-  const onUpdateItem = (obj) => {
+  const onUpdateItem = async (obj) => {
     dialogUpdate.value = false
-    estimate.value.items = estimate.value.items.map((item) => {
-      if (item.id === obj.id) {
-        return obj
-      }
-      return item
-    })
+    // estimate.value.items = estimate.value.items.map((item) => {
+    //   if (item.id === obj.id) {
+    //     return obj
+    //   }
+    //   return item
+    // })
+    await getData()
+    await getProject()
   }
 
   // открыть редактирование сметы с видимым полем

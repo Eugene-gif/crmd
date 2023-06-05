@@ -49,7 +49,7 @@
               <div 
                 class="circle-close rotate" 
                 v-if="formData.image?.thumbnail"
-                @click="formData.image = null; onSubmit(true)"
+                @click="formData.image = ''; onSubmit(true)"
               >
                 <q-icon
                   size="12px"
@@ -120,7 +120,7 @@
                     ref="menu"
                     width="300px"
                   >
-                    Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
+                    Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
                   </q-menu>
               </q-btn>
               <div class="circle-warning-15 lg-visible">
@@ -335,7 +335,7 @@
               size="16px" 
               class="q-ml-auto"
               style="cursor: pointer;"
-              @click="formData.file = null; onSubmit(true)"
+              @click="formData.file = ''; onSubmit(true)"
             />
           </div>
         </div>

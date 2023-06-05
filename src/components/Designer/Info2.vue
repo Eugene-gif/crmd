@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="number">
-          6
+          {{ projects.length }}
         </div>
       </div>
 
@@ -50,16 +50,25 @@
   </div>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref, onMounted } from 'vue'
+import { projectsApi } from 'src/api/projects'
 
-export default {
-  name: 'DesignerInfo2',
-  setup() {
-    const tab = ref()
-    return {
-      tab
-    }
-  },
+const tab = ref()
+const projects = ref([])
+
+const getProjects = async () => {
+  try {
+    await projectsApi.getAllMy().then(resp => {
+      projects.value = resp
+    })
+  } catch (err) {
+    console.log(err)
+  }
 }
+
+onMounted( () => {
+  getProjects()
+})
+
 </script>

@@ -405,7 +405,6 @@
     } else {
       nodate.value = false
     }
-    
   }
   onMounted(() => {
     start()

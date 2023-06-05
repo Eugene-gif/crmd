@@ -51,14 +51,14 @@ export const orderersApi = {
     try {
       return httpClient({
         method: "post",
-        url: `${url}/get`,
-      }).then(response => {
+        url: `${url}/getAllForUser`,
+      }).then(({data}) => {
         let arr = []
-        for (const [i, el] of response.data.entries()) {
+        for (const el of data.data) {
           arr.push({
             id: el.id,
             status: 1,
-            image: image.thumbnail || null,
+            // image: image.thumbnail || null,
             name: `${el.first_name} ${el.last_name}`,
             city: 'города нет в апи',
             tel: el.phone,
@@ -70,16 +70,16 @@ export const orderersApi = {
             birth_date: el.birth_date,
             projects: []
           })
-          for (const project of response.data[i].projects) {
-            arr[i].projects.push({
-              icon: project.emoji,
-              name: project.name,
-              progress: 20,
-              pay: 0,
-              city: 'города нет в апи',
-              link: ''
-            })
-          }
+          // for (const project of response.data[i].projects) {
+          //   arr[i].projects.push({
+          //     icon: project.emoji,
+          //     name: project.name,
+          //     progress: 20,
+          //     pay: 0,
+          //     city: 'города нет в апи',
+          //     link: ''
+          //   })
+          // }
         }
         return arr
       })

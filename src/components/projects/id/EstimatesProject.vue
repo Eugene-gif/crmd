@@ -42,8 +42,8 @@
       </q-card-section>
       <q-card-section
         v-for="item in estimates" :key="item"
+        @dblclick="onActionOpen(item.id)"
       >
-        <q-item :to="`/estimates/${item.id}`" class="link-all"></q-item>
         <div class="title">{{item.name}}</div>
         <q-btn
           rounded

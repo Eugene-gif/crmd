@@ -29,14 +29,9 @@
     class="foto-gallery q-expansion-my"
   >
     <template v-slot:header>
-      <div class="title">
+      <div class="title q-mr-auto">
         Общая информация
       </div>
-      <q-icon
-        name="svguse:icons/allIcons.svg#settings"
-        size="17px"
-        class="settings-icon"
-      />
     </template>
 
     <div class="container">

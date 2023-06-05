@@ -128,15 +128,40 @@ export const designerApi = {
     try {
       return httpClient.post(`${url}/info/services/getAll`)
       .then(( {data} ) => {
-        console.log(data.data)
-        let sortedData = data.data.sort((a, b) => {
-          let dateA = new Date(a.updated_at.split(' ')[0].split('/').reverse().join('-'));
-          let dateB = new Date(b.updated_at.split(' ')[0].split('/').reverse().join('-'));
-          return dateA - dateB; // для сортировки по возрастанию, для сортировки по убыванию используйте dateB - dateA
+        data.data.sort((a, b) => {
+          let dateTimeA = a.updated_at.split(' ')
+          let dateA = dateTimeA[1].split('/').map(part => parseInt(part, 10))
+          let timeA = dateTimeA[0].split(':').map(part => parseInt(part, 10))
+        
+          let dateTimeB = b.updated_at.split(' ')
+          let dateB = dateTimeB[1].split('/').map(part => parseInt(part, 10))
+          let timeB = dateTimeB[0].split(':').map(part => parseInt(part, 10))
+          
+          // Сначала сравниваем годы
+          if (dateA[2] != dateB[2]) {
+            return dateA[2] - dateB[2] // по возрастанию
+          }
+        
+          // Затем сравниваем месяцы
+          if (dateA[1] != dateB[1]) {
+            return dateA[1] - dateB[1] // по возрастанию
+          }
+        
+          // Если месяцы одинаковые, сравниваем дни
+          if (dateA[0] != dateB[0]) {
+            return dateA[0] - dateB[0] // по возрастанию
+          }
+        
+          // Если дни одинаковые, сравниваем часы
+          if (timeA[0] != timeB[0]) {
+            return timeA[0] - timeB[0] // по возрастанию
+          }
+        
+          // Если часы одинаковые, сравниваем минуты
+          return timeA[1] - timeB[1] // по возрастанию
         })
-
-        return data = sortedData.map(el => {
-          console.log(data.data)
+        
+        let sortedData = data.data.map(el => {
           return {
             id: el.id,
             name: el.name,
@@ -145,9 +170,11 @@ export const designerApi = {
             pricename: el.type.text,
             value: false,
             type: el.service_term == null ? 'unit' : 'service',
-            updated_at: el.updated_at.split(' ')[1]
+            updated_at: el.updated_at
           }
         })
+        
+        return sortedData
       })
     } catch(err) {
       console.log(err)

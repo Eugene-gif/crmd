@@ -191,8 +191,7 @@
           <div class="img-section" :style="{background: userInfo.colorBkg}">
             <img :src="me.image.url || me.image.placeholder">
           </div>
-          
-          <q-item-label>{{userInfo.user_name}} {{userInfo.user_lastname}} </q-item-label>
+          <q-item-label>{{userInfo.first_name}} {{userInfo.last_name}} </q-item-label>
           <q-icon size="14px" name="svguse:icons/allIcons.svg#exit" @click="logout" />
         </q-item-section>
       </q-item>

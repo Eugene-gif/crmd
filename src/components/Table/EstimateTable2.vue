@@ -610,8 +610,6 @@
       <div class="q-tr-separator"></div>
     </template>
   </q-table>
-
-
 </template>
 
 <script setup>
@@ -715,6 +713,9 @@
   }
 
   function goToLink(link) {
+    if (!/^https?:\/\//i.test(link)) {
+      link = 'https://' + link
+    }
     window.open(link, '_blank')
   }
 

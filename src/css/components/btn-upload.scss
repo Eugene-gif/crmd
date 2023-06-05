@@ -476,11 +476,22 @@
   line-height: 18px;
   padding: 20px 19px;
   color: #444444;
+  padding-right: 40px;
+  position: relative;
+  .q-icon {
+    position: absolute;
+    top: 20px;
+    right: 19px;
+  }
   @media (max-width: 772px) {
     font-size: 16px;
     line-height: 16px;
     padding: 12px 19px;
     border-radius: 6px;
+    padding-right: 40px;
+    .q-icon {
+      top: 12px;
+    }
   }
 }
 .uploadedFile-section {

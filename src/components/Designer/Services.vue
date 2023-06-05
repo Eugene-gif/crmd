@@ -43,6 +43,7 @@
     >
       <template v-slot:header-cell-id="props">
         <q-th :props="props" class="q-th__id">
+          
         </q-th>
       </template>
       <template v-slot:header-cell-action="props">
