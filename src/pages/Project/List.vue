@@ -408,15 +408,6 @@
   }
   onMounted(() => {
     start()
-    if ('add' in route.query) {
-      dialog.value = true
-
-      const newQuery = { ...route.query }
-      delete newQuery.add
-
-      const newPath = `#${route.path}?${new URLSearchParams(newQuery).toString()}`
-      history.replaceState({}, '', newPath)
-    }
   })
 
   const tab = ref('tiles')

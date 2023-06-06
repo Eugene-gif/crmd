@@ -106,7 +106,7 @@
           <div
             class="sort-number" 
             ref="sortNumber"
-            :style="{ width: sortNumberWidth+'px' }"
+            :class="{ 'activate': sortNumberState }"
           >
             <q-btn
               v-for="item in checkArray"
@@ -118,7 +118,6 @@
             </q-btn>
           </div>
         </div>
-        
       </template>
       <template #body="props">
         <div
@@ -318,7 +317,153 @@
   ])
 
   const rows = ref([])
+  
+  const pagination = ref({
+    sortBy: '',
+    rowsPerPage: 0,
+    descending: false
+  })
+  
+  async function getAll() {
+    loading.value = true
+    try {
+      await orderersApi.getClients()
+      .then(resp => {
+        rows.value = resp
+        sortedTable()
+      })
+    } catch (err) {
+      console.log(err)
+    }
+    loading.value = false
+    if (rows.value == '') {
+      nodate.value = true
+    } else {
+      nodate.value = false
+    }
+  }
+
+  const actionfunc = ref([
+    {
+      title: 'Редактировать',
+      emmit: 'actionUpdate'
+    },
+    {
+      title: 'Дублировать',
+      emmit: 'actionCopy'
+    },
+    {
+      title: 'Удалить',
+      emmit: 'actionDel'
+    },
+  ])
+  const formOrderer = ref();
+
+  const onActionUpdate =(id) => {
+    loading.value = true
+    sortRows.value.map((item) => {
+      if (item.id === id) {
+        let firstname = item.name.split(' ')[0]
+        let lastName = item.name.split(' ')[1]
+
+        return formOrderer.value = {
+          id: id,
+          first_name: firstname,
+          second_name: item.name,
+          last_name: lastName,
+          birth_date: '',
+          phone: item.tel,
+          email: item.email,
+          soc_inst: item.instagram,
+          soc_wa: item.whatsapp,
+          soc_tg: item.telegram,
+          photo: item.image,
+          birth_date: item.birth_date,
+          personal_info: 'информация'
+        }
+      }
+    })
+    dialog.value = true
+    loading.value = false
+  }
+  async function onActionCopy(id) {
+    loading.value = true
+    let element 
+    sortRows.value.map((item) => {
+      if (item.id === id) {
+        let firstname = item.name.split(' ')[0]
+        let lastName = item.name.split(' ')[1]
+
+        return element = {
+          first_name: firstname,
+          second_name: item.name,
+          last_name: lastName,
+          birth_date: '',
+          phone: item.tel,
+          email: item.email,
+          soc_inst: item.instagram,
+          soc_wa: item.whatsapp,
+          soc_tg: item.telegram,
+          birth_date: item.birth_date,
+          personal_info: 'информация'
+        }
+      }
+    })
+    try {
+      await orderersApi.createOrderers(element)
+      .then(resp => {
+        getAll()
+        setTimeout(() => {
+          $q.notify({
+            color: 'positive',
+            timeout: 3000,
+            message: 'Дублирование выполнено'
+          })
+        }, 0)
+      })
+    } catch (err) {
+      console.log(err)
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          timeout: 3000,
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }, 0)
+    }
+    loading.value = false
+  }
+  async function onActionDel(id) {
+    loading.value = true
+    try {
+      await orderersApi.delOrderer(id).then(resp => {
+        getAll()
+        setTimeout(() => {
+          $q.notify({
+            color: 'positive',
+            message: 'Заказчик удален'
+          })
+        }, 0)
+      })
+    } catch (err) {
+      console.log(err)
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }, 0)
+    }
+    loading.value = false
+  }
+  async function onUpdateRows(name, descending) {
+    pagination.value.sortBy = name
+    pagination.value.descending = descending
+  }
+
   const sortRows = ref([])
+
+
   const checkArray = ref([
     {
       number: 'а',
@@ -437,155 +582,15 @@
       active: false
     }
   ])
-
   const sort = ref([])
-  const pagination = ref({
-    sortBy: '',
-    rowsPerPage: 0,
-    descending: false
-  })
   const numberTable = ref([])
   const sortNumber = ref()
   const sortNumberOffset = ref()
-  const sortNumberWidth = ref()
   const nullNumberSorted = ref(false)
+  const sortNumberState = ref(false)
+  const sortStartNumberWidth = ref()
 
-  const options2 = ref(['Имя', 'Город', 'Проекты'])
-
-  async function getAll() {
-    loading.value = true
-    try {
-      await orderersApi.getClients()
-      .then(resp => {
-        rows.value = resp
-        sortedTable()
-      })
-    } catch (err) {
-      console.log(err)
-    }
-    loading.value = false
-    if (rows.value == '') {
-      nodate.value = true
-    } else {
-      nodate.value = false
-    }
-  }
-
-  const actionfunc = ref([
-    {
-      title: 'Редактировать',
-      emmit: 'actionUpdate'
-    },
-    {
-      title: 'Дублировать',
-      emmit: 'actionCopy'
-    },
-    {
-      title: 'Удалить',
-      emmit: 'actionDel'
-    },
-  ])
-  const formOrderer = ref()
-
-  async function onActionUpdate(id) {
-    loading.value = true
-    sortRows.value.map((item) => {
-      if (item.id === id) {
-        let firstname = item.name.split(' ')[0]
-        let lastName = item.name.split(' ')[1]
-
-        return formOrderer.value = {
-          id: id,
-          first_name: firstname,
-          second_name: item.name,
-          last_name: lastName,
-          birth_date: '',
-          phone: item.tel,
-          email: item.email,
-          soc_inst: item.instagram,
-          soc_wa: item.whatsapp,
-          soc_tg: item.telegram,
-          photo: item.image,
-          birth_date: item.birth_date,
-          personal_info: 'информация'
-        }
-      }
-    })
-    dialog.value = true
-    loading.value = false
-  }
-  async function onActionCopy(id) {
-    loading.value = true
-    let element 
-    sortRows.value.map((item) => {
-      if (item.id === id) {
-        let firstname = item.name.split(' ')[0]
-        let lastName = item.name.split(' ')[1]
-
-        return element = {
-          first_name: firstname,
-          second_name: item.name,
-          last_name: lastName,
-          birth_date: '',
-          phone: item.tel,
-          email: item.email,
-          soc_inst: item.instagram,
-          soc_wa: item.whatsapp,
-          soc_tg: item.telegram,
-          birth_date: item.birth_date,
-          personal_info: 'информация'
-        }
-      }
-    })
-    try {
-      await orderersApi.createOrderers(element)
-      .then(resp => {
-        getAll()
-        setTimeout(() => {
-          $q.notify({
-            color: 'positive',
-            timeout: 3000,
-            message: 'Дублирование выполнено'
-          })
-        }, 0)
-      })
-    } catch (err) {
-      console.log(err)
-      setTimeout(() => {
-        $q.notify({
-          color: 'red',
-          timeout: 3000,
-          message: 'Произошла ошибка, попробуйте позже'
-        })
-      }, 0)
-    }
-    loading.value = false
-  }
-  async function onActionDel(id) {
-    loading.value = true
-    try {
-      await orderersApi.delOrderer(id).then(resp => {
-        getAll()
-        setTimeout(() => {
-          $q.notify({
-            color: 'positive',
-            message: 'Заказчик удален'
-          })
-        }, 0)
-      })
-    } catch (err) {
-      console.log(err)
-      setTimeout(() => {
-        $q.notify({
-          color: 'red',
-          message: 'Произошла ошибка, попробуйте позже'
-        })
-      }, 0)
-    }
-    loading.value = false
-  }
-
-  function sortedTable() {
+  const sortedTable = () => {
     let arr = []
     let index = 0
     let oneLetter = ''
@@ -613,6 +618,7 @@
     })
     sortRows.value = arr
   }
+
   function updateSorted() {
     const variable = pagination.value.sortBy
     if (variable === 'name' || variable === null) {
@@ -621,6 +627,7 @@
       nullNumberSorted.value = true
     }
   }
+
   function scrollMeTo(ref) {
     if (window.innerWidth > 772) {
       window.scrollTo({
@@ -633,18 +640,6 @@
       })
     }
   }
-  function sortNumberScroll() {
-    if (window.pageYOffset > sortNumberOffset.value + 300) {
-      sortNumber.value.classList.add('activate')
-    } else {
-      sortNumber.value.classList.remove('activate')
-    }
-  }
-
-  async function onUpdateRows(name, descending) {
-    pagination.value.sortBy = name
-    pagination.value.descending = descending
-  }
 
   function getTouch(e) {
     let y = Math.trunc(e.changedTouches[0].clientY)
@@ -656,28 +651,29 @@
       }
     }) 
   }
+
   function outTouchSortNumber(e) {
-    document.body.style.overflow = 'visible';
+    document.body.style.overflow = 'visible'
   }
 
-  onMounted(() => {
-    getAll()
+  function sortNumberScroll() {
+    if (window.scrollY > sortNumberOffset.value + 300) {
+      sortNumberState.value = true
+      sortNumber.value.style.width = `${sortStartNumberWidth.value}px`
+    } else {
+      sortNumberState.value = false
+      sortNumber.value.style.width = 'auth'
+    }
+  }
+
+  onMounted( async() => {
+    await getAll()
     window.addEventListener('scroll', sortNumberScroll)
-    sortNumberOffset.value = sortNumber.value.offsetTop 
-    if (window.innerWidth > 772) {
-      sortNumberWidth.value = sortNumber.value.offsetWidth
-    }     
+    sortNumberOffset.value = sortNumber.value.offsetTop
     sortNumber.value.addEventListener('touchmove', getTouch)
     sortNumber.value.addEventListener('touchend', outTouchSortNumber)
-    if ('add' in route.query) {
-      dialog.value = true
-
-      const newQuery = { ...route.query }
-      delete newQuery.add
-
-      const newPath = `#/${route.path}?${new URLSearchParams(newQuery).toString()}`
-      history.replaceState({}, '', newPath)
-    }
+    sortStartNumberWidth.value = sortNumber.value.offsetWidth
+    
   })
 
   const modalFalse = () => {

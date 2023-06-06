@@ -45,7 +45,7 @@
   padding-right: 18px;
   justify-content: center;
   transition: all 0.25s;
-  min-width: 100%;
+  
   &.activate {
     position: fixed;
     top: 120px;
@@ -61,7 +61,7 @@
     display: flex;
     flex: 1;
     justify-content: center;
-    min-height: auto;
+    height: auto;
     padding: 0;
     &:before {
       display: none;
@@ -92,7 +92,7 @@
     }
     &.activate {
       top: 120px;
-      min-width: 15px;
+      max-width: 15px;
       padding: 0;
       right: 10px;
       justify-content: center;

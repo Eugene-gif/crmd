@@ -18,30 +18,30 @@ export const orderersApi = {
     try {
       return httpClient({
         method: "post",
-        url: `${url}/getAllForUser`
+        url: `${url}/getAll`
       })
-      .then(({data}) => {
-        return data = data.data.map(el => {
-          return {
-            label: `${el.first_name} ${el.last_name}`,
-            value: `${el.first_name} ${el.last_name}`,
-            icon: el.image.thumbnail !== '' ? el.image.thumbnail : el.image.placeholder,
-            email: el.email,
-            like: 25,
-            dislike: 2,
-            reviews: 12,
-            whatsapp: el.soc_wa,
-            tel: el.phone,
-            telegram: `//${el.soc_tg}`,
-            instagram: `//${el.soc_inst}`,
-            tab: '',
-            tab: '',
-            id: el.id,
-            orderer: el.id,
-            orderer_id: el.id,            
-          }
+        .then(({ data }) => {
+          return data = data.data.map(el => {
+            return {
+              label: `${el.first_name} ${el.last_name}`,
+              value: `${el.first_name} ${el.last_name}`,
+              icon: el.image.thumbnail !== '' ? el.image.thumbnail : el.image.placeholder,
+              email: el.email,
+              like: 25,
+              dislike: 2,
+              reviews: 12,
+              whatsapp: el.soc_wa,
+              tel: el.phone,
+              telegram: `//${el.soc_tg}`,
+              instagram: `//${el.soc_inst}`,
+              tab: '',
+              tab: '',
+              id: el.id,
+              orderer: el.id,
+              orderer_id: el.id,
+            }
+          })
         })
-      })
     } catch (err) {
       console.log(err)
     }
@@ -51,16 +51,14 @@ export const orderersApi = {
     try {
       return httpClient({
         method: "post",
-        url: `${url}/getAllForUser`,
-      }).then(({data}) => {
-        let arr = []
-        for (const el of data.data) {
-          arr.push({
+        url: `${url}/getList`,
+      }).then(({ data }) => {
+        return data.data.map(el => {
+          let client = {
             id: el.id,
             status: 1,
-            // image: image.thumbnail || null,
+            image: el.image.thumbnail || el.image.placeholder,
             name: `${el.first_name} ${el.last_name}`,
-            city: 'города нет в апи',
             tel: el.phone,
             whatsapp: el.soc_wa,
             telegram: el.soc_tg,
@@ -69,19 +67,20 @@ export const orderersApi = {
             show: false,
             birth_date: el.birth_date,
             projects: []
+          }
+
+          el.projects.forEach(project => {
+            client.projects.push({
+              icon: project.emoji,
+              name: project.name,
+              progress: 20,
+              pay: 0,
+              link: ''
+            })
           })
-          // for (const project of response.data[i].projects) {
-          //   arr[i].projects.push({
-          //     icon: project.emoji,
-          //     name: project.name,
-          //     progress: 20,
-          //     pay: 0,
-          //     city: 'города нет в апи',
-          //     link: ''
-          //   })
-          // }
-        }
-        return arr
+
+          return client
+        })
       })
     } catch (err) {
       console.log(err)
@@ -100,7 +99,7 @@ export const orderersApi = {
     formData.append("orderer[data][soc_inst]", data.soc_inst)
     formData.append("orderer[data][soc_wa]", data.soc_wa)
     formData.append("orderer[data][soc_tg]", data.soc_tg)
-    
+
     if (data.image) {
       formData.append("orderer[data][image]", data.image)
     }
@@ -153,7 +152,7 @@ export const orderersApi = {
   delOrderer(id) {
     try {
       return httpClient.post(`${url}/delete`, {
-        id: id 
+        orderer_id: id
       }).then(({ data }) => {
         return data
       })
