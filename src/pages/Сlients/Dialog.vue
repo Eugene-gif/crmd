@@ -119,7 +119,6 @@
               <q-uploader
                 @added="onFileChange"
                 url="http://localhost:8080/upload"
-                style="max-width: 300px"
               />
             </div>
           </q-card-section>
@@ -172,7 +171,7 @@ export default defineComponent({
       soc_inst: 'https://link',
       soc_wa: 'https://link',
       soc_tg: 'https://link',
-      photo: '',
+      image: '',
       personal_info: ' ',
       second_name: 'Вася ивановов'
     })
@@ -254,7 +253,7 @@ export default defineComponent({
       formOrderers.value.birth_date = time
     }
     function onFileChange(file) {
-      formOrderers.value.photo = file[0]
+      formOrderers.value.image = file[0]
     }
 
     function updateInfo() {

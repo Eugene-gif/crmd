@@ -90,8 +90,9 @@
           </i>
         </q-th>
       </template>
+
       <template v-slot:header-cell-content="props">
-        <q-th :props="props" class="q-th__content">
+        <q-th :props="props" >
         </q-th>
       </template>
       <template v-slot:header-cell-image="props">
@@ -154,7 +155,6 @@
                   @click="props.row.show = !props.row.show"
                 />
               </div>
-              <div class="city item">{{props.row.city}}</div>
 
               <div class="projects item " @click="props.row.showProjects = !props.row.showProjects">
                 Проектов: <span v-if="props.row.projects.length > 0">{{props.row.projects.length}}</span>
@@ -235,7 +235,6 @@
                     <div class="text">Оплата: <span>{{item.pay}}</span>%</div>
                   </q-chip>
                 </div>
-                <div class="city">{{item.city}}</div>
               </q-item>
             </div>
             <div class="foot mb-visible">
@@ -311,7 +310,6 @@
     { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
     { name: 'image', label: '', field: 'image', align: 'left', sortable: true },
     { name: 'name', label: 'Имя', field: 'name', align: 'left', sortable: true },
-    { name: 'city', label: 'Город', field: 'city', align: 'left', sortable: true },
     { name: 'projects', label: 'Проекты', field: 'projects', align: 'left', sortable: true },
     { name: 'content', label: '', field: 'content', align: 'left', sortable: true },
   ])
@@ -463,7 +461,6 @@
 
   const sortRows = ref([])
 
-
   const checkArray = ref([
     {
       number: 'а',
@@ -598,9 +595,6 @@
     rows.value.filter((item) => {
       let letter = item.name.toLowerCase().substr(0, 1)
       sort.value.push(letter)
-      if (checkArray.value.includes(letter)) {
-
-      }
       checkArray.value.filter((el) => {    
         if (el.number.toLowerCase().substr(0, 1) === letter) {
           el.active = true
@@ -619,7 +613,7 @@
     sortRows.value = arr
   }
 
-  function updateSorted() {
+  const updateSorted = () => {
     const variable = pagination.value.sortBy
     if (variable === 'name' || variable === null) {
       nullNumberSorted.value = false
@@ -628,20 +622,20 @@
     }
   }
 
-  function scrollMeTo(ref) {
-    if (window.innerWidth > 772) {
+  const scrollMeTo = (ref) => {
+    if (window.innerWidth > 772 && numberTable.value[ref]) {
       window.scrollTo({
         top: numberTable.value[ref].offsetTop,
         behavior: 'smooth'
       })
-    } else {
+    } else if (numberTable.value[ref]) {
       window.scrollTo({
         top: numberTable.value[ref].offsetTop
       })
     }
   }
 
-  function getTouch(e) {
+  const getTouch = (e) => {
     let y = Math.trunc(e.changedTouches[0].clientY)
     document.body.style.overflow = 'hidden'
     let letters = sortNumber.value.querySelectorAll('.activate')
@@ -652,11 +646,11 @@
     }) 
   }
 
-  function outTouchSortNumber(e) {
+  const outTouchSortNumber = (e) => {
     document.body.style.overflow = 'visible'
   }
 
-  function sortNumberScroll() {
+  const sortNumberScroll = () => {
     if (window.scrollY > sortNumberOffset.value + 300) {
       sortNumberState.value = true
       sortNumber.value.style.width = `${sortStartNumberWidth.value}px`

@@ -130,9 +130,7 @@ export const orderersApi = {
     formData.append("soc_inst", data.soc_inst)
     formData.append("soc_wa", data.soc_wa)
     formData.append("soc_tg", data.soc_tg)
-    if (data.image) {
-      formData.append("image", data.image)
-    }
+    if (data.image) formData.append("image", data.image)
     formData.append("personal_info", data.personal_info)
     formData.append("second_name", data.second_name)
     try {

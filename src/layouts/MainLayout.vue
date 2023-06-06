@@ -259,7 +259,7 @@
   </q-layout>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
 import EssentialLink from 'components/EssentialLink.vue'
@@ -283,207 +283,174 @@ const links = [
     title: 'Настройки',
     link: '#'
   }
-];
-
-export default ({
-  name: 'MainLayout',
-
-  components: {
-    EssentialLink,
-    Notifications
+]
+// const userInfo = ref({})
+const leftDrawerOpen = ref(false)
+const text = ref('')
+const showing = ref(false)
+const showingMob = ref(false)
+const headerMenu = ref([
+  {
+    icon: '🏰',
+    name: 'Квартира на патриарших прудах',
+    type: 'проекты'
   },
-
-  setup () {
-    // const userInfo = ref({})
-    const leftDrawerOpen = ref(false)
-    const text = ref('')
-    const showing = ref(false)
-    const showingMob = ref(false)
-    const headerMenu = ref([
-      {
-        icon: '🏰',
-        name: 'Квартира на патриарших прудах',
-        type: 'проекты'
-      },
-      {
-        icon: '🏰',
-        name: 'Квартира в ЖК Адмирал',
-        type: 'проекты'
-      },
-      {
-        icon: '🏰',
-        name: 'Название сметы, в котором есть слово квартира ',
-        type: 'сметы'
-      },
-      {
-        icon: '',
-        name: 'Довольно длинное название сметы, в котором есть слово квартира в котором есть слово квартира в котором есть слово квартира в котором есть слово квартира',
-        type: 'сметы'
-      },
-      {
-        icon: '',
-        name: 'Название сметы, в котором есть слово квартира ',
-        type: 'сметы'
-      },
-      {
-        icon: '',
-        name: 'Название сметы, в котором есть слово квартира ',
-        type: 'сметы'
-      },
-      {
-        icon: '',
-        name: 'Довольно длинное название сметы, в котором есть слово ква ква ква',
-        type: 'сметы'
-      },
-      {
-        icon: '',
-        name: 'Название сметы, в котором есть слово квартира',
-        type: 'сметы'
-      },
-    ])
-    const serchBox = ref([
-      {
-        value: true,
-        title: 'Проекты'
-      },
-      {
-        value: true,
-        title: 'Сметы'
-      },
-      {
-        value: true,
-        title: 'Финансы'
-      },
-      {
-        value: false,
-        title: 'Заказчики'
-      },
-      {
-        value: false,
-        title: 'Подрядчики'
-      },
-      {
-        value: false,
-        title: 'Документы'
-      },
-    ]) 
-    const filterHeaderMenu = ref([])
-    const headerInputSerach = ref()
-    const qCardHeaderMenu = ref()
-    const InputSerachMobile = ref()
-    const mobIconOpenSearch = ref()
-    const essentialLinks = ref([])
+  {
+    icon: '🏰',
+    name: 'Квартира в ЖК Адмирал',
+    type: 'проекты'
+  },
+  {
+    icon: '🏰',
+    name: 'Название сметы, в котором есть слово квартира ',
+    type: 'сметы'
+  },
+  {
+    icon: '',
+    name: 'Довольно длинное название сметы, в котором есть слово квартира в котором есть слово квартира в котором есть слово квартира в котором есть слово квартира',
+    type: 'сметы'
+  },
+  {
+    icon: '',
+    name: 'Название сметы, в котором есть слово квартира ',
+    type: 'сметы'
+  },
+  {
+    icon: '',
+    name: 'Название сметы, в котором есть слово квартира ',
+    type: 'сметы'
+  },
+  {
+    icon: '',
+    name: 'Довольно длинное название сметы, в котором есть слово ква ква ква',
+    type: 'сметы'
+  },
+  {
+    icon: '',
+    name: 'Название сметы, в котором есть слово квартира',
+    type: 'сметы'
+  },
+])
+const serchBox = ref([
+  {
+    value: true,
+    title: 'Проекты'
+  },
+  {
+    value: true,
+    title: 'Сметы'
+  },
+  {
+    value: true,
+    title: 'Финансы'
+  },
+  {
+    value: false,
+    title: 'Заказчики'
+  },
+  {
+    value: false,
+    title: 'Подрядчики'
+  },
+  {
+    value: false,
+    title: 'Документы'
+  },
+]) 
+const filterHeaderMenu = ref([])
+const headerInputSerach = ref()
+const qCardHeaderMenu = ref()
+const InputSerachMobile = ref()
+const mobIconOpenSearch = ref()
+const essentialLinks = ref([])
 
 
-    const router = useRouter()
-    const store = useStore()
-    
-    const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)
-    const me = computed(() => store.state['auth'].me)
-    const linki = computed(() => store.getters["auth/getLinks"]);
+const router = useRouter()
+const store = useStore()
+
+const isAuthenticated = computed(() => store.state['auth'].isAuthenticated)
+const me = computed(() => store.state['auth'].me)
+const linki = computed(() => store.getters["auth/getLinks"]);
 
 
-    const userNikeName = computed(() => {
-      let name = userInfo.value.user_name
-      let lastName = userInfo.value.user_lastname
-      if (name) {
-        name = name.slice(0, 1)
-        lastName = lastName.slice(0, 1)
-      }
-      return name+lastName
-    })
-
-    
-    function dropdown(e){
-      let el = qCardHeaderMenu.value.$el
-      const click = e.composedPath().includes(el)
-      if (!click) {
-        showing.value = false
-        text.value = ''
-      }
-    } 
-    function dropdownMob(e){
-      let el = InputSerachMobile.value.$el
-      let el2 = mobIconOpenSearch.value.$el
-      const click = e.composedPath().includes(el)
-      const click2 = e.composedPath().includes(el2)
-      if (!click2 && !click) {
-        showingMob.value = false
-        text.value = ''
-      }
-    }      
-    function logout(){
-      store.dispatch('auth/singOut')
-      router.push({ path: '/login' })
-    } 
-
-    const userInfo = computed(() => {
-      let user = JSON.parse(localStorage.getItem('userInfo'))
-      console.log(user)
-      return user
-    })   
-    
-    onMounted(() => {
-      window.addEventListener('click', dropdown)
-      window.addEventListener('click', dropdownMob)
-
-      essentialLinks.value = linki.value
-      
-    })
-    return {
-      userInfo, 
-      me,
-      linki,
-      // getUser,
-      userNikeName,
-
-      showing,
-      showingMob,
-      essentialLinks,
-      links,
-      serchBox,
-      headerMenu,
-      filterHeaderMenu,
-      leftDrawerOpen,
-      headerInputSerach,
-      InputSerachMobile,
-      dropdown,
-      dropdownMob,
-      qCardHeaderMenu,
-      mobIconOpenSearch,
-      text,
-      logout,
-      isAuthenticated,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      },
-      
-      filterFn (arrayMenu) {
-        if (text.value.length > 1) {
-          showing.value = true
-        } else {
-          showing.value = false
-        }
-        const needle = text.value.toLowerCase()
-        filterHeaderMenu.value = arrayMenu.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
-      },
-
-      focusInput() {
-        headerInputSerach.value.focus()
-      },
-      closeHeaderMenu() {
-        showing.value = false
-        text.value = ''
-      },
-      openMobileSearch() {
-        showingMob.value = true
-        
-        function func() {
-          InputSerachMobile.value.focus()
-        }
-        setTimeout(func, 400);
-      }
-    }
+const userNikeName = computed(() => {
+  let name = userInfo.value.user_name
+  let lastName = userInfo.value.user_lastname
+  if (name) {
+    name = name.slice(0, 1)
+    lastName = lastName.slice(0, 1)
   }
+  return name+lastName
 })
+
+
+function dropdown(e){
+  let el = qCardHeaderMenu.value.$el
+  const click = e.composedPath().includes(el)
+  if (!click) {
+    showing.value = false
+    text.value = ''
+  }
+} 
+function dropdownMob(e){
+  let el = InputSerachMobile.value.$el
+  let el2 = mobIconOpenSearch.value.$el
+  const click = e.composedPath().includes(el)
+  const click2 = e.composedPath().includes(el2)
+  if (!click2 && !click) {
+    showingMob.value = false
+    text.value = ''
+  }
+}      
+function logout(){
+  store.dispatch('auth/singOut')
+  router.push({ path: '/login' })
+} 
+
+const userInfo = computed(() => {
+  let user = JSON.parse(localStorage.getItem('userInfo'))
+  console.log(user)
+  return user
+})   
+
+
+const toggleLeftDrawer = () => {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}
+
+const filterFn = (arrayMenu) => {
+  if (text.value.length > 1) {
+    showing.value = true
+  } else {
+    showing.value = false
+  }
+  const needle = text.value.toLowerCase()
+  filterHeaderMenu.value = arrayMenu.filter(v => v.name.toLowerCase().indexOf(needle) > -1)
+}
+
+const focusInput = () => {
+  headerInputSerach.value.focus()
+}
+const closeHeaderMenu = () => {
+  showing.value = false
+  text.value = ''
+}
+const openMobileSearch = () => {
+  showingMob.value = true
+  
+  function func () {
+    InputSerachMobile.value.focus()
+  }
+  setTimeout(func, 400);
+}
+
+onMounted(() => {
+  window.addEventListener('click', dropdown)
+  window.addEventListener('click', dropdownMob)
+
+  essentialLinks.value = linki.value
+  
+})
+
+
 </script>

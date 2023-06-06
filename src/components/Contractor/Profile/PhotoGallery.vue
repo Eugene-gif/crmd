@@ -231,7 +231,6 @@ import { contractorApi } from 'src/api/contractor'
 import { VueDadata } from 'vue-dadata'
 import { useQuasar } from 'quasar'
 import { inject } from 'vue'
-import axios from "axios"
 
 export default {
   name: 'PhotoGallery',
@@ -242,8 +241,8 @@ export default {
     const $q = useQuasar()
     const lodingBtn = ref(false)
     const query = ref(null)
-    const suggestion = ref(undefined);
-    const emitter = inject('emitter');
+    const suggestion = ref(undefined)
+    const emitter = inject('emitter')
 
     const formData = ref({
       name: '',
