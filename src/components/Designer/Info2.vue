@@ -4,9 +4,9 @@
       <div class="item">
         <div class="title">
           Проектов
-          <div class="circle-plus bg-positive">
+          <q-btn class="circle-plus bg-positive" to="/projects" @click.stop="emitOpenDialog">
             <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" color="white" />
-          </div>
+          </q-btn>
         </div>
         <div class="number">
           {{ projects.length }}
@@ -65,6 +65,10 @@ const getProjects = async () => {
   } catch (err) {
     console.log(err)
   }
+}
+
+const emitOpenDialog = () => {
+  localStorage.setItem('open_dialog', 'true')
 }
 
 onMounted( () => {

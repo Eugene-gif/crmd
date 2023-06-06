@@ -9,7 +9,7 @@
         v-for="el in list.slice(0, lengthList)"
         :key="el.id"
       >
-        <img :src="el.img" alt="">
+        <img :src="el.image" alt="">
         <CardInfo 
           :anchor="['bottom', 'middle']" 
           :self="['top', 'right']" 

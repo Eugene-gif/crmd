@@ -274,11 +274,11 @@
 </template>
 
 <script setup>
-  
   import { ref, onMounted } from 'vue'
   import { projectsApi } from 'src/api/projects'
   import { useQuasar } from 'quasar'
   import { useRouter, useRoute } from 'vue-router'
+  import { inject } from 'vue'
 
   import LoaderDate from 'src/components/LoaderDate.vue'
   import NoDate from 'src/components/NoDate.vue'
@@ -294,6 +294,7 @@
   const nodate = ref(true)
   const router = useRouter()
   const route = useRoute()
+  const emitter = inject('emitter')
 
   const columns = ref([
     { name: 'image', label: '', field: 'image', align: 'left' },
@@ -322,6 +323,7 @@
   const dialog = ref(false)
   function modalFalse() {
     dialog.value = false
+    localStorage.setItem('open_dialog', '')
   }
 
   const actionfunc = ref([
@@ -406,8 +408,14 @@
       nodate.value = false
     }
   }
-  onMounted(() => {
-    start()
+
+  emitter.on('openModal', (bool) => {
+    if (bool) dialog.value = true
+  })
+  onMounted( async () => {
+    await start()
+    if (localStorage.getItem('open_dialog') === 'true') dialog.value = true
+    localStorage.setItem('open_dialog', '')
   })
 
   const tab = ref('tiles')

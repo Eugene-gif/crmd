@@ -299,8 +299,10 @@
   import { orderersApi } from 'src/api/orderers'
   import { useQuasar } from 'quasar'
   import { useRoute } from 'vue-router'
+  import { inject } from 'vue'
 
   const $q = useQuasar()
+  const emitter = inject('emitter')
   const loading = ref(false)
   const nodate = ref(true)
   const dialog = ref(false)
@@ -660,6 +662,10 @@
     }
   }
 
+  emitter.on('openModal', (bool) => {
+    if (bool) dialog.value = true
+  })
+
   onMounted( async() => {
     await getAll()
     window.addEventListener('scroll', sortNumberScroll)
@@ -668,10 +674,13 @@
     sortNumber.value.addEventListener('touchend', outTouchSortNumber)
     sortStartNumberWidth.value = sortNumber.value.offsetWidth
     
+    if (localStorage.getItem('open_dialog') === 'true') dialog.value = true
+    localStorage.setItem('open_dialog', '')
   })
 
   const modalFalse = () => {
     dialog.value = false
+    localStorage.setItem('open_dialog', '')
   }
  
 </script>

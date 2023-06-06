@@ -13,14 +13,15 @@
         padding="0"
         icon="svguse:icons/allIcons.svg#essentialPlus"
         class="q-icon"
-        :to="`${link}${prefix}`"
-        @click.stop
+        :to="`${link}`"
+        @click.stop="emitOpenDialog"
       />
     </q-item-section>
   </q-item>
 </template>
 
 <script>
+import { inject } from 'vue'
 export default {
   name: 'EssentialLink',
   props: {
@@ -40,5 +41,18 @@ export default {
     },
     prefix: String || null,
   },
+  setup() {
+    const emitter = inject('emitter')
+
+    const emitOpenDialog = () => {
+      localStorage.setItem('open_dialog', 'true')
+      emitter.emit('openModal', true)
+    }
+
+    return {
+      emitter,
+      emitOpenDialog
+    }
+  }
 }
 </script>
