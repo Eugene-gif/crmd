@@ -27,6 +27,7 @@
           no-caps 
           label="База подрядчиков" 
           padding="0" 
+          to="/contractor"
         />
       </div>
     </div>

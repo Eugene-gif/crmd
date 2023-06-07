@@ -481,7 +481,7 @@
   .q-icon {
     position: absolute;
     top: 20px;
-    right: 19px;
+    right: 23px;
   }
   @media (max-width: 772px) {
     font-size: 16px;
@@ -491,6 +491,7 @@
     padding-right: 40px;
     .q-icon {
       top: 12px;
+      right: 9px;
     }
   }
 }

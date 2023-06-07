@@ -12,16 +12,6 @@
 
         <q-card-actions class="q-card-actions-add-customer" >
           <q-card-section class="form-section">
-            <label class="lable-title">Фамилия</label>
-            <q-input
-              v-model="formOrderers.last_name"
-              class="my-input bg-grey-3"
-              placeholder="Введите фамилию"
-              lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
-            />
-          </q-card-section>
-          <q-card-section class="form-section">
             <label class="lable-title">Имя</label>
             <q-input
               v-model="formOrderers.first_name"
@@ -31,6 +21,17 @@
               :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
+          <q-card-section class="form-section">
+            <label class="lable-title">Фамилия</label>
+            <q-input
+              v-model="formOrderers.last_name"
+              class="my-input bg-grey-3"
+              placeholder="Введите фамилию"
+              lazy-rules
+              :rules="[ val => val && val.length > 0 || '']"
+            />
+          </q-card-section>
+          
           <q-card-section class="form-section">
             <label class="lable-title">Отчество</label>
             <q-input
@@ -46,7 +47,7 @@
             <q-input
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
-              placeholder="+7 (999)-999-99-99"
+              placeholder="Введите телефон"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             />
@@ -56,7 +57,7 @@
             <q-input
               v-model="formOrderers.email"
               class="my-input bg-grey-3"
-              placeholder="email@gmail.com"
+              placeholder="Введите e-mail"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             />
@@ -83,7 +84,7 @@
             <q-input
               v-model="formOrderers.soc_tg"
               class="my-input bg-grey-3"
-              placeholder="Ссылка на Telegram"
+              placeholder="@аккаунт"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             >
@@ -96,7 +97,7 @@
             <q-input
               v-model="formOrderers.soc_inst"
               class="my-input bg-grey-3"
-              placeholder="Ссылка на Instagram"
+              placeholder="@аккаунт"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             >
@@ -114,6 +115,7 @@
               class="my-textarea bg-grey-3"
               placeholder="Введите примечание"
             />
+            
             <div class="my-file-upload">
               <label class="lable-title">Изображение</label>
               <q-uploader
@@ -162,18 +164,17 @@ export default defineComponent({
 
     const formOrderers = ref({
       // user_id: '',
-      first_name: 'Вася',
-      second_name: 'отчество',
-      last_name: 'ивановов',
-      birth_date: '27-09-1998',
-      phone: '8999999999999',
-      email: 'email@gmil.com',
-      soc_inst: 'https://link',
-      soc_wa: 'https://link',
-      soc_tg: 'https://link',
+      first_name: '',
+      second_name: '',
+      last_name: '',
+      birth_date: '',
+      phone: '',
+      email: '',
+      soc_inst: '',
+      soc_wa: '',
+      soc_tg: '',
       image: '',
-      personal_info: ' ',
-      second_name: 'Вася ивановов'
+      personal_info: '',
     })
 
     async function onSubmit() {

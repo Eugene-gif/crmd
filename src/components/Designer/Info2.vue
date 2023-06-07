@@ -4,7 +4,7 @@
       <div class="item">
         <div class="title">
           Проектов
-          <q-btn class="circle-plus bg-positive" to="/projects" @click.stop="emitOpenDialog">
+          <q-btn class="circle-plus bg-positive" flat to="/projects" @click.stop="emitOpenDialog">
             <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" color="white" />
           </q-btn>
         </div>

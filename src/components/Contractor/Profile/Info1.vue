@@ -31,6 +31,7 @@
           no-caps 
           label="База дизайнеров" 
           padding="0" 
+          to="/designer"
         />
       </div>
     </div>
