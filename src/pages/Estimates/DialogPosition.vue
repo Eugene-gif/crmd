@@ -102,7 +102,7 @@
               <div class="circle-warning-15 lg-visible">
                 <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
                 <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom">
-                  Подайте предложение, указав условия, на которые вы согласны. Вы сможете поменять и дополнить его, пока статус позиции не будет переведен в «Согласован» обеими сторонами.
+                  Задайте прогноз цены, чтобы подрядчики могли учитывать его при подаче своих предложений. Подать предложение можно к уже созданным позициям сметы.
                 </q-tooltip>
               </div>
             </label>
