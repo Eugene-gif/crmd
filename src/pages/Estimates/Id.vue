@@ -433,8 +433,8 @@
   }
 
   // обновление позиции сметы
-  const onUpdateItem = async (obj) => {
-    dialogUpdate.value = false
+  const onUpdateItem = async (bool) => {
+    if (bool !== true) dialogUpdate.value = false
     // estimate.value.items = estimate.value.items.map((item) => {
     //   if (item.id === obj.id) {
     //     return obj

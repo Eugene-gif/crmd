@@ -44,12 +44,15 @@
               />
             </div>
             
-            <div class="my-file-upload" :class="{'my-file-upload-no-border': formData.image?.thumbnail}">
+            <div 
+              class="my-file-upload my-file-upload--no-close" 
+              :class="{'my-file-upload-no-border': formData.image?.thumbnail,}"
+            >
               <label class="lable-title">Изображение</label>
               <div 
                 class="circle-close rotate" 
                 v-if="formData.image?.thumbnail"
-                @click="formData.image = ''; onSubmit(true)"
+                @click="updateObjItem('img', 'del')"
               >
                 <q-icon
                   size="12px"
@@ -335,7 +338,7 @@
               size="16px" 
               class="q-ml-auto"
               style="cursor: pointer;"
-              @click="formData.file = ''; onSubmit(true)"
+              @click="updateObjItem('file', 'del')"
             />
           </div>
         </div>
@@ -371,8 +374,8 @@
   const $q = useQuasar()
   const lodingBtn = ref(false)
   
-  const roleUser = JSON.parse(localStorage.getItem('userInfo'))
-  const sdfsd = process.env.API_BASE_URL
+  // const roleUser = JSON.parse(localStorage.getItem('userInfo'))
+  // const sdfsd = process.env.API_BASE_URL
 
   const props = defineProps({
     iditem: String,
@@ -431,8 +434,8 @@
     lodingBtn.value = true
 
     try {
-      const resp = await estimatesApi.updateItem(formData.value)
-      if (bool !== true) emit('updateItem', resp)
+      await estimatesApi.updateItem(formData.value)
+      if (bool !== true) emit('updateItem')
       $q.notify({
         color: 'positive',
         message: 'Позиция cмeты успешно обновлена'
@@ -447,6 +450,52 @@
     lodingBtn.value = false
   }
 
+  const updateObjItem = async (name, action) => {
+    try {
+      let resp = null
+      if (name === 'img') {
+        resp = await estimatesApi.updateObjItem(
+          formData.value.id, 
+          action === 'del' ? '' : formData.value.image,
+          name
+        )
+      }
+      if (name === 'file') {
+        await estimatesApi.updateObjItem(
+          formData.value.id,
+          action === 'del' ? '' : formData.value.file,
+          name
+        )
+      }
+
+      if (action === 'del') {
+        if (name === 'img') { 
+          formData.value.image = ''
+        }
+        if (name === 'file') {
+          formData.value.file = ''
+        }
+      } else {
+        if (name === 'img') formData.value.image = resp.image
+      }
+
+      emit('updateItem', true)
+
+      $q.notify({
+        color: 'positive',
+        message: 'Позиция cмeты успешно обновлена'
+      })
+    } catch(err) {
+      console.log(err)
+      $q.notify({
+        color: 'negative',
+        message: 'Произошла ошибка, попробуйте позже'
+      })
+      
+    }
+  }
+
+
   const getItem = async () => {
     try {
       formData.value = await estimatesApi.getItemById(props.iditem)
@@ -454,7 +503,6 @@
       console.log(err)
     }
   }
-
 
   // получение полей
   const term_forecast = ref()
@@ -497,9 +545,11 @@
   // работа с загрузкой файлов и картинок
   const onFileChange = (file) => {
     formData.value.file = file[0]
+    updateObjItem('file')
   }
   const onImageChange = (file) => {
     formData.value.image = file[0]
+    updateObjItem('img')
   }
   const checkFileSize = (files) => {
     return files.filter(file => file.size > 2048)

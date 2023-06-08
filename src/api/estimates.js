@@ -159,8 +159,8 @@ export const estimatesApi = {
     if (data.color) formData.append("color", data.color)
     if (data.manufacturer) formData.append("manufacturer", data.manufacturer)
 
-    if (data.image === '' || typeof(data.image) !== 'object') formData.append("image", data.image)
-    if (data.file === '' || typeof(data.file) !== 'object') formData.append("file", data.file)
+    // formData.append("image", data.image)
+    // formData.append("file", data.file)
     
     try {
       const resp = await httpClient({
@@ -174,7 +174,27 @@ export const estimatesApi = {
       throw err
     }
   },
-  
+
+  async updateObjItem(id, obj, name) {
+    const formData = new FormData()
+    formData.append("id", id)
+
+    if (name === 'img') formData.append("image", obj)
+    if (name === 'file') formData.append("file", obj)
+
+    try {
+      const resp = await httpClient({
+        method: "post",
+        url: `${url}/items/update`,
+        data: formData,
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      return resp.data.data
+    } catch (err) {
+      throw err
+    }
+  },
+
   setSelectedProposal(estimateId, proposalId) {
     try {
       return httpClient.post(`${url}/items/setSelectedProposal`, {

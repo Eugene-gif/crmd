@@ -690,6 +690,19 @@
       }
     }
   }
+  &--no-close {
+    .q-uploader {
+      .q-uploader__list {
+        .q-uploader__file--img {
+          .q-uploader__file-header {
+            .q-btn {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .my-file-upload-rounded {
   .q-uploader {
