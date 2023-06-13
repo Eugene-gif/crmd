@@ -66,8 +66,22 @@
         display: block;
         margin-bottom: 20px;
         align-items: center;
+        &-inline {
+          span {
+            display: inline;
+          }
+          .q-btn {
+            display: inline;
+          }
+        }
         @media (min-width: 772px) {
           height: 18px;
+          &-inline {
+            .lg-visible {
+              display: inline-block;
+              vertical-align: middle;
+            }
+          }
         }
       }
       .text {
@@ -693,11 +707,6 @@
           @media (max-width: 500px) {
             .lable-title {
               min-height: 32px;
-              .circle-warning-15 {
-                position: absolute;
-                top: 0;
-                right: 10px;
-              }
             }
           }
           .q-field {

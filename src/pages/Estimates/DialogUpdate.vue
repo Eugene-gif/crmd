@@ -113,8 +113,8 @@
 
         <q-card-section class="form-section form-section-row no-wrap">
           <div class="form-col-4 q-pl-none items-start">
-            <label class="lable-title ib-mb" style="display: flex;align-items: center !important;">
-              Прогноз<br class="mb-visible"> цены
+            <label class="lable-title ib-mb lable-title-inline">
+              <span>Прогноз<br class="mb-visible"> цены</span>
               <q-btn flat class="circle-warning-15 mb-visible q-ml-auto">
                 <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
                   <q-menu
