@@ -244,7 +244,7 @@
         >
           <div class="td-content-section td-content-status">
             <div class="status">
-              <div :class="`circle bg-${colorStatus(props.row.status.id)}`"></div>
+              <div :class="`circle bg-${colorStatus(props.row.status)}`"></div>
               <div class="desc">{{props.row.status}}</div>
             </div>
             <!-- <img v-if="props.row.status.imageUrl" :src="props.row.status.imageUrl" alt="" class="status-img"> -->
@@ -254,91 +254,13 @@
             self="top middle"
             class="menu-estimate-status"
           >
-            <div class="item item-position">
-              <div class="title">
-                Позиция
-                <q-btn flat class="circle-warning-15">
-                  <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-                  <q-menu
-                    :offset="[10, 10]"
-                    anchor="top middle" self="bottom middle"
-                    class="circle-warning-tooltip mb-visible"
-                    ref="menu"
-                    width="300px"
-                  >
-                    Статус позиции не требует согласования второй стороной, вы можете выбрать любой. «Отмена» и «Куплено заказчиком» ставят запрет подрядчикам на подачу новых предложений.
-                  </q-menu>
-                  <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom lg-visible">
-                    Статус позиции не требует согласования второй стороной, вы можете выбрать любой. «Отмена» и «Куплено заказчиком» ставят запрет подрядчикам на подачу новых предложений.
-                  </q-tooltip>
-                </q-btn>
-              </div>
-              <q-tabs v-model="tab" no-caps class="q-tabs-null">
-                <q-tab name="1" label="В работе" />
-                <q-tab name="2" label="Скомплектовано" />
-                <q-tab name="3" label="Куплено заказчиком" />
-                <q-tab name="4" label="Отмена" />
-              </q-tabs>
-            </div>
-            <div class="item item-deal">
-              <div class="title">
-                Сделка
-                <q-btn flat class="circle-warning-15">
-                  <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
-                  <q-menu
-                    :offset="[10, 10]"
-                    anchor="top middle" self="bottom middle"
-                    class="circle-warning-tooltip mb-visible"
-                    ref="menu"
-                    width="300px"
-                  >
-                    Заключение сделки это фиксация договоренностей дизайнера и подрядчика по данной позиции сметы. Переход в статус «Оплачено» будет считать сумму агентских как долг подрядчика перед дизайнером.
-                  </q-menu>
-                  <q-tooltip max-width="300px" anchor="bottom middle" self="top middle" class="my-tooltip-bottom lg-visible">
-                    Заключение сделки это фиксация договоренностей дизайнера и подрядчика по данной позиции сметы. Переход в статус «Оплачено» будет считать сумму агентских как долг подрядчика перед дизайнером.
-                  </q-tooltip>
-                </q-btn>
-                <q-btn
-                  flat
-                  class="text-grey-5 btn-flat btn-remove"
-                  padding="0"
-                  no-caps
-                  label="отменить сделку"
-                  v-if="tab === '5' || tab === '6' || tab === '7' || tab === '8'"
-                  @click="tab = ''"
-                />
-                <img src="~assets/stroipro.jpg" alt="" class="estimate-status__img">
-              </div>
-              <q-tabs
-                v-model="tab"
-                no-caps
-                class="q-tabs-null"
-              >
-                <q-tab
-                  v-for="el in optionstab"
-                  :key="el"
-                  :name="el.name"
-                  :label="el.label"
-                  :disable="!el.active"
-                  @click.prevent="subTab = el.value"
-                  :class="[
-                    {'q-tab--subactive': el.value === subTab},
-                    {'q-tab--active': el.value === tab}
-                  ]"
-                >
-                  <q-btn
-                    rounded
-                    unelevated
-                    no-caps
-                    padding="4px 18px"
-                    class="bg-positive my-btn my-btn-14 no-cursor q-ml-xs btn-flat"
-                    @click.stop="selectTab(el.value)"
-                  >
-                    <span class="block text-white">подтвердить</span>
-                  </q-btn>
-                </q-tab>
-              </q-tabs>
-            </div>
+            <SelectStatus 
+              :estimate_item_id="props.row.id" 
+              :status="props.row.status" 
+              :options="optionstab" 
+              v-if="optionstab" 
+              @updateStatus="value => props.row.status = value"
+            />
           </q-menu>
         </q-td>
 
@@ -613,8 +535,10 @@
 </template>
 
 <script setup>
-  import { ref} from 'vue'
+  import { ref, onMounted } from 'vue'
+  import { estimatesApi } from 'src/api/estimates'
   import useContextMenu from 'src/composable/useContextMenu'
+  import SelectStatus from 'src/components/estimate/SelectStatus'
 
   const props = defineProps({
     columns: Array,
@@ -631,7 +555,6 @@
   ])
 
   const activeSmeta = ref()
-  const tab = ref('')
 
   const pagination = ref({
     sortBy: '',
@@ -639,29 +562,6 @@
     descending: false
   })
 
-  const subTab = ref()
-  const optionstab = ref([
-    {
-      value: '5',
-      label: 'Согласовано',
-      active: true,
-    },
-    {
-      value: '6',
-      label: 'Оплачено',
-      active: true,
-    },
-    {
-      value: '7',
-      label: 'Готово к выдаче',
-      active: true,
-    },
-    {
-      value: '8',
-      label: 'Выполнено',
-      active: true,
-    },
-  ])
 
   const {
     contextMenu,
@@ -683,19 +583,18 @@
     isMobile
   } = useContextMenu()
 
-  const selectTab = (value) => {
-    subTab.value = ''
-    tab.value = value
-  }
-
-  function colorStatus(statusId) {
-    if (statusId === 1) {
+  
+  const colorStatus = (statusId) => {
+    if (statusId === 'В работе') {
       return 'positive'
     }
-    if (statusId === 2) {
+    if (statusId === 'Отмена') {
       return 'negative'
     }
-    if (statusId === 3) {
+    if (statusId === 'Куплено заказчиком') {
+      return 'primary'
+    }
+    if (statusId === 'Скомплектовано') {
       return 'grey-7'
     }
   }
@@ -718,5 +617,19 @@
     }
     window.open(link, '_blank')
   }
+
+  const optionstab = ref([])
+  const getStatuses = async () => {
+    try {
+      const resp = await estimatesApi.getStatuses()
+      optionstab.value = resp
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  onMounted(() => {
+    getStatuses()
+  })
 
 </script>

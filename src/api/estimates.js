@@ -109,6 +109,26 @@ export const estimatesApi = {
   },
 
 
+  async getStatuses() {
+    try {
+      const resp = await httpClient.post(`${url}/items/getStatuses`)
+      return resp.data.data.statuses
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  async setStatus(estimate_item_id, status) {
+    try {
+      const resp = await httpClient.post(`${url}/items/setStatus`, {
+        estimate_item_id: estimate_item_id,
+        status: status
+      })
+      return resp.data.data
+    } catch (err) {
+      console.log(err)
+    }
+  },
   
   async createItem(data) {
 

@@ -113,9 +113,9 @@
 
         <q-card-section class="form-section form-section-row no-wrap">
           <div class="form-col-4 q-pl-none items-start">
-            <label class="lable-title ib-mb" style="display: flex;">
-              Прогноз цены
-              <q-btn flat class="circle-warning-15 mb-visible">
+            <label class="lable-title ib-mb" style="display: flex;align-items: center !important;">
+              Прогноз<br class="mb-visible"> цены
+              <q-btn flat class="circle-warning-15 mb-visible q-ml-auto">
                 <q-icon name="svguse:icons/allIcons.svg#tooltip" color="grey-4" size="7px"/>
                   <q-menu
                     :offset="[10, 10]"
@@ -144,7 +144,7 @@
             />
           </div>
           <div class="form-col-4">
-            <label class="lable-title">Срок, дней</label>
+            <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
             <q-input 
               v-model="formData.term_forecast" 
               type="number" 
@@ -154,7 +154,7 @@
             />
           </div>
           <div class="form-col-4 q-pr-none items-end">
-            <label class="lable-title">Ставка, процент</label>
+            <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
             <q-input 
               v-model="formData.rate_forecast" 
               type="number" 
