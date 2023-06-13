@@ -234,7 +234,7 @@
     quantity: '',
     price_forecast: '',
     term_forecast: '',
-    rate_forecast: props.rate,
+    rate_forecast: props.rate || '',
     article: '',
     color: '',
     manufacturer: '',

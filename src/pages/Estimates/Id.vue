@@ -89,6 +89,7 @@
           no-caps
           class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite q-ml-xs"
           label="Назад"
+          @click="router.go(-1)"
         />
       </div>
     </div> 
@@ -297,7 +298,7 @@
   import { estimatesApi } from 'src/api/estimates'
   import { projectsApi } from 'src/api/projects'
   import { designerApi } from 'src/api/designer'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { useQuasar } from 'quasar'
 
   import LoaderDate from 'src/components/LoaderDate.vue'
@@ -314,6 +315,7 @@
   
   const $q = useQuasar()
   const loading = ref(false)
+  const router = useRouter()
   const idEstimate = useRoute().params.id
   const cutTitle = (title) => {
     return String(title.substring(0,2))

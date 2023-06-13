@@ -100,9 +100,10 @@
             <label class="lable-title">Кол-во</label>
             <q-input 
               v-model="formData.quantity" 
+              v-number-only
               class="my-input bg-grey-3"
               placeholder="шт/м2" 
-              type="number"
+              type="text"
               ref="quantity"
               :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
             />

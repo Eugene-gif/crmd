@@ -149,7 +149,7 @@ export const estimatesApi = {
 
     formData.append("name", data.name)
     formData.append("link", data.link === null ? '': data.link)
-    if (data.room_type) formData.append("room_type", data.room_type.name)
+    if (data.room_type.name !== null) formData.append("room_type", data.room_type.name)
     formData.append("description", data.description === null ? '': data.description)
     formData.append("quantity", Number(data.quantity))
     formData.append("price_forecast", Number(data.price_forecast))
