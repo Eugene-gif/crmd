@@ -43,6 +43,7 @@
           no-caps
           class="bg-positive text-white q-mr-xs my-btn my-effect h-dark q-ml-xs"
           @click="dialog = true"
+          v-if="userRole === 'designer'"
         >
           <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" color="white" class="mb-visible" />
           <div class="block">Добавить <span class="lg-visible">проект</span></div>
@@ -98,6 +99,18 @@
         </template>
         <template v-slot:header-cell-address="props">
           <q-th :props="props" class="q-th__address">
+          </q-th>
+        </template>
+        <template v-slot:header-cell-timing="props" v-if="userRole === 'contractor'">
+          <q-th :props="props" class="q-th__timing" v-show="false">
+          </q-th>
+        </template>
+        <template v-slot:header-cell-payment="props" v-if="userRole === 'contractor'">
+          <q-th :props="props" class="q-th__payment" v-show="false">
+          </q-th>
+        </template>
+        <template v-slot:header-cell-readiness="props" v-if="userRole === 'contractor'">
+          <q-th :props="props" class="q-th__readiness" v-show="false">
           </q-th>
         </template>
         <template v-slot:header-cell-share="props">
@@ -213,6 +226,7 @@
               key="readiness"
               :props="props"
               class="q-td-readiness"
+              v-if="userRole === 'designer'"
             >
               <q-chip>
                 <div class="text">Готовность: <span>{{props.row.readiness}}</span>%</div>
@@ -225,6 +239,7 @@
               key="payment"
               :props="props"
               class="q-td-payment"
+              v-if="userRole === 'designer'"
             >
               <q-chip>
                 <div class="text">Оплата: <span>{{props.row.payment}}</span>%</div>
@@ -246,7 +261,15 @@
               :props="props"
               class="q-td-share"
             >
-              <q-list>
+              <q-list >
+                <q-item class="items-center">
+                  <q-btn>
+                    <img :src="props.row.creater?.image" alt="">
+                  </q-btn>
+                  <span class="q-ml-md text">{{ props.row.creater?.name }}</span>
+                </q-item>
+              </q-list>
+              <q-list v-if="userRole === 'designer'">
                 <q-item
                   v-for="item in props.row.share.slice(0, 3)" :key="item.link"
                 >
@@ -296,6 +319,8 @@
   const route = useRoute()
   const emitter = inject('emitter')
 
+  let userRole = JSON.parse(localStorage.getItem('userInfo')).role
+
   const columns = ref([
     { name: 'image', label: '', field: 'image', align: 'left' },
     { name: 'status', label: '', field: 'status', align: 'left', sortable: true },
@@ -332,11 +357,11 @@
       emmit: 'actionOpen'
     },
     {
-      title: 'Настройки доступа',
+      title: userRole === 'designer' ? 'Настройки доступа' : null,
       emmit: 'actionCopy'
     },
     {
-      title: 'Удалить проект',
+      title: userRole === 'designer' ? 'Удалить проект' : null,
       emmit: 'actionDel'
     },
   ])
@@ -395,9 +420,8 @@
   async function start() {
     loading.value = true
     try {
-      await projectsApi.getAllMy().then(resp => {
-        rows2.value = resp
-      })
+      if (userRole === 'designer') projectsApi.getAllMy().then(resp => {rows2.value = resp})
+      else await await projectsApi.getAll().then(resp => {rows2.value = resp})
     } catch (err) {
       console.log(err)
     }

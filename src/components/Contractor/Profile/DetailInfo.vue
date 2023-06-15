@@ -138,230 +138,196 @@
   </q-expansion-item>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted, computed } from 'vue'
-import { contractorApi } from 'src/api/contractor';
-import { albumsApi } from 'src/api/albums';
-import { imagesApi } from 'src/api/images';
-import { userApi } from 'src/api/user';
+import { albumsApi } from 'src/api/albums'
+import { imagesApi } from 'src/api/images'
+import { userApi } from 'src/api/user'
 import { useQuasar } from 'quasar'
-import { useStore } from 'vuex';
+import { useStore } from 'vuex'
 
 import PhotoGallery from 'components/Contractor/Profile/PhotoGallery'
 import DialogDelite from 'components/dialog/DialogDelite'
 import DialogLightbox from 'components/dialog/DialogLightbox'
 
-export default {
-  name: 'ProfileDetilInfo',
-  components: {
-    PhotoGallery,
-    DialogDelite,
-    DialogLightbox
-  },
-  setup() {
-    const $q = useQuasar()
-    const store = useStore()
+const $q = useQuasar()
+const store = useStore()
 
-    const dialog = ref(false)
-    const dialogLightbox = ref(false)
-    const lodingBtn = ref(false)
-    const lodingBtn2 = ref(false)
-    const dialogName = ref()
+const dialog = ref(false)
+const dialogLightbox = ref(false)
+const lodingBtn = ref(false)
+const lodingBtn2 = ref(false)
+const dialogName = ref()
 
-    const lightBoxObj = ref({})
-    
-    const me = computed(() => store.state['auth'].me)
+const lightBoxObj = ref({})
 
-    // загрузка аватарки
-    const images = ref([])
+const me = computed(() => store.state['auth'].me)
 
-    const userImage = ref()
-    const systemImage = ref(true)
+// загрузка аватарки
+const images = ref([])
 
-    function getUserImage() {
-      if (me.value.image.url == null) {
-        userImage.value = me.value.image.placeholder
+const userImage = ref()
+const systemImage = ref(true)
+
+function getUserImage() {
+  if (me.value.image.url == null || me.value.image.url === '') {
+    userImage.value = me.value.image.placeholder
+  } else { 
+    userImage.value = me.value.image.url
+    systemImage.value = false
+  }  
+}
+
+
+function checkFileSize (files) {
+  return files.filter(file => file.size < 2048)
+}
+function onRejected (rejectedEntries) {
+  $q.notify({
+    type: 'negative',
+    message: 'Ошибка загрузки'
+  })
+}
+
+async function onFileChange(file) {
+  lodingBtn.value = true
+  if (file === undefined) {
+    file = ['']
+  }
+  try {
+    await userApi.updateUserAvatar(file[0]).then(resp => {
+      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+
+      if (resp.image.url == null) {
+        userImage.value = resp.image.placeholder
       } else { 
-        userImage.value = me.value.image.url
+        userImage.value = resp.image.url
         systemImage.value = false
-      }  
-    }
+      } 
 
+      storageUser.image = resp.image
+      let userInfo = JSON.stringify(storageUser)
+      localStorage.setItem('userInfo', userInfo)
+      
+      store.commit('auth/setMe', resp)
+    })
+  } catch (err) {
+    console.log(err)
+  }
+  lodingBtn.value = false
+}
 
-    function checkFileSize (files) {
-      return files.filter(file => file.size < 2048)
-    }
-    function onRejected (rejectedEntries) {
+async function uploadProfilePhoto(file) {
+  lodingBtn2.value = true
+  
+  let lenghtImages = images.value.length + file.length
+
+  if (lenghtImages > 24 ) {
+    $q.notify({
+      type: 'negative',
+      message: 'Максимальное количество фото - 24 штук'
+    })
+  } else {
+    let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+    let id = storageUser.profile_album_id
+    try {
+      await albumsApi.addImagesInMainAlbum(file, id).then(resp => {
+        images.value = resp.images
+        $q.notify({
+          type: 'positive',
+          message: 'Фото загружены'
+        })
+      })
+    } catch (err) {
+      console.log(err)
       $q.notify({
         type: 'negative',
-        message: 'Ошибка загрузки'
+        message: 'Происошла ошибка'
       })
     }
-    
-    async function onFileChange(file) {
-      lodingBtn.value = true
-      if (file === undefined) {
-        file = ['']
-      }
-      try {
-        await userApi.updateUserAvatar(file[0]).then(resp => {
-          let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-
-          if (resp.image.url == null) {
-            userImage.value = resp.image.placeholder
-          } else { 
-            userImage.value = resp.image.url
-            systemImage.value = false
-          } 
-
-          storageUser.image = resp.image
-          let userInfo = JSON.stringify(storageUser)
-          localStorage.setItem('userInfo', userInfo)
-          
-          store.commit('auth/setMe', resp)
-        })
-      } catch (err) {
-        console.log(err)
-      }
-      lodingBtn.value = false
-    }
-
-    async function uploadProfilePhoto(file) {
-      lodingBtn2.value = true
-      
-      let lenghtImages = images.value.length + file.length
-
-      if (lenghtImages > 24 ) {
-        $q.notify({
-          type: 'negative',
-          message: 'Максимальное количество фото - 24 штук'
-        })
-      } else {
-        let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-        let id = storageUser.profile_album_id
-        try {
-          await albumsApi.addImagesInMainAlbum(file, id).then(resp => {
-            images.value = resp.images
-            $q.notify({
-              type: 'positive',
-              message: 'Фото загружены'
-            })
-          })
-        } catch (err) {
-          console.log(err)
-          $q.notify({
-            type: 'negative',
-            message: 'Происошла ошибка'
-          })
-        }
-      }
-      lodingBtn2.value = false
-    }
-
-    async function getAlbum() {
-      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      let id = storageUser.profile_album_id
-      try {
-        await albumsApi.getAlbum(id).then(resp => {
-          images.value = resp
-        })
-      } catch (err) {
-        console.log(err)
-      }
-    }
-
-    async function delImage(id) {
-      lodingBtn2.value = true
-      try {
-        await imagesApi.delImage(id).then(resp => {
-          images.value = images.value.filter((item) => item.id !== id)
-          $q.notify({
-            type: 'positive',
-            message: 'Картинка удалена'
-          })
-        })
-      } catch (err) {
-        console.log(err)
-        $q.notify({
-          type: 'negative',
-          message: 'Произошла ошибка'
-        })
-      }
-      lodingBtn2.value = false
-    }
-    async function delUserAlbum() {
-      let storageUser = JSON.parse(localStorage.getItem('userInfo'))
-      let id = storageUser.profile_album_id
-      try {
-        await albumsApi.delUserAlbum(id).then(resp => {
-          images.value = []
-          $q.notify({
-            type: 'positive',
-            message: 'Удалено'
-          })
-        })
-      } catch (err) {
-        console.log(err)
-        $q.notify({
-          type: 'negative',
-          message: 'Произошла ошибка'
-        })
-      }
-    }
-
-    function callDelDialog(modal) {
-      dialogName.value = modal
-      dialog.value = true
-    }
-
-    function modalFalse(val) {
-      dialog.value = false
-      if (dialogName.value === 'delAllPhotosUser' && val) delUserAlbum()
-      if (dialogName.value === 'delAvatar' && val) {
-        onFileChange()
-        systemImage.value = true
-      } 
-    }
-
-    function openLightbox (obj) {
-      lightBoxObj.value = obj
-      dialogLightbox.value = true
-    }
-    function UnModalFalseLightbox() {
-      dialogLightbox.value = false
-    }
-    
-    // загрузка множества 
-
-
-    onMounted(() => {
-      getUserImage()
-      getAlbum()
-    }) 
-
-    return {
-      dialog,
-      dialogLightbox,
-      userImage,
-      images,
-      systemImage,
-      lodingBtn,
-      lodingBtn2,
-      dialogName,
-      lightBoxObj,
-      callDelDialog,
-      getUserImage,
-      checkFileSize,
-      onFileChange,
-      onRejected,
-      uploadProfilePhoto,
-      getAlbum,
-      delImage,
-      delUserAlbum,
-      modalFalse,
-      UnModalFalseLightbox,
-      openLightbox,
-    }
-  },
+  }
+  lodingBtn2.value = false
 }
+
+async function getAlbum() {
+  let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+  let id = storageUser.profile_album_id
+  try {
+    await albumsApi.getAlbum(id).then(resp => {
+      images.value = resp
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+async function delImage(id) {
+  lodingBtn2.value = true
+  try {
+    await imagesApi.delImage(id).then(resp => {
+      images.value = images.value.filter((item) => item.id !== id)
+      $q.notify({
+        type: 'positive',
+        message: 'Картинка удалена'
+      })
+    })
+  } catch (err) {
+    console.log(err)
+    $q.notify({
+      type: 'negative',
+      message: 'Произошла ошибка'
+    })
+  }
+  lodingBtn2.value = false
+}
+async function delUserAlbum() {
+  let storageUser = JSON.parse(localStorage.getItem('userInfo'))
+  let id = storageUser.profile_album_id
+  try {
+    await albumsApi.delUserAlbum(id).then(resp => {
+      images.value = []
+      $q.notify({
+        type: 'positive',
+        message: 'Удалено'
+      })
+    })
+  } catch (err) {
+    console.log(err)
+    $q.notify({
+      type: 'negative',
+      message: 'Произошла ошибка'
+    })
+  }
+}
+
+function callDelDialog(modal) {
+  dialogName.value = modal
+  dialog.value = true
+}
+
+function modalFalse(val) {
+  dialog.value = false
+  if (dialogName.value === 'delAllPhotosUser' && val) delUserAlbum()
+  if (dialogName.value === 'delAvatar' && val) {
+    onFileChange()
+    systemImage.value = true
+  } 
+}
+
+function openLightbox (obj) {
+  lightBoxObj.value = obj
+  dialogLightbox.value = true
+}
+function UnModalFalseLightbox() {
+  dialogLightbox.value = false
+}
+
+// загрузка множества 
+
+
+onMounted(() => {
+  getUserImage()
+  getAlbum()
+}) 
+
 </script>

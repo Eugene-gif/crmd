@@ -1,4 +1,65 @@
 <template>
+  <q-dialog
+    v-model="dialogModal"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog projects-dialog projects-dialog-create"
+  >
+    <Dialog @modalFalse="dialogModal = false" />
+  </q-dialog>
+  
+  <q-dialog
+    v-model="dialogDelite"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite @modalFalse="handleModalClose" />
+  </q-dialog>
+
+  <div class="row items-center header-btns-2" v-if="userRole === 'designer'">
+    <q-btn
+      rounded
+      no-caps
+      outline
+      color="grey-3"
+      class="q-mr-xs my-btn my-effect my-btn--outline q-btn-info"
+      @click="dialogModal = true"
+    >
+      <q-icon name="svguse:icons/btnIcons.svg#user" color="grey-8" size="16px" class="q-mr-md">
+        <sup>
+          3
+        </sup>
+      </q-icon>
+      <q-icon name="svguse:icons/btnIcons.svg#link" color="grey-8" size="18px" class="q-mr-md link-icon">
+        <div class="circle"></div>
+      </q-icon>
+      <div class="block text-grey-5">Настройки доступа</div>
+    </q-btn>
+    <q-btn
+      rounded
+      no-caps
+      outline
+      color="grey-3"
+      class="my-btn my-effect q-mr-xs my-btn--outline"
+      @click="dashboardActive = true"
+    >
+      <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="17px" class="q-mr-md" />
+      <div class="block text-grey-5">Редактировать</div>
+    </q-btn>
+    <q-btn
+      rounded
+      no-caps
+      outline
+      color="grey-3"
+      class="my-btn my-effect q-mr-xs my-btn--outline"
+      @click="onActionDel('delProject', projectId)"
+    >
+      <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="17px" class="q-mr-md" />
+      <div class="block text-grey-5">Удалить проект</div>
+    </q-btn>
+  </div>
+  
   <q-expansion-item
     expand-separator
     default-opened
@@ -309,23 +370,31 @@
 </template>
 
 <script setup>
-  import { ref, defineComponent, computed, onMounted } from "vue"
+  import { ref, computed, onMounted } from "vue"
   import Emoji from "components/Emoji"
+  import Dialog from 'pages/Project/dialog-create.vue'
   import { projectsApi } from 'src/api/projects'
   import { useQuasar } from 'quasar'
+  import DialogDelite from 'src/components/dialog/DialogDelite'
+  import useDialogDel from 'src/composable/useDialogDel'
+  import { useRouter } from 'vue-router'
 
   const props = defineProps({
     info: Object,
     type: Array,
-    orderer: Object
+    orderer: Object,
+    projectId: String,
+    userRole: String
   })
 
   const $q = useQuasar()
+  const dialogModal = ref(false)
   const loding = ref(false)
   const lodingBtn = ref(false)
   const lodingBtn2 = ref(false)
   const dashboardActive = ref(false)
   const uploader = ref(null)
+  const router = useRouter()
   const triggerFilePicker = () => {
     if (uploader.value) {
       uploader.value.pickFiles();
@@ -354,6 +423,40 @@
       message: 'Ошибка загрузки'
     })
   }
+
+  async function onActionProjectDel() {
+    try {
+      await projectsApi.delProject(props.projectId).then(resp => {
+        router.push(`/projects`)
+        setTimeout(() => {
+          $q.notify({
+            color: 'positive',
+            message: 'Проект удален'
+          })
+        }, 0)
+      })
+    } catch (err) {
+      console.log(err)
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          message: 'Произошла ошибка, попробуйте позже'
+        })
+      }, 0)
+    }
+  }
+
+  const actionHandlers = {
+    delProject: onActionProjectDel,
+  }
+  const { 
+    dialogDelite, 
+    dialogDelId, 
+    dialogDelName, 
+    onActionDel, 
+    modalCloseDel, 
+    handleModalClose 
+  } = useDialogDel(actionHandlers)
 
 
   async function uploadProfilePhoto(file) {

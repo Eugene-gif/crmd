@@ -95,7 +95,7 @@
     </div> 
     <div class="info row justify-between">
       <p class="desc"><b>Проект</b>: {{estimate.project?.name}}</p>
-      <q-item to="/" class="action q-item-none">Перенести в другой проект</q-item>
+      <!-- <q-item to="/" class="action q-item-none">Перенести в другой проект</q-item> -->
     </div>
     <div class="sectiobn-btns">
       <q-btn
@@ -108,17 +108,6 @@
       >
         <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
         <span class="block q-ml-xs">Добавить позицию</span>
-      </q-btn>
-      <q-btn
-        rounded
-        unelevated
-        no-caps
-        class="bg-positive text-white q-mr-xs my-btn my-effect h-dark"
-        padding="12px 24px 12px 20px"
-        @click="dialogUpdate = true"
-      >
-        <q-icon size="13px" name="svguse:icons/allIcons.svg#miniplus" class="q-mr-sm" />
-        <span class="block q-ml-xs">Изменить</span>
       </q-btn>
       <q-btn
         rounded

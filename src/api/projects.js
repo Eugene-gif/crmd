@@ -13,11 +13,11 @@ function getMyDate(time) {
 
 const currentDate = new Date()
 function parseCustomDate(dateStr) {
-  const timeAndDate = dateStr.split(' ');
-  const [hours, minutes, seconds] = timeAndDate[0].split(':').map(Number);
-  const [day, month, year] = timeAndDate[1].split('/').map(Number);
+  const timeAndDate = dateStr.split(' ')
+  const [hours, minutes, seconds] = timeAndDate[0].split(':').map(Number)
+  const [day, month, year] = timeAndDate[1].split('/').map(Number)
 
-  return new Date(year, month - 1, day, hours, minutes, seconds);
+  return new Date(year, month - 1, day, hours, minutes, seconds)
 }
 
 function getProgress(created_at, services) {
@@ -55,7 +55,7 @@ function getTiming(created_at, services) {
     }, 0)
   }
 
-  const projectDueDate = parseCustomDate(created_at);
+  const projectDueDate = parseCustomDate(created_at)
   let projectCompletionDate = new Date(projectDueDate)
   projectCompletionDate.setDate(projectDueDate.getDate() + readiness);
 
@@ -64,7 +64,7 @@ function getTiming(created_at, services) {
   const totalDaysForProject = readiness
   const daysElapsed = Math.floor(timeElapsedInMilliseconds / (1000 * 60 * 60 * 24))
   let daysRemaining = totalDaysForProject - daysElapsed
-  console.log(services)
+
   if (daysRemaining < 0) daysRemaining = 0
 
   return daysRemaining
@@ -80,6 +80,10 @@ export const projectsApi = {
 
       resp.filter(el => {
         el.status = 1
+        el.creater = {
+          name: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
+          image: el.orderer.data.image.thumbnail ? el.orderer.data.image.thumbnail : el.orderer.data.image.placeholder
+        }
         el.orderer = `${el.orderer.data.first_name} ${el.orderer.data.last_name}`
         el.changed = getFormatDate(el.updated_at)
         el.created = getFormatDate(el.created_at)
