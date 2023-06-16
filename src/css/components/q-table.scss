@@ -650,6 +650,7 @@
         display: none;
       }
     }
+
     tbody {
       display: flex;
       max-width: 1320px;
@@ -911,6 +912,35 @@
       }
     }
   }
+  &.contractor {
+    @media (min-width: 772px) {
+      tbody {
+        .q-td-changed {
+          .btn-new {
+            display: none;
+          }
+        }
+      }
+    }
+    @media (max-width: 772px) {
+      tbody {
+        .q-td-changed {
+          .btn-new {
+            margin-top: 17px;
+            margin-left: 0;
+            margin-bottom: 23px;
+          }
+        }
+      }
+      .q-td-share {
+        .q-list {
+          .q-item-add {
+            display: none;
+          }
+        }
+      }
+    }
+  }
   &.projects-table-cubes {
     tbody {
       tr {
@@ -1083,6 +1113,29 @@
         }
       }
     }
+    &.contractor {
+      tbody {
+        .q-tr-tiles {
+          .q-td-changed {
+            // padding-top: calc(21px + 19px);
+          }
+          .q-td-changed {
+            .btn-new {
+              display: block;
+              margin-left: 0;
+              margin-bottom: 23px;
+            }
+          }
+          .q-td-share {
+            .q-list {
+              .q-item-add {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   
@@ -1198,7 +1251,9 @@
               content: 'Заказчик: ';
             }
           }
-          
+          .q-td-action {
+            margin-right: 5px;
+          }
           .q-td-readiness,
           .q-td-payment{
             flex: 0 0 auto;
@@ -1226,6 +1281,7 @@
           .q-td-payment {
             margin-top: 0;
             padding-left: 0;
+            flex: 1 auto;
             .text {
               margin-left: auto;
             }
@@ -1263,6 +1319,74 @@
               .q-item-add {
                 margin-left: auto;
               }
+            }
+          }
+        }
+      }
+      &.contractor {
+        tbody {
+          .q-tr-tiles {
+            padding-bottom: 0;
+            .q-td-customer {
+              width: 100%;
+              flex: 0 0 100%;
+              margin-left: 0;
+              min-width: 100%;
+              padding-top: 2.5px;
+              padding-bottom: 2.5px;
+              .customer-desginter {
+                margin-right: auto;
+                padding-left: 0;
+                .text {
+                  margin-left: 0;
+                  &:before {
+                    display: none;
+                  }
+                }
+              }
+            }
+            .q-td-share {
+              .q-list {
+                padding-top: 0;
+                .q-item {
+                  display: none;
+                }
+                .q-item-add {
+                  top: 1px;
+                  position: relative;
+                }
+              }
+            }
+            .q-td-square,
+            .q-td-address {
+              background: #F7F7F7;
+              border-top: 1px solid #F0F0F0;
+              border-bottom: 1px solid #F0F0F0;
+              padding-top: 0;
+              padding-bottom: 0;
+              display: flex;
+              align-items: center;
+              height: 28px;
+              .text {
+                font-size: 14px;
+                line-height: 14px;
+              }
+            }
+            .q-td-square {
+              order: 5;
+            }
+            .q-td-address {
+              order: 5;
+              flex: 1 auto;
+              .text {
+                white-space: nowrap;
+              }
+            }
+            .q-td-changed {
+              order: 6;
+            }
+            .q-td-created {
+              padding-right: 25px;
             }
           }
         }

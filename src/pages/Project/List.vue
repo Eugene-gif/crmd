@@ -72,7 +72,11 @@
         row-key="id"
         hide-pagination
         class="my-table projects-table "
-        :class="{'projects-table-cubes': tab === 'cubes', 'projects-table-stripes': tab === 'stripes'}"
+        :class="{
+          'projects-table-cubes': tab === 'cubes',
+          'projects-table-stripes': tab === 'stripes',
+          'contractor': userRole === 'contractor'
+        }"
         v-model:pagination="pagination"
         v-show="rows2 != ''"
       >
@@ -198,6 +202,16 @@
               :props="props"
               class="q-td-changed"
             >
+              <q-btn
+                rounded
+                unelevated
+                no-caps
+                padding="2px 15px"
+                style="width: max-content;height: 19px;border-radius: 13px;"
+                class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs btn-new"
+              >
+                <span class="block text-white" style="font-size:10px;">Новое</span>
+              </q-btn>
               <div class="text">Изменен: {{props.row.changed}}</div>
             </q-td>
             <q-td
@@ -205,6 +219,12 @@
               :props="props"
               class="q-td-customer"
             >
+              <q-item 
+                class="items-center customer-desginter"
+                v-if="tab === 'stripes' && userRole === 'contractor'"
+              >
+                <span class="q-ml-md text">Дизайнер: {{ props.row.creater?.name }}</span>
+              </q-item>
               <div class="text">{{props.row.orderer}}</div>
             </q-td>
             <q-td
@@ -252,6 +272,7 @@
               key="timing"
               :props="props"
               class="q-td-timing"
+              v-if="userRoler === 'designer'"
             >
               <div class="text">Сроки: осталось {{props.row.timing}} дн</div>
             </q-td>
@@ -261,14 +282,6 @@
               :props="props"
               class="q-td-share"
             >
-              <q-list >
-                <q-item class="items-center">
-                  <q-btn>
-                    <img :src="props.row.creater?.image" alt="">
-                  </q-btn>
-                  <span class="q-ml-md text">{{ props.row.creater?.name }}</span>
-                </q-item>
-              </q-list>
               <q-list v-if="userRole === 'designer'">
                 <q-item
                   v-for="item in props.row.share.slice(0, 3)" :key="item.link"
@@ -284,6 +297,26 @@
                 </q-item>
                 <q-item class="q-item-add">
                   <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
+                </q-item>
+              </q-list>
+              <q-list v-else>
+                <q-item class="items-center">
+                  <q-btn>
+                    <img :src="props.row.creater?.image" alt="">
+                  </q-btn>
+                  <span class="q-ml-md text">{{ props.row.creater?.name }}</span>
+                </q-item>
+                <q-item class="q-item-add items-center">
+                  <q-btn
+                    rounded
+                    unelevated
+                    no-caps
+                    padding="2px 15px"
+                    style="width: max-content;height: 19px;border-radius: 13px;"
+                    class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
+                  >
+                    <span class="block text-white" style="font-size:10px;">Новое</span>
+                  </q-btn>
                 </q-item>
               </q-list>
             </q-td>
