@@ -7,7 +7,7 @@
     />
 
     <div class="row justify-between items-center head">
-      <div class="text-h2">{{generalInfo.name}}</div>
+      <div class="text-h2">{{generalInfo.name}}</div> 
       <q-icon size="18px" class="mb-visible" name="svguse:icons/allIcons.svg#back" />
       <div class="head-btns">
         <q-btn
@@ -20,7 +20,7 @@
         />
       </div>
     </div>
-
+{{ creater }}
     <div class="row items-center header-btns">
       <!-- <div v-if="userRole === 'designer'">
         <q-btn
@@ -128,6 +128,7 @@
   import FilesProject from "components/projects/id/FilesProject"
 
   import { projectsApi } from 'src/api/projects'
+  import { designerApi } from 'src/api/designer'
   import { ref, onMounted } from 'vue'
   import { useRoute } from 'vue-router'
 
@@ -139,6 +140,7 @@
 
   const generalInfo = ref({})
   const data = ref({})
+  const creater = ref({})
   async function getProject() {
     loading.value = true
     try {
@@ -175,6 +177,14 @@
     }      
   }
 
+  async function getCreater() {
+    try {
+      creater.value = await designerApi.get(data.value.user_id)
+    } catch (err) {
+      console.log(err)
+    }      
+  }
+
   function onUpdateAlbums(array) {
     data.value.albums = array
   }
@@ -185,6 +195,7 @@
   onMounted( async() => {
     await getType()
     await getProject()
+    await getCreater()
   })
 
 </script>

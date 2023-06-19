@@ -4,6 +4,18 @@ const url = 'designers'
 
 export const designerApi = {
 
+  async get(id) {
+    try {
+      const resp = await httpClient.post(`${url}/get`, {
+        user_id: id
+      })
+
+      return resp.data.data
+    } catch (err) {
+      throw err
+    }
+  },
+
   getListDesigners() {
     try {
       return httpClient.post(`${url}/getAll`)

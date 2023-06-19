@@ -210,7 +210,7 @@
                 class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs btn-new"
                 v-if="userRole === 'contractor'"
               >
-                <span class="block text-white" style="font-size:10px;">Новое</span>
+                <span class="block text-white" style="font-size:10px;">Новый</span>
               </q-btn>
               <div class="text">Изменен: {{props.row.changed}}</div>
             </q-td>
@@ -316,7 +316,7 @@
                     class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
                     v-if="userRole === 'contractor'"
                   >
-                    <span class="block text-white" style="font-size:10px;">Новое</span>
+                    <span class="block text-white" style="font-size:10px;">Новый</span>
                   </q-btn>
                 </q-item>
               </q-list>
