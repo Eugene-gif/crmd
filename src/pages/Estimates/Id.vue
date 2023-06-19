@@ -62,7 +62,11 @@
     transition-hide="fade" 
     class="my-dialog estimates-dialog-export estimates-dialog-settings"
   >
-    <DialogSettings @modalFalse="modalFalse" />
+    <DialogSettings 
+      :idEstimate="idEstimate"
+      :estimateName="estimate.name"
+      @modalFalse="val => {estimate.name = val; dialogSettings = false}"
+    />
   </q-dialog>
 
   <LoaderDate
@@ -97,6 +101,7 @@
       <p class="desc"><b>Проект</b>: {{estimate.project?.name}}</p>
       <!-- <q-item to="/" class="action q-item-none">Перенести в другой проект</q-item> -->
     </div>
+    
     <div class="sectiobn-btns">
       <q-btn
         rounded
@@ -152,6 +157,7 @@
         outline
         color="grey-3"
         class="my-btn my-effect q-mr-xs my-btn--outline"
+        @click="dubleEstimate"
       >
         <q-icon name="svguse:icons/btnIcons.svg#copy" color="grey-8" size="15px" class="q-mr-md" />
         <div class="block text-grey-5">Дублировать смету</div>
@@ -173,6 +179,7 @@
         outline
         color="grey-3"
         class="my-btn my-effect q-mr-xs my-btn--outline"
+        @click="onActionDel('delEstimate', idEstimate)"
       >
         <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-md" />
         <div class="block text-grey-5">Удалить смету</div>
@@ -379,6 +386,34 @@
     })
   }
 
+  // дублирование сметы
+  const dubleEstimate = async () => {
+    try {
+      const resp = await estimatesApi.duble(estimate.value)
+      router.push(`/estimates/${resp.id}`)
+      $q.notify({
+        color: 'positive',
+        message: 'Смета продублирована'
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  // удаление сметы
+  async function onDelEstimate(id) {
+    try {
+      await estimatesApi.del(id)
+      router.push('/estimates')
+      $q.notify({
+        color: 'positive',
+        message: 'Смета удалена'
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
   // применение предложения
   const onChooseSmeta = async (estimateId, proposalId) => {
     try {
@@ -403,7 +438,6 @@
   const modalFalse = () => {
     dialogSecurity.value = false
     dialogExport.value = false
-    dialogSettings.value = false
   }
 
   // добавление новой позиции сметы
@@ -445,7 +479,7 @@
     dialogUpdate.value = true
     // dataEdit.value = val
   }
-
+  
   // дублировать позицию сметы
   const onDubleItem = async (id) => {
     try {
@@ -530,6 +564,7 @@
   // composable удаления
   const actionHandlers = {
     delItem: onDelItem,
+    delEstimate: onDelEstimate
   }
   const { 
     dialogDelite, 

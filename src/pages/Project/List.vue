@@ -171,7 +171,6 @@
               :props="props"
               class="q-td-name"
             >
-            
               <div class="text-h3" @dblclick.stop="onActionOpen(props.row.id)">
                 <span class="name-ico" v-if="props.row.emoji">{{props.row.emoji}}</span>{{props.row.name}}
               </div>
@@ -209,6 +208,7 @@
                 padding="2px 15px"
                 style="width: max-content;height: 19px;border-radius: 13px;"
                 class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs btn-new"
+                v-if="userRole === 'contractor'"
               >
                 <span class="block text-white" style="font-size:10px;">Новое</span>
               </q-btn>
@@ -314,6 +314,7 @@
                     padding="2px 15px"
                     style="width: max-content;height: 19px;border-radius: 13px;"
                     class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs"
+                    v-if="userRole === 'contractor'"
                   >
                     <span class="block text-white" style="font-size:10px;">Новое</span>
                   </q-btn>
@@ -453,17 +454,15 @@
   async function start() {
     loading.value = true
     try {
-      if (userRole === 'designer') projectsApi.getAllMy().then(resp => {rows2.value = resp})
+      if (userRole === 'designer') await projectsApi.getAllMy().then(resp => {rows2.value = resp})
       else await await projectsApi.getAll().then(resp => {rows2.value = resp})
+
+      if (!rows2.value.length) nodate.value = true
+      else nodate.value = false
     } catch (err) {
       console.log(err)
     }
     loading.value = false
-    if (rows2.value == '') {
-      nodate.value = true
-    } else {
-      nodate.value = false
-    }
   }
 
   emitter.on('openModal', (bool) => {

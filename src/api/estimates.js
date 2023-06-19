@@ -74,6 +74,31 @@ export const estimatesApi = {
     }
   },
 
+  async duble(estimate) {
+    try {
+      const resp = await httpClient.post(`${url}/duplicate`, {
+        estimate_id: estimate.id,
+        project_id: estimate.project_id,
+        name: estimate.name
+      })
+      return resp.data.data
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  async update(estimate_id, name) {
+    try {
+      const resp = await httpClient.post(`${url}/update`, {
+        id: estimate_id,
+        name: name
+      })
+      return resp.data.data
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
   del(id) {
     try {
       return httpClient.post(`${url}/delete`, {

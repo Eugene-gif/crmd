@@ -22,7 +22,7 @@
     </div>
 
     <div class="row items-center header-btns">
-      <div v-if="userRole === 'designer'">
+      <!-- <div v-if="userRole === 'designer'">
         <q-btn
           rounded
           unelevated
@@ -58,7 +58,7 @@
           class="bg-positive text-white my-btn my-effect h-dark q-mr-xs"
           label="Финансы"
         />
-      </div>
+      </div> -->
     </div>
     
 
