@@ -68,12 +68,12 @@
     :class="{'hidden-settings-icon': dashboardActive}"
   >
     <template v-slot:header>
-      <div class="title">Данные объекта</div>
+      <div class="title q-mr-auto">Данные объекта</div>
       <q-icon
         name="svguse:icons/allIcons.svg#settings"
         size="17px"
         class="settings-icon"
-        v-if="!dashboardActive"
+        v-if="userRole === 'designer' && !dashboardActive"
         @click.stop="dashboardActive = !dashboardActive"
       />
     </template>
@@ -139,13 +139,14 @@
             />
             <label class="text text-white">Заменить фото</label>
           </div>
-          <div class="btn-upload-2" @click="triggerFilePicker">
+          <div class="btn-upload-2" @click="userRole === 'designer'?? triggerFilePicker">
             <q-uploader
               @added="uploadProfilePhoto"
               multiple
               accept=".jpg, image/*"
               @rejected="onRejected"
               ref="uploader"
+              v-if="userRole === 'designer'"
               :class="{ 'btn-load-grey': lodingBtn2 }"
             />
             <div class="upload-content">
@@ -158,12 +159,12 @@
                   
                 />
               </div>
-              <label class="text">Добавить фото</label>
+              <label class="text" v-if="userRole === 'designer'">Добавить фото</label>
             </div>
           </div>
         </div>
 
-        <div class="q-item section-toolbar">
+        <div class="q-item section-toolbar" v-if="userRole === 'designer'">
           <div class="item">
             <div class="title">Прогресс проекта <span>{{info.readiness}}%</span></div>
             <div class="flex toolbar">
@@ -179,7 +180,7 @@
         </div>
       </q-card-section>
 
-      <q-card-section class="img-section">
+      <q-card-section class="img-section" >
         <div
           class="circle-close mini rotate" 
           v-show="formData.image?.url"
@@ -193,7 +194,7 @@
           />
         </div>
         <img :src="formData.image?.url" alt="" v-show="formData.image?.url">
-        <div class="btn-upload" v-show="formData.image?.url">
+        <div class="btn-upload" v-show="formData.image?.url" v-if="userRole === 'designer'">
           <q-uploader
             @added="uploadProfilePhoto"
             accept=".jpg, image/*"
@@ -202,12 +203,13 @@
           />
           <label class="text text-white">Заменить фото</label>
         </div>
-        <div class="btn-upload-2" @click="triggerFilePicker">
+        <div class="btn-upload-2" @click="userRole === 'designer'?? triggerFilePicker">
           <q-uploader
             @added="uploadProfilePhoto"
             multiple
             accept=".jpg, image/*"
             @rejected="onRejected"
+            v-if="userRole === 'designer'"
             :class="{ 'btn-load-grey': lodingBtn2 }"
           />
           <div class="upload-content">
@@ -220,7 +222,7 @@
                 
               />
             </div>
-            <label class="text">Добавить фото</label>
+            <label class="text" v-if="userRole === 'designer'">Добавить фото</label>
           </div>
         </div>
       </q-card-section>
@@ -356,6 +358,7 @@
       label="Изменить"
       v-show="!dashboardActive"
       @click="dashboardActive = true"
+      v-if="userRole === 'designer'"
     />
     <q-btn
       unelevated

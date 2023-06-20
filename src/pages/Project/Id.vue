@@ -20,7 +20,7 @@
         />
       </div>
     </div>
-{{ creater }}
+
     <div class="row items-center header-btns">
       <!-- <div v-if="userRole === 'designer'">
         <q-btn
@@ -137,10 +137,9 @@
   const loading = ref(true)
   
   let userRole = JSON.parse(localStorage.getItem('userInfo')).role
-
   const generalInfo = ref({})
   const data = ref({})
-  const creater = ref({})
+  
   async function getProject() {
     loading.value = true
     try {
@@ -177,9 +176,10 @@
     }      
   }
 
+  const creater = ref({})
   async function getCreater() {
     try {
-      creater.value = await designerApi.get(data.value.user_id)
+      creater.value = await designerApi.getInfoDesigner(data.value.user_id)
     } catch (err) {
       console.log(err)
     }      

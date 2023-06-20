@@ -79,9 +79,11 @@ export const designerApi = {
     }
   },
   
-  getInfoDesigner() {
+  getInfoDesigner(id) {
     try {
-      return httpClient.post(`${url}/getFullInfo `)
+      return httpClient.post(`${url}/getFullInfo `, {
+        user_id: id || null
+      })
       .then(( {data} ) => {
         let formData = {}
         Object.keys(data.data).forEach(key => {
@@ -90,7 +92,7 @@ export const designerApi = {
           } else {
             formData[key] = data.data[key]
           }
-        });
+        })
         return formData
       })
     } catch(err) {
