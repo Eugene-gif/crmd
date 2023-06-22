@@ -81,8 +81,8 @@ export const projectsApi = {
       resp.filter(el => {
         el.status = 1
         el.creater = {
-          name: `${el.orderer.data.first_name} ${el.orderer.data.last_name}`,
-          image: el.orderer.data.image.thumbnail ? el.orderer.data.image.thumbnail : el.orderer.data.image.placeholder
+          name: `${el.user.first_name} ${el.user.last_name}`,
+          image: el.user.image.thumbnail ? el.user.image.thumbnail : el.user.image.placeholder
         }
         el.orderer = `${el.orderer.data.first_name} ${el.orderer.data.last_name}`
         el.changed = getFormatDate(el.updated_at)

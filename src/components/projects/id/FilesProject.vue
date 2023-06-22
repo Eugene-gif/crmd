@@ -63,6 +63,7 @@
                   class="my-btn my-effect h-opacity q-mr-md"
                   padding="0"
                   @click="updateFile(file)"
+                  v-if="userRole === 'designer'"
                 >
                   <q-icon name="svguse:icons/btnIcons.svg#edit" color="grey-8" size="16px" class="q-mr-sm" />
                   <span class="block text-grey-5">Редактировать</span>
@@ -74,6 +75,7 @@
                   class="my-btn my-effect h-opacity"
                   padding="0"
                   @click="onActionDel('del', file.id)"
+                  v-if="userRole === 'designer'"
                 >
                   <q-icon name="svguse:icons/btnIcons.svg#delete" color="grey-8" size="16px" class="q-mr-sm" />
                   <span class="block text-grey-5">Удалить</span>
@@ -91,6 +93,7 @@
             no-caps
             class="bg-grey-3 text-grey-5 my-btn my-effect h-dark-lite"
             @click="dialog = true"
+            v-if="userRole === 'designer'"
           >
             <div class="block">Загрузить файл</div>
             <q-icon name="svguse:icons/allIcons.svg#plus" size="12px" />
@@ -111,7 +114,8 @@
 
   const props = defineProps({
     data: Array,
-    project_id: String
+    project_id: String,
+    userRole: String
   })
 
   // инициализация управления файлами

@@ -61,6 +61,7 @@
             :actionfunc="actionfunc"
             @actionEdit="onActionEdit(item)"
             @actionDel="onActionDel('delAlbums', item.id)"
+            v-if="userRole === 'designer'"
           />
           <!-- 
             @actionOpen="onActionOpen"
@@ -68,18 +69,35 @@
            -->
         </div>
         <div class="row security">
+          <span 
+            class="info" 
+            style="font-size: 16px;text-transform: uppercase;"
+            v-if="userRole !== 'designer'"
+          >
+            Можно смотреть, загружать и удалять
+          </span>
+          <q-icon 
+            name="svguse:icons/btnIcons.svg#link" 
+            size="18px" 
+            class="q-mr-xs link-icon"
+            v-if="userRole !== 'designer'"
+          >
+            <q-item class="link-all" :to="`/estimates/${item.id}`"></q-item>
+            <div class="circle"></div>
+          </q-icon>
           <q-btn
             unelevated
             no-caps
             class="bg-grey-3 text-grey-5 my-btn my-effect"
             padding="9px 14px"
+            v-if="userRole === 'designer'"
           >
             Доступ по ссылке
             <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
               <div class="circle"></div>
             </q-icon>
           </q-btn>
-          <q-list class="q-list-share">
+          <q-list class="q-list-share" v-if="userRole === 'designer'">
             <!-- <q-item
               v-for="el in item.share.slice(0, 4)" :key="el.link"
             >
@@ -99,7 +117,7 @@
         </div>        
       </q-card-section>
 
-      <q-card-section class="q-card-btn">
+      <q-card-section class="q-card-btn" v-if="userRole === 'designer'">
         <q-btn
           unelevated
           no-caps
@@ -116,7 +134,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import ActionBtn from 'src/components/Table/ActionBtn.vue'
 import VisualSlider from 'src/components/projects/VisualSlider.vue'
 import DialogUploadImg from 'src/components/Profile/DialogUploadImg.vue'
@@ -131,6 +149,7 @@ import { useQuasar } from 'quasar'
 const props = defineProps({
   data: Array,
   project_id: String,
+  userRole: String
 })
 
 const emit = defineEmits([
@@ -226,4 +245,11 @@ function modalUpdateFalse(val) {
   modalFalseUpdatePhotos(val)
   dialogUpadte.value = false
 }
+
+
+  // userRole === 'designer'
+  
+  
+
+
 </script>

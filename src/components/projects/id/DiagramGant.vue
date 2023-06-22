@@ -99,6 +99,7 @@
       label="Изменить"
       v-show="!grafficActive"
       @click="grafficActive = true"
+      v-if="userRole === 'designer'"
     />
     <q-btn
       unelevated 
@@ -112,55 +113,44 @@
   </q-expansion-item>
 </template>
 
-<script>
+<script setup>
 import { ref, defineComponent, onMounted } from "vue";
 import GraficGant from 'components/GraficGant.vue'
 import BtnDate from 'components/BtnDate.vue'
 import { useQuasar } from 'quasar'
 
-export default defineComponent({
-  components: {
-    GraficGant,
-    BtnDate
-  },
-  props: {
-    
-  },
-  setup(props, {emit}) {
-    const $q = useQuasar()
-    
-    const grafficActive = ref(false)
-    const grafficOptopn = ref([
-      {
-        services: 'Планировочное решение',
-        days: 20,
-        date: '1-6-2022'
-      },
-      {
-        services: 'Дизайн-концепция',
-        days: 15,
-        date: '5-5-2022'
-      },
-      {
-        services: 'Визуальная подача',
-        days: 5,
-        date: '5-6-2022'
-      },
-      {
-        services: 'Рабочая документация',
-        days: 7,
-        date: '10-6-2022'
-      },
-    ])
+const $q = useQuasar()
 
-    onMounted(() => {
-      
-    })
-
-    return {
-      grafficActive,
-      grafficOptopn,
-    }
-  },
+const props = defineProps({
+  userRole: String
 })
+
+const grafficActive = ref(false)
+const grafficOptopn = ref([
+  {
+    services: 'Планировочное решение',
+    days: 20,
+    date: '1-6-2022'
+  },
+  {
+    services: 'Дизайн-концепция',
+    days: 15,
+    date: '5-5-2022'
+  },
+  {
+    services: 'Визуальная подача',
+    days: 5,
+    date: '5-6-2022'
+  },
+  {
+    services: 'Рабочая документация',
+    days: 7,
+    date: '10-6-2022'
+  },
+])
+
+onMounted(() => {
+  
+})
+
 </script>

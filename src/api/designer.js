@@ -81,9 +81,7 @@ export const designerApi = {
   
   getInfoDesigner(id) {
     try {
-      return httpClient.post(`${url}/getFullInfo `, {
-        user_id: id || null
-      })
+      return httpClient.post(`${url}/getFullInfo `, id??{user_id: id})
       .then(( {data} ) => {
         let formData = {}
         Object.keys(data.data).forEach(key => {

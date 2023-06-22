@@ -72,7 +72,7 @@
         v-if="generalInfo"
       />
 
-      <DiagramGant />
+      <DiagramGant :userRole="userRole" />
       <DocumentsProject />
       <ExplicationsProject 
         :type="type" 
@@ -84,17 +84,20 @@
       <EstimatesProject 
         :data="data.estimates"
         :project_id="projectId"
+        :userRole="userRole"
         v-if="data.estimates"
       />
       <AlbumsProject 
         :data="data.albums" 
         :project_id="projectId" 
+        :userRole="userRole"
         @updateAlbums="onUpdateAlbums"
         v-if="data.albums" 
       />
       <FilesProject 
         :data="data.files" 
         :project_id="projectId" 
+        :userRole="userRole"
         v-if="data.files" 
       />      
 

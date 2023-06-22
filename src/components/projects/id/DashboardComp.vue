@@ -120,13 +120,13 @@
             class="circle-close mini rotate"
             v-show="formData.image?.url"
             @click="uploadProfilePhoto([''])"
+            v-if="userRole === 'designer'"
            >
             <q-icon
               size="12px"
               name="svguse:icons/allIcons.svg#close-modal"
               color="black"
               style="opacity: 0.3;"
-
             />
           </div>
           <img :src="formData.image?.url" alt="" v-show="formData.image?.url">
@@ -139,7 +139,7 @@
             />
             <label class="text text-white">Заменить фото</label>
           </div>
-          <div class="btn-upload-2" @click="userRole === 'designer'?? triggerFilePicker">
+          <div class="btn-upload-2" @click="triggerFilePicker">
             <q-uploader
               @added="uploadProfilePhoto"
               multiple
@@ -150,13 +150,12 @@
               :class="{ 'btn-load-grey': lodingBtn2 }"
             />
             <div class="upload-content">
-              <div class="circle-photo">
+              <div class="circle-photo" v-if="userRole === 'designer'">
                 <q-icon
                   size="38px"
                   name="svguse:icons/allIcons.svg#no-photo"
                   color="black"
                   style="opacity: 0.1;"
-                  
                 />
               </div>
               <label class="text" v-if="userRole === 'designer'">Добавить фото</label>
@@ -203,7 +202,7 @@
           />
           <label class="text text-white">Заменить фото</label>
         </div>
-        <div class="btn-upload-2" @click="userRole === 'designer'?? triggerFilePicker">
+        <div class="btn-upload-2" @click="triggerFilePicker">
           <q-uploader
             @added="uploadProfilePhoto"
             multiple
@@ -399,8 +398,8 @@
   const uploader = ref(null)
   const router = useRouter()
   const triggerFilePicker = () => {
-    if (uploader.value) {
-      uploader.value.pickFiles();
+    if (uploader.value && props.userRole === 'designer') {
+      uploader.value.pickFiles()
     }
   }
 

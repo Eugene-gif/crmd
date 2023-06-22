@@ -71,7 +71,12 @@
           <div class="text">
             Общий доступ
           </div>
-          <q-icon name="svguse:icons/btnIcons.svg#link" size="18px" class="q-mr-sm link-icon">
+          <q-icon
+            name="svguse:icons/btnIcons.svg#link" 
+            size="18px" 
+            class="q-mr-sm link-icon" 
+            v-if="userRole === 'designer'"
+          >
             <q-item class="link-all" :to="`/estimates/${item.id}`"></q-item>
             <div class="circle"></div>
           </q-icon>
@@ -89,10 +94,10 @@
           >
             <q-btn class="q-td-share__btn__limit" :label="`+${item.share.length - 1}`" />
           </q-item> -->
-          <q-item class="q-item-add">
+          <q-item class="q-item-add" v-if="userRole === 'designer'">
             <q-btn class="q-td-share__btn__add" icon="svguse:icons/allIcons.svg#plus" />
           </q-item>
-          <q-item class="q-item-action">
+          <q-item class="q-item-action" v-if="userRole === 'designer'">
             <ActionBtn 
               :propsEl="item.id"
               :offsetYX="[55, -266]"
@@ -103,7 +108,11 @@
           </q-item>
         </q-list>
       </q-card-section>
-      <q-card-section class="q-card-add" @click="dialog = true">
+      <q-card-section 
+        class="q-card-add" 
+        @click="dialog = true" 
+        v-if="userRole === 'designer'"
+      >
         <q-btn
           rounded
           unelevated
@@ -154,6 +163,12 @@
   const estimates = ref()
   const router = useRouter()
 
+  const props = defineProps({
+    data: Array,
+    project_id: String,
+    userRole: String
+  })
+
   const actionfunc = ref([
     {
       title: 'Открыть',
@@ -181,10 +196,7 @@
     },
   ])
 
-  const props = defineProps({
-    data: Array,
-    project_id: String
-  })
+  
 
   const onActionOpen = (id) => {
     router.push(`/estimates/${id}`)

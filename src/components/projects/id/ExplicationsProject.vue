@@ -14,10 +14,9 @@
     class="data"
   >
   <template v-slot:header>
-    <div class="title">
-      Экспликации
+    <div class="title q-mr-auto">
+      Экспликация
     </div>
-    <q-icon name="svguse:icons/allIcons.svg#settings" size="17px" class="settings-icon" @click.stop="true" />
   </template>
     <q-card>
       <!-- <q-card-section class="q-card-head"> -->
