@@ -553,6 +553,34 @@
   }
 }
 
+.list-info {
+  .q-item {
+    padding: 24px 0;
+    border-top: 1px solid rgb(240, 240, 240);
+    align-items: center;
+    margin-bottom: 10px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+    &:last-child {
+      border-bottom: 1px solid rgb(240, 240, 240);
+    }
+    .title {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 20px;
+      &.minw {
+        min-width: 85px;
+      }
+    }
+    .text {
+      font-size: 18px;
+      color: rgba(68, 68, 68, 1);
+      line-height: 20px;
+    }
+  }
+}
+
 
 .q-item-null {
   padding: 0;

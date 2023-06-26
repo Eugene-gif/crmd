@@ -69,6 +69,7 @@
         :type="type"
         :projectId="projectId"
         :userRole="userRole"
+        :creater="creater"
         v-if="generalInfo"
       />
 
@@ -182,7 +183,13 @@
   const creater = ref({})
   async function getCreater() {
     try {
-      creater.value = await designerApi.getInfoDesigner(data.value.user_id)
+      const resp = await designerApi.getInfoDesignerById(data.value.user_id)
+      creater.value = {
+        id: resp.id,
+        user_id: resp.user_id,
+        name: resp.name,
+        image: resp.image.placeholder ? resp.image.placeholder : resp.image.thumbnail
+      }
     } catch (err) {
       console.log(err)
     }      

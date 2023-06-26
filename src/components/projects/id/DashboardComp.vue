@@ -79,7 +79,8 @@
     </template>
 
     <q-card v-show="!dashboardActive">
-      <q-card-section>
+      
+      <q-card-section v-if="userRole === 'designer'">
         <div class="section">
           <q-item class="square">
             <div class="title">Площадь</div>
@@ -89,11 +90,11 @@
             <p class="adres">{{info.address}}</p>
             <div class="row">
               <img 
-                :src="customer.image"
+                :src="ordererInfo.image"
                 alt="" 
                 class="avatar" 
                />
-              <p class="type">{{customer.name}}</p>
+              <p class="type">{{ordererInfo.name}}</p>
               <q-btn flat class="circle-warning-15 mb-visible">
                 <q-icon
                   name="svguse:icons/allIcons.svg#tooltip"
@@ -108,7 +109,7 @@
                   ref="menu"
                   width="300px"
                 >
-                  {{ customer.tooltip }}
+                  {{ ordererInfo.tooltip }}
                 </q-menu>
               </q-btn>
             </div>
@@ -120,7 +121,6 @@
             class="circle-close mini rotate"
             v-show="formData.image?.url"
             @click="uploadProfilePhoto([''])"
-            v-if="userRole === 'designer'"
            >
             <q-icon
               size="12px"
@@ -146,11 +146,10 @@
               accept=".jpg, image/*"
               @rejected="onRejected"
               ref="uploader"
-              v-if="userRole === 'designer'"
               :class="{ 'btn-load-grey': lodingBtn2 }"
             />
             <div class="upload-content">
-              <div class="circle-photo" v-if="userRole === 'designer'">
+              <div class="circle-photo" >
                 <q-icon
                   size="38px"
                   name="svguse:icons/allIcons.svg#no-photo"
@@ -158,12 +157,15 @@
                   style="opacity: 0.1;"
                 />
               </div>
-              <label class="text" v-if="userRole === 'designer'">Добавить фото</label>
+              <label class="text">Добавить фото</label>
             </div>
           </div>
         </div>
 
-        <div class="q-item section-toolbar" v-if="userRole === 'designer'">
+        <div 
+          class="q-item section-toolbar" 
+          
+        >
           <div class="item">
             <div class="title">Прогресс проекта <span>{{info.readiness}}%</span></div>
             <div class="flex toolbar">
@@ -179,11 +181,36 @@
         </div>
       </q-card-section>
 
-      <q-card-section class="img-section" >
+      <q-card-section class="dashboard-section-contractor" v-else>
+        <q-list class="list-info">
+          <q-item>
+            <div class="title minw q-mr-lg">Тип</div>
+            <div class="text q-ml-xs">{{ formData.project_type?.name }}</div>
+            <div class="title q-ml-auto q-mr-lg">Площадь</div>
+            <div class="text q-ml-xs">{{info.square}} м<sup>2</sup></div>
+          </q-item>
+          <q-item>
+            <div class="title minw q-mr-lg">Адрес</div>
+            <div class="text q-ml-xs">{{ info.address }}</div>
+          </q-item>
+          <q-item>
+            <div class="title minw q-mr-lg">Заказчик</div>
+            <div class="text q-ml-xs" v-if="ordererInfo.name">{{ ordererInfo.name }}</div>
+            <div class="text q-ml-xs" v-else>—</div>
+          </q-item>
+          <q-item>
+            <div class="title minw q-mr-lg">Дизайнер</div>
+            <div class="text q-ml-xs">{{ creater.name }}</div>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-section class="img-section" :class="{'img-section-contractor-version': userRole !== 'designer'}" >
         <div
           class="circle-close mini rotate" 
           v-show="formData.image?.url"
           @click="uploadProfilePhoto([''])"
+          v-if="userRole === 'designer'"
         >
           <q-icon
             size="12px"
@@ -218,7 +245,6 @@
                 name="svguse:icons/allIcons.svg#no-photo"
                 color="black"
                 style="opacity: 0.1;"
-                
               />
             </div>
             <label class="text" v-if="userRole === 'designer'">Добавить фото</label>
@@ -274,10 +300,10 @@
                 class="my-input bg-grey-3 my-input__customer"
                 placeholder="Введите адрес"
                 :disable="true"
-                v-model="customer.name"
+                v-model="ordererInfo.name"
               >
                 <template v-slot:prepend>
-                  <img :src="customer.image" alt="" />
+                  <img :src="ordererInfo.image" alt="" />
                 </template>
                 <template v-slot:append>
                   <q-btn flat class="circle-warning-15 mb-visible">
@@ -294,7 +320,7 @@
                       ref="menu"
                       width="300px"
                     >
-                      {{ customer.tooltip }}
+                      {{ ordererInfo.tooltip }}
                     </q-menu>
                   </q-btn>
                   <div
@@ -311,7 +337,7 @@
                       anchor="bottom middle"
                       self="top middle"
                     >
-                      {{ customer.tooltip }}
+                      {{ ordererInfo.tooltip }}
                     </q-tooltip>
                   </div>
                 </template>
@@ -386,7 +412,8 @@
     type: Array,
     orderer: Object,
     projectId: String,
-    userRole: String
+    userRole: String,
+    creater: Object,
   })
 
   const $q = useQuasar()
@@ -505,7 +532,7 @@
     }
   }
 
-  const customer = computed(() => {
+  const ordererInfo = computed(() => {
     if (props.orderer && props.orderer.data) {
       const name = `${props.orderer.data.first_name || ''} ${props.orderer.data.last_name || ''}`.trim() || null
       const image = props.orderer.data.image?.thumbnail ? props.orderer.data.image.thumbnail : props.orderer.data.image?.placeholder

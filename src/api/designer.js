@@ -79,9 +79,28 @@ export const designerApi = {
     }
   },
   
-  getInfoDesigner(id) {
+  getInfoDesigner() {
     try {
-      return httpClient.post(`${url}/getFullInfo `, id??{user_id: id})
+      return httpClient.post(`${url}/getFullInfo`)
+      .then(( {data} ) => {
+        let formData = {}
+        Object.keys(data.data).forEach(key => {
+          if(data.data[key] === 'null' || data.data[key] === null) {
+            formData[key] = null
+          } else {
+            formData[key] = data.data[key]
+          }
+        })
+        return formData
+      })
+    } catch(err) {
+      console.log(err)
+    }
+  },
+
+  getInfoDesignerById(id) {
+    try {
+      return httpClient.post(`${url}/getFullInfo`, {user_id: id})
       .then(( {data} ) => {
         let formData = {}
         Object.keys(data.data).forEach(key => {

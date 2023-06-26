@@ -277,7 +277,50 @@
               z-index: 2;
             }
           }
+          
+          &.dashboard-section-contractor {
+            border: none;
+            @media (max-width: 772px) {
+              .list-info {
+                .q-item {
+                  min-height: max-content;
+                  padding: 0 0;
+                  border-top: none;
+                  align-items: center;
+                  &:last-child {
+                    border-bottom: none;
+                  }
+                  .title {
+                    font-size: 16px;
+                    margin-right: 5px !important;
+                    &.minw {
+                      min-width: max-content;
+                    }
+                  }
+                  .text {
+                    font-size: 16px;
+                    margin-left: 0 !important;
+                  }
+                }
+              }
+            }
+          }
+          &:last-child.img-section-contractor-version {
+            // max-width: 353px;
+            flex: 1 1 calc(35% - 30px);
+            height: 305px;
+            @media (max-width: 772px) {
+              margin-top: 25px;
+              flex: 0 0 100%;
+              margin-left: 0;
+              max-width: 100%;
+              display: flex;
+              min-height: 198px;
+            }
+          }
         }
+        
+        
         .img-section {
           position: relative;
           .circle-close {
@@ -399,6 +442,7 @@
             }
           }
         }
+        
       }
       .emoji {
         .q-card {
