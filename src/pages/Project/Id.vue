@@ -79,6 +79,7 @@
         :type="type" 
         :id="projectId" 
         :data="data.explications" 
+        :userRole="userRole"
         @update="onUpdateExplication"
         v-if="data.explications"
       />

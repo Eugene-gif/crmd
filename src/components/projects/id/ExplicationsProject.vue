@@ -12,13 +12,14 @@
     expand-separator
     default-opened
     class="data"
+    :class="{'explication-contractor': userRole !== 'designer'}"
   >
   <template v-slot:header>
     <div class="title q-mr-auto">
-      Экспликация
+      Экспликация {{ userRole }}
     </div>
   </template>
-    <q-card>
+    <q-card v-if="userRole === 'designer'">
       <!-- <q-card-section class="q-card-head"> -->
       <q-card-section class="q-card-titles">
         <q-item>
@@ -28,6 +29,7 @@
           <div class="title">Площадь, м2</div>
         </q-item>
       </q-card-section>
+
       <q-card-section 
         v-for="premis in data"
         :key="premis"
@@ -117,6 +119,15 @@
         </q-item>
       </q-card-section>
     </q-card>
+    <q-list class="list-info" v-else>
+      <q-item
+        v-for="premis in data"
+        :key="premis"
+      >
+        <div class="title minw">{{ premis.name }}</div>
+        <div class="text">{{ premis.square }} м<sup style="font-size: 12px;">2</sup></div>
+      </q-item>
+    </q-list>
   </q-expansion-item>
 </template>
 
@@ -132,6 +143,7 @@
     type: Object,
     data: Array,
     id: String,
+    userRole: String
   })
 
   const emit = defineEmits([
