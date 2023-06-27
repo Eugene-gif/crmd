@@ -69,6 +69,19 @@
     />
   </q-dialog>
 
+  <q-dialog
+    v-model="dialogDubleEstimate"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDuble 
+      :idEstimate="idEstimate"
+      :estimateName="estimate.name"
+      :project_id="estimate.project_id"
+    />
+  </q-dialog>
+
   <LoaderDate
     v-show="loading"
   />
@@ -157,11 +170,12 @@
         outline
         color="grey-3"
         class="my-btn my-effect q-mr-xs my-btn--outline"
-        @click="dubleEstimate"
+        @click="dialogDubleEstimate = true"
       >
         <q-icon name="svguse:icons/btnIcons.svg#copy" color="grey-8" size="15px" class="q-mr-md" />
         <div class="block text-grey-5">Дублировать смету</div>
       </q-btn>
+
       <q-btn
         rounded
         no-caps
@@ -308,6 +322,7 @@
   import DialogSecurity from 'src/pages/Estimates/DialogSecurity'
   import DialogExport from 'src/pages/Estimates/DialogExport'
   import DialogSettings from 'src/pages/Estimates/DialogSettings'
+  import DialogDuble from 'src/pages/Estimates/DialogDuble'
   
   const $q = useQuasar()
   const loading = ref(false)
@@ -386,20 +401,6 @@
     })
   }
 
-  // дублирование сметы
-  const dubleEstimate = async () => {
-    try {
-      const resp = await estimatesApi.duble(estimate.value)
-      router.push(`/estimates/${resp.id}`)
-      $q.notify({
-        color: 'positive',
-        message: 'Смета продублирована'
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   // удаление сметы
   async function onDelEstimate(id) {
     try {
@@ -435,6 +436,7 @@
   const dialogSecurity = ref(false)
   const dialogExport = ref(false)
   const dialogSettings = ref(false)
+  const dialogDubleEstimate = ref(false)
   const modalFalse = () => {
     dialogSecurity.value = false
     dialogExport.value = false

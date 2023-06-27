@@ -74,12 +74,12 @@ export const estimatesApi = {
     }
   },
 
-  async duble(estimate) {
+  async duble(data) {
     try {
       const resp = await httpClient.post(`${url}/duplicate`, {
-        estimate_id: estimate.id,
-        project_id: estimate.project_id,
-        name: estimate.name
+        estimate_id: data.estimate_id,
+        project_id: data.project_id,
+        name: data.name
       })
       return resp.data.data
     } catch (err) {

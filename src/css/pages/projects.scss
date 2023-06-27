@@ -110,6 +110,9 @@
             &:active {
               opacity: 0.6;
             }
+            &--rotated {
+              transform: rotate(180deg) !important;
+            }
           }
         }
       }
