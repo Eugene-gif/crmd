@@ -1,5 +1,4 @@
 <template>
-
   <q-table
     flat
     :columns="columns"
@@ -9,6 +8,7 @@
     class="estimates-table"
     :pagination="pagination"
     binary-state-sort
+    :class="{'estimates-table-version-contractor': userRole === 'contractor'}"
   >
     <template v-slot:header-cell="props">
       <q-th :props="props">
@@ -57,6 +57,23 @@
         </div>
       </q-th>
     </template>
+    
+    <template #header v-if="userRole === 'contractor'">
+      <!-- {{ columns.name }} -->
+      <q-tr class="tr-colspan">
+        <q-th colspan="5"></q-th>
+        <q-th colspan="5">
+          <div class="text-center">Прогноз</div>
+        </q-th>
+        <q-th colspan="5"></q-th>
+      </q-tr>
+      <q-tr>
+        <q-th v-for="th in columns" :key="th.name">
+          {{ th.label }}
+        </q-th>
+      </q-tr>
+    </template>
+
 
     <template #body="props">
       <q-menu
@@ -176,6 +193,19 @@
         </q-td>
 
         <q-td
+          key="price"
+          :props="props"
+          @dblclick="editModal(props.row, 'quantity')"
+          @click.stop=""
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{props.row.quantity}}
+            </div>
+          </div>
+        </q-td>
+        
+        <q-td
           key="metrics"
           :props="props"
           @dblclick="editModal(props.row, 'forecast_price')"
@@ -189,14 +219,14 @@
         </q-td>
 
         <q-td
-          key="price"
+          key="deadline"
           :props="props"
-          @dblclick="editModal(props.row, 'quantity')"
+          @dblclick="editModal(props.row, 'term_forecast')"
           @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
-              {{props.row.quantity}}
+              {{props.row.forecast.term}}
             </div>
           </div>
         </q-td>
@@ -224,14 +254,25 @@
         </q-td>
 
         <q-td
-          key="deadline"
+          key="procent"
           :props="props"
-          @dblclick="editModal(props.row, 'term_forecast')"
+          @dblclick="editModal(props.row, 'rate')"
           @click.stop=""
         >
           <div class="td-content-section">
             <div class="text">
-              {{props.row.forecast.term}}
+              {{props.row.forecast.rate}}
+            </div>
+          </div>
+        </q-td>
+        <q-td
+          key="agent"
+          :props="props"
+          @click.stop=""
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{props.row.forecast.fee}}
             </div>
           </div>
         </q-td>
@@ -262,30 +303,6 @@
               @updateStatus="value => props.row.status = value"
             />
           </q-menu>
-        </q-td>
-
-        <q-td
-          key="procent"
-          :props="props"
-          @dblclick="editModal(props.row, 'rate')"
-          @click.stop=""
-        >
-          <div class="td-content-section">
-            <div class="text">
-              {{props.row.forecast.rate}}
-            </div>
-          </div>
-        </q-td>
-        <q-td
-          key="agent"
-          :props="props"
-          @click.stop=""
-        >
-          <div class="td-content-section">
-            <div class="text">
-              {{props.row.forecast.fee}}
-            </div>
-          </div>
         </q-td>
 
         <q-td
@@ -627,6 +644,9 @@
       console.log(e)
     }
   }
+
+  const user = JSON.parse(localStorage.getItem('userInfo'))
+  const userRole = user.role.code ? user.role.code : user.role_info.code 
 
   onMounted(() => {
     getStatuses()

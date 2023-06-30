@@ -3268,6 +3268,56 @@
       }
     }
   }
+
+  &-version-contractor {
+    .q-table {
+      thead {
+        .tr-colspan {
+          background: rgba(0,0,0,0);
+          height: 30px;
+          &:hover {
+            background: rgba(0,0,0,0);
+          }
+          th {
+            background: rgba(0,0,0,0);
+            border: none !important;
+            border-radius: 6px 6px 0 0;
+            height: 30px;
+            div {
+              color: rgba(68, 68, 68, 1);
+            }
+            &:nth-child(2) {
+              border: 1px solid #F0F0F0 !important;
+              border-bottom: 0 !important;
+            }
+          } 
+        }
+      }
+    }
+    
+    // thead {
+    //   tr {
+    //     th {
+    //       position: relative;
+    //       overflow: visible;
+    //       &:nth-child(6) {
+    //         &:before {
+    //           content: '';
+    //           width: 100%;
+    //           border: 1px solid black;
+    //           min-height: 30px;
+    //           position: absolute;
+    //           top: -30px;
+    //           left: 0;
+    //           z-index: 1;
+    //           display: block;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
   @media (max-width: 772px) {
     .q-table__middle {
       padding-bottom: 30px;
