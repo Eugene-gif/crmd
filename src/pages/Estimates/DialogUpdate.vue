@@ -405,7 +405,11 @@
     }
     try {
       const resp = await proposalsApi.create(data)
-      console.log(resp)
+      $q.notify({
+        color: 'positive',
+        message: 'Ваше предложение добавлено',
+      })
+      emit('updateItem')
     } catch (error) {
       console.log(error)
       $q.notify({
