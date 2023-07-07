@@ -3290,6 +3290,12 @@
               border: 1px solid #F0F0F0 !important;
               border-bottom: 0 !important;
             }
+            &:nth-child(3) {
+              border: 1px solid rgba(204, 204, 204, 1) !important;
+            }
+            &:last-child {
+              border: none !important;
+            }
           } 
         }
       }
@@ -3374,6 +3380,29 @@
       }
     }
 
+  }
+}
+.estimates-table-version-contractor {
+  .q-table {
+    thead,
+    tbody {
+      tr {
+        th,
+        td {
+          &:nth-child(11) {
+            border-left: 1px solid #ccc;
+          }
+          &:nth-child(11),
+          &:nth-child(12),
+          &:nth-child(13),
+          &:nth-child(14),
+          &:nth-child(15) {
+            border-right: 1px solid #cccccc !important;
+            border-bottom: 1px solid #cccccc !important;
+          }
+        }
+      }
+    }
   }
 }
 

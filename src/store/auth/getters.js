@@ -8,7 +8,7 @@ export function getUser () {
 
 export function getLinks (state) {
   
-  let userRole = getUser().role.code ? getUser().role.code : getUser().role_info.code 
+  let userRole = getUser().role
   if (userRole === 'contractor') {
     return [
       {

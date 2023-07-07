@@ -14,7 +14,8 @@ export const estimatesApi = {
     }
   },
 
-  getById(id) {
+  getById(id, role, userId) {
+    
     try {
       return httpClient.post(`${url}/get`, {
         estimate_id: id
@@ -30,7 +31,8 @@ export const estimatesApi = {
           return {
             ...row,
             iterationId: index + 1,
-            smetaVal: row.proposals.length ? false : null
+            smetaVal: row.proposals.length ? false : null,
+            my_proposal: role !== 'contractor' ? '' : row.proposals.find(el => el.contractor.id === userId)
           }
         })
 

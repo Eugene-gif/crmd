@@ -1,4 +1,5 @@
 <template>
+
   <q-table
     flat
     :columns="columns"
@@ -65,12 +66,32 @@
         <q-th colspan="5">
           <div class="text-center">Прогноз</div>
         </q-th>
+        <q-th colspan="5">
+          <div class="text-center">Мое предложение</div>
+        </q-th>
         <q-th colspan="5"></q-th>
       </q-tr>
       <q-tr>
-        <q-th v-for="th in columns" :key="th.name">
-          {{ th.label }}
-        </q-th>
+        <q-th>№</q-th>
+        <q-th>Название</q-th>
+        <q-th>Помещение</q-th>
+        <q-th>Описание</q-th>
+        <q-th>м2/шт</q-th>
+        <q-th>Цена, руб.</q-th>
+        <q-th>Срок, дн</q-th>
+        <q-th>Итого</q-th>
+        <q-th>Ставка</q-th>
+        <q-th>Агентские, руб.</q-th>
+        <q-th>Цена, руб.</q-th>
+        <q-th>Срок, дн</q-th>
+        <q-th>Итого</q-th>
+        <q-th>Ставка</q-th>
+        <q-th>Агентские, руб</q-th>
+        <q-th>Статус</q-th>
+        <q-th>Производитель</q-th>
+        <q-th>Артикул</q-th>
+        <q-th>Цвет</q-th>
+        <q-th>Файл</q-th>
       </q-tr>
     </template>
 
@@ -246,7 +267,7 @@
               <!-- <img v-if="props.row.status.imageUrl && props.row.smeta" :src="props.row.status.imageUrl" alt=""> -->
             </div>
             <q-icon
-              v-if="props.row.proposals.length"
+              v-if="props.row.proposals.length && userRole === 'designer'"
               size="12px"
               name="svguse:icons/financeTable.svg#miniArrowe"
             />
@@ -277,6 +298,74 @@
           </div>
         </q-td>
 
+
+
+        <q-td
+          key="price"        
+          :props="props"
+          class=""
+          v-if="userRole !== 'designer'"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{ props.row.my_proposal.price }}
+            </div>
+          </div>
+        </q-td>
+
+        <q-td
+          key="deadline"          
+          :props="props"
+          class=""
+          v-if="userRole !== 'designer'"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{ props.row.my_proposal.term }}
+            </div>
+          </div>
+        </q-td>
+
+        <q-td
+          key="total"          
+          :props="props"
+          class="td-total"
+          v-if="userRole !== 'designer'"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{ props.row.my_proposal.total_price }}
+            </div>
+          </div>
+        </q-td>
+
+        <q-td
+          key="procent"          
+          :props="props"
+          class=""
+          v-if="userRole !== 'designer'"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{ props.row.my_proposal.rate }}
+            </div>
+          </div>
+        </q-td>
+        <q-td
+          key="agent"          
+          :props="props"
+          class=""
+          v-if="userRole !== 'designer'"
+        >
+          <div class="td-content-section">
+            <div class="text">
+              {{ props.row.my_proposal.fee }}
+            </div>
+          </div>
+        </q-td>
+
+
+        
         <q-td
           key="status"
           :props="props"
@@ -352,7 +441,7 @@
           @click.stop=""
         >
           <div class="td-content-section">
-            <a :href="props.row.file?.file" target="_blank" class="text link" v-if="props.row.file">
+            <a :href="props.row.file?.file" target="_blank" class="text link" v-if="props.row.file.length">
               {{props.row.file?.extension}}, {{props.row.file?.size}}
             </a>
           </div>
@@ -364,7 +453,7 @@
         v-for="smeta in props.row.proposals"
         :key="smeta"
         class="q-tr-smeta"
-        v-show="props.row.smetaVal"
+        v-show="props.row.smetaVal && userRole === 'designer'"
         @click.stop="chooseSmeta(smeta)"
         @contextmenu.prevent.stop
         @touchstart.stop
@@ -474,7 +563,7 @@
       <q-tr
         class="q-tr-smeta q-tr-smeta-null"
         v-show="props.row.smetaVal"
-        v-if="props.row.proposals"
+        v-if="props.row.proposals && userRole === 'designer'"
         @click.stop="chooseSmeta(smeta)"
         @contextmenu.prevent.stop
         @touchstart.stop
@@ -646,7 +735,7 @@
   }
 
   const user = JSON.parse(localStorage.getItem('userInfo'))
-  const userRole = user.role.code ? user.role.code : user.role_info.code 
+  const userRole = user.role
 
   onMounted(() => {
     getStatuses()

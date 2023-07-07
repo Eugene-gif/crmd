@@ -328,6 +328,10 @@
   const loading = ref(false)
   const router = useRouter()
   const idEstimate = useRoute().params.id
+
+  const user = JSON.parse(localStorage.getItem('userInfo'))
+  const userRole = user.role
+
   const cutTitle = (title) => {
     return String(title.substring(0,2))
   }
@@ -519,7 +523,7 @@
   // получение данных
   const getData = async () => {
     try {
-      const resp = await estimatesApi.getById(idEstimate)
+      const resp = await estimatesApi.getById(idEstimate, userRole, user.role_info.id)
       estimate.value = resp
     } catch (err) {
       console.log(err)
@@ -534,7 +538,7 @@
   // получить проект для сметы
   const getProject = async () => {
     try {
-      const resp = await projectsApi.getById(estimate.value.project_id)
+      const resp = await projectsApi.getById(estimate.value.project_id, null, null)
       estimate.value.project = {
         name: resp.name,
         explications: resp.explications
