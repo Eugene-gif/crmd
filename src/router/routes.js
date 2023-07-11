@@ -142,8 +142,16 @@ const routes = [
         }
       },
       { 
-        path: '/estimates',
+        path: '/estimates/project/:id',
         component: () => import('src/pages/Estimates/Index.vue'),
+        meta: {
+          requireLogin: true,
+          role: ['designer','contractor']
+        }
+      },
+      { 
+        path: '/estimates',
+        component: () => import('src/pages/Estimates/ListAll.vue'),
         meta: {
           requireLogin: true,
           role: ['designer','contractor']

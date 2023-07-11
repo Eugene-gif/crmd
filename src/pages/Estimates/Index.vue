@@ -489,7 +489,7 @@
   </q-page>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue'
 import EstimateTable from 'components/Table/EstimateTable.vue'
 import DialogEdit from 'src/pages/Estimates/DialogEdit.vue' 
@@ -698,78 +698,53 @@ const rowTable = ref([
   },
 ])
 
-export default {
-  name: 'PageEstimates',
-  components: {
-    EstimateTable,
-    DialogEdit,
-    DialogSecurity,
-    DialogExport,
-    DialogSettings,
-    ActionBtn
-  },
-  setup () {
-    const dialogPosition = ref(false)
-    const dialogSecurity = ref(false)
-    const dialogExport = ref(false)
-    const dialogSettings = ref(false)
-    const dataEdit = ref([])
-    const onActiveField = ref()
 
-    function startEditModal(val, field) {
-      onActiveField.value = field
-      dialogPosition.value = true
-      dataEdit.value = val
-    }
-    function onOpenSmeta(val) {
-      rowTable.value.filter((item) => {
-        if (item.id === val) {
-          item.smetaVal = !item.smetaVal
-        }
-      })
-    }
-    function onChooseSmeta(smeta, val) {
-      rowTable.value.filter((item) => {
-        if (item.id === smeta) {
-          item.price = val.price
-          item.metrics = val.metrics
-          item.total = val.total
-          item.deadline = val.deadline
+const dialogPosition = ref(false)
+const dialogSecurity = ref(false)
+const dialogExport = ref(false)
+const dialogSettings = ref(false)
+const dataEdit = ref([])
+const onActiveField = ref()
 
-          item.status.id = val.status.id
-          item.status.name = val.status.name
-
-          item.status.user = val.name
-          // item.status.imageUrl = val.imageUrl
-          item.status.imageUrl = '/icons/anton.jpg'
-
-          item.procent = val.procent
-          item.agent = val.agent
-          item.smetaVal = !item.smetaVal
-        }
-      })
-    }
-    return {
-      dialogPosition,
-      dialogSecurity,
-      dialogExport,
-      columnsTable,
-      dialogSettings,
-      rowTable,
-      dataEdit,
-      onActiveField,
-      val: ref(true),
-      cutTitle,
-      startEditModal,
-      onOpenSmeta,
-      onChooseSmeta,
-      modalFalse() {
-        dialogPosition.value = false
-        dialogSecurity.value = false
-        dialogExport.value = false
-        dialogSettings.value = false
-      }
-    }
-  }
+function startEditModal(val, field) {
+  onActiveField.value = field
+  dialogPosition.value = true
+  dataEdit.value = val
 }
+function onOpenSmeta(val) {
+  rowTable.value.filter((item) => {
+    if (item.id === val) {
+      item.smetaVal = !item.smetaVal
+    }
+  })
+}
+function onChooseSmeta(smeta, val) {
+  rowTable.value.filter((item) => {
+    if (item.id === smeta) {
+      item.price = val.price
+      item.metrics = val.metrics
+      item.total = val.total
+      item.deadline = val.deadline
+
+      item.status.id = val.status.id
+      item.status.name = val.status.name
+
+      item.status.user = val.name
+      // item.status.imageUrl = val.imageUrl
+      item.status.imageUrl = '/icons/anton.jpg'
+
+      item.procent = val.procent
+      item.agent = val.agent
+      item.smetaVal = !item.smetaVal
+    }
+  })
+}
+const val = ref(true)
+const modalFalse = () => {
+  dialogPosition.value = false
+  dialogSecurity.value = false
+  dialogExport.value = false
+  dialogSettings.value = false
+}
+
 </script>

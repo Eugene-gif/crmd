@@ -135,54 +135,43 @@
   
 </template>
 
-<script>
-import { ref, onMounted } from 'vue'
+<script setup>
+import { ref } from 'vue'
 import ActionBtn from 'components/Table/ActionBtn.vue'
 
-export default {
-  components: {
-    ActionBtn,
+const columns = ref([
+  { name: 'id', label: '', field: 'id', align: 'left' },
+  { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
+  { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
+  { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
+  { name: 'status', label: 'Статус', field: 'status', align: 'left', sortable: true },
+  { name: 'action', label: '', field: 'action', align: 'left', sortable: true },
+])
+const rows = ref([
+  {
+    id: 1,
+    name: 'Договор №150',
+    changed: '10:35',
+    created: 'Вчера',
+    status: 1,
+    statusName: 'Подписан'
   },
-  setup() {
-    const columns = ref([
-      { name: 'id', label: '', field: 'id', align: 'left' },
-      { name: 'name', label: 'Название', field: 'name', align: 'left', sortable: true },
-      { name: 'created', label: 'Создан', field: 'created', align: 'left', sortable: true },
-      { name: 'changed', label: 'Изменен', field: 'changed', align: 'left', sortable: true },
-      { name: 'status', label: 'Статус', field: 'status', align: 'left', sortable: true },
-      { name: 'action', label: '', field: 'action', align: 'left', sortable: true },
-    ])
-    const rows = ref([
-      {
-        id: 1,
-        name: 'Договор №150',
-        changed: '10:35',
-        created: 'Вчера',
-        status: 1,
-        statusName: 'Подписан'
-      },
-      {
-        id: 2,
-        name: 'Счет №25',
-        changed: '10:35',
-        created: 'Позавчера',
-        status: 2,
-        statusName: 'Не оплачен'
-      },
-      {
-        id: 3,
-        name: 'Счет №25',
-        changed: '10:35',
-        created: 'Позавчера',
-        status: 3,
-        statusName: 'Отправка'
-      },
-    ])
-    return {
-      columns,
-      rows
-    }
-    
+  {
+    id: 2,
+    name: 'Счет №25',
+    changed: '10:35',
+    created: 'Позавчера',
+    status: 2,
+    statusName: 'Не оплачен'
   },
-}
+  {
+    id: 3,
+    name: 'Счет №25',
+    changed: '10:35',
+    created: 'Позавчера',
+    status: 3,
+    statusName: 'Отправка'
+  },
+])
+
 </script>
