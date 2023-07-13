@@ -1843,6 +1843,43 @@
       }
     }
   }
+  @media (max-width: 772px) {
+    .q-table {
+      tbody {
+        tr {
+          display: flex;
+          flex-wrap: wrap;
+          height: auto;
+          width: 100%;
+          padding: 20px;
+          border: 1px solid rgba(240, 240, 240, 1);
+          margin-bottom: 5px;
+          &:first-child {
+            border: 1px solid rgba(204, 204, 204, 1);
+          }
+          td {
+            padding: 0 !important;
+            height: auto;
+            flex: 0 0 100%;
+            width: 100%;
+            border: none;
+            &:first-child,
+            &:last-child {
+              padding-left: 0 !important;
+            }
+            &:last-child {
+              padding-right: 0 !important;
+            }
+          }
+          &.tr-all {
+            &:first-child {
+              display: flex;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .q-td__action {

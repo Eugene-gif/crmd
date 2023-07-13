@@ -8,11 +8,14 @@
       expand-separator
       default-opened
       class="q-expansion-my"
+      v-for="table in tables"
+      :key="table.id"
     >
       <template v-slot:header>
         <div class="title">
           🏰 Условия работы с дизайнерами
         </div>
+        <q-btn flat padding="0" no-caps label="Открыть проект" class="btn-open q-ml-auto" @click.stop />
       </template>
 
       <q-table
@@ -91,7 +94,32 @@
               class="q-td-name"
               style="width: 65%"
             >
-              <div class="content">{{props.row.name}}</div>
+              <div class="content row">
+                {{props.row.name}}
+                <div class="row" style="flex: 1;">
+                  <q-btn
+                    rounded
+                    unelevated
+                    no-caps
+                    padding="2px 15px"
+                    style="width: max-content;height: 19px;border-radius: 13px;"
+                    class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs btn-new q-ml-sm btn-new-single"
+                  >
+                    <span class="block text-white" style="font-size:10px;">Новая</span>
+                  </q-btn>
+                  <q-btn
+                    rounded
+                    unelevated
+                    no-caps
+                    padding="2px 24px"
+                    style="width: max-content;height: 19px;border-radius: 13px;"
+                    class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs btn-new q-ml-auto q-mr-md btn-new-all"
+                  >
+                    <span class="block text-white" style="font-size:10px;">Новых: 2</span>
+                  </q-btn>
+                </div>
+              </div>
+              
             </q-td>
             <q-td
               key="changed"
@@ -169,5 +197,8 @@ const rows = ref([
     created: 'Позавчера',
     security: ['Только просмотр', 'прогноз скрыт'],
   },
+])
+const tables = ref([
+  {},{}
 ])
 </script>
