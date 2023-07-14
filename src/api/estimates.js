@@ -1,4 +1,5 @@
 import httpClient from "./httpClient.js"
+import { getFormatDate, checkIsNew } from 'src/composable/getFormatDate'
 
 const url = 'estimates'
 // import getFormatDate from 'src/composable/getFormatDate'
@@ -49,7 +50,12 @@ export const estimatesApi = {
         project_id: id
       })
       .then(({ data }) => {
-        return data
+        return data.data.map(item => ({
+          ...item,
+          updated_at: getFormatDate(item.updated_at),
+          created_at: getFormatDate(item.created_at),
+          isNew: checkIsNew(item.created_at)
+        }))
       })
     } catch(err) {
       console.log(err)

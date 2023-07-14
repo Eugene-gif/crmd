@@ -5,22 +5,35 @@
     </div> 
 
     <q-expansion-item
+      v-for="(project, index) in projects"
+      :key="project.id"
       expand-separator
-      default-opened
+      :default-opened="index === 0?? true"
       class="q-expansion-my"
-      v-for="table in tables"
-      :key="table.id"
+      @click.native="openEstimatesProject(project.id, index)"
     >
-      <template v-slot:header>
+      <template v-slot:header >
         <div class="title">
-          🏰 Условия работы с дизайнерами
+          {{ project.emoji }} {{ project.name }}
         </div>
-        <q-btn flat padding="0" no-caps label="Открыть проект" class="btn-open q-ml-auto" @click.stop />
+        <q-btn flat padding="0" no-caps label="Открыть проект" class="btn-open q-ml-auto lg-visible" @click="(() => { router.push(`/projects/${project.id}`) })" />
       </template>
-
+      <div class="row mb-visible full-width text-center">
+        <q-btn 
+          no-caps 
+          unelevated 
+          rounded 
+          padding="8.5px 65px" 
+          color="grey-3" 
+          label="Открыть проект" 
+          class="btn-open text-grey-5" 
+          @click="(() => { router.push(`/projects/${project.id}`) })"
+        />
+      </div>
+      
       <q-table
         flat
-        :rows="rows"
+        :rows="project?.estimates"
         :columns="columns"
         row-key="id"
         hide-pagination
@@ -51,7 +64,7 @@
         
 
         <template #body="props">
-          <q-tr class="tr-all">
+          <q-tr class="tr-all" style="cursor: pointer;">
             <q-td
               key="name"
               :props="props"
@@ -87,6 +100,8 @@
 
           <q-tr
             :props="props"
+            style="cursor: pointer;"
+            @click="(() => { router.push('/projects') })"
           >
             <q-td
               key="name"
@@ -104,8 +119,9 @@
                     padding="2px 15px"
                     style="width: max-content;height: 19px;border-radius: 13px;"
                     class="bg-negative my-btn my-btn-14 no-cursor q-ml-xs btn-new q-ml-sm btn-new-single"
+                    v-if="props.row.isNew !== null"
                   >
-                    <span class="block text-white" style="font-size:10px;">Новая</span>
+                    <span class="block text-white" style="font-size:10px;">{{ props.row.isNew }}</span>
                   </q-btn>
                   <q-btn
                     rounded
@@ -126,14 +142,14 @@
               :props="props"
               class="q-td-changed"
             >
-              <div class="content">{{props.row.changed}}</div>
+              <div class="content">{{props.row.updated_at}}</div>
             </q-td>
             <q-td
               key="created"
               :props="props"
               class="q-td-created"
             >
-              <div class="content">{{props.row.created}}</div>
+              <div class="content">{{props.row.created_at}}</div>
             </q-td>
             <q-td
               key="security"
@@ -173,7 +189,12 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { estimatesApi } from 'src/api/estimates'
+import { projectsApi } from 'src/api/projects'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const columns = ref([
   { name: 'name', label: 'Название сметы', field: 'name', align: 'left', sortable: false },
@@ -182,23 +203,40 @@ const columns = ref([
   { name: 'security', label: 'Мой доступ', field: 'security', align: 'left', sortable: false },
 ])
 
-const rows = ref([
-  {
-    id: 1,
-    name: 'Напольные покрытия',
-    changed: '24/05/2021',
-    created: '24/05/2021',
-    security: ['Можно сделать предложение', 'прогноз скрыт'],
-  },
-  {
-    id: 2,
-    name: 'Стеновые покрытия',
-    changed: '15:35',
-    created: 'Позавчера',
-    security: ['Только просмотр', 'прогноз скрыт'],
-  },
-])
-const tables = ref([
-  {},{}
-])
+const projects = ref([])
+
+const getProjcts = async () => {
+  try {
+    const resp = await projectsApi.getAll()
+    projects.value = resp
+    openEstimatesProject(projects.value[0].id, 0)
+  } catch(err) {
+    console.log(err)
+  }
+}
+const getForProject = async (id) => {
+  try {
+    const resp = await estimatesApi.getId(id)
+    return resp
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+const openEstimatesProject = async (idProject, index) => {
+  if (projects.value[index].estimates === undefined || projects.value[index].estimates.length < 1) {
+    const estimates = await getForProject(idProject)
+    projects.value[index].estimates = estimates
+  }
+}
+
+
+
+onMounted(async () => {
+  getProjcts()
+})
+
+
+
+
 </script>

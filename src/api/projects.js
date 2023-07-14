@@ -1,5 +1,5 @@
 import httpClient from "./httpClient.js"
-import getFormatDate from 'src/composable/getFormatDate'
+import { getFormatDate } from 'src/composable/getFormatDate'
 
 const url = 'projects'
 
@@ -97,7 +97,6 @@ export const projectsApi = {
               // }
         ]
       })
-      console.log(resp)
       return resp
     } catch (err) {
       throw err
@@ -119,7 +118,6 @@ export const projectsApi = {
         el.readiness = getProgress(el.created_at, el.services)
         el.share = []
       })
-      console.log(resp)
       return resp
     } catch (err) {
       throw err

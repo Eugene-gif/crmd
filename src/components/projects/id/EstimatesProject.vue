@@ -154,7 +154,7 @@
   import DialogCreate from 'src/pages/Estimates/DialogCreate'
   import DialogDelite from 'src/components/dialog/DialogDelite'
   import useDialogDel from 'src/composable/useDialogDel'
-  import getFormatDate from 'src/composable/getFormatDate'
+  import { getFormatDate } from 'src/composable/getFormatDate'
   import { useQuasar } from 'quasar'
   import { useRouter } from 'vue-router'
 
