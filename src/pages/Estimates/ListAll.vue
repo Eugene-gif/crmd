@@ -35,6 +35,7 @@
         flat
         :rows="project?.estimates"
         :columns="columns"
+        :pagination="pagination"
         row-key="id"
         hide-pagination
         class="my-table project-table table-head-no-pdd table-list"
@@ -156,13 +157,52 @@
               :props="props"
               class="q-td-security"
             >
-              <div class="content row flex-wrap" style="width: 196px;">
+              <div class="content row flex-wrap" style="width: 196px;" v-if="userRole === 'contractor'">
                 <span
                   v-for="el in props.row.security"
                   :key="el"
                 >
                   {{ el }},
                 </span>
+              </div>
+              <div class="content row" style="width: 196px;" v-if="userRole === 'designer'">
+                
+                <div class="row items-center " style="flex: 1;">
+                  <q-btn flat round class="bg-grey-3" padding="9px">
+                    <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" color="black" />
+                  </q-btn>
+                  <q-list class="list-share q-ml-sm">
+                    <q-item
+                      v-for="el in 1" :key="el"
+                      class="q-item-none"
+                    > 
+                      <q-btn :to="el.link">
+                        <img src="/icons/anton.jpg" alt="">
+                      </q-btn>
+                    </q-item>
+                    <q-btn class="q-td-share__btn__limit no-cursor q-ml-sm" :label="`+5`" />
+                  </q-list>
+                  <q-icon
+                    name="svguse:icons/btnIcons.svg#link" 
+                    size="18px" 
+                    class="link-icon q-ml-auto" 
+                  >
+                    <q-item class="link-all"></q-item>
+                    <div class="circle"></div>
+                  </q-icon>
+                  <!-- <q-item
+                    v-if="item.share.length > 1"
+                  >
+                    <q-btn class="q-td-share__btn__limit" :label="`+${item.share.length - 1}`" />
+                  </q-item> -->
+                  <ActionBtn 
+                    :propsEl="props.row.id"
+                    :offsetYX="[55, -257]"
+                    :actionfunc="actionfunc"
+                    class="q-ml-auto"
+                  />
+                </div>
+
               </div>
             </q-td>
             
@@ -193,22 +233,57 @@ import { ref, onMounted } from 'vue'
 import { estimatesApi } from 'src/api/estimates'
 import { projectsApi } from 'src/api/projects'
 import { useRouter } from 'vue-router'
+import ActionBtn from 'components/Table/ActionBtn.vue'
 
 const router = useRouter()
+const user = JSON.parse(localStorage.getItem('userInfo'))
+const userRole = user.role
 
 const columns = ref([
   { name: 'name', label: 'Название сметы', field: 'name', align: 'left', sortable: false },
   { name: 'changed', label: 'Изменена', field: 'changed', align: 'left', sortable: false },
   { name: 'created', label: 'Создана', field: 'created', align: 'left', sortable: false },
-  { name: 'security', label: 'Мой доступ', field: 'security', align: 'left', sortable: false },
+  { name: 'security', label: userRole === 'contractor' ? 'Мой доступ' : 'Доступы', field: 'security', align: 'left', sortable: false },
+])
+
+const pagination = ref({
+  rowsPerPage: 0,
+})
+
+const actionfunc = ref([
+  {
+    title: 'Открыть',
+    emmit: 'open'
+  },
+  {
+    title: 'Настройки доступа',
+    emmit: ''
+  },
+  {
+    title: 'Изменить',
+    emmit: ''
+  },
+  {
+    title: 'Дублировать',
+    emmit: ''
+  },
+  {
+    title: 'Экспорт сметы',
+    emmit: ''
+  },
+  {
+    title: 'Удалить',
+    emmit: 'actionDel'
+  },
 ])
 
 const projects = ref([])
 
 const getProjcts = async () => {
   try {
-    const resp = await projectsApi.getAll()
-    projects.value = resp
+    if (userRole === 'designer') await projectsApi.getAllMy().then(resp => {projects.value = resp})
+    else await projectsApi.getAll().then(resp => {projects.value = resp})
+    
     openEstimatesProject(projects.value[0].id, 0)
   } catch(err) {
     console.log(err)
@@ -231,12 +306,8 @@ const openEstimatesProject = async (idProject, index) => {
 }
 
 
-
 onMounted(async () => {
   getProjcts()
 })
-
-
-
 
 </script>

@@ -196,8 +196,6 @@
     },
   ])
 
-  
-
   const onActionOpen = (id) => {
     router.push(`/estimates/${id}`)
   }

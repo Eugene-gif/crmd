@@ -22,7 +22,7 @@ function parseCustomDate(dateStr) {
 
 function getProgress(created_at, services) {
   let readiness = 0
-  if (services.length) {
+  if (services !== null && services.length) {
     readiness = services.reduce(function(total, obj) {
       return total + obj.service_term + obj.unit_term
     }, 0)
@@ -49,7 +49,7 @@ function getProgress(created_at, services) {
 
 function getTiming(created_at, services) {
   let readiness = 0
-  if (services.length) {
+  if (services !== null && services.length) {
     readiness = services.reduce(function(total, obj) {
       return total + obj.service_term + obj.unit_term
     }, 0)

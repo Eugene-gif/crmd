@@ -1817,13 +1817,13 @@
     tbody {
       tr {
         td {
-          padding: 23.5px 6px !important;
+          padding: 10.5px 6px !important;
           &:first-child,
           &:last-child {
             padding-left: 26px !important;
           }
           &:last-child {
-            padding-right: 26px !important;
+            padding-right: 1px !important;
           }
           &.q-td-security {
             span {
@@ -1838,6 +1838,8 @@
           }
           td {
             border-color: rgba(204, 204, 204, 1);
+            padding-top: 23.5px !important;
+            padding-bottom: 23.5px !important;
           }
         }
       }
