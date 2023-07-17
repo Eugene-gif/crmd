@@ -158,12 +158,14 @@
               class="q-td-security"
             >
               <div class="content row flex-wrap" style="width: 196px;" v-if="userRole === 'contractor'">
-                <span
+                <!-- <span
                   v-for="el in props.row.security"
                   :key="el"
                 >
-                  {{ el }},
-                </span>
+                  
+                </span> -->
+                <span>Можно сделать предложение,</span> 
+                <span>прогноз скрыт</span> 
               </div>
               <div class="content row" style="width: 196px;" v-if="userRole === 'designer'">
                 
@@ -185,7 +187,7 @@
                   <q-icon
                     name="svguse:icons/btnIcons.svg#link" 
                     size="18px" 
-                    class="link-icon q-ml-auto" 
+                    class="link-icon share q-ml-auto" 
                   >
                     <q-item class="link-all"></q-item>
                     <div class="circle"></div>

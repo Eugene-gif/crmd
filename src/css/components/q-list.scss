@@ -292,10 +292,11 @@
 
 .list-share {
   display: flex;
-  
+  height: 30px;
   .q-btn {
     width: 30px;
-    height: 30px;
+    max-height: 30px;
+    min-height: 30px;
     padding: 0;
     border-radius: 100%;
     overflow: hidden;
@@ -306,6 +307,11 @@
     }
     &:before {
       box-shadow: none;
+    }
+  }
+  @media (max-width: 772px) {
+    .share {
+      
     }
   }
 }
