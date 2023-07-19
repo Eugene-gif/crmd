@@ -1,4 +1,26 @@
 <template>  
+  <q-dialog
+    v-model="dialogDelite"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDelite @modalFalse="handleModalClose" />
+  </q-dialog>
+
+  <q-dialog
+    v-model="dialogDubleEstimate"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog"
+  >
+    <DialogDuble 
+      :idEstimate="activeEstimate.idEstimate"
+      :estimateName="activeEstimate.estimateName"
+      :project_id="activeEstimate.project_id"
+    />
+  </q-dialog>
+
   <q-page class="page-estimates page-estimates-all-project">
     <div class="row justify-between items-center">
       <div class="text-h2">Сметы</div>
@@ -102,7 +124,7 @@
           <q-tr
             :props="props"
             style="cursor: pointer;"
-            @click="(() => { router.push('/projects') })"
+            @dblclick="(() => { router.push(`/estimates/${props.row.id}`) })"
           >
             <q-td
               key="name"
@@ -199,15 +221,20 @@
                   </q-item> -->
                   <ActionBtn 
                     :propsEl="props.row.id"
-                    :offsetYX="[55, -257]"
+                    :offsetYX="[55, -266]"
                     :actionfunc="actionfunc"
                     class="q-ml-auto"
+                    @actionOpen="(() => { router.push(`/projects/${project.id}`) })"
+                    @actionChange="true"
+                    @actionDuble="openDubleDialog(props.row.id, props.row.project_id, props.row.name)"
+                    @actionDel="onActionDel('delEstimate', props.row.id)"
                   />
+                  
                 </div>
-
+                
               </div>
             </q-td>
-            
+
           </q-tr>
         </template>
         <template #bottom>
@@ -235,11 +262,23 @@ import { ref, onMounted } from 'vue'
 import { estimatesApi } from 'src/api/estimates'
 import { projectsApi } from 'src/api/projects'
 import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
 import ActionBtn from 'components/Table/ActionBtn.vue'
+import DialogDelite from 'src/components/dialog/DialogDelite'
+import useDialogDel from 'src/composable/useDialogDel'
+import DialogDuble from 'src/pages/Estimates/DialogDuble'
 
+const $q = useQuasar()
 const router = useRouter()
 const user = JSON.parse(localStorage.getItem('userInfo'))
 const userRole = user.role
+
+const dialogDubleEstimate = ref(false)
+const activeEstimate = ref({
+  idEstimate: null,
+  estimateName: null,
+  project_id: null,
+})
 
 const columns = ref([
   { name: 'name', label: 'Название сметы', field: 'name', align: 'left', sortable: false },
@@ -255,7 +294,7 @@ const pagination = ref({
 const actionfunc = ref([
   {
     title: 'Открыть',
-    emmit: 'open'
+    emmit: 'actionOpen'
   },
   {
     title: 'Настройки доступа',
@@ -263,11 +302,11 @@ const actionfunc = ref([
   },
   {
     title: 'Изменить',
-    emmit: ''
+    emmit: 'actionChange'
   },
   {
     title: 'Дублировать',
-    emmit: ''
+    emmit: 'actionDuble'
   },
   {
     title: 'Экспорт сметы',
@@ -278,6 +317,40 @@ const actionfunc = ref([
     emmit: 'actionDel'
   },
 ])
+
+const actionHandlers = {
+  delEstimate: onDelEstimate
+}
+const { 
+  dialogDelite, 
+  dialogDelId, 
+  dialogDelName, 
+  onActionDel, 
+  modalCloseDel, 
+  handleModalClose 
+} = useDialogDel(actionHandlers)
+
+// удаление сметы
+async function onDelEstimate(id) {
+  try {
+    await estimatesApi.del(id)
+    getProjcts()
+    $q.notify({
+      color: 'positive',
+      message: 'Смета удалена'
+    })
+  } catch(err) {
+    console.log(err)
+  }
+}
+
+const openDubleDialog = async (idEstimate, project_id, estimateName) => {
+  activeEstimate.value.idEstimate = idEstimate
+  activeEstimate.value.estimateName = estimateName
+  activeEstimate.value.project_id = project_id
+  dialogDubleEstimate.value = true
+}
+
 
 const projects = ref([])
 

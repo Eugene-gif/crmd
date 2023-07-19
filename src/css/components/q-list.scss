@@ -309,6 +309,11 @@
       box-shadow: none;
     }
   }
+  .q-td-share__btn__limit {
+    span {
+      font-weight: 400;
+    }
+  }
   @media (max-width: 772px) {
     .share {
       
