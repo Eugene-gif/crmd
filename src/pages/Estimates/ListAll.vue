@@ -87,7 +87,11 @@
         
 
         <template #body="props">
-          <q-tr class="tr-all" style="cursor: pointer;">
+          <q-tr 
+            class="tr-all" 
+            style="cursor: pointer;"
+            @dblclick="(() => { router.push(`/estimates/project/${props.row.project_id}`) })"
+          >
             <q-td
               key="name"
               :props="props"
@@ -221,11 +225,11 @@
                   </q-item> -->
                   <ActionBtn 
                     :propsEl="props.row.id"
-                    :offsetYX="[55, -266]"
+                    :offsetYX="[55, -257]"
                     :actionfunc="actionfunc"
                     class="q-ml-auto"
-                    @actionOpen="(() => { router.push(`/projects/${project.id}`) })"
-                    @actionChange="true"
+                    @actionOpen="(() => { router.push(`/estimates/${props.row.id}`) })"
+                    @actionChange="openEditEstimate(props.row.id)"
                     @actionDuble="openDubleDialog(props.row.id, props.row.project_id, props.row.name)"
                     @actionDel="onActionDel('delEstimate', props.row.id)"
                   />
@@ -258,6 +262,7 @@
 </template>
 
 <script setup>
+import { inject } from 'vue'
 import { ref, onMounted } from 'vue'
 import { estimatesApi } from 'src/api/estimates'
 import { projectsApi } from 'src/api/projects'
@@ -270,6 +275,7 @@ import DialogDuble from 'src/pages/Estimates/DialogDuble'
 
 const $q = useQuasar()
 const router = useRouter()
+const emitter = inject('emitter')
 const user = JSON.parse(localStorage.getItem('userInfo'))
 const userRole = user.role
 
@@ -349,6 +355,12 @@ const openDubleDialog = async (idEstimate, project_id, estimateName) => {
   activeEstimate.value.estimateName = estimateName
   activeEstimate.value.project_id = project_id
   dialogDubleEstimate.value = true
+}
+
+const openEditEstimate = (id) => {
+  // localStorage.setItem('open_dialog', 'true')
+  localStorage.setItem('open_dialog', 'edit')
+  router.push(`/estimates/${id}`)
 }
 
 

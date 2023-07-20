@@ -304,6 +304,7 @@
 </template>
 
 <script setup>
+  import { inject } from 'vue'
   import { ref, onMounted } from 'vue'
   import { estimatesApi } from 'src/api/estimates'
   import { projectsApi } from 'src/api/projects'
@@ -324,19 +325,8 @@
   import DialogSettings from 'src/pages/Estimates/DialogSettings'
   import DialogDuble from 'src/pages/Estimates/DialogDuble'
   
-  const $q = useQuasar()
-  const loading = ref(false)
-  const router = useRouter()
-  const idEstimate = useRoute().params.id
-
-  const user = JSON.parse(localStorage.getItem('userInfo'))
-  const userRole = user.role
-
-  const cutTitle = (title) => {
-    return String(title.substring(0,2))
-  }
   
-
+  
   const columnsTable = ref([
     { name: 'id', label: '№', field: 'id', sortable: true },
     { name: 'name', label: 'Название', field: 'name', sortable: false },
@@ -354,6 +344,20 @@
     { name: 'color', label: 'Цвет', field: 'color', sortable: false },
     { name: 'file', label: 'Файл', field: 'file', sortable: false },
   ])
+
+  const $q = useQuasar()
+  const emitter = inject('emitter')
+  const loading = ref(false)
+  const router = useRouter()
+  const idEstimate = useRoute().params.id
+
+  const user = JSON.parse(localStorage.getItem('userInfo'))
+  const userRole = user.role
+
+  const cutTitle = (title) => {
+    return String(title.substring(0,2))
+  }
+
   const estimate = ref({})
   const idActiveItem = ref(null)
 
@@ -567,6 +571,7 @@
     }
   }
 
+  
   // composable удаления
   const actionHandlers = {
     delItem: onDelItem,
@@ -587,6 +592,8 @@
     await getProject()
     await getSetTerms()
     loading.value = false
+    if (localStorage.getItem('open_dialog') === 'edit') dialogSettings.value = true
+    localStorage.setItem('open_dialog', '')
   })
 
 </script>

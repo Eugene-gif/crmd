@@ -244,6 +244,12 @@
   }
 }
 
+.page-estimates-nofull {
+  .estimates-table-container {
+    width: 100% !important;
+  }
+}
+
 .page-estimates-single {
   .toggle-small {
     transform: rotate(180deg);
@@ -324,18 +330,14 @@
         tr {
           td {
             &.q-td-security {
-              .q-td__action .q-btn {
-                &:hover {
-                  background: rgba(0,0,0,0);
-                }
-              }
+              
               @media (min-width: 772px) {
                 padding-top: 10.5px !important;
                 padding-bottom: 10.5px !important;
                 padding-right: 16px !important;
-                .q-td__action .q-btn {
-                  width: 26px;
-                }
+                // .q-td__action .q-btn {
+                //   width: 26px;
+                // }
               }
             }
           }
