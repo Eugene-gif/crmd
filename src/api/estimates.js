@@ -1,4 +1,5 @@
 import httpClient from "./httpClient.js"
+import { getFormatDate, checkIsNew } from 'src/composable/getFormatDate'
 
 const url = 'estimates'
 // import getFormatDate from 'src/composable/getFormatDate'
@@ -14,7 +15,8 @@ export const estimatesApi = {
     }
   },
 
-  getById(id) {
+  getById(id, role, userId) {
+    
     try {
       return httpClient.post(`${url}/get`, {
         estimate_id: id
@@ -30,7 +32,8 @@ export const estimatesApi = {
           return {
             ...row,
             iterationId: index + 1,
-            smetaVal: row.proposals.length ? false : null
+            smetaVal: row.proposals.length ? false : null,
+            my_proposal: role !== 'contractor' ? '' : row.proposals.find(el => el.contractor.id === userId)
           }
         })
 
@@ -47,7 +50,12 @@ export const estimatesApi = {
         project_id: id
       })
       .then(({ data }) => {
-        return data
+        return data.data.map(item => ({
+          ...item,
+          updated_at: getFormatDate(item.updated_at),
+          created_at: getFormatDate(item.created_at),
+          isNew: checkIsNew(item.created_at)
+        }))
       })
     } catch(err) {
       console.log(err)

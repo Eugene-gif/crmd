@@ -1,5 +1,5 @@
 import httpClient from "./httpClient.js"
-import getFormatDate from 'src/composable/getFormatDate'
+import { getFormatDate } from 'src/composable/getFormatDate'
 
 const url = 'projects'
 
@@ -22,7 +22,7 @@ function parseCustomDate(dateStr) {
 
 function getProgress(created_at, services) {
   let readiness = 0
-  if (services.length) {
+  if (services !== null && services.length) {
     readiness = services.reduce(function(total, obj) {
       return total + obj.service_term + obj.unit_term
     }, 0)
@@ -49,7 +49,7 @@ function getProgress(created_at, services) {
 
 function getTiming(created_at, services) {
   let readiness = 0
-  if (services.length) {
+  if (services !== null && services.length) {
     readiness = services.reduce(function(total, obj) {
       return total + obj.service_term + obj.unit_term
     }, 0)
@@ -97,7 +97,6 @@ export const projectsApi = {
               // }
         ]
       })
-      console.log(resp)
       return resp
     } catch (err) {
       throw err
@@ -119,7 +118,6 @@ export const projectsApi = {
         el.readiness = getProgress(el.created_at, el.services)
         el.share = []
       })
-      console.log(resp)
       return resp
     } catch (err) {
       throw err

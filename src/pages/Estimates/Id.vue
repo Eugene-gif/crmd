@@ -328,6 +328,10 @@
   const loading = ref(false)
   const router = useRouter()
   const idEstimate = useRoute().params.id
+
+  const user = JSON.parse(localStorage.getItem('userInfo'))
+  const userRole = user.role
+
   const cutTitle = (title) => {
     return String(title.substring(0,2))
   }
@@ -338,13 +342,13 @@
     { name: 'name', label: 'Название', field: 'name', sortable: false },
     { name: 'room', label: 'Помещение', field: 'room', sortable: false },
     { name: 'desc', label: 'Описание', field: 'desc', sortable: false },
-    { name: 'price', label: 'Цена, руб.', field: 'price', sortable: false },
     { name: 'metrics', label: 'м2/шт', field: 'metrics', sortable: false },
-    { name: 'total', label: 'Итого', field: 'total', sortable: false },
+    { name: 'price', label: 'Цена, руб.', field: 'price', sortable: false },
     { name: 'deadline', label: 'Срок, дн', field: 'dedline', sortable: false },
-    { name: 'status', label: 'Статус', field: 'status', sortable: false },
+    { name: 'total', label: 'Итого', field: 'total', sortable: false },
     { name: 'procent', label: 'Ставка', field: 'procent', sortable: false },
     { name: 'agent', label: 'Агентские, руб.', field: 'agent', sortable: false },
+    { name: 'status', label: 'Статус', field: 'status', sortable: false },
     { name: 'brand', label: 'Производитель', field: 'brand', sortable: false },
     { name: 'code', label: 'Артикул', field: 'code', sortable: false },
     { name: 'color', label: 'Цвет', field: 'color', sortable: false },
@@ -519,7 +523,7 @@
   // получение данных
   const getData = async () => {
     try {
-      const resp = await estimatesApi.getById(idEstimate)
+      const resp = await estimatesApi.getById(idEstimate, userRole, user.role_info.id)
       estimate.value = resp
     } catch (err) {
       console.log(err)
@@ -534,7 +538,7 @@
   // получить проект для сметы
   const getProject = async () => {
     try {
-      const resp = await projectsApi.getById(estimate.value.project_id)
+      const resp = await projectsApi.getById(estimate.value.project_id, null, null)
       estimate.value.project = {
         name: resp.name,
         explications: resp.explications

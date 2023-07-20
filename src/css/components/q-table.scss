@@ -1761,7 +1761,6 @@
 }
 @media (max-width: 772px) {
   .project-table {
-    
     .q-table__middle {
       overflow: visible;
     }
@@ -1782,6 +1781,108 @@
                   margin-right: 10px;
                 }
               }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.table-head-no-pdd {
+  .q-table {
+    padding-top: 0;
+    thead {
+      transform: translateY(0);
+    }
+  }
+}
+
+.table-list {
+  .q-table {
+    thead {
+      tr {
+        th {
+          border: none;
+          padding-bottom: 0;
+          padding-left: 6px !important;
+          padding-right: 6px !important;
+          &:first-child,
+          &:last-child {
+            padding-left: 26px !important;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          padding: 8.5px 6px !important;
+          &:first-child,
+          &:last-child {
+            padding-left: 26px !important;
+          }
+          &:last-child {
+            padding-right: 1px !important;
+          }
+          &.q-td-security {
+
+            span {
+              white-space: break-spaces;
+            }
+          }
+        }
+        &.tr-all {
+          display: none;
+          &:first-child {
+            display: table-row;
+          }
+          td {
+            border-color: rgba(204, 204, 204, 1);
+            @media (min-width: 772px) {
+              padding-top: 23.5px !important;
+              padding-bottom: 23.5px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 772px) {
+    .q-table {
+      tbody {
+        tr {
+          display: flex;
+          flex-wrap: wrap;
+          height: auto;
+          width: 100%;
+          padding: 20px;
+          border: 1px solid rgba(240, 240, 240, 1);
+          margin-bottom: 5px;
+          &:first-child {
+            border: 1px solid rgba(204, 204, 204, 1);
+          }
+          td {
+            padding: 0 !important;
+            height: auto;
+            flex: 0 0 100%;
+            width: 100%;
+            border: none;
+            &:first-child,
+            &:last-child {
+              padding-left: 0 !important;
+            }
+            &:last-child {
+              padding-right: 0 !important;
+            }
+            .content {
+              white-space: pre-wrap;
+              width: 100% !important;
+            }
+          }
+          &.tr-all {
+            &:first-child {
+              display: flex;
             }
           }
         }
@@ -3268,6 +3369,62 @@
       }
     }
   }
+
+  &-version-contractor {
+    .q-table {
+      thead {
+        .tr-colspan {
+          background: rgba(0,0,0,0);
+          height: 30px;
+          &:hover {
+            background: rgba(0,0,0,0);
+          }
+          th {
+            background: rgba(0,0,0,0);
+            border: none !important;
+            border-radius: 6px 6px 0 0;
+            height: 30px;
+            div {
+              color: rgba(68, 68, 68, 1);
+            }
+            &:nth-child(2) {
+              border: 1px solid #F0F0F0 !important;
+              border-bottom: 0 !important;
+            }
+            &:nth-child(3) {
+              border: 1px solid rgba(204, 204, 204, 1) !important;
+            }
+            &:last-child {
+              border: none !important;
+            }
+          } 
+        }
+      }
+    }
+    
+    // thead {
+    //   tr {
+    //     th {
+    //       position: relative;
+    //       overflow: visible;
+    //       &:nth-child(6) {
+    //         &:before {
+    //           content: '';
+    //           width: 100%;
+    //           border: 1px solid black;
+    //           min-height: 30px;
+    //           position: absolute;
+    //           top: -30px;
+    //           left: 0;
+    //           z-index: 1;
+    //           display: block;
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
   @media (max-width: 772px) {
     .q-table__middle {
       padding-bottom: 30px;
@@ -3324,6 +3481,29 @@
       }
     }
 
+  }
+}
+.estimates-table-version-contractor {
+  .q-table {
+    thead,
+    tbody {
+      tr {
+        th,
+        td {
+          &:nth-child(11) {
+            border-left: 1px solid #ccc;
+          }
+          &:nth-child(11),
+          &:nth-child(12),
+          &:nth-child(13),
+          &:nth-child(14),
+          &:nth-child(15) {
+            border-right: 1px solid #cccccc !important;
+            border-bottom: 1px solid #cccccc !important;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -16,7 +16,7 @@
   >
   <template v-slot:header>
     <div class="title q-mr-auto">
-      Экспликация {{ userRole }}
+      Экспликация
     </div>
   </template>
     <q-card v-if="userRole === 'designer'">
@@ -64,7 +64,7 @@
 
       <q-card-section 
         class="q-card-content q-card-room"
-        v-if="openNewExplication"
+        v-if="openNewExplication || !data.length"
       >
         <q-item>
           <q-input 

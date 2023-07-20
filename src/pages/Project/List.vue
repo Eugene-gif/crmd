@@ -455,7 +455,7 @@
     loading.value = true
     try {
       if (userRole === 'designer') await projectsApi.getAllMy().then(resp => {rows2.value = resp})
-      else await await projectsApi.getAll().then(resp => {rows2.value = resp})
+      else await projectsApi.getAll().then(resp => {rows2.value = resp})
 
       if (!rows2.value.length) nodate.value = true
       else nodate.value = false

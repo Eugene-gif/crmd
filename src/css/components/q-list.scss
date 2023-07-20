@@ -290,6 +290,37 @@
   }
 }
 
+.list-share {
+  display: flex;
+  height: 30px;
+  .q-btn {
+    width: 30px;
+    max-height: 30px;
+    min-height: 30px;
+    padding: 0;
+    border-radius: 100%;
+    overflow: hidden;
+    img {
+      min-width: 100%;
+      object-fit: cover;
+      border-radius: 100%;
+    }
+    &:before {
+      box-shadow: none;
+    }
+  }
+  .q-td-share__btn__limit {
+    span {
+      font-weight: 400;
+    }
+  }
+  @media (max-width: 772px) {
+    .share {
+      
+    }
+  }
+}
+
 .contractor-list,
 .contractor-list-project {
   .q-item {
