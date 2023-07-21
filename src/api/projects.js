@@ -131,6 +131,18 @@ export const projectsApi = {
       })
       .then(({ data }) => {
         data.data.readiness = getProgress(data.data.created_at, data.data.services)
+        data.data.estimates = data.data.estimates.map((row) => {
+          return {
+            ...row,
+            items: row.items.map((item, index) => {
+              return {
+                ...item,
+                iterationId: index + 1
+              }
+            })
+          }
+        })
+
         return data.data
       })
     } catch(err) {

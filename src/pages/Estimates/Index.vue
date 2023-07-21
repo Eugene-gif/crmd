@@ -17,7 +17,7 @@
     <DialogPosition  
       :idEstimate="activeEstimate.id"
       :rate="null"
-      :types="null"
+      :types="project.explications"
       @createItem="onCreateItem"
      />
      <!-- :update="onUpdate" -->
@@ -33,7 +33,7 @@
       @updateItem="onUpdateItem" 
       :iditem="idActiveItem"
       :activeField="onActiveField"
-      :types="estimate.project?.explications" 
+      :types="project.explications" 
       v-if="idActiveItem"
     />
   </q-dialog>
@@ -279,7 +279,7 @@
                 color="grey-3"
                 class="my-btn my-effect my-btn--outline"
                 padding="5.5px 0"
-                @click.stop="activeEstimate = estimate; dialogPosition = true"
+                @click.stop="activeEstimate = estimate; dialogPosition = true; "
               >
                 <q-icon name="svguse:icons/allIcons.svg#plus" color="grey-8" size="12px" class="q-mr-sm" />
                 <div class="block text-grey-5">Добавить позицию</div>
@@ -290,7 +290,6 @@
         <EstimateTable2
           :columns="columnsTable"
           :rows="estimate.items"
-
           @openSmeta="onOpenSmeta"
           @chooseSmeta="onChooseSmeta"
           @editModal="onEditModal"
@@ -417,6 +416,7 @@ import DialogDuble from 'src/pages/Estimates/DialogDuble'
 
 const idProject = useRoute().params.id
 const activeEstimate = ref({})
+const idActiveItem = ref(null)
 const project = ref({})
 const router = useRouter()
 
@@ -484,6 +484,7 @@ const onCreateItem = async (obj) => {
 // открыть модалку обновления сметы
 const dialogUpdate = ref(false)
 const openDialogUpdate = (id) => {
+  
   idActiveItem.value = id
   dialogUpdate.value = true
 }
@@ -504,6 +505,7 @@ const onUpdateItem = async (bool) => {
 const onActiveField = ref()
 // const dataEdit = ref([])
 const onEditModal = (val, field) => {
+  console.log(val, field)
   idActiveItem.value = val.id
   onActiveField.value = field
   dialogUpdate.value = true
@@ -568,19 +570,20 @@ async function getSetTerms() {
 }
 
   
-  // composable удаления
-  const actionHandlers = {
-    delItem: onDelItem
-  }
-  const { 
-    dialogDelite, 
-    dialogDelId, 
-    dialogDelName, 
-    onActionDel, 
-    modalCloseDel, 
-    handleModalClose 
-  } = useDialogDel(actionHandlers)
+// composable удаления
+const actionHandlers = {
+  delItem: onDelItem
+}
+const { 
+  dialogDelite, 
+  dialogDelId, 
+  dialogDelName, 
+  onActionDel, 
+  modalCloseDel, 
+  handleModalClose 
+} = useDialogDel(actionHandlers)
 
+const val = ref(true)
 
 const getProject = async () => {
   try {
