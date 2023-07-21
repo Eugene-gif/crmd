@@ -217,7 +217,7 @@
           <ActionBtn
             propsEl="1"
             :offsetYX="[55, -258]"
-            @click.stop="true"
+            @click.stop
           />
           <div class="item" @click.stop="true">
             <q-btn
@@ -403,7 +403,7 @@ import { estimatesApi } from 'src/api/estimates'
 import { projectsApi } from 'src/api/projects'
 import { useRoute, useRouter } from 'vue-router'
 import EstimateTable2 from 'components/Table/EstimateTable2.vue'
-
+import ActionBtn from 'components/Table/ActionBtn.vue'
 import NoDate from 'src/components/NoDate.vue'
 import DialogDelite from 'src/components/dialog/DialogDelite'
 import useDialogDel from 'src/composable/useDialogDel'
