@@ -2,7 +2,7 @@
   <q-dialog
     v-model="dialog"
     transition-show="fade"
-    transition-hide="fade" 
+    transition-hide="fade"
     class="my-dialog projects-dialog"
   >
     <Dialog
@@ -14,12 +14,12 @@
   <q-dialog
     v-model="dialogDelite"
     transition-show="fade"
-    transition-hide="fade" 
+    transition-hide="fade"
     class="my-dialog"
   >
     <DialogDelite @modalFalse="handleModalClose" />
   </q-dialog>
-  
+
   <q-page class="page-projects">
 
     <LoaderDate
@@ -60,7 +60,7 @@
 
     <div class="projects">
       <!-- :sort-method="customSort" -->
-      <NoDate 
+      <NoDate
         text="Список проектов пуст"
         v-show="nodate"
       />
@@ -157,22 +157,22 @@
               class="q-td-image"
             >
               <q-item @dblclick.stop="onActionOpen(props.row.id)">
-                <img 
-                  v-show="props.row.image.url" 
-                  :src="props.row.image.url" 
-                  alt="" 
+                <img
+                  v-show="props.row.image.url"
+                  :src="props.row.image.url"
+                  alt=""
                   @dblclick.stop="onActionOpen(props.row.id)"
                 >
               </q-item>
             </q-td>
-            
+
             <q-td
               key="name"
               :props="props"
               class="q-td-name"
             >
               <div class="text-h3" @dblclick.stop="onActionOpen(props.row.id)">
-                <span class="name-ico" v-if="props.row.emoji">{{props.row.emoji}}</span>{{props.row.name}}
+                <span class="name-ico" v-if="props.row.emoji && props.row.emoji !== 'null'">{{props.row.emoji}}</span>{{props.row.name}}
               </div>
             </q-td>
             <q-td
@@ -180,7 +180,7 @@
               :props="props"
               class="q-td-action"
             >
-              <ActionBtn 
+              <ActionBtn
                 :propsEl="props.row.id"
                 :offsetYX="[55, -258]"
                 :actionfunc="actionfunc"
@@ -219,7 +219,7 @@
               :props="props"
               class="q-td-customer"
             >
-              <q-item 
+              <q-item
                 class="items-center customer-desginter"
                 v-if="tab === 'stripes' && userRole === 'contractor'"
               >
@@ -325,7 +325,7 @@
           <!-- q-th__share -->
         </template>
       </q-table>
-      
+
     </div>
   </q-page>
 </template>
@@ -404,13 +404,13 @@
   const actionHandlers = {
     delProject: onActionProjectDel,
   }
-  const { 
-    dialogDelite, 
-    dialogDelId, 
-    dialogDelName, 
-    onActionDel, 
-    modalCloseDel, 
-    handleModalClose 
+  const {
+    dialogDelite,
+    dialogDelId,
+    dialogDelName,
+    onActionDel,
+    modalCloseDel,
+    handleModalClose
   } = useDialogDel(actionHandlers)
 
   // управление проектами
@@ -424,7 +424,7 @@
   async function onActionCopy(id) {
 
   }
-  
+
   // функция удаления проекта
   async function onActionProjectDel(id) {
     loading.value = true

@@ -58,7 +58,7 @@
         </div>
       </q-th>
     </template>
-    
+
     <template #header v-if="userRole === 'contractor'">
       <!-- {{ columns.name }} -->
       <q-tr class="tr-colspan">
@@ -225,7 +225,7 @@
             </div>
           </div>
         </q-td>
-        
+
         <q-td
           key="metrics"
           :props="props"
@@ -301,71 +301,71 @@
 
 
         <q-td
-          key="price"        
+          key="price"
           :props="props"
           class=""
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal.price }}
+              {{ props.row.my_proposal?.price }}
             </div>
           </div>
         </q-td>
 
         <q-td
-          key="deadline"          
+          key="deadline"
           :props="props"
           class=""
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal.term }}
+              {{ props.row.my_proposal?.term }}
             </div>
           </div>
         </q-td>
 
         <q-td
-          key="total"          
+          key="total"
           :props="props"
           class="td-total"
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal.total_price }}
+              {{ props.row.my_proposal?.total_price }}
             </div>
           </div>
         </q-td>
 
         <q-td
-          key="procent"          
+          key="procent"
           :props="props"
           class=""
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal.rate }}
+              {{ props.row.my_proposal?.rate }}
             </div>
           </div>
         </q-td>
         <q-td
-          key="agent"          
+          key="agent"
           :props="props"
           class=""
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal.fee }}
+              {{ props.row.my_proposal?.fee }}
             </div>
           </div>
         </q-td>
 
 
-        
+
         <q-td
           key="status"
           :props="props"
@@ -384,11 +384,11 @@
             self="top middle"
             class="menu-estimate-status"
           >
-            <SelectStatus 
-              :estimate_item_id="props.row.id" 
-              :status="props.row.status" 
-              :options="optionstab" 
-              v-if="optionstab" 
+            <SelectStatus
+              :estimate_item_id="props.row.id"
+              :status="props.row.status"
+              :options="optionstab"
+              v-if="optionstab"
               @updateStatus="value => props.row.status = value"
             />
           </q-menu>
@@ -441,7 +441,7 @@
           @click.stop=""
         >
           <div class="td-content-section">
-            <a :href="props.row.file?.file" target="_blank" class="text link" v-if="props.row.file.length">
+            <a :href="props.row.file?.file" target="_blank" class="text link">
               {{props.row.file?.extension}}, {{props.row.file?.size}}
             </a>
           </div>
@@ -689,7 +689,7 @@
     isMobile
   } = useContextMenu()
 
-  
+
   const colorStatus = (statusId) => {
     if (statusId === 'В работе') {
       return 'positive'
