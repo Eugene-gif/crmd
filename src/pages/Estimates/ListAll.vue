@@ -1,8 +1,8 @@
-<template>  
+<template>
   <q-dialog
     v-model="dialogDelite"
     transition-show="fade"
-    transition-hide="fade" 
+    transition-hide="fade"
     class="my-dialog"
   >
     <DialogDelite @modalFalse="handleModalClose" />
@@ -11,10 +11,10 @@
   <q-dialog
     v-model="dialogDubleEstimate"
     transition-show="fade"
-    transition-hide="fade" 
+    transition-hide="fade"
     class="my-dialog"
   >
-    <DialogDuble 
+    <DialogDuble
       :idEstimate="activeEstimate.idEstimate"
       :estimateName="activeEstimate.estimateName"
       :project_id="activeEstimate.project_id"
@@ -24,7 +24,7 @@
   <q-page class="page-estimates page-estimates-all-project">
     <div class="row justify-between items-center">
       <div class="text-h2">Сметы</div>
-    </div> 
+    </div>
 
     <q-expansion-item
       v-for="(project, index) in projects"
@@ -41,18 +41,18 @@
         <q-btn flat padding="0" no-caps label="Открыть проект" class="btn-open q-ml-auto lg-visible" @click="(() => { router.push(`/projects/${project.id}`) })" />
       </template>
       <div class="row mb-visible full-width text-center">
-        <q-btn 
-          no-caps 
-          unelevated 
-          rounded 
-          padding="8.5px 65px" 
-          color="grey-3" 
-          label="Открыть проект" 
-          class="btn-open text-grey-5" 
+        <q-btn
+          no-caps
+          unelevated
+          rounded
+          padding="8.5px 65px"
+          color="grey-3"
+          label="Открыть проект"
+          class="btn-open text-grey-5"
           @click="(() => { router.push(`/projects/${project.id}`) })"
         />
       </div>
-      
+
       <q-table
         flat
         :rows="project?.estimates"
@@ -84,7 +84,7 @@
             </i>
           </q-th>
         </template>
-        
+
 
         <template #body="props">
           <q-tr 
@@ -120,7 +120,7 @@
               class="q-td-status"
             >
               <div class="content">
-                
+
               </div>
             </q-td>
           </q-tr>
@@ -162,7 +162,7 @@
                   </q-btn>
                 </div>
               </div>
-              
+
             </q-td>
             <q-td
               key="changed"
@@ -188,13 +188,13 @@
                   v-for="el in props.row.security"
                   :key="el"
                 >
-                  
+
                 </span> -->
-                <span>Можно сделать предложение,</span> 
-                <span>прогноз скрыт</span> 
+                <span>Можно сделать предложение,</span>
+                <span>прогноз скрыт</span>
               </div>
               <div class="content row" style="width: 196px;" v-if="userRole === 'designer'">
-                
+
                 <div class="row items-center " style="flex: 1;">
                   <q-btn flat round class="bg-grey-3" padding="9px">
                     <q-icon size="12px" name="svguse:icons/allIcons.svg#plus" color="black" />
@@ -203,7 +203,7 @@
                     <q-item
                       v-for="el in 1" :key="el"
                       class="q-item-none"
-                    > 
+                    >
                       <q-btn :to="el.link">
                         <img src="/icons/anton.jpg" alt="">
                       </q-btn>
@@ -211,9 +211,9 @@
                     <q-btn class="q-td-share__btn__limit no-cursor q-ml-sm" :label="`+5`" />
                   </q-list>
                   <q-icon
-                    name="svguse:icons/btnIcons.svg#link" 
-                    size="18px" 
-                    class="link-icon share q-ml-auto" 
+                    name="svguse:icons/btnIcons.svg#link"
+                    size="18px"
+                    class="link-icon share q-ml-auto"
                   >
                     <q-item class="link-all"></q-item>
                     <div class="circle"></div>
@@ -223,7 +223,7 @@
                   >
                     <q-btn class="q-td-share__btn__limit" :label="`+${item.share.length - 1}`" />
                   </q-item> -->
-                  <ActionBtn 
+                  <ActionBtn
                     :propsEl="props.row.id"
                     :offsetYX="[55, -257]"
                     :actionfunc="actionfunc"
@@ -233,9 +233,9 @@
                     @actionDuble="openDubleDialog(props.row.id, props.row.project_id, props.row.name)"
                     @actionDel="onActionDel('delEstimate', props.row.id)"
                   />
-                  
+
                 </div>
-                
+
               </div>
             </q-td>
 
@@ -327,13 +327,13 @@ const actionfunc = ref([
 const actionHandlers = {
   delEstimate: onDelEstimate
 }
-const { 
-  dialogDelite, 
-  dialogDelId, 
-  dialogDelName, 
-  onActionDel, 
-  modalCloseDel, 
-  handleModalClose 
+const {
+  dialogDelite,
+  dialogDelId,
+  dialogDelName,
+  onActionDel,
+  modalCloseDel,
+  handleModalClose
 } = useDialogDel(actionHandlers)
 
 // удаление сметы
@@ -370,7 +370,7 @@ const getProjcts = async () => {
   try {
     if (userRole === 'designer') await projectsApi.getAllMy().then(resp => {projects.value = resp})
     else await projectsApi.getAll().then(resp => {projects.value = resp})
-    
+
     openEstimatesProject(projects.value[0].id, 0)
   } catch(err) {
     console.log(err)
