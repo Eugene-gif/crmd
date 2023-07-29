@@ -441,7 +441,7 @@
           @click.stop=""
         >
           <div class="td-content-section">
-            <a :href="props.row.file?.file" target="_blank" class="text link">
+            <a :href="props.row.file?.file" target="_blank" class="text link" v-if="props.row.file.file">
               {{props.row.file?.extension}}, {{props.row.file?.size}}
             </a>
           </div>

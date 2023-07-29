@@ -1,5 +1,6 @@
 import httpClient from "./httpClient.js"
 import { getFormatDate, checkIsNew } from 'src/composable/getFormatDate'
+const user = JSON.parse(localStorage.getItem('userInfo'))
 
 const url = 'estimates'
 // import getFormatDate from 'src/composable/getFormatDate'
@@ -134,6 +135,7 @@ export const estimatesApi = {
         resp.term_forecast = resp.forecast.term
         resp.rate_forecast = resp.forecast.rate
         resp.room_type = {id: 1,name:resp.room_type}
+        resp.my_proposal = user.role !== 'contractor' ? '' : resp.proposals.find(el => el.contractor.id === user.role_info.id) || null
         return resp
       })
     } catch(err) {
