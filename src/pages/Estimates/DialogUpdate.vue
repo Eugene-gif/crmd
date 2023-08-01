@@ -177,7 +177,7 @@
               {'form-section-row-offer-activated': offerActive}
             ]"
           >
-            <div class="close-form rotate" @click="offerDisActive">
+            <div class="close-form rotate" @click="delProposal">
               <q-icon name="svguse:icons/allIcons.svg#close-modal" size="12px"/>
             </div>
             
@@ -217,7 +217,8 @@
                   Цена за<br class="mb-visible"> единицу
                 </label>
                 <q-input 
-                  v-model="offer.price" 
+                  v-model="offer.price"
+                  ref="offerprice" 
                   type="number" 
                   class="my-input bg-grey-3 q-field__no-append" 
                   placeholder="Цена" 
@@ -227,7 +228,7 @@
               <div class="form-col-4">
                 <label class="lable-title">Срок,<br class="mb-visible"> дней</label>
                 <q-input 
-                  v-model="offer.term" 
+                  v-model="offer.term"
                   type="number" 
                   class="my-input bg-grey-3 q-field__no-append" 
                   placeholder="Срок"
@@ -237,7 +238,7 @@
               <div class="form-col-4 q-pr-none items-end">
                 <label class="lable-title">Ставка,<br class="mb-visible"> процент</label>
                 <q-input 
-                  v-model="offer.rate" 
+                  v-model="offer.rate"
                   type="number" 
                   class="my-input bg-grey-3 q-field-procent q-field__no-append" 
                   placeholder="%" 
@@ -254,7 +255,7 @@
                 flat 
                 no-caps 
                 padding="0" 
-                label="Сделать предложение" 
+                :label="!!formData.my_proposal ? 'Сохранить предложение' : 'Сделать предложение'" 
                 class="text-white btn-flat" 
                 type="submit"
               />
@@ -421,14 +422,19 @@
     console.log(offer.value)
   }
 
+  const delProposal = async () => {
+    try {
+      const resp = await proposalsApi.del(formData.value.my_proposal.id)
+      offer.value.price = ''
+      offer.value.term = ''
+      offer.value.rate = ''
+      offerActive.value = false
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   const offerActive = ref(false)
-  const offerDisActive = () => {
-    offer.value.price = ''
-    offer.value.term = ''
-    offer.value.rate = ''
-    offerActive.value = false
-  }
 
   const show = ref(false)
   const beforeHide = () => {
@@ -524,6 +530,7 @@
   const brand = ref()
   const article = ref()
   const color = ref()
+  const offerprice = ref()
 
   onMounted( async () => {
     await getItem()
@@ -548,6 +555,9 @@
         break
       case 'color':
         color.value.focus()
+        break
+      case 'offerprice':
+        offerprice.value.focus()
         break
     }
   })

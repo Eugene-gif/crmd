@@ -15,6 +15,28 @@ export const proposalsApi = {
     }
   },
 
+  async update(data) {
+    try {
+      let resp = await httpClient.post(`${url}/update`, data)
+      resp = resp.data.data
+      
+      return resp
+    } catch (err) {
+      throw err
+    }
+  },
+
+  async del(proposal_id) {
+    try {
+      let resp = await httpClient.post(`${url}/delete`, { proposal_id: proposal_id })
+      resp = resp.data.data
+      
+      return resp
+    } catch (err) {
+      throw err
+    }
+  },
+
 
 
   async getAll() {

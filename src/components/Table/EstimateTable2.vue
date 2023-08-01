@@ -133,6 +133,7 @@
           key="id"
           :props="props"
           @click.stop=""
+          @dblclick="editModal(props.row, null)"
         >
           <div class="status-new" v-if="props.row.new"></div>
           <div class="td-content-section">
@@ -165,7 +166,8 @@
                 </div>
               </q-tooltip>
             </q-icon>
-            <div class="text">{{props.row.name}}</div>
+            {{props.row.image}}
+            <div class="text" :class="{'q-ml-none': !props.row.image.thumbnail}">{{props.row.name}}</div>
             <q-icon
               color="black"
               style="opacity: 0.2;"
@@ -290,6 +292,7 @@
           key="agent"
           :props="props"
           @click.stop=""
+          @dblclick="editModal(props.row, null)"
         >
           <div class="td-content-section">
             <div class="text">
@@ -303,7 +306,7 @@
         <q-td
           key="price"
           :props="props"
-          class=""
+          @dblclick="editModal(props.row, 'offerprice')"
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
@@ -316,7 +319,7 @@
         <q-td
           key="deadline"
           :props="props"
-          class=""
+          @dblclick="editModal(props.row, 'offerprice')"
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
@@ -330,6 +333,7 @@
           key="total"
           :props="props"
           class="td-total"
+          @dblclick="editModal(props.row, 'offerprice')"
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
@@ -342,7 +346,7 @@
         <q-td
           key="procent"
           :props="props"
-          class=""
+          @dblclick="editModal(props.row, 'offerprice')"
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
@@ -354,7 +358,7 @@
         <q-td
           key="agent"
           :props="props"
-          class=""
+          @dblclick="editModal(props.row, 'offerprice')"
           v-if="userRole !== 'designer'"
         >
           <div class="td-content-section">
