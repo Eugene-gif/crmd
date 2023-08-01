@@ -166,8 +166,7 @@
                 </div>
               </q-tooltip>
             </q-icon>
-            {{props.row.image}}
-            <div class="text" :class="{'q-ml-none': !props.row.image.thumbnail}">{{props.row.name}}</div>
+            <div class="text">{{props.row.name}}</div>
             <q-icon
               color="black"
               style="opacity: 0.2;"
