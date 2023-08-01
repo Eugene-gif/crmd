@@ -118,6 +118,7 @@ export const orderersApi = {
       console.log(err)
     }
   },
+  
   createOrderers(data) {
     const formData = new FormData()
     // formData.append("orderer[data][user_id]", data.user_id)
@@ -127,9 +128,9 @@ export const orderersApi = {
     formData.append("birth_date", data.birth_date)
     formData.append("phone", data.phone)
     formData.append("email", data.email)
-    formData.append("soc_inst", data.soc_inst)
-    formData.append("soc_wa", data.soc_wa)
-    formData.append("soc_tg", data.soc_tg)
+    if (data.soc_inst) formData.append("soc_inst", data.soc_inst)
+    if (data.soc_wa) formData.append("soc_wa", data.soc_wa)
+    if (data.soc_tg) formData.append("soc_tg", data.soc_tg)
     if (data.image) formData.append("image", data.image)
     formData.append("personal_info", data.personal_info)
     formData.append("second_name", data.second_name)

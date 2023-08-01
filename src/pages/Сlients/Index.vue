@@ -9,6 +9,19 @@
     <Dialog
       @modalFalse="modalFalse"
       @updateData="getAll"
+    />
+  </q-dialog>
+
+  <q-dialog
+    v-model="dialogChange"
+    :maximized="maximizedToggle"
+    transition-show="fade"
+    transition-hide="fade" 
+    class="my-dialog projects-dialog clients-dialog"
+  >
+    <DialogChange
+      @modalFalse="modalFalse"
+      @updateData="getAll"
       :formData="formOrderer"
     />
   </q-dialog>
@@ -296,6 +309,7 @@
   import NoDate from 'src/components/NoDate.vue'
   import SortedMobile from 'components/Table/SortedMobile.vue'
   import Dialog from 'pages/Сlients/Dialog.vue'
+  import DialogChange from 'pages/Сlients/DialogChange.vue'
   import { orderersApi } from 'src/api/orderers'
   import { useQuasar } from 'quasar'
   import { useRoute } from 'vue-router'
@@ -306,6 +320,7 @@
   const loading = ref(false)
   const nodate = ref(true)
   const dialog = ref(false)
+  const dialogChange = ref(false)
   const route = useRoute()
 
   const columns = ref([
@@ -357,7 +372,7 @@
       emmit: 'actionDel'
     },
   ])
-  const formOrderer = ref();
+  const formOrderer = ref()
 
   const onActionUpdate =(id) => {
     loading.value = true
@@ -383,9 +398,10 @@
         }
       }
     })
-    dialog.value = true
+    dialogChange.value = true
     loading.value = false
   }
+
   async function onActionCopy(id) {
     loading.value = true
     let element 
@@ -433,6 +449,7 @@
     }
     loading.value = false
   }
+
   async function onActionDel(id) {
     loading.value = true
     try {
@@ -680,6 +697,7 @@
 
   const modalFalse = () => {
     dialog.value = false
+    dialogChange.value = false
     localStorage.setItem('open_dialog', '')
   }
  

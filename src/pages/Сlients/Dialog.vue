@@ -48,6 +48,7 @@
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
               placeholder="Введите телефон"
+              mask="+7 (###)-###-##-##"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             />
@@ -73,7 +74,6 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на WhatsApp"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             >
               <template v-slot:after>
                 <img src="~assets/whatsapp.svg" alt="" class="q-mr-md">
@@ -86,7 +86,6 @@
               class="my-input bg-grey-3"
               placeholder="@аккаунт"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             >
               <template v-slot:after>
                 <img src="~assets/telegram.svg" alt="" class="q-mr-md">
@@ -99,7 +98,6 @@
               class="my-input bg-grey-3"
               placeholder="@аккаунт"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             >
               <template v-slot:after>
                 <img src="~assets/instagram.svg" alt="" class="q-mr-md">
@@ -141,142 +139,111 @@
   
 </template>
 
-<script>
-
-
+<script setup>
 import { defineComponent, ref, onMounted } from 'vue'
 import BtnDate from 'components/BtnDate'
-import { orderersApi } from 'src/api/orderers';
+import { orderersApi } from 'src/api/orderers'
 import { useQuasar } from 'quasar'
     
 
-export default defineComponent({
-  name: 'ClientsDialog',
-  components: {
-    BtnDate
-  }, 
-  props: {
-    formData: Object
-  },  
-  setup (props, { emit }) {
-    const $q = useQuasar()
-    const loading = ref(false)
+const $q = useQuasar()
+const loading = ref(false)
 
-    const formOrderers = ref({
-      // user_id: '',
-      first_name: '',
-      second_name: '',
-      last_name: '',
-      birth_date: '',
-      phone: '',
-      email: '',
-      soc_inst: '',
-      soc_wa: '',
-      soc_tg: '',
-      image: '',
-      personal_info: '',
-    })
+const emit = defineEmits(['updateData', 'modalFalse'])
 
-    async function onSubmit() {
-      if (props.formData != null) {
-        updateOrderer()
-      } else {
-        if (formOrderers.value.birth_date != '') {
-          createOrderer()
-        } else {
-          setTimeout(() => {
-            $q.notify({
-              color: 'red',
-              timeout: 3000,
-              message: 'Необходимо заполнить все данные'
-            })
-          }, 0)
-        }
-      }
-    }
-
-    function updateData() {
-      emit('updateData')
-      emit('modalFalse')
-    }
-
-    async function updateOrderer() {
-      try {
-        await orderersApi.updateOrderers(formOrderers.value)
-        .then(resp => {
-          updateData()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              timeout: 3000,
-              message: 'Заказчик изменен'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            timeout: 3000,
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-    }
-    
-    async function createOrderer() {
-      try {
-        await orderersApi.createOrderers(formOrderers.value)
-        .then(resp => {
-          updateData()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              timeout: 3000,
-              message: 'Заказчик создан'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            timeout: 3000,
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-    }
-
-    function ongetTime(time) {
-      formOrderers.value.birth_date = time
-    }
-    function onFileChange(file) {
-      formOrderers.value.image = file[0]
-    }
-
-    function updateInfo() {
-      if (props.formData != null) {
-        formOrderers.value = props.formData
-      }
-    }
-    onMounted(() => {
-      updateInfo()
-    })
-    return {
-      updateData,
-      updateInfo,
-      updateOrderer,
-      formOrderers,
-
-      ongetTime,
-      onFileChange,
-      onSubmit,
-
-      file: ref(),
-    }
-  }
+const formOrderers = ref({
+  // user_id: '',
+  first_name: '',
+  second_name: '',
+  last_name: '',
+  birth_date: '',
+  phone: '',
+  email: '',
+  soc_inst: '',
+  soc_wa: '',
+  soc_tg: '',
+  image: '',
+  personal_info: '',
 })
+
+async function onSubmit() {
+  if (formOrderers.value.birth_date != '') {
+    createOrderer()
+  } else {
+    setTimeout(() => {
+      $q.notify({
+        color: 'red',
+        timeout: 3000,
+        message: 'Необходимо заполнить все данные'
+      })
+    }, 0)
+  }
+}
+
+function updateData() {
+  emit('updateData')
+  emit('modalFalse')
+  formOrderers.value = {}
+}
+
+async function updateOrderer() {
+  try {
+    await orderersApi.updateOrderers(formOrderers.value)
+    .then(resp => {
+      updateData()
+      setTimeout(() => {
+        $q.notify({
+          color: 'positive',
+          timeout: 3000,
+          message: 'Заказчик изменен'
+        })
+      }, 0)
+    })
+  } catch (err) {
+    console.log(err)
+    setTimeout(() => {
+      $q.notify({
+        color: 'red',
+        timeout: 3000,
+        message: 'Произошла ошибка, попробуйте позже'
+      })
+    }, 0)
+  }
+}
+
+async function createOrderer() {
+  try {
+    await orderersApi.createOrderers(formOrderers.value)
+    .then(resp => {
+      updateData()
+      setTimeout(() => {
+        $q.notify({
+          color: 'positive',
+          timeout: 3000,
+          message: 'Заказчик создан'
+        })
+      }, 0)
+    })
+  } catch (err) {
+    console.log(err)
+    setTimeout(() => {
+      $q.notify({
+        color: 'red',
+        timeout: 3000,
+        message: 'Произошла ошибка, попробуйте позже'
+      })
+    }, 0)
+  }
+}
+
+function ongetTime(time) {
+  formOrderers.value.birth_date = time
+}
+function onFileChange(file) {
+  formOrderers.value.image = file[0]
+}
+
+const file = ref()
+
+
 </script>

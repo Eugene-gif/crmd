@@ -153,20 +153,20 @@
               name="svguse:icons/financeTable.svg#image"
               size="20px"
               class="q-icon-tooltip"
-              :class="{'hide': !props.row.image.thumbnail}"
+              v-if="props.row.image.thumbnail"
             >
               <q-tooltip
                 anchor="center left"
                 self="center right"
                 class="q-tooltip-estimates-img"
-                v-if="props.row.image.thumbnail"
+                v-if="!!props.row.image.thumbnail"
               >
                 <div class="img">
                   <img :src="props.row.image.thumbnail" alt="" style="">
                 </div>
               </q-tooltip>
             </q-icon>
-            <div class="text">{{props.row.name}}</div>
+            <div class="text" :style="{ 'margin-left': !props.row.image.thumbnail ? '0 !important' : '15px' }">{{props.row.name}}</div>
             <q-icon
               color="black"
               style="opacity: 0.2;"
@@ -258,6 +258,7 @@
           :props="props"
           class="td-total"
           @click.stop="openSmeta(props.row.id)"
+          @dblclick="editModal(props.row, null)"
           :class="{open: props.row.smetaVal}"
         >
           <div class="td-content-section">
@@ -372,7 +373,6 @@
         <q-td
           key="status"
           :props="props"
-          @dblclick="editModal(props.row, 'status')"
           @click.stop=""
         >
           <div class="td-content-section td-content-status">
@@ -442,6 +442,7 @@
           :props="props"
           class="td-file"
           @click.stop=""
+          @dblclick="editModal(props.row, null)"
         >
           <div class="td-content-section">
             <a :href="props.row.file?.file" target="_blank" class="text link" v-if="props.row.file.file">

@@ -429,6 +429,7 @@
       offer.value.term = ''
       offer.value.rate = ''
       offerActive.value = false
+      emit('updateItem')
     } catch (err) {
       console.log(err)
     }

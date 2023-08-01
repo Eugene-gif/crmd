@@ -47,6 +47,7 @@
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
               placeholder="+7 (999)-999-99-99"
+              mask="+7 (###)-###-##-##"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             />
@@ -72,7 +73,6 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на WhatsApp"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             >
               <template v-slot:after>
                 <img src="~assets/whatsapp.svg" alt="" class="q-mr-md">
@@ -85,7 +85,6 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Telegram"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             >
               <template v-slot:after>
                 <img src="~assets/telegram.svg" alt="" class="q-mr-md">
@@ -98,7 +97,6 @@
               class="my-input bg-grey-3"
               placeholder="Ссылка на Instagram"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             >
               <template v-slot:after>
                 <img src="~assets/instagram.svg" alt="" class="q-mr-md">
@@ -140,143 +138,123 @@
   
 </template>
 
-<script>
-
-
+<script setup>
 import { defineComponent, ref, onMounted } from 'vue'
 import BtnDate from 'components/BtnDate'
-import { orderersApi } from 'src/api/orderers';
+import { orderersApi } from 'src/api/orderers'
 import { useQuasar } from 'quasar'
     
 
-export default defineComponent({
-  name: 'ClientsDialog',
-  components: {
-    BtnDate
-  }, 
-  props: {
-    formData: Object
-  },  
-  setup (props, { emit }) {
-    const $q = useQuasar()
-    const loading = ref(false)
+const $q = useQuasar()
+const loading = ref(false)
 
-    const formOrderers = ref({
-      // user_id: '',
-      first_name: 'Вася',
-      second_name: 'отчество',
-      last_name: 'ивановов',
-      birth_date: '27-09-1998',
-      phone: '8999999999999',
-      email: 'email@gmil.com',
-      soc_inst: 'https://link',
-      soc_wa: 'https://link',
-      soc_tg: 'https://link',
-      photo: '',
-      personal_info: ' ',
-      second_name: 'Вася ивановов'
-    })
+const props = defineProps({
+  formData: Object
+})
 
-    async function onSubmit() {
-      if (props.formData != null) {
-        updateOrderer()
-      } else {
-        if (formOrderers.value.birth_date != '') {
-          createOrderer()
-        } else {
-          setTimeout(() => {
-            $q.notify({
-              color: 'red',
-              timeout: 3000,
-              message: 'Необходимо заполнить все данные'
-            })
-          }, 0)
-        }
-      }
-    }
+const emit = defineEmits(['updateData', 'modalFalse'])
 
-    function updateData() {
-      emit('updateData')
-      emit('modalFalse')
-    }
+const formOrderers = ref({
+  // user_id: '',
+  first_name: '',
+  second_name: '',
+  last_name: '',
+  birth_date: '',
+  phone: '',
+  email: '',
+  soc_inst: '',
+  soc_wa: '',
+  soc_tg: '',
+  image: '',
+  personal_info: '',
+})
 
-    async function updateOrderer() {
-      try {
-        await orderersApi.updateOrderers(formOrderers.value)
-        .then(resp => {
-          updateData()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              timeout: 3000,
-              message: 'Заказчик изменен'
-            })
-          }, 0)
+async function onSubmit() {
+  if (props.formData != null) {
+    updateOrderer()
+  } else {
+    if (formOrderers.value.birth_date != '') {
+      createOrderer()
+    } else {
+      setTimeout(() => {
+        $q.notify({
+          color: 'red',
+          timeout: 3000,
+          message: 'Необходимо заполнить все данные'
         })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            timeout: 3000,
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-    }
-    
-    async function createOrderer() {
-      try {
-        await orderersApi.createOrderers(formOrderers.value)
-        .then(resp => {
-          updateData()
-          setTimeout(() => {
-            $q.notify({
-              color: 'positive',
-              timeout: 3000,
-              message: 'Заказчик создан'
-            })
-          }, 0)
-        })
-      } catch (err) {
-        console.log(err)
-        setTimeout(() => {
-          $q.notify({
-            color: 'red',
-            timeout: 3000,
-            message: 'Произошла ошибка, попробуйте позже'
-          })
-        }, 0)
-      }
-    }
-
-    function ongetTime(time) {
-      formOrderers.value.birth_date = time
-    }
-    function onFileChange(file) {
-      formOrderers.value.photo = file[0]
-    }
-
-    function updateInfo() {
-      if (props.formData != null) {
-        formOrderers.value = props.formData
-      }
-    }
-    onMounted(() => {
-      updateInfo()
-    })
-    return {
-      updateData,
-      updateInfo,
-      updateOrderer,
-      formOrderers,
-
-      ongetTime,
-      onFileChange,
-      onSubmit,
-
-      file: ref(),
+      }, 0)
     }
   }
+}
+
+function updateData() {
+  emit('updateData')
+  emit('modalFalse')
+}
+
+async function updateOrderer() {
+  try {
+    await orderersApi.updateOrderers(formOrderers.value)
+    .then(resp => {
+      updateData()
+      setTimeout(() => {
+        $q.notify({
+          color: 'positive',
+          timeout: 3000,
+          message: 'Заказчик изменен'
+        })
+      }, 0)
+    })
+  } catch (err) {
+    console.log(err)
+    setTimeout(() => {
+      $q.notify({
+        color: 'red',
+        timeout: 3000,
+        message: 'Произошла ошибка, попробуйте позже'
+      })
+    }, 0)
+  }
+}
+
+async function createOrderer() {
+  try {
+    await orderersApi.createOrderers(formOrderers.value)
+    .then(resp => {
+      updateData()
+      setTimeout(() => {
+        $q.notify({
+          color: 'positive',
+          timeout: 3000,
+          message: 'Заказчик создан'
+        })
+      }, 0)
+    })
+  } catch (err) {
+    console.log(err)
+    setTimeout(() => {
+      $q.notify({
+        color: 'red',
+        timeout: 3000,
+        message: 'Произошла ошибка, попробуйте позже'
+      })
+    }, 0)
+  }
+}
+
+function ongetTime(time) {
+  formOrderers.value.birth_date = time
+}
+function onFileChange(file) {
+  formOrderers.value.image = file[0]
+}
+
+const file = ref()
+onMounted(() => {
+  if (props.formData != null) {
+    formOrderers.value = props.formData
+  }
 })
+
 </script>
+

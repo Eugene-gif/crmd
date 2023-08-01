@@ -108,7 +108,7 @@
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
               placeholder="+7 (999)-999-99-99"
-              type="number"
+              mask="+7 (###) ###-##-##"
               lazy-rules
             />
           </q-card-section>
