@@ -351,7 +351,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal?.rate }}
+              {{ props.row.my_proposal?.fee }}
             </div>
           </div>
         </q-td>
@@ -363,7 +363,7 @@
         >
           <div class="td-content-section">
             <div class="text">
-              {{ props.row.my_proposal?.fee }}
+              {{ props.row.my_proposal?.rate }}
             </div>
           </div>
         </q-td>

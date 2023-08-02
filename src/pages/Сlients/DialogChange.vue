@@ -253,6 +253,7 @@ const file = ref()
 onMounted(() => {
   if (props.formData != null) {
     formOrderers.value = props.formData
+    console.log(formOrderers.value)
   }
 })
 

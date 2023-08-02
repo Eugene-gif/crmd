@@ -222,7 +222,7 @@
                   type="number" 
                   class="my-input bg-grey-3 q-field__no-append" 
                   placeholder="Цена" 
-                  :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+                  
                 />
               </div>
               <div class="form-col-4">
@@ -232,7 +232,7 @@
                   type="number" 
                   class="my-input bg-grey-3 q-field__no-append" 
                   placeholder="Срок"
-                  :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+                  
                 />
               </div>
               <div class="form-col-4 q-pr-none items-end">
@@ -242,7 +242,7 @@
                   type="number" 
                   class="my-input bg-grey-3 q-field-procent q-field__no-append" 
                   placeholder="%" 
-                  :rules="[val => (val != null && val != '' && `${val}`.length > 0) || '']"
+                  
                 >
                   <template v-slot:append>
                     %
@@ -410,7 +410,7 @@
         color: 'positive',
         message: 'Ваше предложение добавлено',
       })
-      emit('updateItem')
+      emit('updateItem', true)
     } catch (error) {
       console.log(error)
       $q.notify({
@@ -429,7 +429,7 @@
       offer.value.term = ''
       offer.value.rate = ''
       offerActive.value = false
-      emit('updateItem')
+      emit('updateItem', true)
     } catch (err) {
       console.log(err)
     }

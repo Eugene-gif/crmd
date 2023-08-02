@@ -159,6 +159,7 @@
                 </div>
               </div>
               <div class="name item" @click="props.row.show = !props.row.show">{{props.row.name}}</div>
+
               <div class="icon-toggle mb-visible">
                 <q-icon
                   size="12px"
@@ -384,7 +385,7 @@
         return formOrderer.value = {
           id: id,
           first_name: firstname,
-          second_name: item.name,
+          second_name: item.second_name,
           last_name: lastName,
           birth_date: '',
           phone: item.tel,

@@ -59,6 +59,7 @@ export const orderersApi = {
             status: 1,
             image: el.image.thumbnail || el.image.placeholder,
             name: `${el.first_name} ${el.last_name}`,
+            second_name: el.second_name,
             tel: el.phone,
             whatsapp: el.soc_wa,
             telegram: el.soc_tg,
@@ -89,22 +90,22 @@ export const orderersApi = {
 
   updateOrderers(data) {
     const formData = new FormData()
-    formData.append("orderer[data][id]", data.id)
-    formData.append("orderer[data][first_name]", data.first_name)
-    formData.append("orderer[data][second_name]", data.second_name)
-    formData.append("orderer[data][last_name]", data.last_name)
-    formData.append("orderer[data][birth_date]", data.birth_date)
-    formData.append("orderer[data][phone]", data.phone)
-    formData.append("orderer[data][email]", data.email)
-    formData.append("orderer[data][soc_inst]", data.soc_inst)
-    formData.append("orderer[data][soc_wa]", data.soc_wa)
-    formData.append("orderer[data][soc_tg]", data.soc_tg)
+    formData.append("id", data.id)
+    formData.append("first_name", data.first_name)
+    formData.append("second_name", data.second_name)
+    formData.append("last_name", data.last_name)
+    formData.append("birth_date", data.birth_date)
+    formData.append("phone", data.phone)
+    formData.append("email", data.email)
+    if (data.soc_inst) formData.append("soc_inst", data.soc_inst)
+    if (data.soc_wa) formData.append("soc_wa", data.soc_wa)
+    if (data.soc_tg) formData.append("soc_tg", data.soc_tg)
 
     if (data.image) {
-      formData.append("orderer[data][image]", data.image)
+      formData.append("image", data.image)
     }
-    formData.append("orderer[data][personal_info]", data.personal_info)
-    formData.append("orderer[data][second_name]", data.second_name)
+    formData.append("personal_info", data.personal_info)
+    formData.append("second_name", data.second_name)
     try {
       return httpClient({
         method: "post",
