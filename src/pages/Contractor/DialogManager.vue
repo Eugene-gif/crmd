@@ -43,6 +43,7 @@
             v-model="formData.phone" 
             class="my-input bg-grey-3"
             placeholder="Введите телефон" 
+            v-mask="[/[0-9\s-]/]"
           />
         </q-card-section>
         
@@ -69,7 +70,7 @@
 
 <script>
 import { defineComponent, ref, onMounted } from 'vue'
-import { contractorApi } from 'src/api/contractor';
+import { contractorApi } from 'src/api/contractor'
 
 export default defineComponent({
   name: 'DialogCreateManager',
@@ -85,6 +86,11 @@ export default defineComponent({
       address: 'null',
       info: ''
     })
+
+    const filterPhoneInput = (newValue) => {
+      const filteredValue = newValue.replace(/[^0-9+\-()\s]/g, "")
+      formOrderers.value.phone = filteredValue
+    }
 
     async function addManager() {
       if (props.modalCustom === true) {
@@ -136,7 +142,8 @@ export default defineComponent({
     return {     
       modalFalse,
       formData,
-      addManager
+      addManager,
+      filterPhoneInput
     }
   }
 })

@@ -45,13 +45,13 @@
               <div class="subtitle">
                 {{file.name}}
               </div>
-              <div class="size" v-if="!file.size"><span class="lg-visible">Ссылка</span></div>
-              <span class="mb-visible format" v-if="!file.size">Ссылка</span>
+              <div class="size" v-if="file.type === 'link'"><span class="lg-visible">Ссылка</span></div>
+              <span class="mb-visible format" v-if="file.type === 'link'">Ссылка</span>
 
-              <div class="size" v-if="file.size">
+              <div class="size" v-if="file.type === 'file'">
                 <span class="lg-visible">{{file.mime}},</span> {{file.size}}
               </div>
-              <span class="mb-visible format" v-if="file.size">
+              <span class="mb-visible format" v-if="file.type === 'file'">
                 {{file.format}}
               </span>
 

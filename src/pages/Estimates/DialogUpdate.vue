@@ -173,7 +173,7 @@
           <q-card-section 
             class="form-section-row-offer"
             :class="[
-              {'form-section-row-offer-enter': offer.price.length || offer.term.length || offer.rate.length && !offerActive},
+              {'form-section-row-offer-enter': offer.price !== '' || offer.term !== '' || offer.rate !== '' && !offerActive},
               {'form-section-row-offer-activated': offerActive}
             ]"
           >
@@ -209,6 +209,7 @@
               label="Вставить" 
               icon="svguse:icons/allIcons.svg#past" 
               class="btn-past text-grey-5" 
+              @click="pasteInfo"
             />
 
             <div class="form-section form-section-row"> 
@@ -507,6 +508,11 @@
     }
   }
 
+  const pasteInfo = () => {
+    offer.value.price = formData.value.price_forecast 
+    offer.value.term = formData.value.term_forecast 
+    offer.value.rate = formData.value.rate_forecast 
+  }
 
   const getItem = async () => {
     try {

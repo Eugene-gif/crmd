@@ -48,7 +48,7 @@
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
               placeholder="Введите телефон"
-              mask="+7 (###)-###-##-##"
+              @update:model-value="filterPhoneInput"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             />
@@ -165,6 +165,11 @@ const formOrderers = ref({
   image: '',
   personal_info: '',
 })
+
+const filterPhoneInput = (newValue) => {
+  const filteredValue = newValue.replace(/[^0-9+\-()\s]/g, "")
+  formOrderers.value.phone = filteredValue
+}
 
 async function onSubmit() {
   if (formOrderers.value.birth_date != '') {
