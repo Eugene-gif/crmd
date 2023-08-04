@@ -305,11 +305,12 @@ function callDelDialog(modal) {
   dialog.value = true
 }
 
-function modalFalse(val) {
+async function modalFalse(val) {
   dialog.value = false
   if (dialogName.value === 'delAllPhotosUser' && val) delUserAlbum()
   if (dialogName.value === 'delAvatar' && val) {
-    onFileChange()
+    await onFileChange()
+    await getUserImage()
     systemImage.value = true
   } 
 }

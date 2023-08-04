@@ -20,69 +20,58 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, ref, onMounted } from 'vue'
+<script setup>
+import { ref, computed, onMounted } from 'vue'
 
-export default defineComponent({
-  name: 'BtnDate',
-  props: {
-    addClass: String,
-    info: String
-  },
-  
-  setup (props, { emit }) {
-    const dateActive = ref(false)
-    const date = ref()
-    const dateInfo = ref('Выберите дату')
-
-    function toggleDate () {
-      dateActive.value = !dateActive.value
-    }
-    function getTime() {
-      emit('getTime', date.value)
-    }
-    function update () {
-      setupDate()
-      getTime()
-      dateActive.value = !dateActive.value
-    }
-    function setupDate () {
-      let arrDate = date.value.split('-') 
-      let day = arrDate[0]
-      let mounth = arrDate[1]
-      let year = arrDate[2]
-      let arrMounth = {
-        0: 'Января',
-        1: 'Февраля',
-        2: 'Марта',
-        3: 'Апреля',
-        4: 'Мая',
-        5: 'Июня',
-        6: 'Июля',
-        7: 'Августа',
-        8: 'Сентября',
-        9: 'Октября',
-        10: 'Ноября',
-        11: 'Декабря'
-      }
-      dateInfo.value = `${day} ${arrMounth[mounth]} ${year}`
-    }
-
-    onMounted(() => {
-      if (props.info) {
-        date.value = props.info
-        setupDate()
-      }
-    })
-    return {
-      date,
-      dateInfo,
-      dateActive,
-      toggleDate,
-      update,
-      setupDate,
-      getTime
-    }
-  }
+const props = defineProps({
+  addClass: String,
+  info: String
 })
+
+const emit = defineEmits(['getTime'])
+
+const dateActive = ref(false)
+const date = ref()
+
+function toggleDate () {
+  dateActive.value = !dateActive.value
+}
+function getTime() {
+  emit('getTime', date.value)
+}
+function update () {
+  getTime()
+  dateActive.value = !dateActive.value
+}
+
+const dateInfo = computed(() => {
+  if (!date.value) return 'Выберите дату'
+
+  let arrDate = date.value.split('-')
+  let day = arrDate[0]
+  let month = arrDate[1]
+  let year = arrDate[2]
+
+  let arrMonthNames = { 
+    0: 'Января',
+    1: 'Февраля',
+    2: 'Марта',
+    3: 'Апреля',
+    4: 'Мая',
+    5: 'Июня',
+    6: 'Июля',
+    7: 'Августа',
+    8: 'Сентября',
+    9: 'Октября',
+    10: 'Ноября',
+    11: 'Декабря',
+  }
+
+  return `${day} ${arrMonthNames[parseInt(month) - 1]} ${year}`
+})
+
+onMounted(() => {
+  date.value = props.info
+})
+
 </script>

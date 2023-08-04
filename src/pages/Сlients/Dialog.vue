@@ -156,7 +156,7 @@ const formOrderers = ref({
   first_name: '',
   second_name: '',
   last_name: '',
-  birth_date: '',
+  birth_data: '',
   phone: '',
   email: '',
   soc_inst: '',
@@ -172,7 +172,7 @@ const filterPhoneInput = (newValue) => {
 }
 
 async function onSubmit() {
-  if (formOrderers.value.birth_date != '') {
+  if (formOrderers.value.birth_data != '') {
     createOrderer()
   } else {
     setTimeout(() => {
@@ -242,7 +242,7 @@ async function createOrderer() {
 }
 
 function ongetTime(time) {
-  formOrderers.value.birth_date = time
+  formOrderers.value.birth_data = time
 }
 function onFileChange(file) {
   formOrderers.value.image = file[0]

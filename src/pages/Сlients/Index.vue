@@ -387,15 +387,14 @@
           first_name: firstname,
           second_name: item.second_name,
           last_name: lastName,
-          birth_date: '',
           phone: item.tel,
           email: item.email,
           soc_inst: item.instagram,
           soc_wa: item.whatsapp,
           soc_tg: item.telegram,
           photo: item.image,
-          birth_date: item.birth_date,
-          personal_info: 'информация'
+          birth_data: item.birth_data,
+          personal_info: ''
         }
       }
     })
@@ -415,16 +414,17 @@
           first_name: firstname,
           second_name: item.name,
           last_name: lastName,
-          birth_date: '',
+          birth_data: item.birth_data,
           phone: item.tel,
           email: item.email,
           soc_inst: item.instagram,
           soc_wa: item.whatsapp,
           soc_tg: item.telegram,
-          birth_date: item.birth_date,
-          personal_info: 'информация'
+          birth_data: item.birth_data,
+          personal_info: ''
         }
       }
+      console.log(element)
     })
     try {
       await orderersApi.createOrderers(element)

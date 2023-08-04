@@ -47,7 +47,7 @@
               v-model="formOrderers.phone"
               class="my-input bg-grey-3"
               placeholder="+7 (999)-999-99-99"
-              mask="+7 (###)-###-##-##"
+              @update:model-value="filterPhoneInput"
               lazy-rules
               :rules="[ val => val && val.length > 0 || '']"
             />
@@ -64,7 +64,7 @@
           </q-card-section>
           <q-card-section class="form-section">
             <label class="lable-title">Дата рождения</label>
-            <BtnDate @getTime="ongetTime" />
+            <BtnDate @getTime="ongetTime" :info="formOrderers.birth_data" v-if="formOrderers.birth_data" />
           </q-card-section>
 
           <q-card-section class="form-section form-section-whatsapp">
@@ -159,7 +159,7 @@ const formOrderers = ref({
   first_name: '',
   second_name: '',
   last_name: '',
-  birth_date: '',
+  birth_data: '',
   phone: '',
   email: '',
   soc_inst: '',
@@ -169,11 +169,16 @@ const formOrderers = ref({
   personal_info: '',
 })
 
+const filterPhoneInput = (newValue) => {
+  const filteredValue = newValue.replace(/[^0-9+\-()\s]/g, "")
+  formOrderers.value.phone = filteredValue
+}
+
 async function onSubmit() {
   if (props.formData != null) {
     updateOrderer()
   } else {
-    if (formOrderers.value.birth_date != '') {
+    if (formOrderers.value.birth_data != '') {
       createOrderer()
     } else {
       setTimeout(() => {
@@ -243,7 +248,7 @@ async function createOrderer() {
 }
 
 function ongetTime(time) {
-  formOrderers.value.birth_date = time
+  formOrderers.value.birth_data = time
 }
 function onFileChange(file) {
   formOrderers.value.image = file[0]

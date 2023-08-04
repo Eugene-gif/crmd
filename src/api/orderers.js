@@ -66,7 +66,7 @@ export const orderersApi = {
             instagram: el.soc_inst,
             email: el.email,
             show: false,
-            birth_date: el.birth_date,
+            birth_data: el.birth_data,
             projects: []
           }
 
@@ -126,7 +126,7 @@ export const orderersApi = {
     formData.append("first_name", data.first_name)
     formData.append("second_name", data.second_name)
     formData.append("last_name", data.last_name)
-    formData.append("birth_date", data.birth_date)
+    formData.append("birth_date", data.birth_data)
     formData.append("phone", data.phone)
     formData.append("email", data.email)
     if (data.soc_inst) formData.append("soc_inst", data.soc_inst)
