@@ -38,7 +38,6 @@
               class="my-input bg-grey-3"
               placeholder="Введите отчество"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -49,7 +48,6 @@
               placeholder="+7 (999)-999-99-99"
               @update:model-value="filterPhoneInput"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -59,12 +57,11 @@
               class="my-input bg-grey-3"
               placeholder="email@gmail.com"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
             <label class="lable-title">Дата рождения</label>
-            <BtnDate @getTime="ongetTime" :info="formOrderers.birth_data" v-if="formOrderers.birth_data" />
+            <BtnDate @getTime="ongetTime" :info="formOrderers.birth_data" v-if="formOrderers.last_name"/>
           </q-card-section>
 
           <q-card-section class="form-section form-section-whatsapp">

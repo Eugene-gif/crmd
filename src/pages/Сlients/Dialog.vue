@@ -3,7 +3,7 @@
     <div class="q-card-background" @click="$emit('modalFalse')"></div>
     <div class="dialog-section">
       <q-form
-        @submit="onSubmit"
+        @submit="createOrderer"
       >
         <q-card-section class="row items-center justify-between head">
           <div class="title">Добавить заказчика</div>
@@ -39,7 +39,6 @@
               class="my-input bg-grey-3"
               placeholder="Введите отчество"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -50,7 +49,6 @@
               placeholder="Введите телефон"
               @update:model-value="filterPhoneInput"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
@@ -60,12 +58,11 @@
               class="my-input bg-grey-3"
               placeholder="Введите e-mail"
               lazy-rules
-              :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
           <q-card-section class="form-section">
             <label class="lable-title">Дата рождения</label>
-            <BtnDate @getTime="ongetTime" />
+            <BtnDate @getTime="ongetTime" :info="null" />
           </q-card-section>
 
           <q-card-section class="form-section form-section-whatsapp">
@@ -172,17 +169,17 @@ const filterPhoneInput = (newValue) => {
 }
 
 async function onSubmit() {
-  if (formOrderers.value.birth_data != '') {
+  // if (formOrderers.value.birth_data != '') {
     createOrderer()
-  } else {
-    setTimeout(() => {
-      $q.notify({
-        color: 'red',
-        timeout: 3000,
-        message: 'Необходимо заполнить все данные'
-      })
-    }, 0)
-  }
+  // } else {
+  //   setTimeout(() => {
+  //     $q.notify({
+  //       color: 'red',
+  //       timeout: 3000,
+  //       message: 'Необходимо заполнить все данные'
+  //     })
+  //   }, 0)
+  // }
 }
 
 function updateData() {

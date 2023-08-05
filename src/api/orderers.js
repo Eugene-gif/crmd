@@ -92,11 +92,11 @@ export const orderersApi = {
     const formData = new FormData()
     formData.append("id", data.id)
     formData.append("first_name", data.first_name)
-    formData.append("second_name", data.second_name)
+    if (data.second_name) formData.append("second_name", data.second_name)
     formData.append("last_name", data.last_name)
-    formData.append("birth_date", data.birth_date)
-    formData.append("phone", data.phone)
-    formData.append("email", data.email)
+    formData.append("birth_date", data.birth_data)
+    if (data.phone) formData.append("phone", data.phone)
+    if (data.email) formData.append("email", data.email)
     if (data.soc_inst) formData.append("soc_inst", data.soc_inst)
     if (data.soc_wa) formData.append("soc_wa", data.soc_wa)
     if (data.soc_tg) formData.append("soc_tg", data.soc_tg)
@@ -115,7 +115,7 @@ export const orderersApi = {
       }).then(response => {
         return response.data
       })
-    } catch (err) {
+    } catch (err) { 
       console.log(err)
     }
   },
@@ -124,17 +124,16 @@ export const orderersApi = {
     const formData = new FormData()
     // formData.append("orderer[data][user_id]", data.user_id)
     formData.append("first_name", data.first_name)
-    formData.append("second_name", data.second_name)
+    if (data.second_name) formData.append("second_name", data.second_name)
     formData.append("last_name", data.last_name)
-    formData.append("birth_date", data.birth_data)
-    formData.append("phone", data.phone)
-    formData.append("email", data.email)
+    if (data.birth_data) formData.append("birth_date", data.birth_data)
+    if (data.phone) formData.append("phone", data.phone)
+    if (data.email) formData.append("email", data.email)
     if (data.soc_inst) formData.append("soc_inst", data.soc_inst)
     if (data.soc_wa) formData.append("soc_wa", data.soc_wa)
     if (data.soc_tg) formData.append("soc_tg", data.soc_tg)
     if (data.image) formData.append("image", data.image)
     formData.append("personal_info", data.personal_info)
-    formData.append("second_name", data.second_name)
     try {
       return httpClient({
         method: "post",
