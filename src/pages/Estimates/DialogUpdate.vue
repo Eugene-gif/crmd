@@ -173,10 +173,11 @@
           <q-card-section 
             class="form-section-row-offer"
             :class="[
-              {'form-section-row-offer-enter': offer.price !== '' || offer.term !== '' || offer.rate !== '' && !offerActive},
-              {'form-section-row-offer-activated': offerActive}
+              {'form-section-row-offer-enter': (checkOffers && !offerActive) || (checkDataMatch !== 1 && checkDataMatch !== 0)},
+              {'form-section-row-offer-activated': offerActive && checkDataMatch === 1}
             ]"
           >
+  
             <div class="close-form rotate" @click="delProposal">
               <q-icon name="svguse:icons/allIcons.svg#close-modal" size="12px"/>
             </div>
@@ -366,227 +367,281 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
-  import { useQuasar } from 'quasar'
-  import { estimatesApi } from 'src/api/estimates'
-  import { proposalsApi } from 'src/api/proposals'
-  import { useStore } from 'vuex'
+import { ref, onMounted, computed } from 'vue'
+import { isEqual } from 'lodash'
+import { useQuasar } from 'quasar'
+import { estimatesApi } from 'src/api/estimates'
+import { proposalsApi } from 'src/api/proposals'
+import { useStore } from 'vuex'
 
-  const store = useStore()
-  const user = store.getters["auth/getUser"]
-  const $q = useQuasar()
-  const lodingBtn = ref(false)
-  
-  // const roleUser = JSON.parse(localStorage.getItem('userInfo'))
-  // const sdfsd = process.env.API_BASE_URL
+const store = useStore()
+const user = store.getters["auth/getUser"]
+const $q = useQuasar()
+const lodingBtn = ref(false)
 
-  const props = defineProps({
-    iditem: String,
-    editValue: Array,
-    activeField: String,
-    types: Array
-  })
-  
-  const emit = defineEmits(['updateItem'])
+// const roleUser = JSON.parse(localStorage.getItem('userInfo'))
+// const sdfsd = process.env.API_BASE_URL
 
-  const formData = ref({})
+const props = defineProps({
+  iditem: String,
+  editValue: Array,
+  activeField: String,
+  types: Array
+})
 
-  const offer = ref({
-    price: '',
-    term: '',
-    rate: '',
-  })
+const emit = defineEmits(['updateItem'])
 
-  const onSubmitOffer = async () => {
-    offerActive.value = true
+const formData = ref({})
+
+const offer = ref({
+  price: '',
+  term: '',
+  rate: '',
+})
+
+const oldOffer = ref({
+  price: '',
+  term: '',
+  rate: '',
+})
+const offerActive = ref(false)
+
+const checkOffers = computed(() => {
+  if (offer.value.price !== '' || offer.value.term !== '' || offer.value.rate !== '') return true
+  return false
+})
+
+const checkDataMatch = computed(() => {
+  if (!formData.value.my_proposal) return 0
+  if (
+    Number(offer.value?.price) === Number(formData.value.my_proposal?.price) &&
+    Number(offer.value?.term) === Number(formData.value.my_proposal?.term) &&
+    Number(offer.value?.rate) === Number(formData.value.my_proposal?.rate)
+  ) {
+    return 1
+  } else {
+    return 2
+  }
+})
+
+const updatePropolsal = async () => {
+  try {
     const data = {
-      estimate_item_id: props.iditem,
+      proposal_id: formData.value.id,
       price: offer.value.price,
       term: offer.value.term,
       rate: offer.value.rate,
     }
-    try {
-      const resp = await proposalsApi.create(data)
+    const resp = await proposalsApi.update(data)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+const onSubmitOffer = async () => {
+  offerActive.value = true
+  const dataCreate = {
+    estimate_item_id: props.iditem,
+    price: offer.value.price,
+    term: offer.value.term,
+    rate: offer.value.rate,
+  }
+
+  try {
+    if (formData.value.my_proposal) {
+      await updatePropolsal()
+      $q.notify({
+        color: 'positive',
+        message: 'Ваше предложение обновлено',
+      })
+      emit('updateItem', true)
+    } else {
+      const resp = await proposalsApi.create(dataCreate)
       $q.notify({
         color: 'positive',
         message: 'Ваше предложение добавлено',
       })
       emit('updateItem', true)
-    } catch (error) {
-      console.log(error)
-      $q.notify({
-        color: 'negative',
-        message: 'Произошла ошибка, попробуйте позже',
-      })
     }
-    // estimate_item_id: data.estimate_item_id,
-    console.log(offer.value)
+  } catch (error) {
+    console.log(error)
+    $q.notify({
+      color: 'negative',
+      message: 'Произошла ошибка, попробуйте позже',
+    })
   }
+  // estimate_item_id: data.estimate_item_id,
+  getItem()
+}
 
-  const delProposal = async () => {
-    try {
-      const resp = await proposalsApi.del(formData.value.my_proposal.id)
-      offer.value.price = ''
-      offer.value.term = ''
-      offer.value.rate = ''
-      offerActive.value = false
-      emit('updateItem', true)
-    } catch (err) {
-      console.log(err)
+const delProposal = async () => {
+  try {
+    const resp = await proposalsApi.del(formData.value.my_proposal.id)
+    offer.value.price = ''
+    offer.value.term = ''
+    offer.value.rate = ''
+    offerActive.value = false
+    emit('updateItem', true)
+    formData.value.my_proposal = null
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+
+const show = ref(false)
+const beforeHide = () => {
+  show.value = true;
+}
+
+const onSubmit = async (bool) => {
+  lodingBtn.value = true
+
+  try {
+    await estimatesApi.updateItem(formData.value)
+    if (bool !== true) emit('updateItem')
+    $q.notify({
+      color: 'positive',
+      message: 'Позиция cмeты успешно обновлена'
+    })
+  } catch(err) {
+    console.log(err)
+    $q.notify({
+      color: 'negative',
+      message: 'Произошла ошибка, попробуйте позже'
+    })
+  }
+  lodingBtn.value = false
+}
+
+const updateObjItem = async (name, action) => {
+  try {
+    let resp = null
+    if (name === 'img') {
+      resp = await estimatesApi.updateObjItem(
+        formData.value.id, 
+        action === 'del' ? '' : formData.value.image,
+        name
+      )
     }
-  }
-
-  const offerActive = ref(false)
-
-  const show = ref(false)
-  const beforeHide = () => {
-    show.value = true;
-  }
-
-  const onSubmit = async (bool) => {
-    lodingBtn.value = true
-
-    try {
-      await estimatesApi.updateItem(formData.value)
-      if (bool !== true) emit('updateItem')
-      $q.notify({
-        color: 'positive',
-        message: 'Позиция cмeты успешно обновлена'
-      })
-    } catch(err) {
-      console.log(err)
-      $q.notify({
-        color: 'negative',
-        message: 'Произошла ошибка, попробуйте позже'
-      })
+    if (name === 'file') {
+      await estimatesApi.updateObjItem(
+        formData.value.id,
+        action === 'del' ? '' : formData.value.file,
+        name
+      )
     }
-    lodingBtn.value = false
-  }
 
-  const updateObjItem = async (name, action) => {
-    try {
-      let resp = null
-      if (name === 'img') {
-        resp = await estimatesApi.updateObjItem(
-          formData.value.id, 
-          action === 'del' ? '' : formData.value.image,
-          name
-        )
+    if (action === 'del') {
+      if (name === 'img') { 
+        formData.value.image = ''
       }
       if (name === 'file') {
-        await estimatesApi.updateObjItem(
-          formData.value.id,
-          action === 'del' ? '' : formData.value.file,
-          name
-        )
+        formData.value.file = ''
       }
-
-      if (action === 'del') {
-        if (name === 'img') { 
-          formData.value.image = ''
-        }
-        if (name === 'file') {
-          formData.value.file = ''
-        }
-      } else {
-        if (name === 'img') formData.value.image = resp.image
-      }
-
-      emit('updateItem', true)
-
-      $q.notify({
-        color: 'positive',
-        message: 'Позиция cмeты успешно обновлена'
-      })
-    } catch(err) {
-      console.log(err)
-      $q.notify({
-        color: 'negative',
-        message: 'Произошла ошибка, попробуйте позже'
-      })
-      
+    } else {
+      if (name === 'img') formData.value.image = resp.image
     }
-  }
 
-  const pasteInfo = () => {
-    offer.value.price = formData.value.price_forecast 
-    offer.value.term = formData.value.term_forecast 
-    offer.value.rate = formData.value.rate_forecast 
-  }
+    emit('updateItem', true)
 
-  const getItem = async () => {
-    try {
-      formData.value = await estimatesApi.getItemById(props.iditem)
-      if (!!formData.value.my_proposal) offerActive.value = true
-      if (formData.value.my_proposal) {
-        offer.value.price = formData.value.my_proposal.price
-        offer.value.term = formData.value.my_proposal.term
-        offer.value.rate = formData.value.my_proposal.fee
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  // получение полей
-  const term_forecast = ref()
-  const name = ref()
-  const forecast_price = ref()
-  const quantity = ref()
-  const rate = ref()
-  const brand = ref()
-  const article = ref()
-  const color = ref()
-  const offerprice = ref()
-
-  onMounted( async () => {
-    await getItem()
-    switch(props.activeField) {
-      case 'term_forecast':
-        term_forecast.value.focus()
-        break
-      case 'name':
-        name.value.focus()
-        break
-      case 'forecast_price':
-        forecast_price.value.focus()
-        break
-      case 'quantity':
-        quantity.value.focus()
-        break
-      case 'brand':
-        brand.value.focus()
-        break
-      case 'article':
-        article.value.focus()
-        break
-      case 'color':
-        color.value.focus()
-        break
-      case 'offerprice':
-        offerprice.value.focus()
-        break
-    }
-  })
-
-
-  // работа с загрузкой файлов и картинок
-  const onFileChange = (file) => {
-    formData.value.file = file[0]
-    updateObjItem('file')
-  }
-  const onImageChange = (file) => {
-    formData.value.image = file[0]
-    updateObjItem('img')
-  }
-  const checkFileSize = (files) => {
-    return files.filter(file => file.size > 2048)
-  }
-  const onRejected = () => {
     $q.notify({
-      type: 'negative',
-      message: 'Файл не cooтвeтcтвyeт расширению'
+      color: 'positive',
+      message: 'Позиция cмeты успешно обновлена'
     })
-  } 
+  } catch(err) {
+    console.log(err)
+    $q.notify({
+      color: 'negative',
+      message: 'Произошла ошибка, попробуйте позже'
+    })
+    
+  }
+}
+
+const pasteInfo = () => {
+  offer.value.price = formData.value.price_forecast 
+  offer.value.term = formData.value.term_forecast 
+  offer.value.rate = formData.value.rate_forecast 
+}
+
+const getItem = async () => {
+  try {
+    formData.value = await estimatesApi.getItemById(props.iditem)
+    if (!!formData.value.my_proposal) offerActive.value = true
+    if (formData.value.my_proposal) {
+      offer.value.price = formData.value.my_proposal.price
+      offer.value.term = formData.value.my_proposal.term
+      offer.value.rate = formData.value.my_proposal.rate
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+// получение полей
+const term_forecast = ref()
+const name = ref()
+const forecast_price = ref()
+const quantity = ref()
+const rate = ref()
+const brand = ref()
+const article = ref()
+const color = ref()
+const offerprice = ref()
+
+onMounted( async () => {
+  await getItem()
+  switch(props.activeField) {
+    case 'term_forecast':
+      term_forecast.value.focus()
+      break
+    case 'name':
+      name.value.focus()
+      break
+    case 'forecast_price':
+      forecast_price.value.focus()
+      break
+    case 'quantity':
+      quantity.value.focus()
+      break
+    case 'brand':
+      brand.value.focus()
+      break
+    case 'article':
+      article.value.focus()
+      break
+    case 'color':
+      color.value.focus()
+      break
+    case 'offerprice':
+      offerprice.value.focus()
+      break
+  }
+
+  oldOffer.value = offer.value
+})
+
+
+// работа с загрузкой файлов и картинок
+const onFileChange = (file) => {
+  formData.value.file = file[0]
+  updateObjItem('file')
+}
+const onImageChange = (file) => {
+  formData.value.image = file[0]
+  updateObjItem('img')
+}
+const checkFileSize = (files) => {
+  return files.filter(file => file.size > 2048)
+}
+const onRejected = () => {
+  $q.notify({
+    type: 'negative',
+    message: 'Файл не cooтвeтcтвyeт расширению'
+  })
+} 
 
 </script>

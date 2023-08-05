@@ -162,7 +162,7 @@
   </q-expansion-item>
 </template>
 
-<script>
+<script setup>
 import { ref, onMounted } from 'vue'
 import DialogManager from 'pages/Contractor/DialogManager'
 import DialogFillials from 'pages/Contractor/DialogFillials'
@@ -170,173 +170,142 @@ import DialogDelite from 'components/dialog/DialogDelite'
 import { contractorApi } from 'src/api/contractor'
 import { useQuasar } from 'quasar'
 
-export default {
-  name: 'ProfileFillials',
-  components: {
-    DialogManager,
-    DialogFillials,
-    DialogDelite
-  },
-  setup() {
-    const $q = useQuasar()
-    const modalCustom = ref(false)
-    const dialogDel = ref(false)
+const $q = useQuasar()
+const modalCustom = ref(false)
+const dialogDel = ref(false)
 
-    // fillals
-    const dialogAffiliate = ref(false)
-    const fillials = ref([])
-    const editDataAffiliate = ref({})
+// fillals
+const dialogAffiliate = ref(false)
+const fillials = ref([])
+const editDataAffiliate = ref({})
 
-    async function getAllAffiliate() {
-      try {
-        await contractorApi.getAllAffiliate().then(resp => {
-          fillials.value = resp
-        })
-      } catch (err) {
-        if (!err.response.status === 404) {
-          $q.notify({
-            color: 'negative',
-            message: 'произошла ошибка'
-          })
-          console.log(err)
-        } else {
-          fillials.value = []
-        }
-      }
-    }
-    function editAffiliate(object) {
-      editDataAffiliate.value = object
-      modalCustom.value = true
-      dialogAffiliate.value = true
-    }
-    async function delAffiliate(id) {
-      try {
-        await contractorApi.delAffiliate(id).then(resp => {
-          $q.notify({
-            color: 'positive',
-            message: 'Филиал удален'
-          })
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
-      }
-    }
-
-    const managers = ref([])
-    const editDataManager = ref({})
-  
-    async function getAllManagers() {
-      try {
-        await contractorApi.getAllManagers().then(resp => {
-          managers.value = resp
-        })
-      } catch (err) {
-        if (!err.response.status === 404) {
-          $q.notify({
-            color: 'negative',
-            message: 'произошла ошибка'
-          })
-          console.log(err)
-        } else {
-          managers.value = []
-        }
-      }
-    }
-    
-    function editManager(object) {
-      editDataManager.value = object
-      modalCustom.value = true
-      dialog.value = true
-    }
-    async function delManager(id) {
-      try {
-        await contractorApi.delManager(id, 'm').then(resp => {
-          getAllManagers()
-          $q.notify({
-            color: 'positive',
-            message: 'Менеджер удален'
-          })
-        })
-      } catch (err) {
-        $q.notify({
-          color: 'negative',
-          message: 'произошла ошибка'
-        })
-        console.log(err)
-      }
-    }
-
-    const dialogDelId = ref()
-    const dialogName = ref('')
-    function callDelDialog(id, val) {
-      dialogName.value = val
-      dialogDelId.value = id
-      dialogDel.value = true
-    }
-
-    function modalDelClose(val) {
-      dialogDel.value = false
-      if (dialogName.value === 'delFillial' && val) delAffiliate(dialogDelId.value)
-      if (dialogName.value === 'delMamager' && val) delManager(dialogDelId.value)
-    }
-
-    const dialog = ref(false)
-
-    onMounted(() => {
-      getAllManagers()
-      getAllAffiliate()
+async function getAllAffiliate() {
+  try {
+    await contractorApi.getAllAffiliate().then(resp => {
+      fillials.value = resp
     })
-
-    return {
-      fillials,
-      dialogAffiliate,
-      editDataAffiliate,
-      getAllAffiliate,
-      editAffiliate,
-      delAffiliate,
-
-      managers,
-      editDataManager,
-      dialog,
-      modalCustom,
-      getAllManagers,
-      editManager,
-      delManager,
-
-      dialogDel,
-      modalDelClose,
-      dialogName,
-      callDelDialog,
-
-      modalFalse(val) {
-        dialog.value = false
-        modalCustom.value = false
-        editDataManager.value = null
-        if (val != null) {
-          $q.notify({
-            color: 'positive',
-            message: val
-          })
-        }
-        getAllManagers()
-      },
-      modalFalseAffiliate(val) {
-        dialogAffiliate.value = false
-        modalCustom.value = false
-        editDataAffiliate.value = null
-        if (val != null) {
-          $q.notify({
-            color: 'positive',
-            message: val
-          })
-        }
-        getAllAffiliate()
-      },
+  } catch (err) {
+    if (!err.response.status === 404) {
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка'
+      })
+      console.log(err)
+    } else {
+      fillials.value = []
     }
-  },
+  }
 }
+function editAffiliate(object) {
+  editDataAffiliate.value = object
+  modalCustom.value = true
+  dialogAffiliate.value = true
+}
+async function delAffiliate(id) {
+  try {
+    await contractorApi.delAffiliate(id).then(resp => {
+      $q.notify({
+        color: 'positive',
+        message: 'Филиал удален'
+      })
+    })
+    getAllAffiliate()
+  } catch (err) {
+    $q.notify({
+      color: 'negative',
+      message: 'произошла ошибка'
+    })
+    console.log(err)
+  }
+}
+
+const managers = ref([])
+const editDataManager = ref({})
+
+async function getAllManagers() {
+  try {
+    await contractorApi.getAllManagers().then(resp => {
+      managers.value = resp
+    })
+  } catch (err) {
+    if (!err.response.status === 404) {
+      $q.notify({
+        color: 'negative',
+        message: 'произошла ошибка'
+      })
+      console.log(err)
+    } else {
+      managers.value = []
+    }
+  }
+}
+
+function editManager(object) {
+  editDataManager.value = object
+  modalCustom.value = true
+  dialog.value = true
+}
+async function delManager(id) {
+  try {
+    await contractorApi.delManager(id, 'm').then(resp => {
+      getAllManagers()
+      $q.notify({
+        color: 'positive',
+        message: 'Менеджер удален'
+      })
+    })
+  } catch (err) {
+    $q.notify({
+      color: 'negative',
+      message: 'произошла ошибка'
+    })
+    console.log(err)
+  }
+}
+
+const dialogDelId = ref()
+const dialogName = ref('')
+function callDelDialog(id, val) {
+  dialogName.value = val
+  dialogDelId.value = id
+  dialogDel.value = true
+}
+
+function modalDelClose(val) {
+  dialogDel.value = false
+  if (dialogName.value === 'delFillial' && val) delAffiliate(dialogDelId.value)
+  if (dialogName.value === 'delMamager' && val) delManager(dialogDelId.value)
+}
+
+const dialog = ref(false)
+
+function modalFalse(val) {
+  dialog.value = false
+  modalCustom.value = false
+  editDataManager.value = null
+  if (val != null) {
+    $q.notify({
+      color: 'positive',
+      message: val
+    })
+  }
+  getAllManagers()
+}
+function modalFalseAffiliate(val) {
+  dialogAffiliate.value = false
+  modalCustom.value = false
+  editDataAffiliate.value = null
+  if (val != null) {
+    $q.notify({
+      color: 'positive',
+      message: val
+    })
+  }
+  getAllAffiliate()
+}
+
+onMounted(() => {
+  getAllManagers()
+  getAllAffiliate()
+})
 </script>
