@@ -94,7 +94,7 @@ export const orderersApi = {
     formData.append("first_name", data.first_name)
     if (data.second_name) formData.append("second_name", data.second_name)
     formData.append("last_name", data.last_name)
-    formData.append("birth_date", data.birth_data)
+    if (data.birth_data) formData.append("birth_date", data.birth_data)
     if (data.phone) formData.append("phone", data.phone)
     if (data.email) formData.append("email", data.email)
     if (data.soc_inst) formData.append("soc_inst", data.soc_inst)

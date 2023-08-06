@@ -11,8 +11,8 @@
         </q-card-section>
 
         <q-card-actions class="q-card-actions-add-customer" >
+          
           <q-card-section class="form-section">
-            <q-card-section class="form-section">
             <label class="lable-title">Имя</label>
             <q-input
               v-model="formOrderers.first_name"
@@ -22,6 +22,8 @@
               :rules="[ val => val && val.length > 0 || '']"
             />
           </q-card-section>
+          
+          <q-card-section class="form-section">
             <label class="lable-title">Фамилия</label>
             <q-input
               v-model="formOrderers.last_name"
@@ -41,6 +43,7 @@
               lazy-rules
             />
           </q-card-section>
+
           <q-card-section class="form-section">
             <label class="lable-title">Телефон</label>
             <q-input

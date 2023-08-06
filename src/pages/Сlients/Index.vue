@@ -49,7 +49,7 @@
           @click="dialog = true"
         >
           <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" color="white" class="mb-visible" />
-          <div class="block">Добавить <span class="lg-visible">проект</span></div>
+          <div class="block">Добавить <span class="lg-visible">заказчика</span></div>
         </q-btn>
       </div>
     </div> 
