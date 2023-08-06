@@ -45,13 +45,11 @@
           rounded
           unelevated
           no-caps
-          class="bg-positive text-white my-btn my-effect h-dark"
+          class="bg-positive text-white q-mr-xs my-btn my-effect h-dark q-ml-xs"
           @click="dialog = true"
         >
-          <span class="block">
-            <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" class="mb-visible" style="vertical-align: initial;" />
-            Добавить <span class="lg-visible">заказчика</span>
-          </span>
+          <q-icon size="10px" name="svguse:icons/allIcons.svg#plus" color="white" class="mb-visible" />
+          <div class="block">Добавить <span class="lg-visible">проект</span></div>
         </q-btn>
       </div>
     </div> 
@@ -412,7 +410,7 @@
 
         return element = {
           first_name: firstname,
-          second_name: item.name,
+          second_name: item.second_name,
           last_name: lastName,
           birth_data: item.birth_data,
           phone: item.tel,

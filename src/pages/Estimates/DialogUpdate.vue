@@ -427,7 +427,7 @@ const checkDataMatch = computed(() => {
 const updatePropolsal = async () => {
   try {
     const data = {
-      proposal_id: formData.value.id,
+      proposal_id: offer.value.id,
       price: offer.value.price,
       term: offer.value.term,
       rate: offer.value.rate,
@@ -575,6 +575,7 @@ const getItem = async () => {
       offer.value.price = formData.value.my_proposal.price
       offer.value.term = formData.value.my_proposal.term
       offer.value.rate = formData.value.my_proposal.rate
+      offer.value.id = formData.value.my_proposal.id
     }
   } catch (err) {
     console.log(err)

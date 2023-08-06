@@ -243,12 +243,14 @@ a.q-btn.lg-visible {
       margin-left: auto;
       margin-right: 16px;
       .q-icon {
-        width: 30px;
-        height: 30px;
+        width: 23px;
+        height: 23px;
         border-radius: 100%;
         background: #F0F0F0;
         svg {
           opacity: 0.3;
+          font-size: 7px;
+          width: 7px;
         }
         &:last-child {
           margin-left: 6px;

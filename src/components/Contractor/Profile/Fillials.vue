@@ -98,6 +98,7 @@
     </q-btn>
   </q-expansion-item>
 
+
   <q-expansion-item
     expand-separator
     default-opened
@@ -120,8 +121,8 @@
         </div>
         <div class="txt-content">
           Должность: {{item.jobtitle}}<br>
-          <span v-show="item.email.length">Email: {{item.email}}</span><br>
-          <span v-show="item.phone.length">Тел: {{item.phone}}</span>
+          <span v-if="item.email">Email: {{item.email}}</span><br>
+          <span v-if="item.phone">Тел: {{item.phone}}</span>
         </div>
       </div>
       <div class="btn-sec">
@@ -149,6 +150,7 @@
         </q-btn>
       </div>
     </div>
+
     <q-btn
       unelevated 
       no-caps
