@@ -422,6 +422,11 @@
           border: 1px solid #F0F0F0;
           border-radius: 10px;
           margin-bottom: 10px;
+          @media (min-width: 772px) {
+            &:nth-last-child(-n+2)  {
+              margin-bottom: 40px;
+            }
+          }
           .item-sec {
             min-height: 148px;
             padding: 23px 19px;
@@ -450,9 +455,10 @@
             }
           } 
         }
-        .my-btn-custom-big {
-          margin-top: 30px;
-        }
+        // .my-btn-custom-big {
+        //   margin-top: 30px;
+        // }
+        
       }
       @media (max-width: 772px) {
         .branch-managers {
